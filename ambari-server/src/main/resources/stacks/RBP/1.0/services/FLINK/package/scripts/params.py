@@ -29,7 +29,7 @@ from resource_management.libraries.functions.default import default
 config = Script.get_config()
 
 service_packagedir = os.path.realpath(__file__).split('/scripts')[0]
-flink_archive_file = service_packagedir + '/files/flink-0.10.1-bin-hadoop27-scala_2.10.tgz'
+flink_archive_file = service_packagedir + '/files/flink-0.10.1-bin-hadoop27-scala_2.11.tgz'
 #flink_archive_file = '/var/lib/ambari-agent/cache/stacks/RBP/1.0/services/FLINK/package/files/flink-0.10.1-bin-hadoop27-scala_2.10.tgz'
     
 # params from flink-ambari-config

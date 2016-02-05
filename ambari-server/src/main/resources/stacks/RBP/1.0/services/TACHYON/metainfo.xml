@@ -85,6 +85,10 @@
                 <timeout>300</timeout>
             </commandScript>
 
+            <requiredServices>
+                <service>ZOOKEEPER</service>
+            </requiredServices>
+
             <configuration-dependencies>
               <config-type>tachyon-config</config-type>
               <config-type>tachyon-env</config-type>
