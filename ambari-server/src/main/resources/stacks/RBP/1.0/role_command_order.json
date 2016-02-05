@@ -2,7 +2,10 @@
   "_comment" : "Record format:",
   "_comment" : "blockedRole-blockedCommand: [blockerRole1-blockerCommand1, blockerRole2-blockerCommand2, ...]",
   "general_deps" : {
-    "_comment" : "dependencies for all cases"
+    "_comment" : "dependencies for all cases",
+    "KAFKA_BROKER-START" : ["ZOOKEEPER_SERVER-START"],
+    "ZOOKEEPER_SERVICE_CHECK-SERVICE_CHECK": ["ZOOKEEPER_SERVER-START"],
+    "ZOOKEEPER_QUORUM_SERVICE_CHECK-SERVICE_CHECK": ["ZOOKEEPER_SERVER-START"]
   },
   "_comment" : "GLUSTERFS-specific dependencies",
   "optional_glusterfs": { },

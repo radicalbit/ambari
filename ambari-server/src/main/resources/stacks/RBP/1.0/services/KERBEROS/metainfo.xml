@@ -16,9 +16,11 @@
    limitations under the License.
 -->
 <metainfo>
-    <versions>
-	  <active>true</active>
-    </versions>
-    <minJdk>1.7</minJdk>
-    <maxJdk>1.8</maxJdk>
+  <schemaVersion>2.0</schemaVersion>
+  <services>
+    <service>
+      <name>KERBEROS</name>
+      <extends>common-services/KERBEROS/1.10.3-10</extends>
+    </service>
+  </services>
 </metainfo>

@@ -47,9 +47,9 @@
                    <!--<package><name>java-1.7.0-openjdk-devel</name></package>  -->
                    <!--<package><name>apache-maven-3.2*</name></package>                                           -->
                 <!--</packages>-->
-              <!--</osSpecific>-->
-              
-            </osSpecifics>
+              <!--</osSpecific>              -->
+            <!--</osSpecifics>-->
+
       	    <configuration-dependencies>
 	        	<config-type>flink-ambari-config</config-type>      	   
       	    </configuration-dependencies>
