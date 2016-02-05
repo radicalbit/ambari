@@ -1,0 +1,17 @@
+{
+  "_comment" : "Record format:",
+  "_comment" : "blockedRole-blockedCommand: [blockerRole1-blockerCommand1, blockerRole2-blockerCommand2, ...]",
+  "general_deps" : {
+    "_comment" : "dependencies for all cases"
+  },
+  "_comment" : "GLUSTERFS-specific dependencies",
+  "optional_glusterfs": { },
+  "_comment" : "Dependencies that are used when GLUSTERFS is not present in cluster",
+  "optional_no_glusterfs": {
+    "AMBARI_METRICS_SERVICE_CHECK-SERVICE_CHECK": ["METRICS_COLLECTOR-START"]
+  },
+  "_comment" : "Dependencies that are used in HA NameNode cluster",
+  "namenode_optional_ha": { },
+  "_comment" : "Dependencies that are used in ResourceManager HA cluster",
+  "resourcemanager_optional_ha" : { }
+}

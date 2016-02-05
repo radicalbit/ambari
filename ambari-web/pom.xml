@@ -311,7 +311,10 @@
     <profile>
       <id>pluggable-stack-definition</id>
       <activation>
-        <activeByDefault>false</activeByDefault>
+        <property>
+          <name>stack.distribution</name>
+          <value>RBP</value>
+        </property>
       </activation>
       <build>
         <plugins>
