@@ -35,7 +35,7 @@ def setup_hadoop():
   )
 
   #directories
-  if params.has_namenode:
+  '''if params.has_namenode:
     Directory(params.hdfs_log_dir_prefix,
               recursive=True,
               owner='root',
@@ -98,7 +98,7 @@ def setup_hadoop():
       File(os.path.join(params.hadoop_conf_dir, "hadoop-metrics2.properties"),
            owner=params.hdfs_user,
            content=Template("hadoop-metrics2.properties.j2")
-      )
+      )'''
 
 
 def setup_configs():
@@ -107,7 +107,7 @@ def setup_configs():
   """
   import params
 
-  if params.has_namenode:
+  '''if params.has_namenode:
     if os.path.exists(params.hadoop_conf_dir):
       File(params.task_log4j_properties_location,
            content=StaticFile("task-log4j.properties"),
@@ -123,7 +123,7 @@ def setup_configs():
       File(os.path.join(params.hadoop_conf_dir, 'masters'),
                 owner=params.hdfs_user,
                 group=params.user_group
-      )
+      )'''
 
   generate_include_file()
 
@@ -131,13 +131,13 @@ def setup_configs():
 def generate_include_file():
   import params
 
-  if params.has_namenode and params.dfs_hosts and params.has_slaves:
+  '''if params.has_namenode and params.dfs_hosts and params.has_slaves:
     include_hosts_list = params.slave_hosts
     File(params.dfs_hosts,
          content=Template("include_hosts_list.j2"),
          owner=params.hdfs_user,
          group=params.user_group
-    )
+    )'''
 
 def create_javahome_symlink():
   if os.path.exists("/usr/jdk/jdk1.6.0_31") and not os.path.exists("/usr/jdk64/jdk1.6.0_31"):

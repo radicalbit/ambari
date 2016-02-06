@@ -65,6 +65,6 @@ def create_topology_script():
 
 def create_topology_script_and_mapping():
   import params
-  if params.has_hadoop_env:
+  '''if params.has_hadoop_env:
     create_topology_mapping()
-    create_topology_script()
+    create_topology_script()'''
