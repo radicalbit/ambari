@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
-import os
+import os, hashlib
 from resource_management import *
 
 class HDFS(Script):
@@ -31,21 +31,31 @@ class HDFS(Script):
       hadoop_download_link = "http://apache.panu.it/hadoop/common/hadoop-2.7.2/hadoop-2.7.2.tar.gz"
       hadoop_tmp_file = "/tmp/hadoop-2.7.2.tar.gz"
 
+      if not os.path.exists(hadoop_tmp_file):
+        Execute(
+            'wget '+hadoop_download_link+' -O '+hadoop_tmp_file+' -a /tmp/hadoop_download.log',
+            user=params.hdfs_user
+        )
+      else:
+        hadoop_tmp_file_md5 = hashlib.md5(open(hadoop_tmp_file, "rb").read()).hexdigest()
+
+        if not hadoop_tmp_file_md5 == params.binary_file_md5:
+          Execute(
+              'rm -f '+hadoop_tmp_file,
+              user=params.hdfs_user
+          )
+
+          Execute(
+              'wget '+hadoop_download_link+' -O '+hadoop_tmp_file+' -a /tmp/hadoop_download.log',
+              user=params.hdfs_user
+          )
+
+
       Directory(
           [params.hadoop_base_dir, params.hadoop_tmp_dir, params.hadoop_pid_dir, params.dfs_datanode_dir, params.dfs_namenode_dir],
           owner=params.hdfs_user,
           group=params.user_group,
           recursive=True
-      )
-
-      Execute(
-          'rm -f '+hadoop_tmp_file,
-          user=params.hdfs_user
-      )
-
-      Execute(
-          'wget '+hadoop_download_link+' -O '+hadoop_tmp_file+' -a /tmp/hadoop_download.log',
-          user=params.hdfs_user
       )
 
       Execute(
