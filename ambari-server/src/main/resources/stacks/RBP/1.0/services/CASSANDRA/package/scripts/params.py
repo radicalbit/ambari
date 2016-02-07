@@ -35,6 +35,8 @@ listen_address = hostname
 rpc_address = hostname
 
 binary_file_md5 = 'cb77a8e3792a7e8551af6602ac5f11df'
+cassandra_download_link = 'https://dist.apache.org/repos/dist/release/cassandra/2.2.4/apache-cassandra-2.2.4-bin.tar.gz'
+cassandra_tmp_file = '/tmp/apache-cassandra-2.2.4-bin.tar.gz'
 
 service_packagedir = os.path.realpath(__file__).split('/scripts')[0]
 cassandra_archive_file = service_packagedir + '/files/apache-cassandra-2.2.4-bin.tar.gz'

@@ -36,7 +36,7 @@
 
   <property>
     <name>hadoop.tmp.dir</name>
-    <value>/home/hadoopuser/tmp</value>
+    <value>/var/lib/hadoop/tmp</value>
     <description>Temporary Directory.</description>
   </property>
 

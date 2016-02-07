@@ -28,6 +28,8 @@ user_group = config['configurations']['cluster-env']['user_group']
 java_home = config['hostLevelParams']['java_home']
 
 binary_file_md5 = 'c442bd89b29cab9151b5987793b94041'
+hadoop_download_link = "https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.7.2/hadoop-2.7.2.tar.gz"
+hadoop_tmp_file = "/tmp/hadoop-2.7.2.tar.gz"
 
 service_packagedir = os.path.realpath(__file__).split('/scripts')[0]
 hdfs_archive_file = service_packagedir + '/files/hadoop-2.7.2.tar.gz'

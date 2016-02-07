@@ -28,25 +28,22 @@ class HDFS(Script):
 
     if not os.path.exists(params.hadoop_base_dir):
 
-      hadoop_download_link = "http://apache.panu.it/hadoop/common/hadoop-2.7.2/hadoop-2.7.2.tar.gz"
-      hadoop_tmp_file = "/tmp/hadoop-2.7.2.tar.gz"
-
-      if not os.path.exists(hadoop_tmp_file):
+      if not os.path.exists(params.hadoop_tmp_file):
         Execute(
-            'wget '+hadoop_download_link+' -O '+hadoop_tmp_file+' -a /tmp/hadoop_download.log',
+            'wget '+params.hadoop_download_link+' -O '+params.hadoop_tmp_file+' -a /tmp/hadoop_download.log',
             user=params.hdfs_user
         )
       else:
-        hadoop_tmp_file_md5 = hashlib.md5(open(hadoop_tmp_file, "rb").read()).hexdigest()
+        hadoop_tmp_file_md5 = hashlib.md5(open(params.hadoop_tmp_file, "rb").read()).hexdigest()
 
         if not hadoop_tmp_file_md5 == params.binary_file_md5:
           Execute(
-              'rm -f '+hadoop_tmp_file,
+              'rm -f '+params.hadoop_tmp_file,
               user=params.hdfs_user
           )
 
           Execute(
-              'wget '+hadoop_download_link+' -O '+hadoop_tmp_file+' -a /tmp/hadoop_download.log',
+              'wget '+params.hadoop_download_link+' -O '+params.hadoop_tmp_file+' -a /tmp/hadoop_download.log',
               user=params.hdfs_user
           )
 
@@ -59,13 +56,13 @@ class HDFS(Script):
       )
 
       Execute(
-          '/bin/tar -zxf ' + hadoop_tmp_file + ' --strip 1 -C ' + params.hadoop_base_dir,
+          '/bin/tar -zxf ' + params.hadoop_tmp_file + ' --strip 1 -C ' + params.hadoop_base_dir,
           user=params.hdfs_user
       )
 
       # Set HADOOP_HOME
       Execute(
-          "echo 'export HADOOP_HOME=" + params.hadoop_base_dir + "/hadoop' >>/home" + params.hdfs_user + "/.bash_profile",
+          "echo 'export HADOOP_HOME=" + params.hadoop_base_dir + "' >>/home" + params.hdfs_user + "/.bash_profile",
           user=params.hdfs_user
       )
       # Set JAVA_HOME

@@ -32,6 +32,25 @@ class CassandraNode(Script):
 
     self.install_packages(env)
 
+    if not os.path.exists(params.cassandra_tmp_file):
+      Execute(
+          'wget '+params.cassandra_download_link+' -O '+params.cassandra_tmp_file+' -a /tmp/hadoop_download.log',
+          user=params.cassandra_user
+      )
+    else:
+      hadoop_tmp_file_md5 = hashlib.md5(open(params.cassandra_tmp_file, "rb").read()).hexdigest()
+
+      if not hadoop_tmp_file_md5 == params.binary_file_md5:
+        Execute(
+            'rm -f '+params.cassandra_tmp_file,
+            user=params.cassandra_user
+        )
+
+        Execute(
+            'wget '+params.cassandra_download_link+' -O '+params.cassandra_tmp_file+' -a /tmp/hadoop_download.log',
+            user=params.cassandra_user
+        )
+
     Directory(
         [params.cassandra_install_dir, params.cassandra_pid_file, params.commitlog_directory,
          params.data_file_directories, params.saved_caches_directory],
@@ -41,7 +60,7 @@ class CassandraNode(Script):
     )
 
     Execute(
-        '/bin/tar -zxvf ' + params.cassandra_archive_file + ' --strip 1 -C ' + params.cassandra_install_dir,
+        '/bin/tar -zxvf ' + params.cassandra_tmp_file + ' --strip 1 -C ' + params.cassandra_install_dir,
         user=params.cassandra_user
     )
 
