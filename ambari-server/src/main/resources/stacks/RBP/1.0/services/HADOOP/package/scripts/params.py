@@ -22,7 +22,7 @@ from resource_management.libraries.functions.default import default
 
 config = Script.get_config()
 
-hdfs_user = config['configurations']['hadoop-env']['hdfs.user']
+hdfs_user = config['configurations']['hadoop-env']['hdfs_user']
 user_group = config['configurations']['cluster-env']['user_group']
 
 java_home = config['hostLevelParams']['java_home']

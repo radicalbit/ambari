@@ -22,7 +22,7 @@
 
 <configuration>
   <property>
-    <name>hdfs.user</name>
+    <name>hdfs_user</name>
     <value>hdfs</value>
     <property-type>USER</property-type>
     <description>HDFS Service Account User</description>
