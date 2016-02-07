@@ -29,24 +29,45 @@ class Tachyon(Script):
 
     self.install_packages(env)
 
-    if not os.path.isfile('/etc/sudoers.pre_tachyon.bak'):
-      Execute('cp /etc/sudoers /etc/sudoers.pre_tachyon.bak')
-      Execute('echo "'+params.tachyon_user+'    ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers')
+    if not os.path.exists(params.base_dir):
+
+      if not os.path.exists(params.tachyon_tmp_file):
+        Execute(
+            'wget '+params.tachyon_download_link+' -O '+params.tachyon_tmp_file+' -a /tmp/tachyon_download.log',
+            user=params.tachyon_user
+        )
+      else:
+        hadoop_tmp_file_md5 = hashlib.md5(open(params.tachyon_tmp_file, "rb").read()).hexdigest()
+
+        if not hadoop_tmp_file_md5 == params.binary_file_md5:
+          Execute(
+              'rm -f '+params.tachyon_tmp_file,
+              user=params.tachyon_user
+          )
+
+          Execute(
+              'wget '+params.tachyon_download_link+' -O '+params.tachyon_tmp_file+' -a /tmp/tachyon_download.log',
+              user=params.tachyon_user
+          )
+
+      if not os.path.isfile('/etc/sudoers.pre_tachyon.bak'):
+        Execute('cp /etc/sudoers /etc/sudoers.pre_tachyon.bak')
+        Execute('echo "'+params.tachyon_user+'    ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers')
 
 
-    Directory(
-        [params.base_dir, params.underfs_addr, params.pid_dir, params.log_dir],
-        owner=params.tachyon_user,
-        group=params.user_group,
-        recursive=True
-    )
+      Directory(
+          [params.base_dir, params.underfs_addr, params.pid_dir, params.log_dir],
+          owner=params.tachyon_user,
+          group=params.user_group,
+          recursive=True
+      )
 
-    Execute(
-        '/bin/tar -zxf ' + params.tachyon_archive_file + ' --strip 1 -C ' + params.base_dir,
-        user=params.tachyon_user
-    )
+      Execute(
+          '/bin/tar -zxf ' + params.tachyon_archive_file + ' --strip 1 -C ' + params.base_dir,
+          user=params.tachyon_user
+      )
 
-    #self.configure(env)
+      #self.configure(env)
 
   def configure(self, env):
     import params

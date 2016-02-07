@@ -25,6 +25,8 @@ config = Script.get_config()
 tmp_dir = Script.get_tmp_dir()
 
 binary_file_md5 = 'a4ff1ffc9cdbf593ffb46839dec1bfbe'
+tachyon_download_link = 'http://tachyon-project.org/downloads/files/0.8.2/tachyon-0.8.2-bin.tar.gz'
+tachyon_tmp_file = '/tmp/tachyon-0.8.2-bin.tar.gz'
 
 # identify archive file
 service_packagedir = os.path.realpath(__file__).split('/scripts')[0]

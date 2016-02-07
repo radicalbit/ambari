@@ -24,6 +24,10 @@ class Namenode(HDFS):
   def base_install(self, env):
     import params
     self.base_install(env)
+    Execute(
+        'cp ' + params.hadoop_conf_dir + '/mapred-site.xml.template ' + params.hadoop_conf_dir + '/mapred-site.xml',
+        user=params.hdfs_user
+    )
     Execute(params.hadoop_base_dir + '/bin/hdfs namenode -format', user=params.hdfs_user)
 
   def configure(self, env):
@@ -35,7 +39,7 @@ class Namenode(HDFS):
         format("{hadoop_conf_dir}/mapred-site.xml"),
         owner=params.hdfs_user,
         mode=0644,
-        content=Template('mapred-site.xml.j2', conf_dir=hadoop_conf_dir)
+        content=Template('mapred-site.xml.j2', conf_dir=params.hadoop_conf_dir)
     )
 
     File(

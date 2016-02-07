@@ -62,17 +62,17 @@ class HDFS(Script):
 
       # Set HADOOP_HOME
       Execute(
-          "echo 'export HADOOP_HOME=" + params.hadoop_base_dir + "' >>/home" + params.hdfs_user + "/.bash_profile",
+          "echo 'export HADOOP_HOME=" + params.hadoop_base_dir + "' >>/home/" + params.hdfs_user + "/.bash_profile",
           user=params.hdfs_user
       )
       # Set JAVA_HOME
       Execute(
-          "echo 'export JAVA_HOME=" + params.java_home + "' >>/home" + params.hdfs_user + "/.bash_profile",
+          "echo 'export JAVA_HOME=" + params.java_home + "' >>/home/" + params.hdfs_user + "/.bash_profile",
           user=params.hdfs_user
       )
       # Add Hadoop bin and sbin directory to PATH
       Execute(
-          "echo 'export PATH=$PATH:$HADOOP_HOME/bin;$HADOOP_HOME/sbin' >>/home" + params.hdfs_user + "/.bash_profile",
+          "echo 'export PATH=$PATH:$HADOOP_HOME/bin;$HADOOP_HOME/sbin' >>/home/" + params.hdfs_user + "/.bash_profile",
           user=params.hdfs_user
       )
 
@@ -93,19 +93,19 @@ class HDFS(Script):
         format("{hadoop_conf_dir}/core-site.xml"),
         owner=params.hdfs_user,
         mode=0644,
-        content=Template('core-site.xml.j2', conf_dir=hadoop_conf_dir)
+        content=Template('core-site.xml.j2', conf_dir=params.hadoop_conf_dir)
     )
 
     File(
         format("{hadoop_conf_dir}/hdfs-site.xml"),
         owner=params.hdfs_user,
         mode=0644,
-        content=Template('hdfs-site.xml.j2', conf_dir=hadoop_conf_dir)
+        content=Template('hdfs-site.xml.j2', conf_dir=params.hadoop_conf_dir)
     )
 
     File(
         format("{hadoop_conf_dir}/yarn-site.xml"),
         owner=params.hdfs_user,
         mode=0644,
-        content=Template('yarn-site.xml.j2', conf_dir=hadoop_conf_dir)
+        content=Template('yarn-site.xml.j2', conf_dir=params.hadoop_conf_dir)
     )

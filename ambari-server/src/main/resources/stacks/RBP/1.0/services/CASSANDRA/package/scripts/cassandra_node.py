@@ -34,7 +34,7 @@ class CassandraNode(Script):
 
     if not os.path.exists(params.cassandra_tmp_file):
       Execute(
-          'wget '+params.cassandra_download_link+' -O '+params.cassandra_tmp_file+' -a /tmp/hadoop_download.log',
+          'wget '+params.cassandra_download_link+' -O '+params.cassandra_tmp_file+' -a /tmp/cassandra_download.log',
           user=params.cassandra_user
       )
     else:
@@ -47,7 +47,7 @@ class CassandraNode(Script):
         )
 
         Execute(
-            'wget '+params.cassandra_download_link+' -O '+params.cassandra_tmp_file+' -a /tmp/hadoop_download.log',
+            'wget '+params.cassandra_download_link+' -O '+params.cassandra_tmp_file+' -a /tmp/cassandra_download.log',
             user=params.cassandra_user
         )
 
