@@ -19,7 +19,7 @@ limitations under the License.
 import os, hashlib
 from resource_management import *
 
-class HDFS(Script):
+class Hadoop(Script):
 
   def base_install(self, env):
     import params

@@ -17,9 +17,9 @@ limitations under the License.
 
 """
 from resource_management import *
-from hdfs import HDFS
+from hadoop import Hadoop
 
-class Datanode(HDFS):
+class Datanode(Hadoop):
 
   def install(self, env):
     self.base_install(env)
@@ -32,7 +32,7 @@ class Datanode(HDFS):
     import params
     self.configure(env)
 
-    Execute(params.hadoop_base_dir + '/bin/hdfs datanode', user=params.hdfs_user)
+    Execute(params.hadoop_base_dir + '/bin/hdfs datanode &', user=params.hdfs_user)
 
     cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep DataNode | awk '{print $1}'`> " + params.hadoop_pid_dir + "/datanode.pid"
     Execute(cmd, user=params.hdfs_user)

@@ -17,9 +17,9 @@ limitations under the License.
 
 """
 from resource_management import *
-from hdfs import HDFS
+from hadoop import Hadoop
 
-class Namenode(HDFS):
+class Namenode(Hadoop):
 
   def install(self, env):
     import params
@@ -29,6 +29,7 @@ class Namenode(HDFS):
     #     user=params.hdfs_user
     # )
     Execute('touch ' + params.hadoop_conf_dir + '/mapred-site.xml', user=params.hdfs_user)
+    self.configure(env)
     Execute(params.hadoop_base_dir + '/bin/hdfs namenode -format', user=params.hdfs_user)
 
   def configure(self, env):
@@ -37,24 +38,24 @@ class Namenode(HDFS):
     env.set_params(params)
 
     File(
+        format("{hadoop_conf_dir}/slaves"),
+        owner=params.hdfs_user,
+        mode=0644,
+        content='\n'.join(params.hdfs_datanode)
+    )
+
+    File(
         format("{hadoop_conf_dir}/mapred-site.xml"),
         owner=params.hdfs_user,
         mode=0644,
         content=Template('mapred-site.xml.j2', conf_dir=params.hadoop_conf_dir)
     )
 
-    File(
-        format("{tachyon_config_dir}/slaves"),
-        owner=params.hdfs_user,
-        mode=0644,
-        content='\n'.join(params.hdfs_datanode)
-    )
-
   def start(self, env):
     import params
     self.configure(env)
 
-    Execute(params.hadoop_base_dir + '/bin/hdfs namenode', user=params.hdfs_user)
+    Execute(params.hadoop_base_dir + '/bin/hdfs namenode &', user=params.hdfs_user)
 
     cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep NameNode | awk '{print $1}'`> " + params.hadoop_pid_dir + "/namenode.pid"
     Execute(cmd, user=params.hdfs_user)

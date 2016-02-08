@@ -45,4 +45,4 @@ dfs_namenode_dir = config['configurations']['hadoop-env']['dfs.namenode.name.dir
 dfs_datanode_dir = config['configurations']['hadoop-env']['dfs.datanode.data.dir']
 
 hdfs_namenode = default("/clusterHostInfo/namenode_host", [])[0]
-hdfs_datanode = default("/clusterHostInfo/datanode_hosts", [])
+hdfs_datanode = default("/clusterHostInfo/slave_hosts", [])
