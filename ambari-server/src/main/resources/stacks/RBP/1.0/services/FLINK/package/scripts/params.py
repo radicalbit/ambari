@@ -32,10 +32,9 @@ binary_file_md5 = '0efef9dc038834823e62f9d305300c2c'
 flink_download_url = 'https://dist.apache.org/repos/dist/release/flink/flink-0.10.1/flink-0.10.1-bin-hadoop27-scala_2.11.tgz'
 flink_tmp_file = '/tmp/flink-0.10.1-bin-hadoop27-scala_2.11.tgz'
 
-service_packagedir = os.path.realpath(__file__).split('/scripts')[0]
-flink_archive_file = service_packagedir + '/files/flink-0.10.1-bin-hadoop27-scala_2.11.tgz'
-#flink_archive_file = '/var/lib/ambari-agent/cache/stacks/RBP/1.0/services/FLINK/package/files/flink-0.10.1-bin-hadoop27-scala_2.10.tgz'
-    
+#service_packagedir = os.path.realpath(__file__).split('/scripts')[0]
+#flink_archive_file = service_packagedir + '/files/flink-0.10.1-bin-hadoop27-scala_2.11.tgz'
+
 # params from flink-ambari-config
 flink_install_dir = config['configurations']['flink-ambari-config']['flink_install_dir']
 flink_numcontainers = config['configurations']['flink-ambari-config']['flink_numcontainers']

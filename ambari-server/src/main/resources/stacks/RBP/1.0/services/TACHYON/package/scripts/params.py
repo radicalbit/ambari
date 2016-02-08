@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
-import os
+#import os
 from resource_management.libraries.script.script import Script
 
 # config object that holds the configurations declared in the -config.xml file
@@ -29,8 +29,8 @@ tachyon_download_link = 'http://tachyon-project.org/downloads/files/0.8.2/tachyo
 tachyon_tmp_file = '/tmp/tachyon-0.8.2-bin.tar.gz'
 
 # identify archive file
-service_packagedir = os.path.realpath(__file__).split('/scripts')[0]
-tachyon_archive_file = service_packagedir + '/files/tachyon-0.8.2-bin.tar.gz'
+#service_packagedir = os.path.realpath(__file__).split('/scripts')[0]
+#tachyon_archive_file = service_packagedir + '/files/tachyon-0.8.2-bin.tar.gz'
 
 # tachyon underfs address
 underfs_addr = config['configurations']['tachyon-config']['tachyon.underfs.address']
@@ -50,13 +50,17 @@ base_dir = config['configurations']['tachyon-env']['tachyon.lib.dir']
 tachyon_user = config['configurations']['tachyon-env']['tachyon_user']
 user_group = config['configurations']['cluster-env']['user_group']
 
-# tachyon addresses
-tachyon_master = config['clusterHostInfo']['tachyon_master_hosts'][0]
-tachyon_workers = config['clusterHostInfo']['tachyon_slave_hosts']
-
 ambari_server = config['clusterHostInfo']['ambari_server_host']
 
-current_hostname = config['clusterHostInfo']['hostname']
+# tachyon addresses
+
+#tachyon_master = config['clusterHostInfo']['tachyon_master_hosts'][0]
+if config['clusterHostInfo']['hostname'] in config['clusterHostInfo']['tachyon_master_hosts']:
+  tachyon_master = config['clusterHostInfo']['hostname']
+else:
+  tachyon_master = config['clusterHostInfo']['tachyon_master_hosts'][0]
+
+tachyon_workers = config['clusterHostInfo']['tachyon_slave_hosts']
 
 # zookeeper infos
 zookeeper_hosts = ''
