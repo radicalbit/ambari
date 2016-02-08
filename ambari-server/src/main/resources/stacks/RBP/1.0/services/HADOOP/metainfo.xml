@@ -32,7 +32,7 @@
                     <name>NAMENODE</name>
                     <displayName>NameNode</displayName>
                     <category>MASTER</category>
-                    <cardinality>1-2</cardinality>
+                    <cardinality>1</cardinality>
                     <versionAdvertised>true</versionAdvertised>
                     <commandScript>
                         <script>scripts/namenode.py</script>
@@ -54,19 +54,18 @@
                     </commandScript>
                 </component>
 
-                <!--<component>-->
-                    <!--<name>SECONDARY_NAMENODE</name>-->
-                    <!--<displayName>SNameNode</displayName>-->
-                    <!--&lt;!&ndash; TODO:  cardinality is conditional on HA usage &ndash;&gt;-->
-                    <!--<cardinality>1</cardinality>-->
-                    <!--<versionAdvertised>true</versionAdvertised>-->
-                    <!--<category>MASTER</category>-->
-                    <!--<commandScript>-->
-                        <!--<script>scripts/snamenode.py</script>-->
-                        <!--<scriptType>PYTHON</scriptType>-->
-                        <!--<timeout>1200</timeout>-->
-                    <!--</commandScript>-->
-                <!--</component>-->
+                <component>
+                    <name>SECONDARY_NAMENODE</name>
+                    <displayName>SNameNode</displayName>
+                    <cardinality>1</cardinality>
+                    <versionAdvertised>true</versionAdvertised>
+                    <category>MASTER</category>
+                    <commandScript>
+                        <script>scripts/snamenode.py</script>
+                        <scriptType>PYTHON</scriptType>
+                        <timeout>1200</timeout>
+                    </commandScript>
+                </component>
 
                 <!--<component>-->
                     <!--<name>HDFS_CLIENT</name>-->

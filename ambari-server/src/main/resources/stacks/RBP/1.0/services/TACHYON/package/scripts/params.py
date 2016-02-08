@@ -56,6 +56,8 @@ tachyon_workers = config['clusterHostInfo']['tachyon_slave_hosts']
 
 ambari_server = config['clusterHostInfo']['ambari_server_host']
 
+current_hostname = config['clusterHostInfo']['hostname']
+
 # zookeeper infos
 zookeeper_hosts = ''
 if 'zookeeper_hosts' in config['clusterHostInfo']:

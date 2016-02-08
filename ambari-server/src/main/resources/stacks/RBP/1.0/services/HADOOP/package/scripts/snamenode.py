@@ -18,9 +18,9 @@ limitations under the License.
 """
 import os
 from resource_management import *
-from hdfs import HDFS
+from hadoop import Hadoop
 
-class SecondaryNameNode(HDFS):
+class SecondaryNameNode(Hadoop):
 
   def configure(self, env):
     import params
@@ -30,7 +30,7 @@ class SecondaryNameNode(HDFS):
     import params
     self.configure(env)
 
-    Execute(params.hadoop_base_dir + '/bin/hdfs secondarynamenode', user=params.hdfs_user)
+    Execute(params.hadoop_base_dir + '/bin/hdfs secondarynamenode &', user=params.hdfs_user)
 
     cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep SecondaryNameNode | awk '{print $1}'`> " + params.hadoop_pid_dir + "/secondarynamenode.pid"
     Execute(cmd, user=params.hdfs_user)

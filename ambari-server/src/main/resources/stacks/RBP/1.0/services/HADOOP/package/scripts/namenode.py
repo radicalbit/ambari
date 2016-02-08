@@ -28,7 +28,6 @@ class Namenode(Hadoop):
     #     'cp ' + params.hadoop_conf_dir + '/mapred-site.xml.template ' + params.hadoop_conf_dir + '/mapred-site.xml',
     #     user=params.hdfs_user
     # )
-    Execute('touch ' + params.hadoop_conf_dir + '/mapred-site.xml', user=params.hdfs_user)
     self.configure(env)
     Execute(params.hadoop_base_dir + '/bin/hdfs namenode -format', user=params.hdfs_user)
 
@@ -44,12 +43,12 @@ class Namenode(Hadoop):
         content='\n'.join(params.hdfs_datanode)
     )
 
-    File(
-        format("{hadoop_conf_dir}/mapred-site.xml"),
-        owner=params.hdfs_user,
-        mode=0644,
-        content=Template('mapred-site.xml.j2', conf_dir=params.hadoop_conf_dir)
-    )
+    # File(
+    #     format("{hadoop_conf_dir}/mapred-site.xml"),
+    #     owner=params.hdfs_user,
+    #     mode=0644,
+    #     content=Template('mapred-site.xml.j2', conf_dir=params.hadoop_conf_dir)
+    # )
 
   def start(self, env):
     import params
