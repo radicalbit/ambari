@@ -48,3 +48,5 @@ dfs_datanode_dir = config['configurations']['hadoop-env']['dfs.datanode.data.dir
 hdfs_namenode = default("/clusterHostInfo/namenode_host", [])[0]
 hdfs_snamenode = default("/clusterHostInfo/snamenode_host", [])[0]
 hdfs_datanode = default("/clusterHostInfo/slave_hosts", [])
+
+yarn_resourcemanager = default("/clusterHostInfo/resourcemanager_host", [])[0]
