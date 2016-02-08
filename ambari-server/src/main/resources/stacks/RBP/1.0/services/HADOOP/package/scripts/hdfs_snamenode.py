@@ -16,14 +16,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
-import os
 from resource_management import *
 from hadoop import Hadoop
 
 class SecondaryNameNode(Hadoop):
 
+  def install(self, env):
+    self.base_install(env)
+
   def configure(self, env):
-    import params
     self.base_configure(env)
 
   def start(self, env):

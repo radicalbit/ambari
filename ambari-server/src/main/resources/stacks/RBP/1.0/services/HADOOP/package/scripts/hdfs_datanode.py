@@ -25,7 +25,6 @@ class Datanode(Hadoop):
     self.base_install(env)
 
   def configure(self, env):
-    import params
     self.base_configure(env)
 
   def start(self, env):
