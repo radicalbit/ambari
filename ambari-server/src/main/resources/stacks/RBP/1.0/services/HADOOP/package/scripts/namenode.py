@@ -21,7 +21,7 @@ from hdfs import HDFS
 
 class Namenode(HDFS):
 
-  def base_install(self, env):
+  def install(self, env):
     import params
     self.base_install(env)
     Execute(
