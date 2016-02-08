@@ -33,7 +33,7 @@ class ResourceManager(Hadoop):
 
     Execute(params.hadoop_base_dir + '/bin/yarn resourcemanager &', user=params.yarn_user)
 
-    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep ResourceManager | awk '{print $1}'`> " + params.hadoop_pid_dir + "/resourcemanager.pid"
+    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep org.apache.hadoop.yarn.server.resourcemanager.ResourceManager | awk '{print $1}'`> " + params.hadoop_pid_dir + "/resourcemanager.pid"
     Execute(cmd, user=params.yarn_user)
 
   def stop(self, env):

@@ -33,7 +33,7 @@ class NodeManager(Hadoop):
 
     Execute(params.hadoop_base_dir + '/bin/yarn nodemanager &', user=params.yarn_user)
 
-    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep NodeManager | awk '{print $1}'`> " + params.hadoop_pid_dir + "/nodemanager.pid"
+    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep org.apache.hadoop.yarn.server.nodemanager.NodeManager | awk '{print $1}'`> " + params.hadoop_pid_dir + "/nodemanager.pid"
     Execute(cmd, user=params.yarn_user)
 
   def stop(self, env):

@@ -33,7 +33,7 @@ class SecondaryNameNode(Hadoop):
 
     Execute(params.hadoop_base_dir + '/bin/hdfs secondarynamenode &', user=params.hdfs_user)
 
-    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep SecondaryNameNode | awk '{print $1}'`> " + params.hadoop_pid_dir + "/secondarynamenode.pid"
+    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep org.apache.hadoop.hdfs.server.namenode.SecondaryNameNode | awk '{print $1}'`> " + params.hadoop_pid_dir + "/secondarynamenode.pid"
     Execute(cmd, user=params.hdfs_user)
 
   def stop(self, env):

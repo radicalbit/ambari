@@ -33,7 +33,7 @@ class Datanode(Hadoop):
 
     Execute(params.hadoop_base_dir + '/bin/hdfs datanode &', user=params.hdfs_user)
 
-    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep DataNode | awk '{print $1}'`> " + params.hadoop_pid_dir + "/datanode.pid"
+    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep org.apache.hadoop.hdfs.server.datanode.DataNode | awk '{print $1}'`> " + params.hadoop_pid_dir + "/datanode.pid"
     Execute(cmd, user=params.hdfs_user)
 
   def stop(self, env):

@@ -56,7 +56,7 @@ class Namenode(Hadoop):
 
     Execute(params.hadoop_base_dir + '/bin/hdfs namenode &', user=params.hdfs_user)
 
-    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep NameNode | awk '{print $1}'`> " + params.hadoop_pid_dir + "/namenode.pid"
+    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep org.apache.hadoop.hdfs.server.namenode.NameNode | awk '{print $1}'`> " + params.hadoop_pid_dir + "/namenode.pid"
     Execute(cmd, user=params.hdfs_user)
 
   def stop(self, env):
