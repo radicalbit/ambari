@@ -24,10 +24,11 @@ class Namenode(HDFS):
   def install(self, env):
     import params
     self.base_install(env)
-    Execute(
-        'cp ' + params.hadoop_conf_dir + '/mapred-site.xml.template ' + params.hadoop_conf_dir + '/mapred-site.xml',
-        user=params.hdfs_user
-    )
+    # Execute(
+    #     'cp ' + params.hadoop_conf_dir + '/mapred-site.xml.template ' + params.hadoop_conf_dir + '/mapred-site.xml',
+    #     user=params.hdfs_user
+    # )
+    Execute('touch ' + params.hadoop_conf_dir + '/mapred-site.xml', user=params.hdfs_user)
     Execute(params.hadoop_base_dir + '/bin/hdfs namenode -format', user=params.hdfs_user)
 
   def configure(self, env):
@@ -46,7 +47,7 @@ class Namenode(HDFS):
         format("{tachyon_config_dir}/slaves"),
         owner=params.hdfs_user,
         mode=0644,
-        content='\n'.join(params.slave_hosts)
+        content='\n'.join(params.hdfs_datanode)
     )
 
   def start(self, env):
