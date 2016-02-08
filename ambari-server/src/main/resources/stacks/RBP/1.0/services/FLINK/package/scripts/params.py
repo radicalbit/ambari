@@ -29,6 +29,8 @@ from resource_management.libraries.functions.default import default
 config = Script.get_config()
 
 binary_file_md5 = '0efef9dc038834823e62f9d305300c2c'
+flink_download_url = 'https://dist.apache.org/repos/dist/release/flink/flink-0.10.1/flink-0.10.1-bin-hadoop27-scala_2.11.tgz'
+flink_tmp_file = '/tmp/flink-0.10.1-bin-hadoop27-scala_2.11.tgz'
 
 service_packagedir = os.path.realpath(__file__).split('/scripts')[0]
 flink_archive_file = service_packagedir + '/files/flink-0.10.1-bin-hadoop27-scala_2.11.tgz'
@@ -45,7 +47,7 @@ flink_queue = config['configurations']['flink-ambari-config']['flink_queue']
 flink_streaming = config['configurations']['flink-ambari-config']['flink_streaming']
 
 hadoop_conf_dir = config['configurations']['flink-ambari-config']['hadoop_conf_dir']
-flink_download_url = config['configurations']['flink-ambari-config']['flink_download_url']
+#flink_download_url = config['configurations']['flink-ambari-config']['flink_download_url']
  
 
 conf_dir=''

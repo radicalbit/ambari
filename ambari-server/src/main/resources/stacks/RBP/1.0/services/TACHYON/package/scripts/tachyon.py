@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
-import os
+import os, hashlib
 from resource_management import *
 from resource_management.libraries.script.script import Script
 from resource_management.core.resources.system import File, Execute, Directory
@@ -63,7 +63,7 @@ class Tachyon(Script):
       )
 
       Execute(
-          '/bin/tar -zxf ' + params.tachyon_archive_file + ' --strip 1 -C ' + params.base_dir,
+          '/bin/tar -zxf ' + params.tachyon_tmp_file + ' --strip 1 -C ' + params.base_dir,
           user=params.tachyon_user
       )
 

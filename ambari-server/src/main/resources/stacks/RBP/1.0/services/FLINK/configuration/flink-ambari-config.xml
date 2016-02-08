@@ -77,11 +77,5 @@
     <value>/etc/hadoop/conf</value>
     <description>Hadoop conf dir. Needed to submit to YARN</description>
   </property>
-
-  <property>
-    <name>flink_download_url</name>
-    <value>http://www.us.apache.org/dist/flink/flink-0.10.1/flink-0.10.1-bin-hadoop27-scala_2.10.tgz</value>
-    <description>Snapshot download location. Downloaded when setup_prebuilt is true</description>
-  </property>
     
 </configuration>  

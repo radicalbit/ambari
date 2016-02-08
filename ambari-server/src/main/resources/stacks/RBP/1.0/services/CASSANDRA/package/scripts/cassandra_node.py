@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
-import sys, os, pwd, signal, time
+import sys, os, pwd, signal, time, hashlib
 from resource_management import *
 from resource_management.libraries.functions.check_process_status import check_process_status
 from resource_management.core import sudo

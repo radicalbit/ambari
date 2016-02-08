@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
-import sys, os, pwd, grp, signal, time, glob
+import sys, os, pwd, grp, signal, time, glob, hashlib
 from resource_management import *
 from subprocess import call
 
@@ -25,6 +25,25 @@ class Master(Script):
 
     import params
     import status_params
+
+    if not os.path.exists(params.flink_tmp_file):
+      Execute(
+          'wget '+params.flink_download_url+' -O '+params.flink_tmp_file+' -a /tmp/flink_download.log',
+          user=params.flink_user
+      )
+    else:
+      hadoop_tmp_file_md5 = hashlib.md5(open(params.flink_tmp_file, "rb").read()).hexdigest()
+
+      if not hadoop_tmp_file_md5 == params.binary_file_md5:
+        Execute(
+            'rm -f '+params.flink_tmp_file,
+            user=params.flink_user
+        )
+
+        Execute(
+            'wget '+params.flink_download_url+' -O '+params.flink_tmp_file+' -a /tmp/flink_download.log',
+            user=params.flink_user
+        )
             
     Directory([params.flink_install_dir],
             owner=params.flink_user,
@@ -48,7 +67,7 @@ class Master(Script):
     Execute('echo Installing packages')
 
     Execute(
-        '/bin/tar -zxvf ' + params.flink_archive_file + ' --strip 1 -C ' + params.flink_install_dir,
+        '/bin/tar -zxvf ' + params.flink_tmp_file + ' --strip 1 -C ' + params.flink_install_dir,
         user=params.flink_user
     )
     self.configure(env, True)
