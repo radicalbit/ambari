@@ -14,14 +14,14 @@
             {
               "name": "jvm.JvmMetrics.GcCount",
               "metric_path": "metrics/jvm/gcCount",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "NAMENODE",
               "host_component_criteria": "host_components/metrics/dfs/FSNamesystem/HAState=active"
             },
             {
               "name": "jvm.JvmMetrics.GcCountConcurrentMarkSweep",
               "metric_path": "metrics/jvm/GcCountConcurrentMarkSweep",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "NAMENODE",
               "host_component_criteria": "host_components/metrics/dfs/FSNamesystem/HAState=active"
             }
@@ -50,7 +50,7 @@
             {
               "name": "jvm.JvmMetrics.GcTimeMillisConcurrentMarkSweep",
               "metric_path": "metrics/jvm/GcTimeMillisConcurrentMarkSweep",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "NAMENODE",
               "host_component_criteria": "host_components/metrics/dfs/FSNamesystem/HAState=active"
             }
@@ -77,7 +77,7 @@
               "name": "rpc.rpc.NumOpenConnections",
               "metric_path": "metrics/rpc/NumOpenConnections",
               "category": "",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "NAMENODE",
               "host_component_criteria": "host_components/metrics/dfs/FSNamesystem/HAState=active"
             }
@@ -102,14 +102,14 @@
             {
               "name": "jvm.JvmMetrics.MemHeapCommittedM",
               "metric_path": "metrics/jvm/memHeapCommittedM",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "NAMENODE",
               "host_component_criteria": "host_components/metrics/dfs/FSNamesystem/HAState=active"
             },
             {
               "name": "jvm.JvmMetrics.MemHeapUsedM",
               "metric_path": "metrics/jvm/memHeapUsedM",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "NAMENODE",
               "host_component_criteria": "host_components/metrics/dfs/FSNamesystem/HAState=active"
             }
@@ -139,56 +139,56 @@
             {
               "name": "cpu_system",
               "metric_path": "metrics/cpu/cpu_system",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "NAMENODE",
               "host_component_criteria": "host_components/metrics/dfs/FSNamesystem/HAState=active"
             },
             {
               "name": "cpu_user",
               "metric_path": "metrics/cpu/cpu_user",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "NAMENODE",
               "host_component_criteria": "host_components/metrics/dfs/FSNamesystem/HAState=active"
             },
             {
               "name": "cpu_nice",
               "metric_path": "metrics/cpu/cpu_nice",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "NAMENODE",
               "host_component_criteria": "host_components/metrics/dfs/FSNamesystem/HAState=active"
             },
             {
               "name": "cpu_idle",
               "metric_path": "metrics/cpu/cpu_idle",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "NAMENODE",
               "host_component_criteria": "host_components/metrics/dfs/FSNamesystem/HAState=active"
             },
             {
               "name": "cpu_wio",
               "metric_path": "metrics/cpu/cpu_wio",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "NAMENODE",
               "host_component_criteria": "host_components/metrics/dfs/FSNamesystem/HAState=active"
             },
             {
               "name": "mem_total",
               "metric_path": "metrics/memory/mem_total",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "NAMENODE",
               "host_component_criteria": "host_components/metrics/dfs/FSNamesystem/HAState=active"
             },
             {
               "name": "mem_free",
               "metric_path": "metrics/memory/mem_free",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "NAMENODE",
               "host_component_criteria": "host_components/metrics/dfs/FSNamesystem/HAState=active"
             },
             {
               "name": "mem_cached",
               "metric_path": "metrics/memory/mem_cached",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "NAMENODE",
               "host_component_criteria": "host_components/metrics/dfs/FSNamesystem/HAState=active"
             }
@@ -218,14 +218,14 @@
             {
               "name": "rpc.rpc.RpcQueueTimeAvgTime",
               "metric_path": "metrics/rpc/RpcQueueTime_avg_time",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "NAMENODE",
               "host_component_criteria": "host_components/metrics/dfs/FSNamesystem/HAState=active"
             },
             {
               "name": "rpc.rpc.RpcProcessingTimeAvgTime",
               "metric_path": "metrics/rpc/RpcProcessingTime_avg_time",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "NAMENODE",
               "host_component_criteria": "host_components/metrics/dfs/FSNamesystem/HAState=active"
             }
@@ -255,7 +255,7 @@
             {
               "name": "Hadoop:service=NameNode,name=FSNamesystem.CorruptBlocks",
               "metric_path": "metrics/dfs/FSNamesystem/CorruptBlocks",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "NAMENODE"
             }
           ],
@@ -279,7 +279,7 @@
             {
               "name": "Hadoop:service=NameNode,name=FSNamesystem.UnderReplicatedBlocks",
               "metric_path": "metrics/dfs/FSNamesystem/UnderReplicatedBlocks",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "NAMENODE"
             }
           ],
@@ -311,7 +311,7 @@
             {
               "name": "dfs.datanode.BytesRead",
               "metric_path": "metrics/dfs/datanode/bytes_read",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "DATANODE"
             }
           ],
@@ -335,7 +335,7 @@
             {
               "name": "dfs.datanode.BytesWritten",
               "metric_path": "metrics/dfs/datanode/bytes_written",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "DATANODE"
             }
           ],
@@ -359,7 +359,7 @@
             {
               "name": "Hadoop:service=DataNode,name=JvmMetrics.GcTimeMillis",
               "metric_path": "metrics/jvm/gcTimeMillis",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "DATANODE"
             }
           ],
@@ -383,7 +383,7 @@
             {
               "name": "Hadoop:service=DataNode,name=JvmMetrics.MemHeapUsedM",
               "metric_path": "metrics/jvm/memHeapUsedM",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "DATANODE"
             }
           ],
@@ -407,7 +407,7 @@
             {
               "name": "Hadoop:service=DataNode,name=JvmMetrics.MemHeapCommittedM",
               "metric_path": "metrics/jvm/memHeapCommittedM",
-              "service_name": "HDFS",
+              "service_name": "HADOOP",
               "component_name": "DATANODE"
             }
           ],

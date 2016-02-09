@@ -19,8 +19,8 @@
     <schemaVersion>2.0</schemaVersion>
     <services>
         <service>
-            <name>HDFS</name>
-            <displayName>HDFS</displayName>
+            <name>HADOOP</name>
+            <displayName>Hadoop</displayName>
             <comment>Apache Hadoop Distributed File System</comment>
             <version>2.7.2</version>
 
@@ -98,22 +98,24 @@
                         <!--</configFile>-->
                     <!--</configFiles>-->
                 <!--</component>-->
-            </components>
 
-            <configuration-dependencies>
-                <config-type>hadoop-env</config-type>
-                <config-type>hdfs-log4j</config-type>
-            </configuration-dependencies>
-            <restartRequiredAfterRackChange>true</restartRequiredAfterRackChange>
 
-        </service>
+            <!--</components>-->
 
-        <service>
-            <name>YARN</name>
-            <displayName>YARN</displayName>
-            <comment>Apache Hadoop NextGen MapReduce (YARN)</comment>
-            <version>2.7.2</version>
-            <components>
+            <!--<configuration-dependencies>-->
+                <!--<config-type>hadoop-env</config-type>-->
+                <!--<config-type>hdfs-log4j</config-type>-->
+            <!--</configuration-dependencies>-->
+            <!--<restartRequiredAfterRackChange>true</restartRequiredAfterRackChange>-->
+
+        <!--</service>-->
+
+        <!--<service>-->
+            <!--<name>YARN</name>-->
+            <!--<displayName>YARN</displayName>-->
+            <!--<comment>Apache Hadoop NextGen MapReduce (YARN)</comment>-->
+            <!--<version>2.7.2</version>-->
+            <!--<components>-->
 
                 <component>
                     <name>RESOURCEMANAGER</name>
@@ -206,7 +208,9 @@
             </components>
 
             <configuration-dependencies>
+                <config-type>hadoop-env</config-type>
                 <config-type>yarn-env</config-type>
+                <config-type>hdfs-log4j</config-type>
             </configuration-dependencies>
             <restartRequiredAfterRackChange>true</restartRequiredAfterRackChange>
         </service>
