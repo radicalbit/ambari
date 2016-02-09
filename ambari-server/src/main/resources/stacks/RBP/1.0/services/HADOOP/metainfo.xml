@@ -71,9 +71,9 @@
                 <config-type>hadoop-env</config-type>
                 <config-type>hdfs-log4j</config-type>
             </configuration-dependencies>
+
             <widgetsFileName>HADOOP_HDFS_widgets.json</widgetsFileName>
             <metricsFileName>HADOOP_HDFS_metrics.json</metricsFileName>
-            <restartRequiredAfterRackChange>true</restartRequiredAfterRackChange>
         </service>
 
         <!--YARN-->
@@ -111,12 +111,18 @@
 
             </components>
 
+            <requiredServices>
+                <service>HADOOP_HDFS</service>
+            </requiredServices>
+
             <configuration-dependencies>
                 <config-type>yarn-env</config-type>
             </configuration-dependencies>
+
+            <restartRequiredAfterRackChange>true</restartRequiredAfterRackChange>
+
             <widgetsFileName>HADOOP_YARN_widgets.json</widgetsFileName>
             <metricsFileName>HADOOP_YARN_metrics.json</metricsFileName>
-            <restartRequiredAfterRackChange>true</restartRequiredAfterRackChange>
         </service>
     </services>
 </metainfo>
