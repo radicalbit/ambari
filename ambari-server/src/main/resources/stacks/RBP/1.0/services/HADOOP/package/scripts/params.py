@@ -49,4 +49,4 @@ hdfs_namenode = default("/clusterHostInfo/namenode_host", [])[0]
 hdfs_snamenode = default("/clusterHostInfo/snamenode_host", [])[0]
 hdfs_datanode = default("/clusterHostInfo/slave_hosts", [])
 
-yarn_resourcemanager = default("/clusterHostInfo/yarn_resourcemanager_host", [])[0]
+yarn_resourcemanager = default("/clusterHostInfo/yarn_resourcemanager_hosts", [])[0]

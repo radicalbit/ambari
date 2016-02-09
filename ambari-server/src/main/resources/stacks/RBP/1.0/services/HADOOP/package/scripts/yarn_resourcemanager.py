@@ -31,14 +31,14 @@ class ResourceManager(Hadoop):
     import params
     self.configure(env)
 
-    Execute(params.hadoop_base_dir + '/bin/yarn resourcemanager &', user=params.yarn_user)
+    Execute(params.hadoop_base_dir + '/bin/yarn resourcemanager &', user=params.hdfs_user)
 
     cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep org.apache.hadoop.yarn.server.resourcemanager.ResourceManager | awk '{print $1}'`> " + params.hadoop_pid_dir + "/resourcemanager.pid"
     Execute(cmd, user=params.hdfs_user)
 
   def stop(self, env):
     import params
-    Execute('kill `cat ' + params.hadoop_pid_dir + '/resourcemanager.pid`', user=params.yarn_user)
+    Execute('kill `cat ' + params.hadoop_pid_dir + '/resourcemanager.pid`', user=params.hdfs_user)
 
   def status(self, env):
     import status_params as params
