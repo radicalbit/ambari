@@ -18,21 +18,22 @@
 <metainfo>
     <schemaVersion>2.0</schemaVersion>
     <services>
+
+        <!--HDFS-->
+
         <service>
             <name>HDFS_HADOOP</name>
             <displayName>Hadoop</displayName>
             <comment>Apache Hadoop Distributed File System</comment>
             <version>2.7.2</version>
 
-            <!--HDFS-->
-
             <components>
+
                 <component>
                     <name>NAMENODE</name>
                     <displayName>NameNode</displayName>
                     <category>MASTER</category>
                     <cardinality>1</cardinality>
-                    <versionAdvertised>true</versionAdvertised>
                     <commandScript>
                         <script>scripts/hdfs_namenode.py</script>
                         <scriptType>PYTHON</scriptType>
@@ -45,7 +46,6 @@
                     <displayName>DataNode</displayName>
                     <category>SLAVE</category>
                     <cardinality>1+</cardinality>
-                    <versionAdvertised>true</versionAdvertised>
                     <commandScript>
                         <script>scripts/hdfs_datanode.py</script>
                         <scriptType>PYTHON</scriptType>
@@ -55,9 +55,8 @@
 
                 <component>
                     <name>SECONDARY_NAMENODE</name>
-                    <displayName>Secondary NameNode</displayName>
+                    <displayName>SecondaryNameNode</displayName>
                     <cardinality>1</cardinality>
-                    <versionAdvertised>true</versionAdvertised>
                     <category>MASTER</category>
                     <commandScript>
                         <script>scripts/hdfs_snamenode.py</script>
@@ -65,8 +64,18 @@
                         <timeout>1200</timeout>
                     </commandScript>
                 </component>
+
             </components>
+
+            <configuration-dependencies>
+                <config-type>hadoop-env</config-type>
+                <config-type>hdfs-log4j</config-type>
+            </configuration-dependencies>
+            <restartRequiredAfterRackChange>true</restartRequiredAfterRackChange>
         </service>
+
+        <!--YARN-->
+
         <service>
             <name>HDFS_YARN</name>
             <displayName>YARN</displayName>
@@ -74,14 +83,11 @@
             <version>2.7.2</version>
             <components>
 
-                <!--YARN-->
-
                 <component>
                     <name>RESOURCEMANAGER</name>
-                    <displayName>ResourceManager</displayName>
+                    <displayName>YarnResourceManager</displayName>
                     <category>MASTER</category>
                     <cardinality>1</cardinality>
-                    <versionAdvertised>true</versionAdvertised>
                     <commandScript>
                         <script>scripts/yarn_resourcemanager.py</script>
                         <scriptType>PYTHON</scriptType>
@@ -91,10 +97,9 @@
 
                 <component>
                     <name>NODEMANAGER</name>
-                    <displayName>NodeManager</displayName>
+                    <displayName>YarnNodeManager</displayName>
                     <category>SLAVE</category>
                     <cardinality>1+</cardinality>
-                    <versionAdvertised>true</versionAdvertised>
                     <commandScript>
                         <script>scripts/yarn_nodemanager.py</script>
                         <scriptType>PYTHON</scriptType>
@@ -105,9 +110,7 @@
             </components>
 
             <configuration-dependencies>
-                <config-type>hadoop-env</config-type>
                 <config-type>yarn-env</config-type>
-                <config-type>hdfs-log4j</config-type>
             </configuration-dependencies>
             <restartRequiredAfterRackChange>true</restartRequiredAfterRackChange>
         </service>
