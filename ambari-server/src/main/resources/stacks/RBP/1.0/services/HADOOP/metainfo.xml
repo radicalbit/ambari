@@ -69,6 +69,7 @@
 
             <configuration-dependencies>
                 <config-type>hadoop-env</config-type>
+                <config-type>yarn-env</config-type>
                 <config-type>hdfs-log4j</config-type>
             </configuration-dependencies>
 
@@ -114,10 +115,6 @@
             <requiredServices>
                 <service>HADOOP_HDFS</service>
             </requiredServices>
-
-            <configuration-dependencies>
-                <config-type>yarn-env</config-type>
-            </configuration-dependencies>
 
             <restartRequiredAfterRackChange>true</restartRequiredAfterRackChange>
 
