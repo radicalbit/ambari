@@ -81,8 +81,22 @@ class Master(Script):
     self.set_conf_bin(env)
         
     #write out nifi.properties
-    properties_content=InlineTemplate(params.flink_yaml_content)
-    File(format("{conf_dir}/flink-conf.yaml"), content=properties_content, owner=params.flink_user)
+    #properties_content=InlineTemplate(params.flink_yaml_content)
+    #File(format("{conf_dir}/flink-conf.yaml"), content=properties_content, owner=params.flink_user)
+
+    File(
+        format("{conf_dir}/flink-conf.yaml"),
+        owner=params.flink_user,
+        mode=0644,
+        content=Template('flink-conf.yaml.j2', conf_dir=params.conf_dir)
+    )
+
+    File(
+        format("{conf_dir}/core-site.xml"),
+        owner=params.flink_user,
+        mode=0644,
+        content=Template('core-site.xml', conf_dir=params.conf_dir)
+    )
         
     
   def stop(self, env):
@@ -102,7 +116,9 @@ class Master(Script):
 
     Execute('echo bin dir ' + params.bin_dir)        
     Execute('echo pid file ' + status_params.flink_pid_file)
-    cmd = format("export HADOOP_CONF_DIR={hadoop_conf_dir}; {bin_dir}/yarn-session.sh -n {flink_numcontainers} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
+    #cmd = format("export HADOOP_CONF_DIR={hadoop_conf_dir}; {bin_dir}/yarn-session.sh -n {flink_numcontainers} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
+    cmd = format("{bin_dir}/yarn-session.sh -n {flink_numcontainers} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
+
     if params.flink_streaming:
       cmd = cmd + ' -st '
     Execute (cmd + format(" >> {flink_log_file}"), user=params.flink_user)
