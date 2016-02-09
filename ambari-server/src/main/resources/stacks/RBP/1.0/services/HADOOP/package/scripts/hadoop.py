@@ -76,8 +76,6 @@ class Hadoop(Script):
           user=params.hdfs_user
       )
 
-      # hdfs namenode -format (only master)
-
   def base_configure(self, env):
     import params
     env.set_params(params)

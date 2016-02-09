@@ -29,13 +29,13 @@
     <description>HDFS Service Account User</description>
   </property>
 
-  <property>
-    <name>yarn_user</name>
-    <display-name>Yarn User</display-name>
-    <value>yarn</value>
-    <property-type>USER</property-type>
-    <description>Yarn User</description>
-  </property>
+  <!--<property>-->
+    <!--<name>yarn_user</name>-->
+    <!--<display-name>Yarn User</display-name>-->
+    <!--<value>yarn</value>-->
+    <!--<property-type>USER</property-type>-->
+    <!--<description>Yarn User</description>-->
+  <!--</property>-->
 
   <property>
     <name>hadoop.base.dir</name>
