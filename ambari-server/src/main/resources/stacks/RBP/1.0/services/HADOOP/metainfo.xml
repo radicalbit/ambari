@@ -22,8 +22,8 @@
         <!--HDFS-->
 
         <service>
-            <name>HDFS_HADOOP</name>
-            <displayName>Hadoop</displayName>
+            <name>HADOOP_HDFS</name>
+            <displayName>HDFS</displayName>
             <comment>Apache Hadoop Distributed File System</comment>
             <version>2.7.2</version>
 
@@ -55,7 +55,7 @@
 
                 <component>
                     <name>SECONDARY_NAMENODE</name>
-                    <displayName>SecondaryNameNode</displayName>
+                    <displayName>Secondary NameNode</displayName>
                     <cardinality>1</cardinality>
                     <category>MASTER</category>
                     <commandScript>
@@ -77,15 +77,15 @@
         <!--YARN-->
 
         <service>
-            <name>HDFS_YARN</name>
+            <name>HADOOP_YARN</name>
             <displayName>YARN</displayName>
-            <comment>Apache Hadoop Distributed File System</comment>
+            <comment>Apache Hadoop NextGen MapReduce (YARN)</comment>
             <version>2.7.2</version>
             <components>
 
                 <component>
-                    <name>RESOURCEMANAGER</name>
-                    <displayName>YarnResourceManager</displayName>
+                    <name>YARN_RESOURCEMANAGER</name>
+                    <displayName>Yarn Resource Manager</displayName>
                     <category>MASTER</category>
                     <cardinality>1</cardinality>
                     <commandScript>
@@ -96,8 +96,8 @@
                 </component>
 
                 <component>
-                    <name>NODEMANAGER</name>
-                    <displayName>YarnNodeManager</displayName>
+                    <name>YARN_NODEMANAGER</name>
+                    <displayName>Yarn Node Manager</displayName>
                     <category>SLAVE</category>
                     <cardinality>1+</cardinality>
                     <commandScript>
