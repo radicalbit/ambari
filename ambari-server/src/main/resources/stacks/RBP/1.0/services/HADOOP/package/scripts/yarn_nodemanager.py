@@ -38,7 +38,7 @@ class NodeManager(Hadoop):
 
   def stop(self, env):
     import params
-    Execute('kill `cat ' + params.hadoop_pid_dir + '/nodemanager.pid`', user=params.yarn_user)
+    Execute('kill `cat ' + params.hadoop_pid_dir + '/nodemanager.pid`', user=params.hdfs_user)
 
   def status(self, env):
     import status_params as params
