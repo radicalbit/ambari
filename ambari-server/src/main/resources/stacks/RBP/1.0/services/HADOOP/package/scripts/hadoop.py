@@ -72,7 +72,7 @@ class Hadoop(Script):
       )
       # Add Hadoop bin and sbin directory to PATH
       Execute(
-          "echo 'export PATH=$PATH:$HADOOP_HOME/bin;$HADOOP_HOME/sbin' >>/home/" + params.hdfs_user + "/.bash_profile",
+          "echo 'export PATH=$PATH:$HADOOP_HOME/bin/;$HADOOP_HOME/sbin/' >>/home/" + params.hdfs_user + "/.bash_profile",
           user=params.hdfs_user
       )
 
