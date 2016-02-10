@@ -4,7 +4,7 @@ jdk: oraclejdk7
 env:
   global:
     - MAVEN_URL=http://apache.mirrors.pair.com/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz
-    - NODE_JS_ULR=https://nodejs.org/download/release/latest-v0.10.x/node-v0.10.41-linux-x64.tar.gz
+    - NODE_JS_ULR=https://nodejs.org/download/release/v0.10.41/node-v0.10.41-linux-x64.tar.gz
     - SETUP_TOOL_URL=https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg#md5=fe1f997bc722265116870bc7919059ea
 
 before_install:
