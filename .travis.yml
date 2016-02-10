@@ -31,15 +31,15 @@ before_install:
   - sudo ln -s /home/travis/node-v0.10.41-linux-x64 /home/travis/nodejs
   - sudo wget -O /home/travis/setuptools-0.6c11-py2.7.egg $SETUP_TOOL_URL
   - sudo sh /home/travis/setuptools-0.6c11-py2.7.egg
-  - PATH=$PATH:/home/travis/node-v0.10.41-linux-x64/bin:/home/travis/maven/bin:/home/travis
+  - sudo echo "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/travis/node-v0.10.41-linux-x64/bin:/home/travis/maven/bin:/home/travis">/etc/environment
   - export _JAVA_OPTIONS="-Xmx2048m -XX:MaxPermSize=1024m -Djava.awt.headless=true"
 #  - sudo /home/travis/nodejs/bin/npm install -g brunch@1.7.20
 #  - sudo /home/travis/maven/bin/mvn versions:set -DnewVersion="2.2.0.0"
-  - npm install -g brunch@1.7.20
-  - mvn versions:set -DnewVersion="2.2.0.0"
+  - sudo npm install -g brunch@1.7.20
+  - sudo mvn versions:set -DnewVersion="2.2.0.0"
   - pushd ambari-metrics
-  - mvn versions:set -DnewVersion="2.2.0.0"
+  - sudo mvn versions:set -DnewVersion="2.2.0.0"
   - popd
 
 install:
-  - mvn -B clean install package -DnewVersion="2.2.0.0" -Dstack.distribution="RBP" -DskipTests -Dpython.ver="python >= 2.7" -Dfindbugs.skip=true -Preplaceurl
+  - sudo mvn -B clean install package -DnewVersion="2.2.0.0" -Dstack.distribution="RBP" -DskipTests -Dpython.ver="python >= 2.7" -Dfindbugs.skip=true -Preplaceurl
