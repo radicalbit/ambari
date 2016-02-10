@@ -26,21 +26,17 @@ env:
 before_install:
   - wget -O - $MAVEN_URL | sudo tar xvz -C /home/travis
   - sudo rm /usr/local/maven
-#  - sudo ln -s /home/travis/apache-maven-3.0.5 /home/travis/maven
   - wget -O - $NODE_JS_ULR | sudo tar xvz -C /home/travis
-#  - sudo ln -s /home/travis/node-v0.10.41-linux-x64 /home/travis/nodejs
   - sudo wget -O /home/travis/setuptools-0.6c11-py2.7.egg $SETUP_TOOL_URL
   - sudo sh /home/travis/setuptools-0.6c11-py2.7.egg
   - PATH=$PATH:/home/travis/node-v0.10.41-linux-x64/bin:/home/travis/apache-maven-3.0.5/bin:/home/travis
   - export M2_HOME=/home/travis/apache-maven-3.0.5
   - export _JAVA_OPTIONS="-Xmx2048m -XX:MaxPermSize=1024m -Djava.awt.headless=true"
-#  - sudo /home/travis/nodejs/bin/npm install -g brunch@1.7.20
-#  - sudo /home/travis/maven/bin/mvn versions:set -DnewVersion="2.2.0.0"
   - npm install -g brunch@1.7.20
-  - mvn versions:set -DnewVersion="2.2.0.0"
+  - mvn versions:set -DnewVersion="2.2.0.0.0"
   - pushd ambari-metrics
-  - mvn versions:set -DnewVersion="2.2.0.0"
+  - mvn versions:set -DnewVersion="2.2.0.0.0"
   - popd
 
 install:
-  - mvn -B clean install package -DnewVersion="2.2.0.0" -Dstack.distribution="RBP" -DskipTests -Dpython.ver="python >= 2.7" -Dfindbugs.skip=true -Preplaceurl
+  - mvn -B clean install package -DnewVersion="2.2.0.0.0" -Dstack.distribution="RBP" -DskipTests -Dpython.ver="python >= 2.7" -Dfindbugs.skip=true -Preplaceurl
