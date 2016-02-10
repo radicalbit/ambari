@@ -24,20 +24,22 @@ env:
     - SETUP_TOOL_URL=https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg
 
 before_install:
-  - wget -O - $MAVEN_URL | sudo tar xvz -C /usr/local
+  - wget -O - $MAVEN_URL | sudo tar xvz -C /home/travis
   - sudo rm /usr/local/maven
-  - sudo ln -s /usr/local/apache-maven-3.0.5 /usr/local/maven
-  - wget -O - $NODE_JS_ULR | sudo tar xvz -C /usr/local
-  - sudo ln -s /usr/local/node-v0.10.41-linux-x64 /usr/local/nodejs
-  - sudo wget -O /usr/local/setuptools-0.6c11-py2.7.egg $SETUP_TOOL_URL
-  - sudo sh /usr/local/setuptools-0.6c11-py2.7.egg
-  - PATH=$PATH:/usr/local/nodejs/bin:/usr/local/maven/bin:/usr/local
+  - sudo ln -s /home/travis/apache-maven-3.0.5 /home/travis/maven
+  - wget -O - $NODE_JS_ULR | sudo tar xvz -C /home/travis
+  - sudo ln -s /home/travis/node-v0.10.41-linux-x64 /home/travis/nodejs
+  - sudo wget -O /home/travis/setuptools-0.6c11-py2.7.egg $SETUP_TOOL_URL
+  - sudo sh /home/travis/setuptools-0.6c11-py2.7.egg
+  - PATH=$PATH:/home/travis/nodejs/bin:/home/travis/maven/bin:/home/travis
   - export _JAVA_OPTIONS="-Xmx2048m -XX:MaxPermSize=1024m -Djava.awt.headless=true"
-  - sudo /usr/local/nodejs/bin/npm install -g brunch@1.7.20
-  - sudo /usr/local/maven/bin/mvn versions:set -DnewVersion="2.2.0.0"
+#  - sudo /home/travis/nodejs/bin/npm install -g brunch@1.7.20
+#  - sudo /home/travis/maven/bin/mvn versions:set -DnewVersion="2.2.0.0"
+  - sudo npm install -g brunch@1.7.20
+  - sudo mvn versions:set -DnewVersion="2.2.0.0"
   - pushd ambari-metrics
-  - sudo /usr/local/maven/bin/mvn versions:set -DnewVersion="2.2.0.0"
+  - sudo /home/travis/maven/bin/mvn versions:set -DnewVersion="2.2.0.0"
   - popd
 
 install:
-  - sudo /usr/local/maven/bin/mvn -B clean install package -DnewVersion="2.2.0.0" -Dstack.distribution="RBP" -DskipTests -Dpython.ver="python >= 2.7" -Dfindbugs.skip=true -Preplaceurl
+  - sudo /home/travis/maven/bin/mvn -B clean install package -DnewVersion="2.2.0.0" -Dstack.distribution="RBP" -DskipTests -Dpython.ver="python >= 2.7" -Dfindbugs.skip=true -Preplaceurl
