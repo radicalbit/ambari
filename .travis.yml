@@ -1,5 +1,9 @@
-language: java
+language:
+  - java
+  - node_js
 jdk: oraclejdk7
+node_js:
+  - "0.10.41"
 
 env:
   global:
@@ -16,7 +20,7 @@ before_install:
   - sudo wget -O /usr/local/setuptools-0.6c11-py2.7.egg $SETUP_TOOL_URL
   - sudo sh /usr/local/setuptools-0.6c11-py2.7.egg
   - PATH=$PATH:/usr/local/nodejs/bin:/usr/local/maven/bin:/usr/local
-  - export _JAVA_OPTIONS="-Xmx2048m -XX:MaxPermSize=1024m -Djava.awt.headless=true"
+  - sudo export _JAVA_OPTIONS="-Xmx2048m -XX:MaxPermSize=1024m -Djava.awt.headless=true"
   - sudo npm install -g brunch@1.7.20
   - sudo mvn versions:set -DnewVersion="2.2.0.0"
   - pushd ambari-metrics
