@@ -35,7 +35,7 @@ before_install:
   - export _JAVA_OPTIONS="-Xmx2048m -XX:MaxPermSize=1024m -Djava.awt.headless=true"
 #  - sudo /home/travis/nodejs/bin/npm install -g brunch@1.7.20
 #  - sudo /home/travis/maven/bin/mvn versions:set -DnewVersion="2.2.0.0"
-  - sudo npm install -g brunch@1.7.20
+  - npm install -g brunch@1.7.20
   - sudo mvn versions:set -DnewVersion="2.2.0.0"
   - pushd ambari-metrics
   - sudo /home/travis/maven/bin/mvn versions:set -DnewVersion="2.2.0.0"
