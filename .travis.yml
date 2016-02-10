@@ -40,4 +40,4 @@ before_install:
   - popd
 
 install:
-  - sudo /usr/local/maven/bin/mvn -B clean install package rpm:rpm -DnewVersion="2.2.0.0" -Dstack.distribution="RBP" -DskipTests -Dpython.ver="python >= 2.7" -Dfindbugs.skip=true -Preplaceurl
+  - sudo /usr/local/maven/bin/mvn -B clean install package -DnewVersion="2.2.0.0" -Dstack.distribution="RBP" -DskipTests -Dpython.ver="python >= 2.7" -Dfindbugs.skip=true -Preplaceurl
