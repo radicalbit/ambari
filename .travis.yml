@@ -31,7 +31,7 @@ before_install:
   - sudo ln -s /usr/local/node-v0.10.41-linux-x64 /usr/local/nodejs
   - sudo wget -O /usr/local/setuptools-0.6c11-py2.7.egg $SETUP_TOOL_URL
   - sudo sh /usr/local/setuptools-0.6c11-py2.7.egg
-  - sudo PATH=$PATH:/usr/local/nodejs/bin:/usr/local/maven/bin:/usr/local
+  - PATH=$PATH:/usr/local/nodejs/bin:/usr/local/maven/bin:/usr/local
   - export _JAVA_OPTIONS="-Xmx2048m -XX:MaxPermSize=1024m -Djava.awt.headless=true"
   - sudo /usr/local/nodejs/bin/npm install -g brunch@1.7.20
   - sudo /usr/local/maven/bin/mvn versions:set -DnewVersion="2.2.0.0"
