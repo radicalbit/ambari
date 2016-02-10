@@ -1,9 +1,21 @@
-language:
-  - java
-  - node_js
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+language: java
 jdk: oraclejdk7
-node_js:
-  - "0.10.41"
 
 env:
   global:
@@ -19,7 +31,7 @@ before_install:
   - sudo ln -s /usr/local/node-v0.10.41-linux-x64 /usr/local/nodejs
   - sudo wget -O /usr/local/setuptools-0.6c11-py2.7.egg $SETUP_TOOL_URL
   - sudo sh /usr/local/setuptools-0.6c11-py2.7.egg
-#  - sudo PATH=$PATH:/usr/local/nodejs/bin:/usr/local/maven/bin:/usr/local
+  - sudo PATH=$PATH:/usr/local/nodejs/bin:/usr/local/maven/bin:/usr/local
   - export _JAVA_OPTIONS="-Xmx2048m -XX:MaxPermSize=1024m -Djava.awt.headless=true"
   - sudo /usr/local/nodejs/bin/npm install -g brunch@1.7.20
   - sudo /usr/local/maven/bin/mvn versions:set -DnewVersion="2.2.0.0"
