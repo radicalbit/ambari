@@ -15,17 +15,17 @@ before_install:
   - wget -O - $MAVEN_URL | sudo tar xvz -C /usr/local
   - sudo rm /usr/local/maven
   - sudo ln -s /usr/local/apache-maven-3.0.5 /usr/local/maven
-#  - wget -O - $NODE_JS_ULR | sudo tar xvz -C /usr/local
-#  - sudo ln -s /usr/local/node-v0.10.41-linux-x64 /usr/local/nodejs
+  - wget -O - $NODE_JS_ULR | sudo tar xvz -C /usr/local
+  - sudo ln -s /usr/local/node-v0.10.41-linux-x64 /usr/local/nodejs
   - sudo wget -O /usr/local/setuptools-0.6c11-py2.7.egg $SETUP_TOOL_URL
   - sudo sh /usr/local/setuptools-0.6c11-py2.7.egg
 #  - sudo PATH=$PATH:/usr/local/nodejs/bin:/usr/local/maven/bin:/usr/local
   - export _JAVA_OPTIONS="-Xmx2048m -XX:MaxPermSize=1024m -Djava.awt.headless=true"
-  - sudo npm install -g brunch@1.7.20
-  - sudo mvn versions:set -DnewVersion="2.2.0.0"
+  - sudo /usr/local/nodejs/bin/npm install -g brunch@1.7.20
+  - sudo /usr/local/maven/bin/mvn versions:set -DnewVersion="2.2.0.0"
   - pushd ambari-metrics
-  - sudo mvn versions:set -DnewVersion="2.2.0.0"
+  - sudo /usr/local/maven/bin/mvn versions:set -DnewVersion="2.2.0.0"
   - popd
 
 install:
-  - sudo mvn -B clean install package rpm:rpm -DnewVersion="2.2.0.0" -Dstack.distribution="RBP" -DskipTests -Dpython.ver="python >= 2.7" -Dfindbugs.skip=true -Preplaceurl
+  - sudo /usr/local/maven/bin/mvn -B clean install package rpm:rpm -DnewVersion="2.2.0.0" -Dstack.distribution="RBP" -DskipTests -Dpython.ver="python >= 2.7" -Dfindbugs.skip=true -Preplaceurl
