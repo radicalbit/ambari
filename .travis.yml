@@ -8,17 +8,12 @@ env:
     - SETUP_TOOL_URL=https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg#md5=fe1f997bc722265116870bc7919059ea
 
 before_install:
-  - ls -lad /usr/local/maven
   - wget -O - $MAVEN_URL | sudo tar xvz -C /usr/local
   - sudo rm /usr/local/maven
   - sudo ln -s /usr/local/apache-maven-3.0.5 /usr/local/maven
-  - ls -lad /usr/local/maven
-  - ls -lad /usr/local/nodejs
   - wget -O - $NODE_JS_ULR | sudo tar xvz -C /usr/local
-  - sudo rm /usr/local/nodejs
-  - sudo ln -s /usr/local/apache-maven-3.0.5 /usr/local/nodejs
-  - ls -lad /usr/local/nodejs
-  - wget - $SETUP_TOOL_URL  -O /usr/local/setuptools-0.6c11-py2.7.egg
+  - sudo ln -s /usr/local/node-v0.10.41-linux-x64 /usr/local/nodejs
+  - wget $SETUP_TOOL_URL  -O /usr/local/setuptools-0.6c11-py2.7.egg
   - PATH=$PATH:/usr/local/nodejs/bin:/usr/local/maven/bin:/usr/local
   - export _JAVA_OPTIONS="-Xmx2048m -XX:MaxPermSize=1024m -Djava.awt.headless=true"
   - sudo npm install -g brunch@1.7.20
@@ -29,4 +24,4 @@ before_install:
   - popd
 
 install:
-  - mvn -B clean install package rpm:rpm -DnewVersion="2.2.0.0" -Dstack.distribution="RBP" -DskipTests -Dpython.ver="python >= 2.7" -Dfindbugs.skip=true -Preplaceurl
+  - sudo mvn -B clean install package rpm:rpm -DnewVersion="2.2.0.0" -Dstack.distribution="RBP" -DskipTests -Dpython.ver="python >= 2.7" -Dfindbugs.skip=true -Preplaceurl
