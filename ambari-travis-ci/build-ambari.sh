@@ -34,12 +34,16 @@ echo "$1"
 export _JAVA_OPTIONS="-Xmx2048m -XX:MaxPermSize=1024m -Djava.awt.headless=true"
 
 echo "-------------------------"
+echo "| Install support tools |"
+echo "-------------------------"
+npm install -g brunch@1.7.20
+sh /root/setuptools-0.6c11-py2.7.egg
+
+echo "-------------------------"
 echo "| Building Distribution |"
 echo "-------------------------"
-# run the build
-cd ..
-npm install -g brunch@1.7.20
-sh ../setuptools-0.6c11-py2.7.egg
+cd /root/ambari
+pwd
 mvn versions:set -DnewVersion="2.2.0.0.0"
 pushd ambari-metrics
 mvn versions:set -DnewVersion="2.2.0.0.0"
