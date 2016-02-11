@@ -30,7 +30,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y update && apt-get -y install \
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
 RUN wget https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg#md5=fe1f997bc722265116870bc7919059ea -O /root/setuptools-0.6c11-py2.7.egg
-RUN wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u60-b27/jdk-8u60-linux-x64.rpm" -O /root/jdk-8u60-linux-x64.rpm
 
 RUN wget http://archive.apache.org/dist/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz -O /root/apache-maven-3.0.5-bin.tar.gz
 RUN wget https://nodejs.org/download/release/v0.10.41/node-v0.10.41-linux-x64.tar.gz -O /root/node-v0.10.41-linux-x64.tar.gz
