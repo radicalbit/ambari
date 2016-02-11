@@ -41,5 +41,5 @@ RUN rm -f /root/node-v0.10.41-linux-x64.tar.gz
 
 
 RUN mkdir -p /root/ambari
-COPY * /root/ambari/
+COPY ../* /root/ambari/
 
