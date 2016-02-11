@@ -37,13 +37,13 @@ echo "-------------------------"
 echo "| Install support tools |"
 echo "-------------------------"
 npm install -g brunch@1.7.20
+npm config set unsafe-perm true
 sh /root/setuptools-0.6c11-py2.7.egg
 
 echo "-------------------------"
 echo "| Building Distribution |"
 echo "-------------------------"
 cd /root/ambari
-pwd
 mvn versions:set -DnewVersion="2.2.0.0.0"
 pushd ambari-metrics
 mvn versions:set -DnewVersion="2.2.0.0.0"
