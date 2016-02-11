@@ -37,6 +37,7 @@ script:
   #
   #- sudo docker run $DOCKER_TAG sh /root/ambari/ambari-travis-ci/build-ambari.sh $PKG
   - ls
+  - sudo docker run $DOCKER_TAG sh ambari-travis-ci/build-ambari.sh
 
 #language: java
 #jdk: oraclejdk7
