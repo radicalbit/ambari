@@ -19,9 +19,9 @@ sudo: required
 matrix:
   include:
     - services: docker
-      env: DOCKER_IMAGE="centos:7" DOCKER_FILE="ambari-travis-ci/Dockerfile.centos" DOCKER_TAG="centos:ambari" PKG="rpm:rpm"
+      env: DOCKER_IMAGE="centos:7" DOCKER_FILE="ambari-travis-ci/Dockerfile.centos" DOCKER_TAG="centos7" PKG="rpm:rpm"
     - services: docker
-      env: DOCKER_IMAGE="ubuntu:14.04" DOCKER_FILE="ambari-travis-ci/Dockerfile.ubuntu" DOCKER_TAG="ubuntu:ambari" PKG="jdeb:jdeb"
+      env: DOCKER_IMAGE="ubuntu:14.04" DOCKER_FILE="ambari-travis-ci/Dockerfile.ubuntu" DOCKER_TAG="ubuntu14" PKG="jdeb:jdeb"
 
 before_install:
   - sudo apt-get update
@@ -35,6 +35,7 @@ script:
   # Run test on container
   #
   #- sudo docker run $DOCKER_TAG sh /root/ambari/ambari-travis-ci/build-ambari.sh $PKG
+  - sudo docker cp -r * $DOCKER_TAG:/root/ambari/
   - sudo docker run $DOCKER_TAG ls /root
   - sudo docker run $DOCKER_TAG ls /root/ambari
 
