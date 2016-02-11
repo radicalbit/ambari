@@ -29,12 +29,14 @@ before_install:
   - sudo docker pull $DOCKER_IMAGE
   # Customize container
   - sudo docker build --rm=true --file=$DOCKER_FILE --tag=$DOCKER_TAG .
+  - ls
 
 script:
   #
   # Run test on container
   #
-  - sudo docker run $DOCKER_TAG sh /root/ambari/ambari-travis-ci/build-ambari.sh $PKG
+  #- sudo docker run $DOCKER_TAG sh /root/ambari/ambari-travis-ci/build-ambari.sh $PKG
+  - ls
 
 #language: java
 #jdk: oraclejdk7

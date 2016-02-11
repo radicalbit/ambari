@@ -39,4 +39,6 @@ RUN rm -f /root/apache-maven-3.0.5-bin.tar.gz
 RUN rm -f /root/node-v0.10.41-linux-x64.tar.gz
 
 RUN mkdir -p /root/ambari
+RUN ls
+RUN pwd
 COPY * /root/ambari/
