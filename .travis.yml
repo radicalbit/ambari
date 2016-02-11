@@ -35,11 +35,12 @@ script:
   # Run test on container
   #
   #- sudo docker run $DOCKER_TAG sh /root/ambari/ambari-travis-ci/build-ambari.sh $PKG
-  - sudo docker images
-  - sudo docker images -q $DOCKER_TAG
+  #- sudo docker images
+  #- sudo docker images -q $DOCKER_TAG
   #- sudo docker cp ../ambari $DOCKER_TAG:/root/ambari/
   - sudo docker run $DOCKER_TAG ls /root
   - sudo docker run $DOCKER_TAG ls /root/ambari
+  - sudo docker run $DOCKER_TAG sh /root/ambari/ambari-travis-ci/build-ambari.sh $PKG
 
 #language: java
 #jdk: oraclejdk7
