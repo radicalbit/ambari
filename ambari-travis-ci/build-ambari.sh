@@ -28,8 +28,8 @@ echo "| Setting system environments |"
 echo "-------------------------------"
 # update the PATH as needed by the build
 PATH=$PATH:/root/node-v0.10.41-linux-x64/bin:/root/apache-maven-3.0.5/bin:/root
+PKG=$1
 echo "PATH=$PATH"
-echo "$1"
 # create the JAVA_OPTIONS needed by the build
 export _JAVA_OPTIONS="-Xmx2048m -XX:MaxPermSize=1024m -Djava.awt.headless=true"
 
@@ -48,5 +48,5 @@ mvn versions:set -DnewVersion="2.2.0.0.0"
 pushd ambari-metrics
 mvn versions:set -DnewVersion="2.2.0.0.0"
 popd
-mvn -B clean install package -DnewVersion="2.2.0.0.0" -Dstack.distribution="RBP" -DskipTests -Dpython.ver="python >= 2.7" -Dfindbugs.skip=true -Preplaceurl
+mvn -B clean install package -DnewVersion="2.2.0.0.0" -Dstack.distribution="RBP" $PKG -DskipTests -Dpython.ver="python >= 2.7" -Dfindbugs.skip=true -Preplaceurl
 cd ..
