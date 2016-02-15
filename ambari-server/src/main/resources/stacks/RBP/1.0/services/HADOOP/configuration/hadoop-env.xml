@@ -58,6 +58,12 @@
   </property>
 
   <property>
+    <name>dfs.nameservices</name>
+    <description>Hadoop cluster name</description>
+    <value>mycluster</value>
+  </property>
+
+  <property>
     <name>dfs.repication</name>
     <description>Default block replication</description>
     <value>2</value>
@@ -73,6 +79,12 @@
     <name>dfs.datanode.data.dir</name>
     <description>Determines where on the local filesystem an DFS data node should store its blocks. If this is a comma-delimited list of directories, then data will be stored in all named directories, typically on different devices. Directories that do not exist are ignored.</description>
     <value>/var/lib/hadoop/data/datanode</value>
+  </property>
+
+  <property>
+    <name>dfs.journalnode.edits.dir</name>
+    <description>The path where the JournalNode daemon will store its local state.</description>
+    <value>/var/lib/hadoop/data/journalnode</value>
   </property>
 
 </configuration>

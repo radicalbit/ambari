@@ -33,7 +33,7 @@
                     <name>NAMENODE</name>
                     <displayName>NameNode</displayName>
                     <category>MASTER</category>
-                    <cardinality>1</cardinality>
+                    <cardinality>1-2</cardinality>
                     <commandScript>
                         <script>scripts/hdfs_namenode.py</script>
                         <scriptType>PYTHON</scriptType>
@@ -65,7 +65,59 @@
                     </commandScript>
                 </component>
 
+                <component>
+                    <name>HDFS_CLIENT</name>
+                    <displayName>HDFS Client</displayName>
+                    <category>CLIENT</category>
+                    <cardinality>1+</cardinality>
+                    <versionAdvertised>true</versionAdvertised>
+                    <commandScript>
+                        <script>scripts/hdfs_client.py</script>
+                        <scriptType>PYTHON</scriptType>
+                        <timeout>1200</timeout>
+                    </commandScript>
+                </component>
+
+                <component>
+                    <name>JOURNALNODE</name>
+                    <displayName>JournalNode</displayName>
+                    <category>SLAVE</category>
+                    <cardinality>1+</cardinality>
+                    <versionAdvertised>true</versionAdvertised>
+                    <commandScript>
+                        <script>scripts/hdfs_journalnode.py</script>
+                        <scriptType>PYTHON</scriptType>
+                        <timeout>1200</timeout>
+                    </commandScript>
+                    <dependencies>
+                        <dependency>
+                            <name>HADOOP_HDFS/HDFS_CLIENT</name>
+                            <scope>host</scope>
+                            <auto-deploy>
+                                <enabled>true</enabled>
+                            </auto-deploy>
+                        </dependency>
+                    </dependencies>
+                </component>
+
+                <component>
+                    <name>ZKFC</name>
+                    <displayName>ZKFailoverController</displayName>
+                    <category>SLAVE</category>
+                    <cardinality>1+</cardinality>
+                    <versionAdvertised>false</versionAdvertised>
+                    <commandScript>
+                        <script>scripts/hdfs_zkfc.py</script>
+                        <scriptType>PYTHON</scriptType>
+                        <timeout>1200</timeout>
+                    </commandScript>
+                </component>
+
             </components>
+
+            <requiredServices>
+                <service>ZOOKEEPER</service>
+            </requiredServices>
 
             <configuration-dependencies>
                 <config-type>hadoop-env</config-type>

@@ -27,6 +27,7 @@ yarn_user = config['configurations']['yarn-env']['yarn_user']
 user_group = config['configurations']['cluster-env']['user_group']
 
 java_home = config['hostLevelParams']['java_home']
+current_host = config['hostname']
 
 binary_file_md5 = 'c442bd89b29cab9151b5987793b94041'
 hadoop_download_link = "https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.7.2/hadoop-2.7.2.tar.gz"
@@ -41,12 +42,23 @@ hadoop_conf_dir = hadoop_base_dir + '/etc/hadoop'
 hadoop_tmp_dir = config['configurations']['hadoop-env']['hadoop.tmp.dir']
 hadoop_pid_dir = config['configurations']['hadoop-env']['hadoop.pid.dir']
 
+dfs_nameservices = config['configurations']['hadoop-env']['dfs.nameservices']
 dfs_repication = config['configurations']['hadoop-env']['dfs.repication']
 dfs_namenode_dir = config['configurations']['hadoop-env']['dfs.namenode.name.dir']
 dfs_datanode_dir = config['configurations']['hadoop-env']['dfs.datanode.data.dir']
+dfs_journalnode_dir = config['configurations']['hadoop-env']['dfs.journalnode.edits.dir']
 
-hdfs_namenode = default("/clusterHostInfo/namenode_host", [])[0]
+hdfs_primary_namenode = default("/clusterHostInfo/namenode_host", [])[0]
+hdfs_primary_zkfc = default("/clusterHostInfo/zkfc_hosts", [])[0]
+hdfs_namenodes = default("/clusterHostInfo/namenode_host", [])
 hdfs_snamenode = default("/clusterHostInfo/snamenode_host", [])[0]
 hdfs_datanode = default("/clusterHostInfo/slave_hosts", [])
+hdfs_journalnodes = default("/clusterHostInfo/journalnode_hosts", [])
+hdfs_zkfc = default("/clusterHostInfo/zkfc_hosts", [])
+
+zookeeper_hosts = default("/clusterHostInfo/zookeeper_hosts", [])
+dfs_namenodes = 'nn' + ",nn".join(str(host) from host in range(1, len(hdfs_namenodes)+1))
 
 yarn_resourcemanager = default("/clusterHostInfo/yarn_resourcemanager_hosts", [])[0]
+
+

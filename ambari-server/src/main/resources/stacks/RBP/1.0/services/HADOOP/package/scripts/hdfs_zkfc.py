@@ -19,7 +19,7 @@ limitations under the License.
 from resource_management import *
 from hadoop import Hadoop
 
-class Namenode(Hadoop):
+class ZKFailoverController(Hadoop):
 
   def install(self, env):
     import params
@@ -29,9 +29,8 @@ class Namenode(Hadoop):
     #     user=params.hdfs_user
     # )
     self.configure(env)
-    if params.current_host == params.hdfs_primary_namenode:
-      Execute(params.hadoop_base_dir + '/bin/hdfs namenode -format', user=params.hdfs_user)
-      Execute(params.hadoop_base_dir + '/bin/hdfs namenode -bootstrapStandby', user=params.hdfs_user)
+    if params.current_host == params.hdfs_primary_zkfc:
+      Execute(params.hadoop_base_dir + '/bin/hdfs zkfc -formatZK', user=params.hdfs_user)
 
   def configure(self, env):
     import params
@@ -45,31 +44,24 @@ class Namenode(Hadoop):
         content='\n'.join(params.hdfs_datanode)
     )
 
-    # File(
-    #     format("{hadoop_conf_dir}/mapred-site.xml"),
-    #     owner=params.hdfs_user,
-    #     mode=0644,
-    #     content=Template('mapred-site.xml.j2', conf_dir=params.hadoop_conf_dir)
-    # )
-
   def start(self, env):
     import params
     self.configure(env)
 
-    Execute(params.hadoop_base_dir + '/bin/hdfs namenode &', user=params.hdfs_user)
+    Execute(params.hadoop_base_dir + '/bin/hdfs zkfc &', user=params.hdfs_user)
 
-    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep org.apache.hadoop.hdfs.server.namenode.NameNode | awk '{print $1}'`> " + params.hadoop_pid_dir + "/namenode.pid"
+    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | org.apache.hadoop.hdfs.tools.DFSZKFailoverController | awk '{print $1}'`> " + params.hadoop_pid_dir + "/zkfc.pid"
     Execute(cmd, user=params.hdfs_user)
 
   def stop(self, env):
     import params
-    Execute('kill `cat ' + params.hadoop_pid_dir + '/namenode.pid`', user=params.hdfs_user)
+    Execute('kill `cat ' + params.hadoop_pid_dir + '/zkfc.pid`', user=params.hdfs_user)
 
   def status(self, env):
     import status_params as params
     env.set_params(params)
-    pid_file = format("{hadoop_pid_dir}/namenode.pid")
+    pid_file = format("{hadoop_pid_dir}/zkfc.pid")
     check_process_status(pid_file)
 
 if __name__ == "__main__":
-  Namenode().execute()
+  ZKFailoverController().execute()
