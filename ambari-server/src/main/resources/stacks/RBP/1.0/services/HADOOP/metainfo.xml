@@ -70,7 +70,7 @@
                     <displayName>HDFS Client</displayName>
                     <category>CLIENT</category>
                     <cardinality>1+</cardinality>
-                    <versionAdvertised>true</versionAdvertised>
+                    <!--<versionAdvertised>true</versionAdvertised>-->
                     <commandScript>
                         <script>scripts/hdfs_client.py</script>
                         <scriptType>PYTHON</scriptType>
@@ -83,7 +83,7 @@
                     <displayName>JournalNode</displayName>
                     <category>SLAVE</category>
                     <cardinality>1+</cardinality>
-                    <versionAdvertised>true</versionAdvertised>
+                    <!--<versionAdvertised>true</versionAdvertised>-->
                     <commandScript>
                         <script>scripts/hdfs_journalnode.py</script>
                         <scriptType>PYTHON</scriptType>
@@ -105,7 +105,7 @@
                     <displayName>ZKFailoverController</displayName>
                     <category>SLAVE</category>
                     <cardinality>1+</cardinality>
-                    <versionAdvertised>false</versionAdvertised>
+                    <!--<versionAdvertised>false</versionAdvertised>-->
                     <commandScript>
                         <script>scripts/hdfs_zkfc.py</script>
                         <scriptType>PYTHON</scriptType>

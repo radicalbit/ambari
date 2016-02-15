@@ -57,7 +57,7 @@ hdfs_journalnodes = default("/clusterHostInfo/journalnode_hosts", [])
 hdfs_zkfc = default("/clusterHostInfo/zkfc_hosts", [])
 
 zookeeper_hosts = default("/clusterHostInfo/zookeeper_hosts", [])
-dfs_namenodes = 'nn' + ",nn".join(str(host) from host in range(1, len(hdfs_namenodes)+1))
+dfs_namenodes = 'nn' + ",nn".join(str(host) for host in range(1, len(hdfs_namenodes)+1))
 
 yarn_resourcemanager = default("/clusterHostInfo/yarn_resourcemanager_hosts", [])[0]
 
