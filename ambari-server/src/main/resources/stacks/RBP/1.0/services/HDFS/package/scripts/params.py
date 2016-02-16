@@ -26,6 +26,7 @@ tmp_dir = Script.get_tmp_dir()
 
 #RPM versioning support
 #rpm_version = default("/configurations/cluster-env/rpm_version", None)
+hdp_stack_version = ''
 rpm_version = True
 
 #hadoop params
