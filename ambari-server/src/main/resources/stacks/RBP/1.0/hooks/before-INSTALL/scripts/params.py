@@ -17,18 +17,16 @@ limitations under the License.
 
 """
 
-from ambari_commons.constants import AMBARI_SUDO_BINARY
-from resource_management.libraries.functions.version import format_hdp_stack_version, compare_versions
+from resource_management import *
 from resource_management.core.system import System
-from resource_management.libraries.script.script import Script
-from resource_management.libraries.functions import default, format
+import json
+import collections
 
 config = Script.get_config()
 tmp_dir = Script.get_tmp_dir()
-sudo = AMBARI_SUDO_BINARY
 
-stack_version_unformatted = str(config['hostLevelParams']['stack_version'])
-hdp_stack_version = format_hdp_stack_version(stack_version_unformatted)
+#RPM versioning support
+rpm_version = True #default("/configurations/cluster-env/rpm_version", None)
 
 #users and groups
 hbase_user = config['configurations']['hbase-env']['hbase_user']
@@ -41,10 +39,6 @@ user_group = config['configurations']['cluster-env']['user_group']
 proxyuser_group = default("/configurations/hadoop-env/proxyuser_group","users")
 
 hdfs_log_dir_prefix = config['configurations']['hadoop-env']['hdfs_log_dir_prefix']
-
-# repo templates
-repo_rhel_suse =  config['configurations']['cluster-env']['repo_suse_rhel_template']
-repo_ubuntu =  config['configurations']['cluster-env']['repo_ubuntu_template']
 
 #hosts
 hostname = config["hostname"]
@@ -87,7 +81,7 @@ is_slave = hostname in slave_hosts
 if has_ganglia_server:
   ganglia_server_host = ganglia_server_hosts[0]
 
-hbase_tmp_dir = "/tmp/hbase-hbase"
+hbase_tmp_dir = config['configurations']['hbase-site']['hbase.tmp.dir']
 
 #security params
 security_enabled = config['configurations']['cluster-env']['security_enabled']
@@ -100,7 +94,6 @@ jce_policy_zip = default("/hostLevelParams/jce_name", None) # None when jdk is a
 jce_location = config['hostLevelParams']['jdk_location']
 jdk_location = config['hostLevelParams']['jdk_location']
 ignore_groupsusers_create = default("/configurations/cluster-env/ignore_groupsusers_create", False)
-host_sys_prepped = default("/hostLevelParams/host_sys_prepped", False)
 
 smoke_user_dirs = format("/tmp/hadoop-{smoke_user},/tmp/hsperfdata_{smoke_user},/home/{smoke_user},/tmp/{smoke_user},/tmp/sqoop-{smoke_user}")
 if has_hbase_masters:
@@ -108,3 +101,16 @@ if has_hbase_masters:
 #repo params
 repo_info = config['hostLevelParams']['repo_info']
 service_repo_info = default("/hostLevelParams/service_repo_info",None)
+
+user_to_groups_dict = collections.defaultdict(lambda:[user_group])
+user_to_groups_dict[smoke_user] = [proxyuser_group]
+if has_ganglia_server:
+  user_to_groups_dict[gmond_user] = [gmond_user]
+  user_to_groups_dict[gmetad_user] = [gmetad_user]
+if has_tez:
+  user_to_groups_dict[tez_user] = [proxyuser_group]
+
+user_to_gid_dict = collections.defaultdict(lambda:user_group)
+
+user_list = json.loads(config['hostLevelParams']['user_list'])
+group_list = json.loads(config['hostLevelParams']['group_list'])

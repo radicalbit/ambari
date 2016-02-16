@@ -63,27 +63,3 @@ supervisor.sink.ganglia.servers={{ganglia_server_host}}:8650
 resourcemanager.sink.ganglia.tagsForPrefix.yarn=Queue
 
 {% endif %}
-
-{% if has_metric_collector %}
-
-*.period={{metrics_collection_period}}
-*.sink.timeline.plugin.urls=file:///usr/lib/ambari-metrics-hadoop-sink/ambari-metrics-hadoop-sink.jar
-*.sink.timeline.class=org.apache.hadoop.metrics2.sink.timeline.HadoopTimelineMetricsSink
-*.sink.timeline.period={{metrics_collection_period}}
-*.sink.timeline.sendInterval={{metrics_report_interval}}000
-*.sink.timeline.slave.host.name = {{hostname}}
-
-datanode.sink.timeline.collector={{metric_collector_host}}:{{metric_collector_port}}
-namenode.sink.timeline.collector={{metric_collector_host}}:{{metric_collector_port}}
-resourcemanager.sink.timeline.collector={{metric_collector_host}}:{{metric_collector_port}}
-nodemanager.sink.timeline.collector={{metric_collector_host}}:{{metric_collector_port}}
-historyserver.sink.timeline.collector={{metric_collector_host}}:{{metric_collector_port}}
-journalnode.sink.timeline.collector={{metric_collector_host}}:{{metric_collector_port}}
-nimbus.sink.timeline.collector={{metric_collector_host}}:{{metric_collector_port}}
-supervisor.sink.timeline.collector={{metric_collector_host}}:{{metric_collector_port}}
-maptask.sink.timeline.collector={{metric_collector_host}}:{{metric_collector_port}}
-reducetask.sink.timeline.collector={{metric_collector_host}}:{{metric_collector_port}}
-
-resourcemanager.sink.timeline.tagsForPrefix.yarn=Queue
-
-{% endif %}

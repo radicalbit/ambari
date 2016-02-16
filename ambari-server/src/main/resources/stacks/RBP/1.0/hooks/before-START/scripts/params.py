@@ -17,45 +17,34 @@ limitations under the License.
 
 """
 
+from resource_management import *
+from resource_management.core.system import System
 import os
-
-from resource_management.libraries.functions import conf_select
-from resource_management.libraries.functions import hdp_select
-from resource_management.libraries.functions import default
-from resource_management.libraries.functions import format_jvm_option
-from resource_management.libraries.functions import format
-from resource_management.libraries.functions.version import format_hdp_stack_version, compare_versions
-from ambari_commons.os_check import OSCheck
-from resource_management.libraries.script.script import Script
-
 
 config = Script.get_config()
 
-stack_version_unformatted = str(config['hostLevelParams']['stack_version'])
-hdp_stack_version = format_hdp_stack_version(stack_version_unformatted)
+#RPM versioning support
+rpm_version = True #default("/configurations/cluster-env/rpm_version", None)
 
-# hadoop default params
-mapreduce_libs_path = "/usr/lib/hadoop-mapreduce/*"
-
-hadoop_libexec_dir = hdp_select.get_hadoop_dir("libexec")
-hadoop_lib_home = hdp_select.get_hadoop_dir("lib")
-hadoop_bin = hdp_select.get_hadoop_dir("sbin")
-hadoop_home = '/usr'
-create_lib_snappy_symlinks = True
-
-# HDP 2.2+ params
-if Script.is_hdp_stack_greater_or_equal("2.2"):
+#hadoop params
+if rpm_version:
   mapreduce_libs_path = "/usr/hdp/current/hadoop-mapreduce-client/*"
-  hadoop_home = hdp_select.get_hadoop_dir("home")
-  create_lib_snappy_symlinks = False
-  
-current_service = config['serviceName']
+  hadoop_libexec_dir = "/usr/hdp/current/hadoop-client/libexec"
+  hadoop_lib_home = "/usr/hdp/current/hadoop-client/lib"
+  hadoop_bin = "/usr/hdp/current/hadoop-client/sbin"
+  hadoop_home = '/usr/hdp/current/hadoop-client'
+else:
+  mapreduce_libs_path = "/usr/lib/hadoop-mapreduce/*"
+  hadoop_libexec_dir = "/usr/lib/hadoop/libexec"
+  hadoop_lib_home = "/usr/lib/hadoop/lib"
+  hadoop_bin = "/usr/lib/hadoop/sbin"
+  hadoop_home = '/usr'
 
+hadoop_conf_dir = "/etc/hadoop/conf"
 #security params
 security_enabled = config['configurations']['cluster-env']['security_enabled']
 
 #users and groups
-has_hadoop_env = 'hadoop-env' in config['configurations']
 mapred_user = config['configurations']['mapred-env']['mapred_user']
 hdfs_user = config['configurations']['hadoop-env']['hdfs_user']
 yarn_user = config['configurations']['yarn-env']['yarn_user']
@@ -76,7 +65,6 @@ jtnode_host = default("/clusterHostInfo/jtnode_host", [])
 namenode_host = default("/clusterHostInfo/namenode_host", [])
 zk_hosts = default("/clusterHostInfo/zookeeper_hosts", [])
 ganglia_server_hosts = default("/clusterHostInfo/ganglia_server_host", [])
-ams_collector_hosts = default("/clusterHostInfo/metrics_collector_hosts", [])
 
 has_namenode = not len(namenode_host) == 0
 has_resourcemanager = not len(rm_host) == 0
@@ -87,7 +75,6 @@ has_hive_server_host = not len(hive_server_host)  == 0
 has_hbase_masters = not len(hbase_master_hosts) == 0
 has_zk_host = not len(zk_hosts) == 0
 has_ganglia_server = not len(ganglia_server_hosts) == 0
-has_metric_collector = not len(ams_collector_hosts) == 0
 
 is_namenode_master = hostname in namenode_host
 is_jtnode_master = hostname in jtnode_host
@@ -97,25 +84,16 @@ is_hbase_master = hostname in hbase_master_hosts
 is_slave = hostname in slave_hosts
 if has_ganglia_server:
   ganglia_server_host = ganglia_server_hosts[0]
-if has_metric_collector:
-  metric_collector_host = ams_collector_hosts[0]
-  metric_collector_port = default("/configurations/ams-site/timeline.metrics.service.webapp.address", "0.0.0.0:6188")
-  if metric_collector_port and metric_collector_port.find(':') != -1:
-    metric_collector_port = metric_collector_port.split(':')[1]
-  pass
-metrics_report_interval = default("/configurations/ams-site/timeline.metrics.sink.report.interval", 60)
-metrics_collection_period = default("/configurations/ams-site/timeline.metrics.sink.collection.period", 60)
-
 #hadoop params
 
 if has_namenode:
   hadoop_tmp_dir = format("/tmp/hadoop-{hdfs_user}")
-  hadoop_conf_dir = conf_select.get_hadoop_conf_dir(force_latest_on_upgrade=True)
-  task_log4j_properties_location = os.path.join(hadoop_conf_dir, "task-log4j.properties")
-
 hadoop_pid_dir_prefix = config['configurations']['hadoop-env']['hadoop_pid_dir_prefix']
+
+task_log4j_properties_location = os.path.join(hadoop_conf_dir, "task-log4j.properties")
+
 hdfs_log_dir_prefix = config['configurations']['hadoop-env']['hdfs_log_dir_prefix']
-hbase_tmp_dir = "/tmp/hbase-hbase"
+hbase_tmp_dir = config['configurations']['hbase-site']['hbase.tmp.dir']
 #db params
 server_db_name = config['hostLevelParams']['db_name']
 db_driver_filename = config['hostLevelParams']['db_driver_filename']
@@ -143,7 +121,7 @@ else:
 #hadoop-env.sh
 java_home = config['hostLevelParams']['java_home']
 
-if hdp_stack_version != "" and compare_versions(hdp_stack_version, '2.0') >= 0 and compare_versions(hdp_stack_version, '2.1') < 0 and not OSCheck.is_suse_family():
+if str(config['hostLevelParams']['stack_version']).startswith('2.0') and System.get_instance().os_family != "suse":
   # deprecated rhel jsvc_path
   jsvc_path = "/usr/libexec/bigtop-utils"
 else:
@@ -178,24 +156,3 @@ if (('hdfs-log4j' in config['configurations']) and ('content' in config['configu
     log4j_props += config['configurations']['yarn-log4j']['content']
 else:
   log4j_props = None
-
-refresh_topology = False
-command_params = config["commandParams"] if "commandParams" in config else None
-if command_params is not None:
-  refresh_topology = bool(command_params["refresh_topology"]) if "refresh_topology" in command_params else False
-  
-ambari_libs_dir = "/var/lib/ambari-agent/lib"
-is_webhdfs_enabled = config['configurations']['hdfs-site']['dfs.webhdfs.enabled']
-default_fs = config['configurations']['core-site']['fs.defaultFS']
-
-#host info
-all_hosts = default("/clusterHostInfo/all_hosts", [])
-all_racks = default("/clusterHostInfo/all_racks", [])
-all_ipv4_ips = default("/clusterHostInfo/all_ipv4_ips", [])
-slave_hosts = default("/clusterHostInfo/slave_hosts", [])
-
-#topology files
-net_topology_script_file_path = "/etc/hadoop/conf/topology_script.py"
-net_topology_script_dir = os.path.dirname(net_topology_script_file_path)
-net_topology_mapping_data_file_name = 'topology_mappings.data'
-net_topology_mapping_data_file_path = os.path.join(net_topology_script_dir, net_topology_mapping_data_file_name)

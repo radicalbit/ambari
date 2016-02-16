@@ -19,8 +19,7 @@ limitations under the License.
 
 import sys
 from resource_management import *
-from rack_awareness import create_topology_script_and_mapping
-from shared_initialization import setup_hadoop, setup_configs, create_javahome_symlink
+from shared_initialization import *
 
 class BeforeStartHook(Hook):
 
@@ -33,7 +32,6 @@ class BeforeStartHook(Hook):
     setup_hadoop()
     setup_configs()
     create_javahome_symlink()
-    create_topology_script_and_mapping()
 
 if __name__ == "__main__":
   BeforeStartHook().execute()

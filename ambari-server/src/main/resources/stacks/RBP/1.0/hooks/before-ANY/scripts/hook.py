@@ -25,11 +25,10 @@ class BeforeAnyHook(Hook):
   def hook(self, env):
     import params
     env.set_params(params)
-
+    
+    setup_jce()
     setup_users()
-    #if params.has_namenode:
-    #  setup_hadoop_env()
-    setup_java()
+    setup_hadoop_env()
 
 if __name__ == "__main__":
   BeforeAnyHook().execute()

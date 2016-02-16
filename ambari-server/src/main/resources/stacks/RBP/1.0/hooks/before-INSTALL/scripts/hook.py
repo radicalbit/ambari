@@ -32,6 +32,7 @@ class BeforeInstallHook(Hook):
     
     install_repos()
     install_packages()
+    setup_java()
 
 if __name__ == "__main__":
   BeforeInstallHook().execute()
