@@ -17,35 +17,49 @@ limitations under the License.
 
 """
 
-from resource_management import *
+from ambari_commons.constants import AMBARI_SUDO_BINARY
+from resource_management.libraries.script import Script
+from resource_management.libraries.functions import default
+from resource_management.libraries.functions import conf_select
+from resource_management.libraries.functions import hdp_select
+from resource_management.libraries.functions import format_jvm_option
+from resource_management.libraries.functions.version import format_hdp_stack_version
+
 from resource_management.core.system import System
+from ambari_commons.os_check import OSCheck
 
 config = Script.get_config()
+sudo = AMBARI_SUDO_BINARY
 
-#RPM versioning support
-rpm_version = True #default("/configurations/cluster-env/rpm_version", None)
+stack_version_unformatted = str(config['hostLevelParams']['stack_version'])
+hdp_stack_version = format_hdp_stack_version(stack_version_unformatted)
 
-#hadoop params
-if rpm_version:
-  mapreduce_libs_path = "/usr/hdp/current/hadoop-mapreduce-client/*"
-  hadoop_libexec_dir = "/usr/hdp/current/hadoop-client/libexec"
-else:
-  mapreduce_libs_path = "/usr/lib/hadoop-mapreduce/*"
-  hadoop_libexec_dir = "/usr/lib/hadoop/libexec"
-
-hadoop_conf_dir = "/etc/hadoop/conf"
+# default hadoop params
+mapreduce_libs_path = "/usr/lib/hadoop-mapreduce/*"
+hadoop_libexec_dir = hdp_select.get_hadoop_dir("libexec")
 hadoop_conf_empty_dir = "/etc/hadoop/conf.empty"
-versioned_hdp_root = '/usr/bigtop/current'
+
+# HDP 2.2+ params
+if Script.is_hdp_stack_greater_or_equal("2.2"):
+  mapreduce_libs_path = "/usr/hdp/current/hadoop-mapreduce-client/*"
+
+  # not supported in HDP 2.2+
+  hadoop_conf_empty_dir = None
+
+versioned_hdp_root = '/usr/hdp/current'
+
 #security params
 security_enabled = config['configurations']['cluster-env']['security_enabled']
+
 #java params
 java_home = config['hostLevelParams']['java_home']
+
 #hadoop params
 hdfs_log_dir_prefix = config['configurations']['hadoop-env']['hdfs_log_dir_prefix']
 hadoop_pid_dir_prefix = config['configurations']['hadoop-env']['hadoop_pid_dir_prefix']
 hadoop_root_logger = config['configurations']['hadoop-env']['hadoop_root_logger']
 
-if str(config['hostLevelParams']['stack_version']).startswith('2.0') and System.get_instance().os_family != "suse":
+if Script.is_hdp_stack_greater_or_equal("2.0") and Script.is_hdp_stack_less_than("2.1") and not OSCheck.is_suse_family():
   # deprecated rhel jsvc_path
   jsvc_path = "/usr/libexec/bigtop-utils"
 else:
@@ -73,3 +87,6 @@ user_group = config['configurations']['cluster-env']['user_group']
 
 namenode_host = default("/clusterHostInfo/namenode_host", [])
 has_namenode = not len(namenode_host) == 0
+
+if has_namenode:
+  hadoop_conf_dir = conf_select.get_hadoop_conf_dir(force_latest_on_upgrade=True)
