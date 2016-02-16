@@ -26,8 +26,10 @@ tmp_dir = Script.get_tmp_dir()
 
 #RPM versioning support
 #rpm_version = default("/configurations/cluster-env/rpm_version", None)
-hdp_stack_version = ''
 rpm_version = True
+
+hdfs_site = config['configurations']['hdfs-site']
+default_fs = config['configurations']['core-site']['fs.defaultFS']
 
 #hadoop params
 if rpm_version:
@@ -193,15 +195,41 @@ else:
 import functools
 #create partial functions with common arguments for every HdfsDirectory call
 #to create hdfs directory we need to call params.HdfsDirectory in code
-HdfsDirectory = functools.partial(
-  HdfsDirectory,
-  conf_dir=hadoop_conf_dir,
-  hdfs_user=hdfs_user,
-  security_enabled = security_enabled,
-  keytab = hdfs_user_keytab,
-  kinit_path_local = kinit_path_local,
-  bin_dir = hadoop_bin_dir
-)
+
+# HdfsDirectory = functools.partial(
+#   HdfsDirectory,
+#   conf_dir=hadoop_conf_dir,
+#   hdfs_user=hdfs_user,
+#   security_enabled = security_enabled,
+#   keytab = hdfs_user_keytab,
+#   kinit_path_local = kinit_path_local,
+#   bin_dir = hadoop_bin_dir
+# )
+
+try:
+  HdfsDirectory = functools.partial(
+      HdfsDirectory,
+      conf_dir=hadoop_conf_dir,
+      hdfs_user=hdfs_user,
+      security_enabled = security_enabled,
+      keytab = hdfs_user_keytab,
+      kinit_path_local = kinit_path_local,
+      bin_dir = hadoop_bin_dir
+  )
+except NameError:
+  HdfsDirectory = functools.partial(
+      HdfsResource,
+      type="directory",
+      user=hdfs_user,
+      security_enabled = security_enabled,
+      keytab = hdfs_user_keytab,
+      kinit_path_local = kinit_path_local,
+      hadoop_bin_dir = hadoop_bin_dir,
+      hadoop_conf_dir = hadoop_conf_dir,
+      principal_name = hdfs_principal_name,
+      hdfs_site = hdfs_site,
+      default_fs = default_fs
+  )
 
 io_compression_codecs = config['configurations']['core-site']['io.compression.codecs']
 if not "com.hadoop.compression.lzo" in io_compression_codecs:

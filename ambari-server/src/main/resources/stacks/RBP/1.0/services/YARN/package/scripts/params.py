@@ -31,6 +31,9 @@ tmp_dir = Script.get_tmp_dir()
 #rpm_version = default("/configurations/cluster-env/rpm_version", None)
 rpm_version = True
 
+hdfs_site = config['configurations']['hdfs-site']
+default_fs = config['configurations']['core-site']['fs.defaultFS']
+
 #hadoop params
 if rpm_version:
   hadoop_libexec_dir = "/usr/hdp/current/hadoop-client/libexec"
@@ -154,15 +157,30 @@ hdfs_principal_name = config['configurations']['hadoop-env']['hdfs_principal_nam
 import functools
 #create partial functions with common arguments for every HdfsDirectory call
 #to create hdfs directory we need to call params.HdfsDirectory in code
-HdfsDirectory = functools.partial(
-  HdfsDirectory,
-  conf_dir=hadoop_conf_dir,
-  hdfs_user=hdfs_user,
-  security_enabled = security_enabled,
-  keytab = hdfs_user_keytab,
-  kinit_path_local = kinit_path_local,
-  bin_dir = hadoop_bin_dir
-)
+try:
+  HdfsDirectory = functools.partial(
+      HdfsDirectory,
+      conf_dir=hadoop_conf_dir,
+      hdfs_user=hdfs_user,
+      security_enabled = security_enabled,
+      keytab = hdfs_user_keytab,
+      kinit_path_local = kinit_path_local,
+      bin_dir = hadoop_bin_dir
+  )
+except NameError:
+  HdfsDirectory = functools.partial(
+      HdfsResource,
+      type="directory",
+      user=hdfs_user,
+      security_enabled = security_enabled,
+      keytab = hdfs_user_keytab,
+      kinit_path_local = kinit_path_local,
+      hadoop_bin_dir = hadoop_bin_dir,
+      hadoop_conf_dir = hadoop_conf_dir,
+      principal_name = hdfs_principal_name,
+      hdfs_site = hdfs_site,
+      default_fs = default_fs
+  )
 update_exclude_file_only = default("/commandParams/update_exclude_file_only",False)
 
 mapred_tt_group = default("/configurations/mapred-site/mapreduce.tasktracker.group", user_group)
