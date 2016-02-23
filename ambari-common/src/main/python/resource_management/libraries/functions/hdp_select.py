@@ -93,11 +93,11 @@ HADOOP_DIR_TEMPLATE = "/usr/hdp/{0}/{1}/{2}"
 HADOOP_HOME_DIR_TEMPLATE = "/usr/hdp/{0}/{1}"
 
 HADOOP_DIR_DEFAULTS = {
-  "home": "/usr/hdp/2.3.0.0-2557/hadoop",
-  "libexec": "/usr/hdp/2.3.0.0-2557/hadoop/libexec",
-  "sbin": "/usr/hdp/2.3.0.0-2557/hadoop/sbin",
+  "home": "/usr/lib/hadoop",
+  "libexec": "/usr/lib/hadoop/libexec",
+  "sbin": "/usr/lib/hadoop/sbin",
   "bin": "/usr/bin",
-  "lib": "/usr/hdp/2.3.0.0-2557/hadoop/lib"
+  "lib": "/usr/lib/hadoop/lib"
 }
 
 def select(component, version):
