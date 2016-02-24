@@ -19,35 +19,26 @@
   <schemaVersion>2.0</schemaVersion>
   <services>
     <service>
-      <name>ZOOKEEPER</name>
-      <version>3.4.6</version>
+      <name>KAFKA</name>
+      <extends>common-services/KAFKA/0.8.1.1</extends>
       <osSpecifics>
         <osSpecific>
-          <osFamily>redhat7,redhat6,suse11</osFamily>
+          <osFamily>redhat6,suse11</osFamily>
           <packages>
             <package>
-              <name>zookeeper-*</name>
+              <name>kafka-*</name>
             </package>
           </packages>
         </osSpecific>
-        <!--<osSpecific>-->
-          <!--<osFamily>redhat7,redhat6,suse11</osFamily>-->
-          <!--<packages>-->
-            <!--<package>-->
-              <!--<name>zookeeper_2_3_*</name>-->
-            <!--</package>-->
-          <!--</packages>-->
-        <!--</osSpecific>-->
         <osSpecific>
           <osFamily>debian7,ubuntu12,ubuntu14</osFamily>
           <packages>
             <package>
-              <name>zookeeper-2-3-.*</name>
+              <name>kafka-*</name>
             </package>
           </packages>
         </osSpecific>
       </osSpecifics>
-
     </service>
   </services>
 </metainfo>
