@@ -15,31 +15,60 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
+
 <metainfo>
   <schemaVersion>2.0</schemaVersion>
   <services>
     <service>
-      <name>ZOOKEEPER</name>
-      <version>3.4.6.2.3</version>
+      <name>YARN</name>
+      <version>2.7.1</version>
+
       <osSpecifics>
         <osSpecific>
           <osFamily>redhat7,redhat6,suse11</osFamily>
           <packages>
             <package>
-              <name>zookeeper_2_3_*</name>
+              <name>hadoop-*</name>
             </package>
           </packages>
         </osSpecific>
+        <!--<osSpecific>-->
+          <!--<osFamily>debian7,ubuntu12,ubuntu14</osFamily>-->
+          <!--<packages>-->
+            <!--<package>-->
+              <!--<name>hadoop-2-3-.*-yarn</name>-->
+            <!--</package>-->
+            <!--<package>-->
+              <!--<name>hadoop-2-3-.*-mapreduce</name>-->
+            <!--</package>-->
+          <!--</packages>-->
+        <!--</osSpecific>-->
+      </osSpecifics>
+    </service>
+
+    <service>
+      <name>MAPREDUCE2</name>
+      <version>2.7.1</version>
+      <osSpecifics>
         <osSpecific>
-          <osFamily>debian7,ubuntu12,ubuntu14</osFamily>
+          <osFamily>redhat7,redhat6,suse11</osFamily>
           <packages>
             <package>
-              <name>zookeeper-2-3-.*</name>
+              <name>hadoop-*</name>
             </package>
           </packages>
         </osSpecific>
+        <!--<osSpecific>-->
+          <!--<osFamily>debian7,ubuntu12,ubuntu14</osFamily>-->
+          <!--<packages>-->
+            <!--<package>-->
+              <!--<name>hadoop-2-3-.*-mapreduce</name>-->
+            <!--</package>-->
+          <!--</packages>-->
+        <!--</osSpecific>-->
       </osSpecifics>
-
+      <!--<configuration-dir>configuration-mapred</configuration-dir>-->
     </service>
+
   </services>
 </metainfo>

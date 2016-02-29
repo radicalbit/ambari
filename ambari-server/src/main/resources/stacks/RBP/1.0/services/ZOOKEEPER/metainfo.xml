@@ -20,24 +20,32 @@
   <services>
     <service>
       <name>ZOOKEEPER</name>
-      <version>3.4.6.2.3</version>
+      <version>3.4.8</version>
       <osSpecifics>
         <osSpecific>
           <osFamily>redhat7,redhat6,suse11</osFamily>
           <packages>
             <package>
-              <name>zookeeper_2_3_*</name>
+              <name>zookeeper-*</name>
             </package>
           </packages>
         </osSpecific>
-        <osSpecific>
-          <osFamily>debian7,ubuntu12,ubuntu14</osFamily>
-          <packages>
-            <package>
-              <name>zookeeper-2-3-.*</name>
-            </package>
-          </packages>
-        </osSpecific>
+        <!--<osSpecific>-->
+          <!--<osFamily>redhat7,redhat6,suse11</osFamily>-->
+          <!--<packages>-->
+            <!--<package>-->
+              <!--<name>zookeeper_2_3_*</name>-->
+            <!--</package>-->
+          <!--</packages>-->
+        <!--</osSpecific>-->
+        <!--<osSpecific>-->
+          <!--<osFamily>debian7,ubuntu12,ubuntu14</osFamily>-->
+          <!--<packages>-->
+            <!--<package>-->
+              <!--<name>zookeeper-2-3-.*</name>-->
+            <!--</package>-->
+          <!--</packages>-->
+        <!--</osSpecific>-->
       </osSpecifics>
 
     </service>

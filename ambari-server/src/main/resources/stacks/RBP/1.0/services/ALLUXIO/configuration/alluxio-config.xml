@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -15,30 +16,19 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<metainfo>
-  <schemaVersion>2.0</schemaVersion>
-  <services>
-    <service>
-      <name>KAFKA</name>
-      <extends>common-services/KAFKA/0.8.1.1</extends>
-      <osSpecifics>
-        <osSpecific>
-          <osFamily>redhat6,suse11</osFamily>
-          <packages>
-            <package>
-              <name>kafka-*</name>
-            </package>
-          </packages>
-        </osSpecific>
-        <osSpecific>
-          <osFamily>debian7,ubuntu12,ubuntu14</osFamily>
-          <packages>
-            <package>
-              <name>kafka-*</name>
-            </package>
-          </packages>
-        </osSpecific>
-      </osSpecifics>
-    </service>
-  </services>
-</metainfo>
+<configuration>
+
+  <property require-input="true">
+    <name>alluxio.underfs.address</name>
+    <description>Alluxio UnderFS Address</description>
+    <value>hdfs://0.0.0.0:8020</value>
+    <!--<value>/var/lib/alluxio</value>-->
+  </property>
+
+  <property>
+    <name>alluxio.worker.memory</name>
+    <description>Alluxio Worker Memory</description>
+    <value>2GB</value>
+  </property>
+
+</configuration>
