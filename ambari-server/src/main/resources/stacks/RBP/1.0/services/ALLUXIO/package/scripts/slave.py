@@ -32,18 +32,18 @@ class Slave(Alluxio):
 
     Execute(params.base_dir + '/bin/alluxio-start.sh worker SudoMount', user=params.alluxio_user)
 
-    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep TachyonWorker | awk '{print $1}'`> " + params.pid_dir + "/alluxio-worker.pid"
+    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep AlluxioWorker | awk '{print $1}'`> " + params.pid_dir + "/alluxio-worker.pid"
     Execute(cmd, user=params.alluxio_user)
 
 
   def stop(self, env):
     import params
-    Execute(params.base_dir + '/bin/alluxio-worker.sh ' + 'worker', user=params.alluxio_user)
+    Execute(params.base_dir + '/bin/alluxio-stop.sh ' + 'worker', user=params.alluxio_user)
 
   def status(self, env):
     import status_params as params
     env.set_params(params)
-    pid_file = format("{pid_dir}/TachyonWorker.pid")
+    pid_file = format("{pid_dir}/alluxio-worker.pid")
     check_process_status(pid_file)
 
 

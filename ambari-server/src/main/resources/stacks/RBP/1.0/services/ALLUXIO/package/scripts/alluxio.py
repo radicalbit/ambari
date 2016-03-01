@@ -41,6 +41,9 @@ class Alluxio(Script):
           recursive=True
       )
 
+    Execute('chown -R ' + params.alluxio_user + ':' + params.user_group + ' ' + params.pid_dir, user='root')
+    Execute('chown -R ' + params.alluxio_user + ':' + params.user_group + ' ' + params.log_dir, user='root')
+
   def configure(self, env):
     import params
 
@@ -61,10 +64,3 @@ class Alluxio(Script):
         mode=0644,
         content='\n'.join(params.alluxio_workers)
     )
-
-    # File(
-    #     format("{alluxio_config_dir}/alluxio-site.properties"),
-    #     owner=params.alluxio_user,
-    #     mode=0700,
-    #     content=Template('alluxio-site.properties.j2', conf_dir=alluxio_config_dir)
-    # )
