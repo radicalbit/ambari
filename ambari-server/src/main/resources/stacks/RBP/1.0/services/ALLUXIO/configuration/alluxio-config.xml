@@ -21,7 +21,7 @@
   <property require-input="true">
     <name>alluxio.underfs.address</name>
     <description>Alluxio UnderFS Address</description>
-    <value>hdfs://0.0.0.0:8020</value>
+    <value>hdfs://localhost:8020</value>
     <!--<value>/var/lib/alluxio</value>-->
   </property>
 

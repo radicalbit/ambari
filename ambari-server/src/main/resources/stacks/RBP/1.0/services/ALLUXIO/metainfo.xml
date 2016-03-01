@@ -67,6 +67,7 @@
 
             <requiredServices>
                 <service>ZOOKEEPER</service>
+                <service>HDFS</service>
             </requiredServices>
 
             <configuration-dependencies>

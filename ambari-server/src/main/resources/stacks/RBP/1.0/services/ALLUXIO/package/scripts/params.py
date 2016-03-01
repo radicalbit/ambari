@@ -27,6 +27,7 @@ tmp_dir = Script.get_tmp_dir()
 
 # alluxio underfs address
 underfs_addr = config['configurations']['alluxio-config']['alluxio.underfs.address']
+#fs_root = config['configurations']['core-site']['fs.defaultFS']
 
 # alluxio worker memory alotment
 worker_mem = config['configurations']['alluxio-config']['alluxio.worker.memory']

@@ -47,7 +47,6 @@ class Alluxio(Script):
     env.set_params(params)
 
     alluxio_config_dir = '/etc/alluxio/conf'
-    alluxio_libexec_dir = params.base_dir + '/libexec'
 
     File(
         format("{alluxio_config_dir}/alluxio-env.sh"),
@@ -63,9 +62,9 @@ class Alluxio(Script):
         content='\n'.join(params.alluxio_workers)
     )
 
-    File(
-        format("{alluxio_libexec_dir}/alluxio-config.sh"),
-        owner=params.alluxio_user,
-        mode=0700,
-        content=Template('alluxio-config.sh.j2', conf_dir=alluxio_libexec_dir)
-    )
+    # File(
+    #     format("{alluxio_config_dir}/alluxio-site.properties"),
+    #     owner=params.alluxio_user,
+    #     mode=0700,
+    #     content=Template('alluxio-site.properties.j2', conf_dir=alluxio_config_dir)
+    # )
