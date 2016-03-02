@@ -29,7 +29,6 @@ from resource_management.libraries.functions import format
 from resource_management.libraries.functions import conf_select
 from resource_management.libraries.functions import hdp_select
 from resource_management.libraries.functions import format_jvm_option
-from resource_management.libraries.functions.is_empty import is_empty
 from resource_management.libraries.functions.version import format_hdp_stack_version
 from resource_management.libraries.functions.version import compare_versions
 from ambari_commons.os_check import OSCheck
@@ -51,12 +50,6 @@ ambari_server_hostname = config['clusterHostInfo']['ambari_server_host'][0]
 
 stack_version_unformatted = str(config['hostLevelParams']['stack_version'])
 hdp_stack_version = format_hdp_stack_version(stack_version_unformatted)
-
-restart_type = default("/commandParams/restart_type", "")
-version = default("/commandParams/version", None)
-# Handle upgrade and downgrade
-if (restart_type.lower() == "rolling_upgrade" or restart_type.lower() == "nonrolling_upgrade") and version:
-  hdp_stack_version = format_hdp_stack_version(version)
 
 security_enabled = config['configurations']['cluster-env']['security_enabled']
 hdfs_user = config['configurations']['hadoop-env']['hdfs_user']
@@ -103,8 +96,6 @@ hadoop_secure_dn_user = hdfs_user
 hadoop_dir = "/etc/hadoop"
 versioned_hdp_root = '/usr/hdp/current'
 hadoop_java_io_tmpdir = os.path.join(tmp_dir, "hadoop_java_io_tmpdir")
-datanode_max_locked_memory = config['configurations']['hdfs-site']['dfs.datanode.max.locked.memory']
-is_datanode_max_locked_memory_set = not is_empty(config['configurations']['hdfs-site']['dfs.datanode.max.locked.memory'])
 
 # HDP 2.2+ params
 if Script.is_hdp_stack_greater_or_equal("2.2"):
@@ -136,7 +127,11 @@ hdfs_log_dir_prefix = config['configurations']['hadoop-env']['hdfs_log_dir_prefi
 hadoop_pid_dir_prefix = config['configurations']['hadoop-env']['hadoop_pid_dir_prefix']
 hadoop_root_logger = config['configurations']['hadoop-env']['hadoop_root_logger']
 
-jsvc_path = "/usr/lib/bigtop-utils"
+if hdp_stack_version != "" and compare_versions(hdp_stack_version, '2.0') >= 0 and compare_versions(hdp_stack_version, '2.1') < 0 and not OSCheck.is_suse_family():
+  # deprecated rhel jsvc_path
+  jsvc_path = "/usr/libexec/bigtop-utils"
+else:
+  jsvc_path = "/usr/lib/bigtop-utils"
 
 hadoop_heapsize = config['configurations']['hadoop-env']['hadoop_heapsize']
 namenode_heapsize = config['configurations']['hadoop-env']['namenode_heapsize']

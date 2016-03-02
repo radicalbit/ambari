@@ -140,7 +140,6 @@
           </dependencies>
         </component>
 
-        <!--<components>-->
           <!--<component>-->
             <!--<name>NFS_GATEWAY</name>-->
             <!--<displayName>NFSGateway</displayName>-->
@@ -162,7 +161,6 @@
               <!--</dependency>-->
             <!--</dependencies>-->
           <!--</component>-->
-        <!--</components>-->
 
         <component>
           <name>ZKFC</name>

@@ -81,9 +81,9 @@ ams_collector_hosts = default("/clusterHostInfo/metrics_collector_hosts", [])
 has_namenode = not len(namenode_host) == 0
 has_resourcemanager = not len(rm_host) == 0
 has_slaves = not len(slave_hosts) == 0
-has_oozie_server = not len(oozie_servers) == 0
-has_hcat_server_host = not len(hcat_server_hosts) == 0
-has_hive_server_host = not len(hive_server_host) == 0
+has_oozie_server = not len(oozie_servers)  == 0
+has_hcat_server_host = not len(hcat_server_hosts)  == 0
+has_hive_server_host = not len(hive_server_host)  == 0
 has_hbase_masters = not len(hbase_master_hosts) == 0
 has_zk_host = not len(zk_hosts) == 0
 has_ganglia_server = not len(ganglia_server_hosts) == 0
@@ -98,20 +98,10 @@ is_slave = hostname in slave_hosts
 if has_ganglia_server:
   ganglia_server_host = ganglia_server_hosts[0]
 if has_metric_collector:
-  if 'cluster-env' in config['configurations'] and \
-      'metrics_collector_vip_host' in config['configurations']['cluster-env']:
-    metric_collector_host = config['configurations']['cluster-env']['metrics_collector_vip_host']
-  else:
-    metric_collector_host = ams_collector_hosts[0]
-  if 'cluster-env' in config['configurations'] and \
-      'metrics_collector_vip_port' in config['configurations']['cluster-env']:
-    metric_collector_port = config['configurations']['cluster-env']['metrics_collector_vip_port']
-  else:
-    metric_collector_web_address = default("/configurations/ams-site/timeline.metrics.service.webapp.address", "0.0.0.0:6188")
-    if metric_collector_web_address.find(':') != -1:
-      metric_collector_port = metric_collector_web_address.split(':')[1]
-    else:
-      metric_collector_port = '6188'
+  metric_collector_host = ams_collector_hosts[0]
+  metric_collector_port = default("/configurations/ams-site/timeline.metrics.service.webapp.address", "0.0.0.0:6188")
+  if metric_collector_port and metric_collector_port.find(':') != -1:
+    metric_collector_port = metric_collector_port.split(':')[1]
   pass
 metrics_report_interval = default("/configurations/ams-site/timeline.metrics.sink.report.interval", 60)
 metrics_collection_period = default("/configurations/ams-site/timeline.metrics.sink.collection.period", 60)
@@ -153,7 +143,11 @@ else:
 #hadoop-env.sh
 java_home = config['hostLevelParams']['java_home']
 
-jsvc_path = "/usr/lib/bigtop-utils"
+if hdp_stack_version != "" and compare_versions(hdp_stack_version, '2.0') >= 0 and compare_versions(hdp_stack_version, '2.1') < 0 and not OSCheck.is_suse_family():
+  # deprecated rhel jsvc_path
+  jsvc_path = "/usr/libexec/bigtop-utils"
+else:
+  jsvc_path = "/usr/lib/bigtop-utils"
 
 hadoop_heapsize = config['configurations']['hadoop-env']['hadoop_heapsize']
 namenode_heapsize = config['configurations']['hadoop-env']['namenode_heapsize']

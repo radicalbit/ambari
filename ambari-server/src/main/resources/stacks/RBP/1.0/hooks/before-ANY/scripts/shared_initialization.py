@@ -50,6 +50,7 @@ def setup_users():
     pass
 
 
+  '''
   if params.has_hbase_masters:
     Directory (params.hbase_tmp_dir,
                owner = params.hbase_user,
@@ -70,6 +71,7 @@ def setup_users():
         create_tez_am_view_acls()
   else:
     Logger.info('Skipping setting dfs cluster admin and tez view acls as host is sys prepped')
+  '''
 
 def create_dfs_cluster_admins():
   """
@@ -132,7 +134,7 @@ def set_uid(user, user_dirs):
 def setup_hadoop_env():
   import params
   stackversion = params.stack_version_unformatted
-  if params.has_namenode or stackversion.find('Gluster') >= 0:
+  '''if params.has_namenode or stackversion.find('Gluster') >= 0:
     if params.security_enabled:
       tc_owner = "root"
     else:
@@ -161,7 +163,7 @@ def setup_hadoop_env():
               owner=params.hdfs_user,
               group=params.user_group,
               mode=0777
-    )
+    )'''
 
 def setup_java():
   """
