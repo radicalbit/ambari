@@ -29,7 +29,7 @@ def hdfs(name=None):
   import params
 
   if os.path.exists(params.hdfs_log_dir_prefix):
-    Execute('chmod -R ' + params.hdfs_user + ':' + params.user_group + ' ' + params.hdfs_log_dir_prefix)
+    Execute('chown -R ' + params.hdfs_user + ':' + params.user_group + ' ' + params.hdfs_log_dir_prefix)
 
   if params.create_lib_snappy_symlinks:
     install_snappy()
