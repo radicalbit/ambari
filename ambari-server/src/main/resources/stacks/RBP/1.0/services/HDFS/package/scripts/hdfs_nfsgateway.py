@@ -66,7 +66,7 @@ def nfsgateway(action=None, format=False):
     service(
       action=action,
       name="nfs3",
-      user=params.root_user,
+      user=params.hdfs_user,
       create_pid_dir=True,
       create_log_dir=True
     )

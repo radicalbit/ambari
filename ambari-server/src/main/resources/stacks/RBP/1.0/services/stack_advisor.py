@@ -18,4 +18,7 @@ limitations under the License.
 """
 
 
-class RBP30StackAdvisor(HDP23StackAdvisor): pass
+#class RBP10StackAdvisor(HDP23StackAdvisor): pass
+from stack_advisor import DefaultStackAdvisor
+
+class RBP10StackAdvisor(DefaultStackAdvisor): pass
