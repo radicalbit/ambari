@@ -68,7 +68,6 @@ class NFSGateway(Script):
     env.set_params(params)
     hdfs()
     nfsgateway(action="configure")
-    Execute('chmod -R ' + params.hdfs_user + ':' + params.user_group + '/var/log/hadoop')
 
   def status(self, env):
     import status_params

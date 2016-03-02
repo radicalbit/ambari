@@ -93,7 +93,6 @@ class NameNode(Script):
     hdfs("namenode")
     hdfs_binary = self.get_hdfs_binary()
     namenode(action="configure", hdfs_binary=hdfs_binary, env=env)
-    Execute('chmod -R ' + params.hdfs_user + ':' + params.user_group + '/var/log/hadoop')
 
   def start(self, env, upgrade_type=None):
     import params

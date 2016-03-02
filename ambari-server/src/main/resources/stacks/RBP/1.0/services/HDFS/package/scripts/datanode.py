@@ -54,7 +54,6 @@ class DataNode(Script):
     env.set_params(params)
     hdfs("datanode")
     datanode(action="configure")
-    Execute('chmod -R ' + params.hdfs_user + ':' + params.user_group + '/var/log/hadoop')
 
   def start(self, env, upgrade_type=None):
     import params
