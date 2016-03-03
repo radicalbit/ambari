@@ -75,8 +75,8 @@
 
   <property>
     <name>xasecure.audit.destination.db.batch.filespool.dir</name>
-    <value>/var/log/kafka/audit/db/spool</value>
-    <description>/var/log/kafka/audit/db/spool</description>
+    <value>/var/log/hadoop/yarn/audit/db/spool</value>
+    <description>/var/log/hadoop/yarn/audit/db/spool</description>
   </property>  
 
   <property>
@@ -109,8 +109,8 @@
 
   <property>
     <name>xasecure.audit.destination.hdfs.batch.filespool.dir</name>
-    <value>/var/log/kafka/audit/hdfs/spool</value>
-    <description>/var/log/kafka/audit/hdfs/spool</description>
+    <value>/var/log/hadoop/yarn/audit/hdfs/spool</value>
+    <description>/var/log/hadoop/yarn/audit/hdfs/spool</description>
   </property>
 
   <property>
@@ -158,13 +158,13 @@
 
   <property>
     <name>xasecure.audit.destination.solr.batch.filespool.dir</name>
-    <value>/var/log/kafka/audit/solr/spool</value>
-    <description>/var/log/kafka/audit/solr/spool</description>
+    <value>/var/log/hadoop/yarn/audit/solr/spool</value>
+    <description>/var/log/hadoop/yarn/audit/solr/spool</description>
   </property>
 
   <property>
     <name>xasecure.audit.provider.summary.enabled</name>
-    <value>true</value>
+    <value>false</value>
     <display-name>Audit provider summary enabled</display-name>
     <description>Enable Summary audit?</description>
     <value-attributes>

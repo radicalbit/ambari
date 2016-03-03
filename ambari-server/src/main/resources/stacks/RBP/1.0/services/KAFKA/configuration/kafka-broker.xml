@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <!--
- censed to the Apache Software Foundation (ASF) under one
+/**
+ * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
  * regarding copyright ownership.  The ASF licenses this file
@@ -18,7 +20,7 @@
  */
 -->
 
-<configuration supports_final="true" xmlns:xi="http://www.w3.org/2001/XInclude">
+<configuration>
   <property>
     <name>log.dirs</name>
     <value>/kafka-logs</value>
@@ -26,6 +28,9 @@
       A comma-separated list of one or more directories in which Kafka data is stored.
       Each new partition that is created will be placed in the directory which currently has the fewest partitions.
     </description>
+    <value-attributes>
+      <type>directories</type>
+    </value-attributes>
   </property>
   <property>
     <name>port</name>
@@ -33,6 +38,9 @@
     <description>
       The port on which the server accepts client connections.
     </description>
+    <value-attributes>
+      <type>int</type>
+    </value-attributes>
   </property>
   <property>
     <name>zookeeper.connect</name>
@@ -40,7 +48,7 @@
     <description>
       Zookeeper also allows you to add a "chroot" path which will make all kafka data for this cluster appear under a particular path.
       This is a way to setup multiple Kafka clusters or other applications on the same zookeeper cluster. To do this give a connection
-      string in the form hostname1:port1,hostname2:port2,hostname3:port3/chroot/path which would put all this cluster's data under the
+     string in the form hostname1:port1,hostname2:port2,hostname3:port3/chroot/path which would put all this cluster's data under the
       path /chroot/path. Note that you must create this path yourself prior to starting the broker and consumers must use the
       same connection string.
     </description>
@@ -99,7 +107,7 @@
     <name>num.partitions</name>
     <value>1</value>
     <description>
-      The default number of partitions per topic.
+        The default number of partitions per topic.
     </description>
   </property>
   <property>
@@ -252,7 +260,7 @@
   </property>
   <property>
     <name>controlled.shutdown.enable</name>
-    <value>false</value>
+    <value>true</value>
     <description>Enable controlled shutdown of the broker. If enabled, the broker will move all leaders on it to some other brokers before shutting itself down. This reduces the unavailability window during shutdown.</description>
   </property>
   <property>
@@ -269,10 +277,13 @@
   </property>
   <property>
     <name>kafka.metrics.reporters</name>
-    <value>{{kafka_metrics_reporters}}</value>
+    <value></value>
     <description>
       kafka ganglia metrics reporter and kafka timeline metrics reporter
     </description>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
   </property>
   <property>
     <name>kafka.ganglia.metrics.reporter.enabled</name>
@@ -316,7 +327,7 @@
     <value>5900</value>
     <description>Timeline metrics reporter send interval</description>
   </property>
-  <property>
+    <property>
     <name>kafka.timeline.metrics.maxRowCacheSize</name>
     <value>10000</value>
     <description>Timeline metrics reporter send interval</description>
@@ -325,11 +336,6 @@
     <name>listeners</name>
     <value>PLAINTEXT://localhost:6667</value>
     <description>host and port where kafka broker will be accepting connnections. localhost will be subsituted with hostname.</description>
-  </property>
-  <property>
-    <name>controlled.shutdown.enable</name>
-    <value>true</value>
-    <description>Enable controlled shutdown of the broker. If enabled, the broker will move all leaders on it to some other brokers before shutting itself down. This reduces the unavailability window during shutdown.</description>
   </property>
   <property>
     <name>auto.leader.rebalance.enable</name>
@@ -370,9 +376,9 @@
     <name>offsets.topic.replication.factor</name>
     <value>3</value>
     <description>The replication factor for the offsets topic (set higher to ensure availability).
-    To ensure that the effective replication factor of the offsets topic is the configured value,
-    the number of alive brokers has to be at least the replication factor at the time of the
-    first request for the offsets topic. If not, either the offsets topic creation will fail or it will get a replication factor of min(alive brokers, configured replication factor).</description>
+      To ensure that the effective replication factor of the offsets topic is the configured value,
+      the number of alive brokers has to be at least the replication factor at the time of the
+      first request for the offsets topic. If not, either the offsets topic creation will fail or it will get a replication factor of min(alive brokers, configured replication factor).</description>
   </property>
   <property>
     <name>offsets.topic.num.partitions</name>
@@ -439,5 +445,17 @@
     <description>
       These metrics would be included even if the exclude prefix omits them.
     </description>
+  </property>
+  <property>
+    <name>authorizer.class.name</name>
+    <description>
+      Kafka authorizer class
+    </description>
+    <depends-on>
+      <property>
+        <type>ranger-kafka-plugin-properties</type>
+        <name>ranger-kafka-plugin-enabled</name>
+      </property>
+    </depends-on>
   </property>
 </configuration>
