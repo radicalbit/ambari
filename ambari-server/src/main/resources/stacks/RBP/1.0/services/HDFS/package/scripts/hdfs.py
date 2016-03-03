@@ -28,6 +28,14 @@ from ambari_commons import OSConst
 def hdfs(name=None):
   import params
 
+  profile_file="/home/" + params.hdfs_user + "/.bash_profile"
+
+  if "JAVA_HOME" not in open(profile_file).read():
+    Execute(
+        "echo 'export JAVA_HOME=" + params.java_home + "' >>/home/" + params.hdfs_user + "/.bash_profile",
+        user=params.hdfs_user
+    )
+
   if os.path.exists(params.hdfs_log_dir_prefix):
     Execute('chown -R ' + params.hdfs_user + ':' + params.user_group + ' ' + params.hdfs_log_dir_prefix)
 
