@@ -58,8 +58,8 @@ hostname = config['hostname']
 
 # default kafka parameters
 kafka_home = '/usr/lib/kafka/'
-kafka_bin = kafka_home+'/bin/kafka'
-conf_dir = "/etc/kafka/conf"
+kafka_bin = kafka_home+'/bin'
+conf_dir = "/etc/kafka/conf.dist"
 limits_conf_dir = "/etc/security/limits.d"
 
 # Used while upgrading the stack in a kerberized cluster and running kafka-acls.sh
@@ -67,12 +67,6 @@ zookeeper_connect = default("/configurations/kafka-broker/zookeeper.connect", No
 
 kafka_user_nofile_limit = config['configurations']['kafka-env']['kafka_user_nofile_limit']
 kafka_user_nproc_limit = config['configurations']['kafka-env']['kafka_user_nproc_limit']
-
-# parameters for 2.2+
-if Script.is_hdp_stack_greater_or_equal("2.2"):
-  kafka_home = '/usr/hdp/current/kafka-broker/'
-  kafka_bin = kafka_home+'bin/kafka'
-  conf_dir = "/usr/hdp/current/kafka-broker/config"
 
 
 kafka_user = config['configurations']['kafka-env']['kafka_user']

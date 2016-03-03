@@ -76,7 +76,7 @@ class KafkaBroker(Script):
     self.configure(env, upgrade_type=upgrade_type)
     if params.is_supported_kafka_ranger:
       setup_ranger_kafka() #Ranger Kafka Plugin related call 
-    daemon_cmd = format('source {params.conf_dir}/kafka-env.sh ; {params.kafka_bin} start')
+    daemon_cmd = format('source {params.conf_dir}/kafka-env.sh ; {params.kafka_bin}/kafka-server-start.sh {params.conf_dir}/server.properties')
     no_op_test = format('ls {params.kafka_pid_file} >/dev/null 2>&1 && ps -p `cat {params.kafka_pid_file}` >/dev/null 2>&1')
     Execute(daemon_cmd,
             user=params.kafka_user,
@@ -90,7 +90,7 @@ class KafkaBroker(Script):
     # restore permissions after installing repo version bits
     # before attempting to stop Kafka Broker
     ensure_base_directories()
-    daemon_cmd = format('source {params.conf_dir}/kafka-env.sh; {params.kafka_bin} stop')
+    daemon_cmd = format('source {params.conf_dir}/kafka-env.sh; {params.kafka_bin}/kafka-server-stop.sh')
     Execute(daemon_cmd,
             user=params.kafka_user,
     )
