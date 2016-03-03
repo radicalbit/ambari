@@ -171,7 +171,9 @@ def service(action=None, name=None, user=None, options="", create_pid_dir=False,
   pid_dir = format("{hadoop_pid_dir_prefix}/{user}")
   pid_file = format("{pid_dir}/hadoop-{user}-{name}.pid")
   hadoop_env_exports = {
-    'HADOOP_LIBEXEC_DIR': params.hadoop_libexec_dir
+    'HADOOP_LIBEXEC_DIR': params.hadoop_libexec_dir,
+    #'HADOOP_LOG_DIR': params.hdfs_log_dir_prefix
+    'JAVA_HOME': params.java_home
   }
   log_dir = format("{hdfs_log_dir_prefix}/{user}")
 
