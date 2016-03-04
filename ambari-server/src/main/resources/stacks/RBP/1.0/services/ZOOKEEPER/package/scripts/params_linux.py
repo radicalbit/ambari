@@ -53,9 +53,9 @@ version = default("/commandParams/version", None)
 #  zk_cli_shell = format("/usr/hdp/current/{component_directory}/bin/zkCli.sh")
 #  config_dir = status_params.config_dir
 
-zk_home = format("/usr/hdp/current/{component_directory}")
-zk_bin = format("/usr/hdp/current/{component_directory}/bin")
-zk_cli_shell = format("/usr/hdp/current/{component_directory}/bin/zkCli.sh")
+zk_home = format("/usr/lib/zookeeper")
+zk_bin = format("/usr/lib/zookeeper/bin")
+zk_cli_shell = format("/usr/lib/zookeeper/bin/zkCli.sh")
 config_dir = status_params.config_dir
 
 
