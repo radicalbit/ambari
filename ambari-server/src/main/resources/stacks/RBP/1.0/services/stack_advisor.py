@@ -17,6 +17,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from stack_advisor import DefaultStackAdvisor
 
-class RBP10StackAdvisor(DefaultStackAdvisor): pass
+class RBP30StackAdvisor(HDP23StackAdvisor): pass
