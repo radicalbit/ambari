@@ -61,6 +61,10 @@ def yarn(name = None):
 @OsFamilyFuncImpl(os_family=OsFamilyImpl.DEFAULT)
 def yarn(name = None):
   import params
+
+  if os.path.exists(params.yarn_log_dir_prefix):
+    Execute('chown -R ' + params.yarn_user + ':' + params.user_group + ' ' + params.yarn_log_dir_prefix)
+
   if name == "historyserver":
     if params.yarn_log_aggregation_enabled:
       params.HdfsResource(params.yarn_nm_app_log_dir,

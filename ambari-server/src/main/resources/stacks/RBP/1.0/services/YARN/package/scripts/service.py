@@ -52,7 +52,12 @@ def service(componentName, action='start', serviceName='yarn'):
     pid_file = format("{yarn_pid_dir}/yarn-{yarn_user}-{componentName}.pid")
     usr = params.yarn_user
 
-  cmd = format("export HADOOP_LIBEXEC_DIR={hadoop_libexec_dir} && {daemon} --config {hadoop_conf_dir}")
+  yarn_env_exports = {
+    'HADOOP_LIBEXEC_DIR': params.hadoop_libexec_dir,
+    'YARN_LOG_DIR': params.yarn_log_dir_prefix,
+    'JAVA_HOME': params.java64_home
+  }
+  cmd = format("{daemon} --config {hadoop_conf_dir}")
 
   if action == 'start':
     daemon_cmd = format("{ulimit_cmd} {cmd} start {componentName}")
@@ -70,13 +75,13 @@ def service(componentName, action='start', serviceName='yarn'):
       )
 
     # Attempt to start the process. Internally, this is skipped if the process is already running.
-    Execute(daemon_cmd, user = usr, not_if = check_process)
+    Execute(daemon_cmd, user = usr, not_if = check_process, environment=yarn_env_exports)
 
     # Ensure that the process with the expected PID exists.
     Execute(check_process,
             not_if = check_process,
             tries=5,
-            try_sleep=1,
+            try_sleep=1
     )
 
   elif action == 'stop':
