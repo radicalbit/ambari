@@ -15,53 +15,25 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-
 <metainfo>
   <schemaVersion>2.0</schemaVersion>
   <services>
     <service>
-      <name>YARN</name>
-      <version>2.7.1</version>
-
-      <components>
-        <component>
-          <name>APP_TIMELINE_SERVER</name>
-          <category>MASTER</category>
-          <deleted>true</deleted>
-        </component>
-      </components>
-
+      <name>KAFKA</name>
+      <version>0.9.0.1</version>
       <osSpecifics>
         <osSpecific>
-          <osFamily>redhat7,redhat6,suse11</osFamily>
+          <osFamily>any</osFamily>
           <packages>
             <package>
-              <name>hadoop-yarn-*</name>
-            </package>
-            <package>
-              <name>hadoop-mapreduce-*</name>
+              <name>kafka-*</name>
             </package>
           </packages>
         </osSpecific>
       </osSpecifics>
+      <configuration-dependencies>
+        <config-type>kafka-broker</config-type>
+      </configuration-dependencies>
     </service>
-
-    <service>
-      <name>MAPREDUCE2</name>
-      <!--<version>2.7.1.2.3</version>-->
-      <!--<deleted>true</deleted>-->
-      <version>2.7.1</version>
-      <osSpecifics>
-        <osSpecific>
-          <osFamily>redhat7,redhat6,suse11</osFamily>
-          <packages>
-            <package>
-              <name>hadoop-mapreduce-*</name>
-            </package>
-          </packages>
-        </osSpecific>
-      </osSpecifics>
-    </service>
-
   </services>
 </metainfo>
