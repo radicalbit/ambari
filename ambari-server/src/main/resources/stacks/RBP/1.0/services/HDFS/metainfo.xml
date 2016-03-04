@@ -22,6 +22,14 @@
       <name>HDFS</name>
       <version>2.7.1</version>
 
+      <components>
+        <component>
+          <name>NFS_GATEWAY</name>
+          <category>SLAVE</category>
+          <deleted>true</deleted>
+        </component>
+      </components>
+
       <osSpecifics>
         <osSpecific>
           <osFamily>any</osFamily>
