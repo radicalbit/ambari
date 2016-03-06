@@ -97,9 +97,6 @@ fi
 
 export JAVA="${JAVA_HOME}/bin/java"
 export ALLUXIO_MASTER_ADDRESS={{ alluxio_master }}
-export ALLUXIO_UNDERFS_ADDRESS={{ underfs_addr }}
-#export ALLUXIO_UNDERFS_ADDRESS=${ALLUXIO_UNDERFS_ADDRESS:-hdfs://localhost:9000}
-export ALLUXIO_WORKER_MEMORY_SIZE={{ worker_mem }}
 
 export ALLUXIO_SSH_FOREGROUND=${ALLUXIO_SSH_FOREGROUND:-"yes"}
 export ALLUXIO_WORKER_SLEEP=${ALLUXIO_WORKER_SLEEP:-"0.02"}
@@ -109,27 +106,15 @@ export ALLUXIO_WORKER_SLEEP=${ALLUXIO_WORKER_SLEEP:-"0.02"}
 #export ALLUXIO_PREPEND_ALLUXIO_CLASSES=${ALLUXIO_PREPEND_ALLUXIO_CLASSES:-"yes"}
 
 # Where log files are stored. $ALLUXIO_HOME/logs by default.
-export ALLUXIO_LOGS_DIR={{ log_dir }}
+#export ALLUXIO_LOGS_DIR=${ALLUXIO_LOGS_DIR:-${ALLUXIO_HOME}/logs}
 
 CONF_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 export ALLUXIO_JAVA_OPTS+="
   -Dlog4j.configuration=file:${CONF_DIR}/log4j.properties
-  -Dalluxio.worker.tieredstore.levels=1
-  -Dalluxio.worker.tieredstore.level0.alias=MEM
-  -Dalluxio.worker.tieredstore.level0.dirs.path=${ALLUXIO_RAM_FOLDER}
-  -Dalluxio.worker.tieredstore.level0.dirs.quota=${ALLUXIO_WORKER_MEMORY_SIZE}
-  -Dalluxio.underfs.address=${ALLUXIO_UNDERFS_ADDRESS}
-  -Dalluxio.worker.memory.size=${ALLUXIO_WORKER_MEMORY_SIZE}
   -Dalluxio.master.hostname=${ALLUXIO_MASTER_ADDRESS}
   -Dorg.apache.jasper.compiler.disablejsr199=true
   -Djava.net.preferIPv4Stack=true
-  -Dalluxio.user.file.writetype.default=CACHE_THROUGH
-  -Dalluxio.master.journal.folder=${TACHYON_UNDERFS_ADDRESS}/journal/
-{% if use_zookeeper == True -%}
-  -Dalluxio.zookeeper.enabled={{ use_zookeeper }}
-  -Dalluxio.zookeeper.address={{ zookeeper_hosts }}
-{% endif %}
 "
 
 # Master specific parameters. Default to ALLUXIO_JAVA_OPTS.

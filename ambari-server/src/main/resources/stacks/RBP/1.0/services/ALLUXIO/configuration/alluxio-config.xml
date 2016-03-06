@@ -25,10 +25,124 @@
     <value>hdfs://localhost:8020</value>
   </property>
 
-  <property>
+  <property require-input="true">
+    <name>alluxio.master.journal.folder</name>
+    <description>Alluxio Master Journal Folder</description>
+    <value>${alluxio.home}/journal/</value>
+  </property>
+
+  <property require-input="true">
+    <name>alluxio.worker.evictor.class</name>
+    <description>Alluxio Worker Evictor Class</description>
+    <value>alluxio.worker.block.evictor.LRUEvictor</value>
+  </property>
+
+  <property require-input="true">
     <name>alluxio.worker.memory</name>
     <description>Alluxio Worker Memory</description>
     <value>2GB</value>
+  </property>
+
+  <property require-input="true">
+    <name>alluxio.worker.tieredstore.levels</name>
+    <description>Alluxio Worker Tieredstore Levels</description>
+    <value>1</value>
+  </property>
+
+  <property require-input="true">
+    <name>alluxio.worker.tieredstore.level0.alias</name>
+    <description>Alluxio Worker Tieredstore Level0 Alias</description>
+    <value>MEM</value>
+  </property>
+
+  <property require-input="true">
+    <name>alluxio.worker.tieredstore.level0.dirs.path</name>
+    <description>Alluxio Worker Tieredstore Level0 Dirs Path</description>
+    <value>/mnt/ramdisk</value>
+  </property>
+
+  <property require-input="true">
+    <name>alluxio.worker.tieredstore.level0.dirs.quota</name>
+    <description>Alluxio Worker Tieredstore Level0 Dirs Quota</description>
+    <value>${alluxio.worker.memory.size}</value>
+  </property>
+
+  <property require-input="true">
+    <name>alluxio.worker.tieredstore.level0.reserved.ratio</name>
+    <description>Alluxio Worker Tieredstore Level0 Reserved Ratio</description>
+    <value>0.1</value>
+  </property>
+
+  <property require-input="false">
+    <name>alluxio.worker.tieredstore.level1.alias</name>
+    <description>Alluxio Worker Tieredstore Level1 Alias</description>
+    <value></value>
+  </property>
+
+  <property require-input="false">
+    <name>alluxio.worker.tieredstore.level1.dirs.path</name>
+    <description>Alluxio Worker Tieredstore Level1 Dirs Path</description>
+    <value></value>
+  </property>
+
+  <property require-input="false">
+    <name>alluxio.worker.tieredstore.level1.dirs.quota</name>
+    <description>Alluxio Worker Tieredstore Level1 Dirs Quota</description>
+    <value></value>
+  </property>
+
+  <property require-input="false">
+    <name>alluxio.worker.tieredstore.level1.reserved.ratio</name>
+    <description>Alluxio Worker Tieredstore Level1 Reserved Ratio</description>
+    <value></value>
+  </property>
+
+  <property require-input="false">
+    <name>alluxio.worker.tieredstore.level2.alias</name>
+    <description>Alluxio Worker Tieredstore Level2 Alias</description>
+    <value></value>
+  </property>
+
+  <property require-input="false">
+    <name>alluxio.worker.tieredstore.level2.dirs.path</name>
+    <description>Alluxio Worker Tieredstore Level2 Dirs Path</description>
+    <value></value>
+  </property>
+
+  <property require-input="false">
+    <name>alluxio.worker.tieredstore.level2.dirs.quota</name>
+    <description>Alluxio Worker Tieredstore Level2 Dirs Quota</description>
+    <value></value>
+  </property>
+
+  <property require-input="false">
+    <name>alluxio.worker.tieredstore.level2.reserved.ratio</name>
+    <description>Alluxio Worker Tieredstore Level2 Reserved Ratio</description>
+    <value></value>
+  </property>
+
+  <property require-input="true">
+    <name>alluxio.worker.tieredstore.reserver.enabled</name>
+    <description>Alluxio Worker Tieredstore Reserver Enabled</description>
+    <value>false</value>
+  </property>
+
+  <property require-input="true">
+    <name>alluxio.user.file.readtype.default</name>
+    <description>Alluxio User File Readtype Default</description>
+    <value>CACHE_PROMOTE</value>
+  </property>
+
+  <property require-input="true">
+    <name>alluxio.user.file.write.location.policy.class</name>
+    <description>Alluxio User File Write Location Policy Class</description>
+    <value>alluxio.client.file.policy.LocalFirstPolicy</value>
+  </property>
+
+  <property require-input="true">
+    <name>alluxio.user.file.writetype.default</name>
+    <description>Alluxio User File Writetype Default</description>
+    <value>MUST_CACHE</value>
   </property>
 
 </configuration>

@@ -26,15 +26,15 @@ class Master(Alluxio):
   def install(self, env):
     import params
     self.base_install(env)
+    self.configure(env)
 
-    #Execute(params.base_dir + '/bin/alluxio format', user=params.alluxio_user)
+    Execute(params.base_dir + '/bin/alluxio format', user=params.alluxio_user)
 
   def start(self, env):
     import params
     self.configure(env)
     env.set_params(params)
 
-    #Execute(params.base_dir + '/bin/alluxio format', user=params.alluxio_user)
     Execute(params.base_dir + '/bin/alluxio-start.sh master', user=params.alluxio_user)
 
     cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep AlluxioMaster | awk '{print $1}'`> " + params.pid_dir + "/alluxio-master.pid"
