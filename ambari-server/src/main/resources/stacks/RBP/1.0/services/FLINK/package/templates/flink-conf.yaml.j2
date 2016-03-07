@@ -120,7 +120,7 @@ fs.hdfs.hadoopconf: {{ conf_dir }}
 
 recovery.mode: zookeeper
 
-recovery.zookeeper.quorum: 172.31.28.164:2181,172.31.25.44:2181,172.31.22.230:2181
+recovery.zookeeper.quorum: {{ zookeeper_quorum }}
 
 # Note: You need to set the state backend to 'filesystem' and the checkpoint
 # directory (see above) before configuring the storageDir.

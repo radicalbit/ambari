@@ -26,30 +26,7 @@ class Master(Script):
     import params
     import status_params
 
-    if not os.path.exists(params.flink_tmp_file):
-      Execute(
-          'wget '+params.flink_download_url+' -O '+params.flink_tmp_file+' -a /tmp/flink_download.log',
-          user=params.flink_user
-      )
-    else:
-      hadoop_tmp_file_md5 = hashlib.md5(open(params.flink_tmp_file, "rb").read()).hexdigest()
-
-      if not hadoop_tmp_file_md5 == params.binary_file_md5:
-        Execute(
-            'rm -f '+params.flink_tmp_file,
-            user=params.flink_user
-        )
-
-        Execute(
-            'wget '+params.flink_download_url+' -O '+params.flink_tmp_file+' -a /tmp/flink_download.log',
-            user=params.flink_user
-        )
-            
-    Directory([params.flink_install_dir],
-            owner=params.flink_user,
-            group=params.flink_group,
-            recursive=True
-    )
+    self.install_packages(env)
 
     Directory([status_params.flink_pid_dir, params.flink_log_dir],
               owner=params.flink_user,
@@ -64,12 +41,6 @@ class Master(Script):
             content=''
     )
 
-    Execute('echo Installing packages')
-
-    Execute(
-        '/bin/tar -zxvf ' + params.flink_tmp_file + ' --strip 1 -C ' + params.flink_install_dir,
-        user=params.flink_user
-    )
     self.configure(env, True)
 
   def configure(self, env, isInstall=False):
@@ -100,8 +71,7 @@ class Master(Script):
         
     
   def stop(self, env):
-    import params
-    import status_params    
+    import status_params
     Execute ('pkill -f org.apache.flink.yarn.ApplicationMaster', ignore_failures=True)
     Execute ('rm -f ' + status_params.flink_pid_file, ignore_failures=True)
  
@@ -109,15 +79,13 @@ class Master(Script):
   def start(self, env):
     import params
     import status_params
-    self.set_conf_bin(env)  
-    self.configure(env) 
+    self.configure(env)
     
     self.create_hdfs_user(params.flink_user)
 
     Execute('echo bin dir ' + params.bin_dir)        
     Execute('echo pid file ' + status_params.flink_pid_file)
-    #cmd = format("export HADOOP_CONF_DIR={hadoop_conf_dir}; {bin_dir}/yarn-session.sh -n {flink_numcontainers} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
-    cmd = format("{bin_dir}/yarn-session.sh -n {flink_numcontainers} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
+    cmd = format("export HADOOP_CONF_DIR={hadoop_conf_dir}; {bin_dir}/yarn-session.sh -n {flink_numcontainers} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
 
     if params.flink_streaming:
       cmd = cmd + ' -st '
@@ -133,11 +101,6 @@ class Master(Script):
     env.set_params(status_params)
     check_process_status(status_params.flink_pid_file)
 
-
-  def set_conf_bin(self, env):
-    import params
-    params.conf_dir =  params.flink_install_dir+ '/conf'
-    params.bin_dir =  params.flink_install_dir+ '/bin'
 
   def create_hdfs_user(self, user):
     Execute('hadoop fs -mkdir -p /user/'+user, user='hdfs', ignore_failures=True)

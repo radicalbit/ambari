@@ -18,47 +18,39 @@ limitations under the License.
 """
 #!/usr/bin/env python
 from resource_management import *
+from resource_management.libraries.functions import conf_select
 from resource_management.libraries.script.script import Script
 import sys, os, glob
-from resource_management.libraries.functions.version import format_hdp_stack_version
-from resource_management.libraries.functions.default import default
 
-
-    
 # server configurations
 config = Script.get_config()
 
-binary_file_md5 = '0efef9dc038834823e62f9d305300c2c'
-flink_download_url = 'https://dist.apache.org/repos/dist/release/flink/flink-0.10.1/flink-0.10.1-bin-hadoop27-scala_2.11.tgz'
-flink_tmp_file = '/tmp/flink-0.10.1-bin-hadoop27-scala_2.11.tgz'
+# usefull dirs
+hadoop_conf_dir = conf_select.get_hadoop_conf_dir()
+flink_install_dir = '/usr/lib/flink'
+conf_dir =  flink_install_dir + '/conf'
+bin_dir =  flink_install_dir + '/bin'
 
-#service_packagedir = os.path.realpath(__file__).split('/scripts')[0]
-#flink_archive_file = service_packagedir + '/files/flink-0.10.1-bin-hadoop27-scala_2.11.tgz'
+# params from flink-config
+flink_numcontainers = config['configurations']['flink-config']['flink_numcontainers']
+flink_jobmanager_memory = config['configurations']['flink-config']['flink_jobmanager_memory']
+flink_container_memory = config['configurations']['flink-config']['flink_container_memory']
+flink_appname = config['configurations']['flink-config']['flink_appname']
+flink_queue = config['configurations']['flink-config']['flink_queue']
+flink_streaming = config['configurations']['flink-config']['flink_streaming']
 
-# params from flink-ambari-config
-flink_install_dir = config['configurations']['flink-ambari-config']['flink_install_dir']
-flink_numcontainers = config['configurations']['flink-ambari-config']['flink_numcontainers']
-flink_jobmanager_memory = config['configurations']['flink-ambari-config']['flink_jobmanager_memory']
-flink_container_memory = config['configurations']['flink-ambari-config']['flink_container_memory']
-#setup_prebuilt = config['configurations']['flink-ambari-config']['setup_prebuilt']
-flink_appname = config['configurations']['flink-ambari-config']['flink_appname']
-flink_queue = config['configurations']['flink-ambari-config']['flink_queue']
-flink_streaming = config['configurations']['flink-ambari-config']['flink_streaming']
-
-#hadoop_conf_dir = config['configurations']['flink-ambari-config']['hadoop_conf_dir']
-#flink_download_url = config['configurations']['flink-ambari-config']['flink_download_url']
- 
-
-conf_dir=''
-bin_dir=''
-
-# params from flink-conf.yaml
-flink_yaml_content = config['configurations']['flink-env']['content']
+# params from flink-env.yaml
 flink_user = config['configurations']['flink-env']['flink_user']
 flink_group = config['configurations']['flink-env']['flink_group']
+flink_pid_dir = config['configurations']['flink-env']['flink_pid_dir']
 flink_log_dir = config['configurations']['flink-env']['flink_log_dir']
 flink_log_file = os.path.join(flink_log_dir,'flink-setup.log')
+#flink_yaml_content = config['configurations']['flink-env']['content']
 
-
-
-temp_file='/tmp/flink.tgz'
+#
+zookeeper_quorum = ''
+zookeeper_port = config['configurations']['zoo.cfg']['clientPort']
+if 'zookeeper_hosts' in config['clusterHostInfo']:
+  zookeeper_hosts_list = config['clusterHostInfo']['zookeeper_hosts']
+  if len(zookeeper_hosts_list) > 0:
+    zookeeper_quorum = ':' + zookeeper_port + ','.join(zookeeper_hosts_list) + ':' + zookeeper_port
