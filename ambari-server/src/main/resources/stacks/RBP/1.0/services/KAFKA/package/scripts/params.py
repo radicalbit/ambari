@@ -58,7 +58,7 @@ hostname = config['hostname']
 
 # default kafka parameters
 kafka_home = '/usr/lib/kafka/'
-#kafka_bin = kafka_home+'/bin/kafka'
+#kafka_bin ='/etc/default/kafka'
 conf_dir = "/etc/kafka/conf.dist"
 limits_conf_dir = "/etc/security/limits.d"
 
