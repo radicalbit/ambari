@@ -54,7 +54,7 @@
             </requiredServices>
 
       	    <configuration-dependencies>
-	        	<config-type>flink-ambari-config</config-type>      	   
+	        	<config-type>flink-config</config-type>
       	    </configuration-dependencies>
             <restartRequiredAfterChange>false</restartRequiredAfterChange>
         </service>
