@@ -44,12 +44,12 @@ flink_user = config['configurations']['flink-env']['flink_user']
 flink_group = config['configurations']['flink-env']['flink_group']
 flink_pid_dir = config['configurations']['flink-env']['flink_pid_dir']
 flink_log_dir = config['configurations']['flink-env']['flink_log_dir']
-flink_log_file = os.path.join(flink_log_dir,'flink-setup.log')
+flink_log_file = os.path.join(flink_log_dir,'flink.log')
 #flink_yaml_content = config['configurations']['flink-env']['content']
 
 #
 zookeeper_quorum = ''
-zookeeper_port = config['configurations']['zoo.cfg']['clientPort']
+zookeeper_port = str(config['configurations']['zoo.cfg']['clientPort'])
 if 'zookeeper_hosts' in config['clusterHostInfo']:
   zookeeper_hosts_list = config['clusterHostInfo']['zookeeper_hosts']
   if len(zookeeper_hosts_list) > 0:

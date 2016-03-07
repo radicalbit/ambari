@@ -48,9 +48,7 @@ class Master(Script):
     import status_params
     env.set_params(params)
     env.set_params(status_params)
-    
-    self.set_conf_bin(env)
-        
+
     #write out nifi.properties
     #properties_content=InlineTemplate(params.flink_yaml_content)
     #File(format("{conf_dir}/flink-conf.yaml"), content=properties_content, owner=params.flink_user)
@@ -71,8 +69,10 @@ class Master(Script):
         
     
   def stop(self, env):
+    import params
     import status_params
-    Execute ('pkill -f org.apache.flink.yarn.ApplicationMaster', ignore_failures=True)
+    cmd = format('pkill -f {params.flink_appname} & pkill -f org.apache.flink.yarn.ApplicationMaster')
+    Execute (cmd, ignore_failures=True)
     Execute ('rm -f ' + status_params.flink_pid_file, ignore_failures=True)
  
       
@@ -85,17 +85,15 @@ class Master(Script):
 
     Execute('echo bin dir ' + params.bin_dir)        
     Execute('echo pid file ' + status_params.flink_pid_file)
-    cmd = format("export HADOOP_CONF_DIR={hadoop_conf_dir}; {bin_dir}/yarn-session.sh -n {flink_numcontainers} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
+    cmd = format("export HADOOP_CONF_DIR={hadoop_conf_dir}; nohup {bin_dir}/yarn-session.sh -n {flink_numcontainers} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
 
     if params.flink_streaming:
       cmd = cmd + ' -st '
-    Execute (cmd + format(" >> {flink_log_file}"), user=params.flink_user)
+    Execute (cmd + format(" >> {flink_log_file} & echo $! > {status_params.flink_pid_file}"), user=params.flink_user)
 
-    Execute("ps -ef | grep org.apache.flink.yarn.ApplicationMaster | awk {'print $2'} | head -n 1 > " + status_params.flink_pid_file, user=params.flink_user)
+    #Execute("ps -ef | grep org.apache.flink.yarn.ApplicationMaster | awk {'print $2'} | head -n 1 > " + status_params.flink_pid_file, user=params.flink_user)
 
-    if os.path.exists(params.temp_file):
-      os.remove(params.temp_file)
-    
+
   def status(self, env):
     import status_params
     env.set_params(status_params)
