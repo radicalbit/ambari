@@ -24,9 +24,9 @@ class FlinkServiceCheck(Script):
   # Service check for VSFTPD service
   def service_check(self, env):
 
-    bin_dir = '/usr/bin'
+    bin_dir = '/usr/lib/flink/bin'
     example_dir = '/usr/share/doc/flink/examples/batch'
-    full_command = format(".{bin_dir}/flink run -m yarn-cluster -yn 4 -yjm 1024 -ytm 4096 .{example_dir}/WordCount.jar")
+    full_command = format("{bin_dir}/flink run -m yarn-cluster -yn 4 -yjm 1024 -ytm 4096 {example_dir}/WordCount.jar")
     proc = subprocess.Popen(full_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (stdout, stderr) = proc.communicate()
     response = stdout
