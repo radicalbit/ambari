@@ -119,7 +119,7 @@ alluxio_workers = config['clusterHostInfo']['alluxio_slave_hosts']
 
 # zookeeper infos
 zookeeper_hosts = ''
-zookeeper_port = config['configurations']['zoo.cfg']['clientPort']
+zookeeper_port = str(config['configurations']['zoo.cfg']['clientPort'])
 if 'zookeeper_hosts' in config['clusterHostInfo']:
   zookeeper_hosts_list = config['clusterHostInfo']['zookeeper_hosts']
   if len(zookeeper_hosts_list) > 0:
