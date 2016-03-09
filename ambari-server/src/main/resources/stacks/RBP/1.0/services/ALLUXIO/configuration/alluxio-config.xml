@@ -77,48 +77,72 @@
     <name>alluxio.worker.tieredstore.level1.alias</name>
     <description>Alluxio Worker Tieredstore Level1 Alias</description>
     <value></value>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
   </property>
 
   <property require-input="false">
     <name>alluxio.worker.tieredstore.level1.dirs.path</name>
     <description>Alluxio Worker Tieredstore Level1 Dirs Path</description>
     <value></value>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
   </property>
 
   <property require-input="false">
     <name>alluxio.worker.tieredstore.level1.dirs.quota</name>
     <description>Alluxio Worker Tieredstore Level1 Dirs Quota</description>
     <value></value>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
   </property>
 
   <property require-input="false">
     <name>alluxio.worker.tieredstore.level1.reserved.ratio</name>
     <description>Alluxio Worker Tieredstore Level1 Reserved Ratio</description>
     <value></value>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
   </property>
 
   <property require-input="false">
     <name>alluxio.worker.tieredstore.level2.alias</name>
     <description>Alluxio Worker Tieredstore Level2 Alias</description>
     <value></value>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
   </property>
 
   <property require-input="false">
     <name>alluxio.worker.tieredstore.level2.dirs.path</name>
     <description>Alluxio Worker Tieredstore Level2 Dirs Path</description>
     <value></value>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
   </property>
 
   <property require-input="false">
     <name>alluxio.worker.tieredstore.level2.dirs.quota</name>
     <description>Alluxio Worker Tieredstore Level2 Dirs Quota</description>
     <value></value>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
   </property>
 
   <property require-input="false">
     <name>alluxio.worker.tieredstore.level2.reserved.ratio</name>
     <description>Alluxio Worker Tieredstore Level2 Reserved Ratio</description>
     <value></value>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
   </property>
 
   <property require-input="true">
