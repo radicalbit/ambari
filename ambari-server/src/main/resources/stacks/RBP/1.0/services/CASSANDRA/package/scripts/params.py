@@ -43,17 +43,14 @@ seeds = ",".join(config['clusterHostInfo']['cassandra_node_hosts'])
 listen_address = hostname
 rpc_address = hostname
 
+authorizer = cassandra_conf['authorizer']
 commitlog_directory = cassandra_conf['commitlog_directory']
 data_file_directories = cassandra_conf['data_file_directories']
 saved_caches_directory = cassandra_conf['saved_caches_directory']
 
-#----------------------------------------------------------
-# cassandra-env.sh
-max_heap_size
-heap_newsize
-authorizer: AllowAllAuthorizer
+max_heap_size = cassandra_env['max_heap_size']
+heap_newsize = cassandra_env['heap_newsize']
 
-#----------------------------------------------------------
 
 # config_defaults = {
 #     'cross_node_timeout': False,
