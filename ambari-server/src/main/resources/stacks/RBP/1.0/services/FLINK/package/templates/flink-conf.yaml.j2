@@ -21,41 +21,27 @@
 # Common
 #==============================================================================
 
-# The host on which the JobManager runs. Only used in non-high-availability mode.
-# The JobManager process will use this hostname to bind the listening servers to.
-# The TaskManagers will try to connect to the JobManager on that host.
 #ZOOKEEPER!
 #jobmanager.rpc.address: localhost
 
-# The port where the JobManager's main actor system listens for messages.
 jobmanager.rpc.port: 6123
 
-# The heap size for the JobManager JVM
 jobmanager.heap.mb: 4096
 
-# The heap size for the TaskManager JVM
 taskmanager.heap.mb: 10240
 
-# The number of task slots that each TaskManager offers. Each slot runs one parallel pipeline.
 taskmanager.numberOfTaskSlots: 4
 
-# Specify whether TaskManager memory should be allocated when starting up (true) or when
-# memory is required in the memory manager (false)
 taskmanager.memory.preallocate: false
 
-# The parallelism used for programs that did not specify and other parallelism.
 parallelism.default: 1
 
 #==============================================================================
 # Web Frontend
 #==============================================================================
 
-# The port under which the web-based runtime monitor listens.
-# A value of -1 deactivates the web server.
 jobmanager.web.port: 18081
 
-# The port uder which the standalone web client
-# (for job upload and submit) listens.
 webclient.port: 18080
 
 #==============================================================================
@@ -67,13 +53,7 @@ webclient.port: 18080
 #
 # Supported backends: jobmanager, filesystem
 
-state.backend: jobmanager
-
-# Directory for storing checkpoints in a flink supported filesystem
-# Note: State backend must be accessible from the JobManager, use file://
-# only for local setups.
-#
-# state.backend.fs.checkpointdir: hdfs://checkpoints
+state.backend: filesystem
 
 #==============================================================================
 # Advanced
@@ -114,15 +94,8 @@ fs.hdfs.hadoopconf: {{ conf_dir }}
 # Master High Availability (required configuration)
 #==============================================================================
 
-# The list of ZooKepper quorum peers that coordinate the high-availability
-# setup. This must be a list of the form:
-# "host1:clientPort,host2[:clientPort],..." (default clientPort: 2181)
-
 recovery.mode: zookeeper
 
 recovery.zookeeper.quorum: {{ zookeeper_quorum }}
-
-# Note: You need to set the state backend to 'filesystem' and the checkpoint
-# directory (see above) before configuring the storageDir.
 
 recovery.zookeeper.storageDir: file:///opt/flink/recovery/

@@ -30,7 +30,7 @@
 
   <property>
     <name>flink_appname</name>
-    <value>flinkapp-from-ambari</value>
+    <value>flink-yarn-shell</value>
     <description>Flink application name</description>
   </property> 
 
