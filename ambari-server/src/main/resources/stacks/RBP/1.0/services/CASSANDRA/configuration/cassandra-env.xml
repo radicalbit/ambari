@@ -19,21 +19,35 @@
 
 <configuration>
 
-  <property>
-    <name>cassandra_base_dir</name>
-    <display-name>Installation Directory</display-name>
-    <description>The directory where Cassandra will be installed.</description>
-    <value>/opt/cassandra</value>
+  <property require-input="true">
+    <name>cassandra_log_dir</name>
+    <display-name>Log Directory</display-name>
+    <description>The directory where Cassandra will write log files.</description>
+    <value>/var/log/cassandra</value>
   </property>
 
-  <property>
+  <property require-input="true">
     <name>cassandra_pid_dir</name>
-    <display-name>Installation Directory</display-name>
+    <display-name>Pid Directory</display-name>
     <description>Directory containing process ID file.</description>
     <value>/var/run/cassandra</value>
   </property>
 
-  <property>
+  <property require-input="true">
+    <name>max_heap_size</name>
+    <display-name>Max Heap Size</display-name>
+    <description>Total amount of memory dedicated to the Java heap.</description>
+    <value>8G</value>
+  </property>
+
+  <property require-input="true">
+    <name>heap_newsize</name>
+    <display-name>Heap Newsize</display-name>
+    <description>Size of the young generation.</description>
+    <value>2G</value>
+  </property>
+
+  <property require-input="true">
     <name>cassandra_user</name>
     <value>cassandra</value>
     <property-type>USER</property-type>

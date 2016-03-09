@@ -36,25 +36,36 @@
                         <scriptType>PYTHON</scriptType>
                         <timeout>600</timeout>
                     </commandScript>
-                    <configFiles>
-                        <configFile>
-                            <type>yaml</type>
-                            <fileName>cassandra.yaml</fileName>
-                            <dictionaryName>cassandra-conf</dictionaryName>
-                        </configFile>
-                    </configFiles>
+                    <!--<configFiles>-->
+                        <!--<configFile>-->
+                            <!--<type>yaml</type>-->
+                            <!--<fileName>cassandra.yaml</fileName>-->
+                            <!--<dictionaryName>cassandra-conf</dictionaryName>-->
+                        <!--</configFile>-->
+                    <!--</configFiles>-->
                 </component>
             </components>
+
             <osSpecifics>
                 <osSpecific>
-                    <osFamily>redhat6</osFamily>
+                    <osFamily>any</osFamily>
+                    <packages>
+                        <package><name>cassandra-2.2.5*</name></package>
+                    </packages>
                 </osSpecific>
             </osSpecifics>
+
+            <commandScript>
+                <script>scripts/service_check.py</script>
+                <scriptType>PYTHON</scriptType>
+                <timeout>300</timeout>
+            </commandScript>
+
             <configuration-dependencies>
                 <config-type>cassandra-env</config-type>
                 <config-type>cassandra-conf</config-type>
             </configuration-dependencies>
-            <restartRequiredAfterChange>false</restartRequiredAfterChange>
+            <restartRequiredAfterChange>true</restartRequiredAfterChange>
         </service>
     </services>
 </metainfo>
