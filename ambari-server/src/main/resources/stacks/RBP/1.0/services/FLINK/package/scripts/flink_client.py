@@ -27,6 +27,7 @@ class FlinkClient(Script):
 
   def configure(self, env, isInstall=False):
     import params
+    env.set_params(params)
     flink()
     self.create_hdfs_user(params.flink_user)
         

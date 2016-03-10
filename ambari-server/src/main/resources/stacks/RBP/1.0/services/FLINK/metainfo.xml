@@ -30,7 +30,7 @@
                   <name>FLINK_CLIENT</name>
                   <displayName>Flink</displayName>
                   <category>CLIENT</category>
-                  <cardinality>1+</cardinality>
+                  <cardinality>0+</cardinality>
                   <commandScript>
                     <script>scripts/flink_client.py</script>
                     <scriptType>PYTHON</scriptType>

@@ -25,19 +25,19 @@ def flink():
 
   Directory([params.flink_log_dir],
       owner=params.flink_user,
-      group=params.flink_group,
+      group=params.user_group,
       recursive=True
   )
 
   File(params.flink_log_file,
       mode=0644,
       owner=params.flink_user,
-      group=params.flink_group,
+      group=params.user_group,
       content=''
   )
 
   File(
-      format("{conf_dir}/flink-conf.yaml"),
+      format("{params.conf_dir}/flink-conf.yaml"),
       owner=params.flink_user,
       mode=0644,
       content=Template('flink-conf.yaml.j2', conf_dir=params.conf_dir)

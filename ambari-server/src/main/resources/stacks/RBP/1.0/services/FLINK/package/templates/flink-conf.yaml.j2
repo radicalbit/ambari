@@ -21,81 +21,51 @@
 # Common
 #==============================================================================
 
-#ZOOKEEPER!
-#jobmanager.rpc.address: localhost
-
-jobmanager.rpc.port: 6123
-
-jobmanager.heap.mb: 4096
-
-taskmanager.heap.mb: 10240
-
-taskmanager.numberOfTaskSlots: 4
-
-taskmanager.memory.preallocate: false
-
-parallelism.default: 1
-
-#==============================================================================
-# Web Frontend
-#==============================================================================
-
-jobmanager.web.port: 18081
-
-webclient.port: 18080
-
-#==============================================================================
-# Streaming state checkpointing
-#==============================================================================
-
-# The backend that will be used to store operator state checkpoints if
-# checkpointing is enabled.
-#
-# Supported backends: jobmanager, filesystem
-
-state.backend: filesystem
+jobmanager.rpc.address: {{ jobmanager_rpc_address }}
+jobmanager.rpc.port: {{ jobmanager_rpc_port }}
+jobmanager.heap.mb: {{ jobmanager_heap_mb }}
+taskmanager.heap.mb: {{ taskmanager_heap_mb }}
+taskmanager.numberOfTaskSlots: {{ taskmanager_numberOfTaskSlots }}
+parallelism.default: {{ parallelism_default }}
+fs.default-scheme: {{ fs_default_scheme }}
+fs.hdfs.hadoopconf: {{ fs_hdfs_hadoopconf }}
 
 #==============================================================================
 # Advanced
 #==============================================================================
 
-# The number of buffers for the network stack.
-#
-# taskmanager.network.numberOfBuffers: 2048
+taskmanager.memory.size: {{ taskmanage_memory_size }}
+taskmanager.memory.fraction: {{ taskmanager_memory_fraction }}
+taskmanager.memory.segment-size: {{ taskmanager_memory_segment_size }}
+taskmanager.memory.preallocate: {{ taskmanager_memory_preallocate }}
+taskmanager.tmp.dirs: {{ taskmanager_tmp_dirs }}
+jobmanager.web.port: {{ jobmanager_web_port }}
+fs.output.always-create-directory: {{ fs_output_always_create_directory }}
+taskmanager.network.numberOfBuffers: {{ taskmanager_network_numberOfBuffers }}
+state.backend: {{ state_backend }}
+blob.storage.directory: {{ blob_storage_directory }}
+blob.server.port: {{ blob_server_port }}
+state.backend.fs.checkpointdir: {{ state_backend_fs_checkpointdir }}
 
-# Directories for temporary files.
-#
-# Add a delimited list for multiple directories, using the system directory
-# delimiter (colon ':' on unix) or a comma, e.g.:
-#     /data1/tmp:/data2/tmp:/data3/tmp
-#
-# Note: Each directory entry is read from and written to by a different I/O
-# thread. You can include the same directory multiple times in order to create
-# multiple I/O threads against that directory. This is for example relevant for
-# high-throughput RAIDs.
-#
-# If not specified, the system-specific Java temporary directory (java.io.tmpdir
-# property) is taken.
-#
-# taskmanager.tmp.dirs: /tmp
+#==============================================================================
+# Web Frontend
+#==============================================================================
 
-# Path to the Hadoop configuration directory.
-#
-# This configuration is used when writing into HDFS. Unless specified otherwise,
-# HDFS file creation will use HDFS default settings with respect to block-size,
-# replication factor, etc.
-#
-# You can also directly specify the paths to hdfs-default.xml and hdfs-site.xml
-# via keys 'fs.hdfs.hdfsdefault' and 'fs.hdfs.hdfssite'.
-#
-fs.hdfs.hadoopconf: {{ conf_dir }}
+jobmanager.web.port: {{ jobmanager_web_port }}
+jobmanager.web.history: {{ jobmanager_web_history }}
+jobmanager.web.checkpoints.disable: {{ jobmanager_web_checkpoints_disable }}
+jobmanager.web.checkpoints.history: {{ jobmanager_web_checkpoints_history }}
+
+#==============================================================================
+# YARN
+#==============================================================================
+
+yarn.application-master.port: {{ yarn_application_master_port }}
 
 #==============================================================================
 # Master High Availability (required configuration)
 #==============================================================================
 
-recovery.mode: zookeeper
-
+recovery.mode: {{ recovery_mode }}
 recovery.zookeeper.quorum: {{ zookeeper_quorum }}
-
-recovery.zookeeper.storageDir: file:///opt/flink/recovery/
+recovery.zookeeper.path.root: {{ recovery_zookeeper_path_root }}
