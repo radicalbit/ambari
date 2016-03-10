@@ -19,19 +19,6 @@
 <configuration>
 
   <property require-input="true">
-    <name>alluxio.underfs.address</name>
-    <description>Alluxio UnderFS Address</description>
-    <!-- cluster variant -->
-    <value>hdfs://localhost:8020</value>
-  </property>
-
-  <property require-input="true">
-    <name>alluxio.master.journal.folder</name>
-    <description>Alluxio Master Journal Folder</description>
-    <value>${alluxio.home}/journal/</value>
-  </property>
-
-  <property require-input="true">
     <name>alluxio.worker.evictor.class</name>
     <description>Alluxio Worker Evictor Class</description>
     <value>alluxio.worker.block.evictor.LRUEvictor</value>

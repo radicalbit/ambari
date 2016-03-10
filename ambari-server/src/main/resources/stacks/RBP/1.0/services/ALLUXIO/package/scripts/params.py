@@ -27,14 +27,14 @@ tmp_dir = Script.get_tmp_dir()
 
 
 # alluxio underfs address
-underfs_addr = config['configurations']['alluxio-config']['alluxio.underfs.address']
+underfs_addr = config['configurations']['core-site']['fs.defaultFS']
 #fs_root = config['configurations']['core-site']['fs.defaultFS']
 
 # hadoop core-site.xml dir
 hadoop_core_site = conf_select.get_hadoop_conf_dir()
 
 # alluxio master journal folder
-journal_addr = config['configurations']['alluxio-config']['alluxio.master.journal.folder']
+journal_addr = config['configurations']['core-site']['fs.defaultFS'] + '/journal'
 
 # alluxio worker evictor class
 evictor_class = config['configurations']['alluxio-config']['alluxio.worker.evictor.class']
