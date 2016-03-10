@@ -35,11 +35,11 @@ def flink():
 
   if not os.path.exists(format('{flink_install_dir}/lib/{alluxio_jar_name}')):
     download_alluxio_client_jar(alluxio_jar_name)
-    Execute('cp /tmp/{alluxio_jar} {flink_install_dir}/lib/', user='root')
+    Execute(format('cp /tmp/{alluxio_jar_name} {flink_install_dir}/lib/'), user='root')
 
   if not os.path.exists(format('{flink_install_dir}/ship/{alluxio_jar_name}')):
     download_alluxio_client_jar(alluxio_jar_name)
-    Execute('cp /tmp/{alluxio_jar} {flink_install_dir}/ship/', user='root')
+    Execute(format('cp /tmp/{alluxio_jar_name} {flink_install_dir}/ship/'), user='root')
 
   Directory([params.flink_log_dir],
       owner=params.flink_user,
