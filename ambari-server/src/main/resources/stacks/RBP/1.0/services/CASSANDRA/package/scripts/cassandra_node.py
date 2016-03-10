@@ -16,84 +16,56 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
-import sys, os, pwd, signal, time, hashlib
 from resource_management import *
-from resource_management.libraries.functions.check_process_status import check_process_status
-from resource_management.core import sudo
-from resource_management.core.exceptions import ComponentIsNotRunning
-from resource_management.core.logger import Logger
-from subprocess import call
-import yaml
 
 class CassandraNode(Script):
 
   def install(self, env):
-    # import params
+    import params
+    env.set_params(params)
     self.install_packages(env)
 
-    #
-    # if not os.path.exists(params.cassandra_tmp_file):
-    #   Execute(
-    #       'wget '+params.cassandra_download_link+' -O '+params.cassandra_tmp_file+' -a /tmp/cassandra_download.log',
-    #       user=params.cassandra_user
-    #   )
-    # else:
-    #   hadoop_tmp_file_md5 = hashlib.md5(open(params.cassandra_tmp_file, "rb").read()).hexdigest()
-    #
-    #   if not hadoop_tmp_file_md5 == params.binary_file_md5:
-    #     Execute(
-    #         'rm -f '+params.cassandra_tmp_file,
-    #         user=params.cassandra_user
-    #     )
-    #
-    #     Execute(
-    #         'wget '+params.cassandra_download_link+' -O '+params.cassandra_tmp_file+' -a /tmp/cassandra_download.log',
-    #         user=params.cassandra_user
-    #     )
-    #
-    # Directory(
-    #     [params.cassandra_install_dir, params.cassandra_pid_file, params.commitlog_directory,
-    #      params.data_file_directories, params.saved_caches_directory],
-    #     owner=params.cassandra_user,
-    #     group=params.user_group,
-    #     recursive=True
-    # )
-    #
-    # Execute(
-    #     '/bin/tar -zxvf ' + params.cassandra_tmp_file + ' --strip 1 -C ' + params.cassandra_install_dir,
-    #     user=params.cassandra_user
-    # )
+    security_folder = '/etc/security/limits.d'
+
+    File(
+        format("{security_folder}/{cassandra_user}.conf"),
+        owner='root',
+        mode=0700,
+        content=Template('cassandra.conf.j2', conf_dir=security_folder)
+    )
+
+    Execute(format('echo "* - nproc 32768" >> {security_folder}/90-nproc.conf'), user='root')
+
+    Execute('echo "vm.max_map_count = 131072" >> /etc/sysctl.conf', user='root')
+
+    Execute('sysctl -p', user='root')
+
+    Execute('swapoff --all', user='root')
+
 
   def configure(self, env):
     import params
     env.set_params(params)
 
-    # File(
-    #     os.path.join(params.cassandra_conf_dir, 'cassandra.yaml'),
-    #     content=yaml.safe_dump(params.cassandra_configs),
-    #     mode=0644,
-    #     owner=params.cassandra_user
-    # )
-
     File(
         format("{cassandra_conf_dir}/cassandra.yaml"),
         owner=params.cassandra_user,
         mode=0700,
-        content=Template('cassandra.yaml', conf_dir=cassandra_conf_dir)
+        content=Template('cassandra.yaml.j2', conf_dir=cassandra_conf_dir)
     )
 
     File(
         format("{cassandra_conf_dir}/cassandra-env.sh"),
         owner=params.cassandra_user,
         mode=0700,
-        content=Template('cassandra-env.sh', conf_dir=cassandra_conf_dir)
+        content=Template('cassandra-env.sh.j2', conf_dir=cassandra_conf_dir)
     )
 
   def start(self, env):
     import params
     self.configure(env)
     Execute(
-        format('{params.cassandra_bin_dir}/cassandra -p {params.cassandra_pid_file}/cassandra.pid'),
+        format('{params.cassandra_bin_dir}/cassandra -p {params.cassandra_pid_dir}/cassandra.pid'),
         user=params.cassandra_user
     )
     # cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep CassandraDaemon | awk '{print $1}'`> " + params.cassandra_pid_file + "/cassandra.pid"
@@ -101,7 +73,7 @@ class CassandraNode(Script):
 
   def stop(self, env):
     import params
-    Execute('kill `cat ' + params.cassandra_pid_file + '/cassandra.pid`', user=params.cassandra_user)
+    Execute(format('kill `cat {params.cassandra_pid_dir}/cassandra.pid`'), user=params.cassandra_user)
 
   def status(self, env):
     import status_params as params

@@ -16,7 +16,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
-#import os.path
 from resource_management.libraries.script.script import Script
 
 config = Script.get_config()
@@ -35,7 +34,7 @@ cassandra_conf_dir = cassandra_install_dir + '/conf'
 cassandra_bin_dir = cassandra_install_dir + '/bin'
 
 cassandra_log_dir = cassandra_env['cassandra_log_dir']
-cassandra_pid_file = cassandra_env['cassandra_pid_dir']
+cassandra_pid_dir = cassandra_env['cassandra_pid_dir']
 
 cluster_name = cassandra_conf['cluster_name']
 
