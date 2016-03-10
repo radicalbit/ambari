@@ -43,7 +43,12 @@
               <osSpecific>
                 <osFamily>any</osFamily>
                 <packages>
-                   <package><name>flink-1.0.0*</name></package>
+                    <package>
+                        <name>wget</name>
+                    </package>
+                    <package>
+                        <name>flink-1.0.0*</name>
+                    </package>
                 </packages>
               </osSpecific>
             </osSpecifics>
@@ -61,6 +66,7 @@
 
       	    <configuration-dependencies>
 	        	<config-type>flink-config</config-type>
+                <config-type>flink-log4j</config-type>
       	    </configuration-dependencies>
             <restartRequiredAfterChange>false</restartRequiredAfterChange>
         </service>

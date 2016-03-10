@@ -70,13 +70,8 @@ yarn_application_master_port = config['configurations']['flink-config']['yarn.ap
 recovery_mode = config['configurations']['flink-config']['recovery.mode']
 recovery_zookeeper_path_root = format('{fs_default_scheme}/flink/recovery')
 
-# params from flink-config
-# flink_numcontainers = config['configurations']['flink-config']['flink_numcontainers']
-# flink_jobmanager_memory = config['configurations']['flink-config']['flink_jobmanager_memory']
-# flink_container_memory = config['configurations']['flink-config']['flink_container_memory']
-# flink_appname = config['configurations']['flink-config']['flink_appname']
-# flink_queue = config['configurations']['flink-config']['flink_queue']
-# flink_streaming = config['configurations']['flink-config']['flink_streaming']
+# log4j configs
+log4j_props = config['configurations']['flink-log4j']['content']
 
 # params from flink-env.yaml
 flink_user = config['configurations']['flink-env']['flink_user']

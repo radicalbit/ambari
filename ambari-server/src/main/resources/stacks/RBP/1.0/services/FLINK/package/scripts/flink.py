@@ -18,10 +18,28 @@ limitations under the License.
 Ambari Agent
 
 """
+import os
 from resource_management import *
 
 def flink():
   import params
+
+  if not os.path.exists(format('{flink_install_dir}/ship/')):
+    Directory([format('{flink_install_dir}/ship')],
+        owner='root',
+        group='root',
+        recursive=True
+    )
+
+  alluxio_jar_name = 'alluxio-core-client-1.0.0-jar-with-dependencies.jar'
+
+  if not os.path.exists(format('{flink_install_dir}/lib/{alluxio_jar_name}')):
+    download_alluxio_client_jar(alluxio_jar_name)
+    Execute('cp /tmp/{alluxio_jar} {flink_install_dir}/lib/', user='root')
+
+  if not os.path.exists(format('{flink_install_dir}/ship/{alluxio_jar_name}')):
+    download_alluxio_client_jar(alluxio_jar_name)
+    Execute('cp /tmp/{alluxio_jar} {flink_install_dir}/ship/', user='root')
 
   Directory([params.flink_log_dir],
       owner=params.flink_user,
@@ -42,3 +60,26 @@ def flink():
       mode=0644,
       content=Template('flink-conf.yaml.j2', conf_dir=params.conf_dir)
   )
+
+  if not is_empty(params.log4j_props):
+    File(format("{params.conf_dir}/log4j.properties"),
+         mode=0644,
+         group=params.user_group,
+         owner=params.flink_user,
+         content=params.log4j_props
+         )
+  elif (os.path.exists(format("{params.conf_dir}/log4j.properties"))):
+    File(format("{params.conf_dir}/log4j.properties"),
+         mode=0644,
+         group=params.user_group,
+         owner=params.flink_user
+         )
+
+def download_alluxio_client_jar(jar_name):
+  jar_url = 'http://public-repo.readicalbit.io/jars'
+
+  if not os.path.exists(format('/tmp/{jar_name}')):
+    Execute(
+        format('wget {jar_url}/{jar_name} -O /tmp/{jar_name} -a /tmp/alluxio_download.log'),
+        user='root'
+    )
