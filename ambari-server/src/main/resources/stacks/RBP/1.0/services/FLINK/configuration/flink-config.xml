@@ -165,6 +165,9 @@
     <name>blob.storage.directory</name>
     <value></value>
     <description>Directory for storing blobs (such as user jar’s) on the TaskManagers.</description>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
   </property>
 
   <property>
