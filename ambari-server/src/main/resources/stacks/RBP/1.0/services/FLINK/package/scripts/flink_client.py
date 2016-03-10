@@ -15,30 +15,30 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-Ambari Agent
-
 """
 from resource_management import *
+from flink import flink
 
-def flink():
-  import params
+class FlinkClient(Script):
 
-  Directory([params.flink_log_dir],
-      owner=params.flink_user,
-      group=params.flink_group,
-      recursive=True
-  )
+  def install(self, env):
+    self.install_packages(env)
+    self.configure(env)
 
-  File(params.flink_log_file,
-      mode=0644,
-      owner=params.flink_user,
-      group=params.flink_group,
-      content=''
-  )
+  def configure(self, env, isInstall=False):
+    import params
+    flink()
+    self.create_hdfs_user(params.flink_user)
+        
 
-  File(
-      format("{conf_dir}/flink-conf.yaml"),
-      owner=params.flink_user,
-      mode=0644,
-      content=Template('flink-conf.yaml.j2', conf_dir=params.conf_dir)
-  )
+  def status(self, env):
+    raise ClientComponentHasNoStatus()
+
+
+  def create_hdfs_user(self, user):
+    Execute('hadoop fs -mkdir -p /user/'+user, user='hdfs', ignore_failures=True)
+    Execute('hadoop fs -chown ' + user + ' /user/'+user, user='hdfs')
+    Execute('hadoop fs -chgrp ' + user + ' /user/'+user, user='hdfs')
+          
+if __name__ == "__main__":
+  FlinkClient().execute()
