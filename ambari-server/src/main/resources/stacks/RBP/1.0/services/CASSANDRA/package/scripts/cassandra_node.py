@@ -17,6 +17,7 @@ limitations under the License.
 
 """
 from resource_management import *
+from cassandra import cassandra
 
 class CassandraNode(Script):
 
@@ -24,42 +25,13 @@ class CassandraNode(Script):
     import params
     env.set_params(params)
     self.install_packages(env)
-
-    security_folder = '/etc/security/limits.d'
-
-    File(
-        format("{security_folder}/{cassandra_user}.conf"),
-        owner='root',
-        mode=0644,
-        content=Template('cassandra.conf.j2', conf_dir=security_folder)
-    )
-
-    Execute(format('echo "* - nproc 32768" >> {security_folder}/90-nproc.conf'), user='root')
-
-    Execute('echo "vm.max_map_count = 131072" >> /etc/sysctl.conf', user='root')
-
-    Execute('sysctl -p', user='root')
-
-    Execute('swapoff --all', user='root')
+    cassandra('install')
 
 
   def configure(self, env):
     import params
     env.set_params(params)
-
-    File(
-        format("{params.cassandra_conf_dir}/cassandra.yaml"),
-        owner=params.cassandra_user,
-        mode=0700,
-        content=Template('cassandra.yaml.j2', conf_dir=params.cassandra_conf_dir)
-    )
-
-    File(
-        format("{params.cassandra_conf_dir}/cassandra-env.sh"),
-        owner=params.cassandra_user,
-        mode=0700,
-        content=Template('cassandra-env.sh.j2', conf_dir=params.cassandra_conf_dir)
-    )
+    cassandra()
 
   def start(self, env):
     import params
