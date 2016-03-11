@@ -24,7 +24,9 @@ configurations = config['configurations']
 cassandra_env = configurations['cassandra-env']
 cassandra_conf = configurations['cassandra-conf']
 
+
 hostname = config['hostname']
+host_ip = get_host_ip(hostname)
 
 cassandra_user = cassandra_env['cassandra_user']
 user_group = config['configurations']['cluster-env']['user_group']
@@ -55,6 +57,16 @@ else:
 
 max_heap_size = cassandra_env['max_heap_size']
 heap_newsize = cassandra_env['heap_newsize']
+
+
+def get_host_ip(name):
+  nodes_hostname = config['clusterHostInfo']['all_hosts']
+  nodes_ip = config['clusterHostInfo']['all_ipv4_ips']
+  host_ip = ''
+  for i in range(0, len(nodes_hostname) - 1):
+    if name == nodes_hostname[i]:
+      host_ip = nodes_ip[i]
+  return host_ip
 
 
 # config_defaults = {
