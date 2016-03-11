@@ -29,17 +29,17 @@ class FlinkClient(Script):
     import params
     env.set_params(params)
     flink()
-    self.create_hdfs_user(params.flink_user)
+    # self.create_hdfs_user(params.flink_user)
         
 
   def status(self, env):
     raise ClientComponentHasNoStatus()
 
 
-  def create_hdfs_user(self, user):
-    Execute('hadoop fs -mkdir -p /user/'+user, user='hdfs', ignore_failures=True)
-    Execute('hadoop fs -chown ' + user + ' /user/'+user, user='hdfs')
-    Execute('hadoop fs -chgrp ' + user + ' /user/'+user, user='hdfs')
+  # def create_hdfs_user(self, user):
+  #   Execute('hadoop fs -mkdir -p /user/'+user, user='hdfs', ignore_failures=True)
+  #   Execute('hadoop fs -chown ' + user + ' /user/'+user, user='hdfs')
+  #   Execute('hadoop fs -chgrp ' + user + ' /user/'+user, user='hdfs')
           
 if __name__ == "__main__":
   FlinkClient().execute()

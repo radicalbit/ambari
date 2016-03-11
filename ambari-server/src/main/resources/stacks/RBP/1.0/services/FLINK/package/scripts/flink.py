@@ -33,9 +33,9 @@ def flink():
 
   alluxio_jar_name = 'alluxio-core-client-1.0.0-jar-with-dependencies.jar'
 
-  if not os.path.exists(format('{flink_install_dir}/lib/{alluxio_jar_name}')):
-    download_alluxio_client_jar(alluxio_jar_name)
-    Execute(format('cp /tmp/{alluxio_jar_name} {flink_install_dir}/lib/'), user='root')
+  # if not os.path.exists(format('{flink_install_dir}/lib/{alluxio_jar_name}')):
+  #   download_alluxio_client_jar(alluxio_jar_name)
+  #   Execute(format('cp /tmp/{alluxio_jar_name} {flink_install_dir}/lib/'), user='root')
 
   if not os.path.exists(format('{flink_install_dir}/ship/{alluxio_jar_name}')):
     download_alluxio_client_jar(alluxio_jar_name)
