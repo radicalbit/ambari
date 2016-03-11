@@ -30,7 +30,7 @@ class CassandraNode(Script):
     File(
         format("{security_folder}/{cassandra_user}.conf"),
         owner='root',
-        mode=0700,
+        mode=0644,
         content=Template('cassandra.conf.j2', conf_dir=security_folder)
     )
 
@@ -48,17 +48,17 @@ class CassandraNode(Script):
     env.set_params(params)
 
     File(
-        format("{cassandra_conf_dir}/cassandra.yaml"),
+        format("{params.cassandra_conf_dir}/cassandra.yaml"),
         owner=params.cassandra_user,
         mode=0700,
-        content=Template('cassandra.yaml.j2', conf_dir=cassandra_conf_dir)
+        content=Template('cassandra.yaml.j2', conf_dir=params.cassandra_conf_dir)
     )
 
     File(
-        format("{cassandra_conf_dir}/cassandra-env.sh"),
+        format("{params.cassandra_conf_dir}/cassandra-env.sh"),
         owner=params.cassandra_user,
         mode=0700,
-        content=Template('cassandra-env.sh.j2', conf_dir=cassandra_conf_dir)
+        content=Template('cassandra-env.sh.j2', conf_dir=params.cassandra_conf_dir)
     )
 
   def start(self, env):
