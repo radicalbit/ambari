@@ -20,11 +20,6 @@
 
 <configuration>
 
-  fs.default-scheme ----> [HDFS - NASCOSTO]
-  fs.hdfs.hadoopconf ----> [nascosto {hadoop_conf_dir}]
-  state.backend.fs.checkpointdir
-  recovery.zookeeper.path.root
-
   <!--Common Options-->
 
   <property>
