@@ -56,8 +56,8 @@ commitlog_directory = cassandra_conf['commitlog_directory']
 data_file_directories = cassandra_conf['data_file_directories']
 saved_caches_directory = cassandra_conf['saved_caches_directory']
 
-listen_address = hostname
-rpc_address = hostname
+listen_address = host_ip
+rpc_address = host_ip
 cassandra_nodes = config['clusterHostInfo']['cassandra_node_hosts']
 if len(cassandra_nodes) > 8:
   seeds = get_host_ip(cassandra_nodes[0], nodes_hostname, nodes_ip) + "," + get_host_ip(cassandra_nodes[1], nodes_hostname, nodes_ip) + "," + get_host_ip(cassandra_nodes[2], nodes_hostname, nodes_ip)

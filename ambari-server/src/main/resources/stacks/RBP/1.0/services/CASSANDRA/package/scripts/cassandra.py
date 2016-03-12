@@ -31,25 +31,33 @@ def cassandra(action = None):
         content=Template('cassandra.conf.j2', conf_dir=security_folder)
     )
 
-    Execute(format('echo "* - nproc 32768" >> {security_folder}/90-nproc.conf'), user='root')
-
-    Execute('echo "vm.max_map_count = 131072" >> /etc/sysctl.conf', user='root')
-
-    Execute('sysctl -p', user='root')
-
-    Execute('swapoff --all', user='root')
+    # Execute(format('echo "* - nproc 32768" >> {security_folder}/90-nproc.conf'), user='root')
+    #
+    # Execute('echo "vm.max_map_count = 131072" >> /etc/sysctl.conf', user='root')
+    #
+    # Execute('sysctl -p', user='root')
+    #
+    # Execute('swapoff --all', user='root')
 
   else :
+
+    Directory(
+        [params.commitlog_directory, params.data_file_directories, params.saved_caches_directory],
+        owner=params.cassandra_user,
+        group=params.user_group,
+        recursive=True
+    )
+
     Execute(format('chown -R {params.cassandra_user}:{params.user_group} {params.commitlog_directory}'), user='root')
     Execute(format('chown -R {params.cassandra_user}:{params.user_group} {params.data_file_directories}'), user='root')
     Execute(format('chown -R {params.cassandra_user}:{params.user_group} {params.saved_caches_directory}'), user='root')
 
-    File(
-        format("{params.cassandra_conf_dir}/cassandra.yaml"),
-        owner=params.cassandra_user,
-        mode=0644,
-        content=Template('cassandra.yaml.j2', conf_dir=params.cassandra_conf_dir)
-    )
+    # File(
+    #     format("{params.cassandra_conf_dir}/cassandra.yaml"),
+    #     owner=params.cassandra_user,
+    #     mode=0644,
+    #     content=Template('cassandra.yaml.j2', conf_dir=params.cassandra_conf_dir)
+    # )
 
     File(
         format("{params.cassandra_conf_dir}/cassandra-env.sh"),
