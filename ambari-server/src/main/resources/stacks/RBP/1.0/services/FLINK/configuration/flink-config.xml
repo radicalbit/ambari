@@ -22,17 +22,17 @@
 
   <!--Common Options-->
 
-  <property>
-    <name>jobmanager.rpc.address</name>
-    <value>localhost</value>
-    <description>The IP address of the JobManager, which is the master/coordinator of the distributed system</description>
-  </property>
+  <!--<property>-->
+    <!--<name>jobmanager.rpc.address</name>-->
+    <!--<value>localhost</value>-->
+    <!--<description>The IP address of the JobManager, which is the master/coordinator of the distributed system</description>-->
+  <!--</property>-->
 
-  <property>
-    <name>jobmanager.rpc.port</name>
-    <value>6123</value>
-    <description>The port number of the JobManager</description>
-  </property>
+  <!--<property>-->
+    <!--<name>jobmanager.rpc.port</name>-->
+    <!--<value>6123</value>-->
+    <!--<description>The port number of the JobManager</description>-->
+  <!--</property>-->
 
   <property>
     <name>jobmanager.heap.mb</name>
@@ -42,17 +42,17 @@
       applications (with many operators), or if you are keeping a long history of them.</description>
   </property>
 
-  <property>
-    <name>taskmanager.heap.mb</name>
-    <value>1024</value>
-    <description>JVM heap size (in megabytes) for the TaskManagers, which are the parallel workers of the system.
-      In contrast to Hadoop, Flink runs operators (e.g., join, aggregate) and user-defined functions
-      (e.g., Map, Reduce, CoGroup) inside the TaskManager (including sorting/hashing/caching),
-      so this value should be as large as possible. If the cluster is exclusively running Flink,
-      the total amount of available memory per machine minus some memory for the operating system (maybe 1-2 GB)
-      is a good value. On YARN setups, this value is automatically configured to the size of the TaskManager’s YARN container,
-      minus a certain tolerance value.</description>
-  </property>
+  <!--<property>-->
+    <!--<name>taskmanager.heap.mb</name>-->
+    <!--<value>1024</value>-->
+    <!--<description>JVM heap size (in megabytes) for the TaskManagers, which are the parallel workers of the system.-->
+      <!--In contrast to Hadoop, Flink runs operators (e.g., join, aggregate) and user-defined functions-->
+      <!--(e.g., Map, Reduce, CoGroup) inside the TaskManager (including sorting/hashing/caching),-->
+      <!--so this value should be as large as possible. If the cluster is exclusively running Flink,-->
+      <!--the total amount of available memory per machine minus some memory for the operating system (maybe 1-2 GB)-->
+      <!--is a good value. On YARN setups, this value is automatically configured to the size of the TaskManager’s YARN container,-->
+      <!--minus a certain tolerance value.</description>-->
+  <!--</property>-->
 
   <property>
     <name>taskmanager.numberOfTaskSlots</name>
@@ -65,16 +65,16 @@
       or half the number of cores).</description>
   </property>
 
-  <property>
-    <name>parallelism.default</name>
-    <value>1</value>
-    <description>The default parallelism to use for programs that have no parallelism specified.
-      For setups that have no concurrent jobs running, setting this value to NumTaskManagers * NumSlotsPerTaskManager
-      will cause the system to use all available execution resources for the program’s execution. Note: The default
-      parallelism can be overwriten for an entire job by calling setParallelism(int parallelism) on the
-      ExecutionEnvironment or by passing -p [parallelism] to the Flink Command-line frontend. It can be overwritten
-      for single transformations by calling setParallelism(int parallelism) on an operator. </description>
-  </property>
+  <!--<property>-->
+    <!--<name>parallelism.default</name>-->
+    <!--<value>1</value>-->
+    <!--<description>The default parallelism to use for programs that have no parallelism specified.-->
+      <!--For setups that have no concurrent jobs running, setting this value to NumTaskManagers * NumSlotsPerTaskManager-->
+      <!--will cause the system to use all available execution resources for the program’s execution. Note: The default-->
+      <!--parallelism can be overwriten for an entire job by calling setParallelism(int parallelism) on the-->
+      <!--ExecutionEnvironment or by passing -p [parallelism] to the Flink Command-line frontend. It can be overwritten-->
+      <!--for single transformations by calling setParallelism(int parallelism) on an operator. </description>-->
+  <!--</property>-->
 
   <!--Advanced Options-->
 
@@ -149,12 +149,12 @@
       increase this value</description>
   </property>
 
-  <property>
-    <name>state.backend</name>
-    <value>filesystem</value>
-    <description>The backend that will be used to store operator state checkpoints if
-      checkpointing is enabled. Supported backends: filesystem, jobmanager</description>
-  </property>
+  <!--<property>-->
+    <!--<name>state.backend</name>-->
+    <!--<value>filesystem</value>-->
+    <!--<description>The backend that will be used to store operator state checkpoints if-->
+      <!--checkpointing is enabled. Supported backends: filesystem, jobmanager</description>-->
+  <!--</property>-->
 
   <property>
     <name>blob.storage.directory</name>
@@ -219,55 +219,17 @@
 
   <!--High Availability Mode-->
 
-  <property>
-    <name>recovery.mode</name>
-    <value>zookeeper</value>
-    <description>Defines the recovery mode used for the cluster execution. Currently,
-      Flink supports the ‘standalone’ mode where only a single JobManager runs and
-      no JobManager state is checkpointed. The high availability mode ‘zookeeper’
-      supports the execution of multiple JobManagers and JobManager state checkpointing.
-      Among the group of JobManagers, ZooKeeper elects one of them as the leader which
-      is responsible for the cluster execution. In case of a JobManager failure,
-      a standby JobManager will be elected as the new leader and is given the
-      last checkpointed JobManager state.</description>
-  </property>
-
-  <!-- params for service -->
-
   <!--<property>-->
-    <!--<name>flink_numcontainers</name>-->
-    <!--<value>1</value>-->
-    <!--<description>Number of YARN container to allocate (=Number of Task Managers)</description>-->
-  <!--</property> -->
-
-  <!--<property>-->
-    <!--<name>flink_appname</name>-->
-    <!--<value>flink-yarn-shell</value>-->
-    <!--<description>Flink application name</description>-->
-  <!--</property> -->
-
-  <!--<property>-->
-    <!--<name>flink_queue</name>-->
-    <!--<value>default</value>-->
-    <!--<description>YARN queue to schedule Flink job on</description>-->
-  <!--</property> -->
-
-  <!--<property>-->
-    <!--<name>flink_streaming</name>-->
-    <!--<value>false</value>-->
-    <!--<description>If true, Flink will be started in streaming mode: to be used when only streaming jobs will be executed on Flink</description>-->
-  <!--</property> -->
-  
-  <!--<property>-->
-    <!--<name>flink_jobmanager_memory</name>-->
-    <!--<value>768</value>-->
-    <!--<description>Memory for JobManager Container [in MB]. Must be at least 768</description>-->
-  <!--</property> -->
-      <!---->
-  <!--<property>-->
-    <!--<name>flink_container_memory</name>-->
-    <!--<value>1024</value>-->
-    <!--<description>Memory per TaskManager Container [in MB]</description>-->
+    <!--<name>recovery.mode</name>-->
+    <!--<value>zookeeper</value>-->
+    <!--<description>Defines the recovery mode used for the cluster execution. Currently,-->
+      <!--Flink supports the ‘standalone’ mode where only a single JobManager runs and-->
+      <!--no JobManager state is checkpointed. The high availability mode ‘zookeeper’-->
+      <!--supports the execution of multiple JobManagers and JobManager state checkpointing.-->
+      <!--Among the group of JobManagers, ZooKeeper elects one of them as the leader which-->
+      <!--is responsible for the cluster execution. In case of a JobManager failure,-->
+      <!--a standby JobManager will be elected as the new leader and is given the-->
+      <!--last checkpointed JobManager state.</description>-->
   <!--</property>-->
-    
-</configuration>  
+
+</configuration>

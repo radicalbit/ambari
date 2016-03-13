@@ -34,12 +34,12 @@ bin_dir =  flink_install_dir + '/bin'
 
 # params from flink-config
 
-jobmanager_rpc_address = config['configurations']['flink-config']['jobmanager.rpc.address']
-jobmanager_rpc_port = config['configurations']['flink-config']['jobmanager.rpc.port']
+# jobmanager_rpc_address = config['configurations']['flink-config']['jobmanager.rpc.address']
+# jobmanager_rpc_port = config['configurations']['flink-config']['jobmanager.rpc.port']
 jobmanager_heap_mb = config['configurations']['flink-config']['jobmanager.heap.mb']
-taskmanager_heap_mb = config['configurations']['flink-config']['taskmanager.heap.mb']
+# taskmanager_heap_mb = config['configurations']['flink-config']['taskmanager.heap.mb']
 taskmanager_numberOfTaskSlots = config['configurations']['flink-config']['taskmanager.numberOfTaskSlots']
-parallelism_default = config['configurations']['flink-config']['parallelism.default']
+# parallelism_default = config['configurations']['flink-config']['parallelism.default']
 fs_default_scheme = hdfs_default_name
 fs_hdfs_hadoopconf = hadoop_conf_dir
 
@@ -67,8 +67,8 @@ jobmanager_web_checkpoints_history = config['configurations']['flink-config']['j
 yarn_application_master_port = config['configurations']['flink-config']['yarn.application-master.port']
 
 
-recovery_mode = config['configurations']['flink-config']['recovery.mode']
-recovery_zookeeper_path_root = format('{fs_default_scheme}/flink/recovery')
+# recovery_mode = config['configurations']['flink-config']['recovery.mode']
+# recovery_zookeeper_path_root = format('{fs_default_scheme}/flink/recovery')
 
 # log4j configs
 log4j_props = config['configurations']['flink-log4j']['content']

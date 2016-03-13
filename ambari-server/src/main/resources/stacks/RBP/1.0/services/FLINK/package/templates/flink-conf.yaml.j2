@@ -21,12 +21,12 @@
 # Common
 #==============================================================================
 
-jobmanager.rpc.address: {{ jobmanager_rpc_address }}
-jobmanager.rpc.port: {{ jobmanager_rpc_port }}
+# jobmanager.rpc.address: {{ jobmanager_rpc_address }}
+# jobmanager.rpc.port: {{ jobmanager_rpc_port }}
 jobmanager.heap.mb: {{ jobmanager_heap_mb }}
-taskmanager.heap.mb: {{ taskmanager_heap_mb }}
+# taskmanager.heap.mb: {{ taskmanager_heap_mb }}
 taskmanager.numberOfTaskSlots: {{ taskmanager_numberOfTaskSlots }}
-parallelism.default: {{ parallelism_default }}
+# parallelism.default: {{ parallelism_default }}
 fs.default-scheme: {{ fs_default_scheme }}
 fs.hdfs.hadoopconf: {{ fs_hdfs_hadoopconf }}
 
@@ -42,7 +42,8 @@ taskmanager.tmp.dirs: {{ taskmanager_tmp_dirs }}
 jobmanager.web.port: {{ jobmanager_web_port }}
 fs.output.always-create-directory: {{ fs_output_always_create_directory }}
 taskmanager.network.numberOfBuffers: {{ taskmanager_network_numberOfBuffers }}
-state.backend: {{ state_backend }}
+# state.backend: {{ state_backend }}
+state.backend: filesystem
 blob.storage.directory: {{ blob_storage_directory }}
 blob.server.port: {{ blob_server_port }}
 state.backend.fs.checkpointdir: {{ state_backend_fs_checkpointdir }}
@@ -66,6 +67,6 @@ yarn.application-master.port: {{ yarn_application_master_port }}
 # Master High Availability (required configuration)
 #==============================================================================
 
-recovery.mode: {{ recovery_mode }}
-recovery.zookeeper.quorum: {{ zookeeper_quorum }}
-recovery.zookeeper.path.root: {{ recovery_zookeeper_path_root }}
+# recovery.mode: {{ recovery_mode }}
+# recovery.zookeeper.quorum: {{ zookeeper_quorum }}
+# recovery.zookeeper.path.root: {{ recovery_zookeeper_path_root }}
