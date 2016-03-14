@@ -47,4 +47,11 @@
     <description>Alluxio Service Account User</description>
   </property>
 
+  <property>
+    <name>root_user</name>
+    <value>root</value>
+    <property-type>USER</property-type>
+    <description>Root User</description>
+  </property>
+
 </configuration>

@@ -31,7 +31,7 @@ underfs_addr = config['configurations']['core-site']['fs.defaultFS']
 #fs_root = config['configurations']['core-site']['fs.defaultFS']
 
 # hadoop core-site.xml dir
-hadoop_core_site = conf_select.get_hadoop_conf_dir()
+hadoop_core_site = conf_select.get_hadoop_conf_dir() + '/core-site.xml'
 
 # alluxio master journal folder
 journal_addr = config['configurations']['core-site']['fs.defaultFS'] + '/journal'
@@ -102,6 +102,7 @@ pid_dir = config['configurations']['alluxio-env']['alluxio.pid.dir']
 # alluxio installation dir
 base_dir = '/usr/lib/alluxio'
 
+root_user = config['configurations']['alluxio-env']['root_user']
 alluxio_user = config['configurations']['alluxio-env']['alluxio_user']
 user_group = config['configurations']['cluster-env']['user_group']
 
@@ -130,13 +131,13 @@ if zookeeper_hosts != '' and config['configurations']['alluxio-env']['alluxio.us
   use_zookeeper = True
 
 # alluxio master keytab file
-master_keytab = config['configurations']['alluxio-env']['alluxio.master.keytab.file']
+master_keytab = config['configurations']['alluxio-config']['alluxio.master.keytab.file']
 
 # alluxio master principal
-master_principal = config['configurations']['alluxio-env']['alluxio.master.principal']
+master_principal = config['configurations']['alluxio-config']['alluxio.master.principal']
 
 # alluxio worker keytab file
-worker_keytab = config['configurations']['alluxio-env']['alluxio.worker.keytab.file']
+worker_keytab = config['configurations']['alluxio-config']['alluxio.worker.keytab.file']
 
 # alluxio worker principal
-worker_principal = config['configurations']['alluxio-env']['alluxio.worker.principal']
+worker_principal = config['configurations']['alluxio-config']['alluxio.worker.principal']

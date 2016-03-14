@@ -23,17 +23,21 @@ from alluxio import Alluxio
 
 class Master(Alluxio):
 
+  first_start = False
+
   def install(self, env):
     import params
     self.base_install(env)
     self.configure(env)
-
-    Execute(params.base_dir + '/bin/alluxio format', user=params.root_user)
+    Master.first_start = True
 
   def start(self, env):
     import params
     self.configure(env)
     env.set_params(params)
+
+    if Master.first_start:
+      Execute(params.base_dir + '/bin/alluxio format', user=params.root_user)
 
     Execute(params.base_dir + '/bin/alluxio-start.sh master', user=params.alluxio_user)
 
