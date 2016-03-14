@@ -33,7 +33,7 @@
 
   <property>
     <name>alluxio.usezookeeper</name>
-    <description>Use zookeeper to grant fault tollerance</description>
+    <description>Use zookeeper to grant fault tolerance</description>
     <value>true</value>
     <value-attributes>
       <type>boolean</type>

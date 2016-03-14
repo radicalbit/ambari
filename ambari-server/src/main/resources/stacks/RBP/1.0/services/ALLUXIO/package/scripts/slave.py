@@ -23,7 +23,11 @@ from alluxio import Alluxio
 class Slave(Alluxio):
 
   def install(self, env):
+    import params
     self.base_install(env)
+    self.configure(env)
+
+    Execute(params.base_dir + '/bin/alluxio formatWorker', user=params.root_user)
 
   def start(self, env):
     import params

@@ -28,7 +28,7 @@ class Master(Alluxio):
     self.base_install(env)
     self.configure(env)
 
-    Execute(params.base_dir + '/bin/alluxio format', user=params.alluxio_user)
+    Execute(params.base_dir + '/bin/alluxio format', user=params.root_user)
 
   def start(self, env):
     import params
