@@ -82,7 +82,7 @@ tieredstore_level2_dirs_quota = config['configurations']['alluxio-config']['allu
 tieredstore_level2_reserved_ratio = config['configurations']['alluxio-config']['alluxio.worker.tieredstore.level2.reserved.ratio']
 
 # alluxio worker tieredstore reserver enabled
-tieredstore_reserver = config['configurations']['alluxio-config']['alluxio.worker.tieredstore.reserver.enabled']
+tieredstore_reserver_enabled = config['configurations']['alluxio-config']['alluxio.worker.tieredstore.reserver.enabled']
 
 # alluxio user file readtype default
 readtype = config['configurations']['alluxio-config']['alluxio.user.file.readtype.default']
