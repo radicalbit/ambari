@@ -22,27 +22,33 @@ from alluxio import Alluxio
 
 class Slave(Alluxio):
 
-  first_start = False
+  def __init__(self):
+    self.first_start = False
 
   def install(self, env):
     import params
     self.base_install(env)
     self.configure(env)
-    Slave.first_start = True
+    self.first_start = True
 
   def start(self, env):
     import params
     self.configure(env)
     env.set_params(params)
 
-    if Slave.first_start:
+    if self.first_start:
+      print 'Formatting the worker...\n'
       Execute(params.base_dir + '/bin/alluxio formatWorker', user=params.root_user)
+      print 'Worker formatted.\n'
 
+    print 'Starting worker...\n'
     Execute(params.base_dir + '/bin/alluxio-start.sh worker SudoMount', user=params.alluxio_user)
+    print 'Worker started...\n'
 
+    print 'Creating pid file for worker...\n'
     cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep AlluxioWorker | awk '{print $1}'`> " + params.pid_dir + "/alluxio-worker.pid"
     Execute(cmd, user=params.alluxio_user)
-
+    print 'Pid file created for worker.\n'
 
   def stop(self, env):
     import params

@@ -23,26 +23,33 @@ from alluxio import Alluxio
 
 class Master(Alluxio):
 
-  first_start = False
+  def __init__(self):
+    self.first_start = False
 
   def install(self, env):
     import params
     self.base_install(env)
     self.configure(env)
-    Master.first_start = True
+    self.first_start = True
 
   def start(self, env):
     import params
     self.configure(env)
     env.set_params(params)
 
-    if Master.first_start:
+    if self.first_start:
+      print 'Formatting the master...\n'
       Execute(params.base_dir + '/bin/alluxio format', user=params.root_user)
+      print 'Master formatted.\n'
 
+    print 'Starting master...\n'
     Execute(params.base_dir + '/bin/alluxio-start.sh master', user=params.alluxio_user)
+    print 'Master started...\n'
 
+    print 'Creating pid file for master...\n'
     cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep AlluxioMaster | awk '{print $1}'`> " + params.pid_dir + "/alluxio-master.pid"
     Execute(cmd, user=params.alluxio_user)
+    print 'Pid file created for master.\n'
 
   #Called to stop the service using alluxio provided stop
   def stop(self, env):
