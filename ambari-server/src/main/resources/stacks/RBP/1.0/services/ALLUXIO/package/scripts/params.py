@@ -25,6 +25,8 @@ from resource_management.libraries.functions import conf_select
 config = Script.get_config()
 tmp_dir = Script.get_tmp_dir()
 
+# alluxio config dir
+alluxio_config_dir = '/etc/alluxio/conf'
 
 # alluxio underfs address
 underfs_addr = config['configurations']['core-site']['fs.defaultFS']
@@ -33,8 +35,11 @@ underfs_addr = config['configurations']['core-site']['fs.defaultFS']
 # hadoop core-site.xml dir
 hadoop_core_site = conf_select.get_hadoop_conf_dir() + '/core-site.xml'
 
+# alluxio master journal relative path
+journal_relative_path = '/alluxio/journal'
+
 # alluxio master journal folder
-journal_addr = config['configurations']['core-site']['fs.defaultFS'] + '/journal'
+journal_addr = config['configurations']['core-site']['fs.defaultFS'] + journal_relative_path
 
 # alluxio worker evictor class
 evictor_class = config['configurations']['alluxio-config']['alluxio.worker.evictor.class']

@@ -18,37 +18,38 @@ limitations under the License.
 """
 import sys, os, pwd, signal, time
 from resource_management import *
+from resource_management.core.logger import Logger
 from alluxio import Alluxio
 
 class Slave(Alluxio):
 
-  def __init__(self):
-    self.first_start = False
-
   def install(self, env):
     import params
+    Logger.info('Installing the Alluxio worker...')
     self.base_install(env)
     self.configure(env)
-    self.first_start = True
+    Logger.info('Alluxio worker installed')
 
   def start(self, env):
     import params
     self.configure(env)
     env.set_params(params)
 
-    if self.first_start:
-      print 'Formatting the worker...\n'
+    self.alluxio_worker_format_marker = os.path.join(params.alluxio_config_dir, 'ALLUXIO_WORKER_FORMATTED')
+    if not os.path.exists(self.alluxio_worker_format_marker):
+      Logger.info('Formatting the Alluxio worker...')
       Execute(params.base_dir + '/bin/alluxio formatWorker', user=params.root_user)
-      print 'Worker formatted.\n'
+      open(self.alluxio_worker_format_marker, 'a').close()
+      Logger.info('Alluxio worker formatted.')
 
-    print 'Starting worker...\n'
+    Logger.info('Starting Alluxio worker...')
     Execute(params.base_dir + '/bin/alluxio-start.sh worker SudoMount', user=params.alluxio_user)
-    print 'Worker started...\n'
+    Logger.info('Alluxio worker started...')
 
-    print 'Creating pid file for worker...\n'
-    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep AlluxioWorker | awk '{print $1}'`> " + params.pid_dir + "/alluxio-worker.pid"
+    Logger.info('Creating pid file for Alluxio worker...')
+    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep AlluxioWorker | awk '{Logger.info($1}'`> " + params.pid_dir + "/alluxio-worker.pid"
     Execute(cmd, user=params.alluxio_user)
-    print 'Pid file created for worker.\n'
+    Logger.info('Pid file created for Alluxio worker.')
 
   def stop(self, env):
     import params

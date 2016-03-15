@@ -49,25 +49,25 @@ class Alluxio(Script):
 
     env.set_params(params)
 
-    alluxio_config_dir = '/etc/alluxio/conf'
+
 
     File(
-        format("{alluxio_config_dir}/alluxio-env.sh"),
+        format("{params.alluxio_config_dir}/alluxio-env.sh"),
         owner=params.alluxio_user,
         mode=0700,
-        content=Template('alluxio-env.sh.j2', conf_dir=alluxio_config_dir)
+        content=Template('alluxio-env.sh.j2', conf_dir=params.alluxio_config_dir)
     )
 
     File(
-        format("{alluxio_config_dir}/workers"),
+        format("{params.alluxio_config_dir}/workers"),
         owner=params.alluxio_user,
         mode=0644,
         content='\n'.join(params.alluxio_workers)
     )
 
     File(
-        format("{alluxio_config_dir}/alluxio-site.properties"),
+        format("{params.alluxio_config_dir}/alluxio-site.properties"),
         owner=params.alluxio_user,
         mode=0644,
-        content=Template('alluxio-site.properties.j2', conf_dir=alluxio_config_dir)
+        content=Template('alluxio-site.properties.j2', conf_dir=params.alluxio_config_dir)
     )

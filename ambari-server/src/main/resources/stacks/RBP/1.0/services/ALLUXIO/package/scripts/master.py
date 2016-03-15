@@ -19,37 +19,51 @@ limitations under the License.
 import sys, os, pwd, signal, time
 from resource_management.core.resources.system import File, Execute
 from resource_management.libraries.functions.check_process_status import check_process_status
+from resource_management.core.logger import Logger
 from alluxio import Alluxio
 
 class Master(Alluxio):
 
-  def __init__(self):
-    self.first_start = False
-
   def install(self, env):
     import params
+    Logger.info('Installing the Alluxio master...')
     self.base_install(env)
     self.configure(env)
-    self.first_start = True
+    Logger.info('Alluxio master installed')
 
   def start(self, env):
     import params
     self.configure(env)
     env.set_params(params)
 
-    if self.first_start:
-      print 'Formatting the master...\n'
+    self.alluxio_master_format_marker = os.path.join(params.alluxio_config_dir, 'ALLUXIO_MASTER_FORMATTED')
+    if not os.path.exists(self.alluxio_master_format_marker):
+
+      Logger.info('Formatting the Alluxio master...')
+
+      # the following steps are needed to format correctly the journal of alluxio
+      # 1-create as hdfs the journal folder
+      folders = journal_relative_path.split('/')[1:]
+      Execute('hdfs dfs -mkdir ' + params.journal_addr, user='hdfs')
+      # 2-change owner to root
+      Execute(format('hdfs dfs -chown -R {params.root_user}:{params.root_user} {folders[0]}', user='hdfs'))
+      # 3-format the cluster as root
       Execute(params.base_dir + '/bin/alluxio format', user=params.root_user)
-      print 'Master formatted.\n'
+      # 4-change owner to alluxio
+      Execute(format('hdfs dfs -chown -R {params.alluxio_user}:{params.alluxio_user} {folders[0]}', user='hdfs'))
 
-    print 'Starting master...\n'
+      # create marker
+      open(self.alluxio_master_format_marker, 'a').close()
+      Logger.info('Alluxio master formatted')
+
+    Logger.info('Starting Alluxio master...')
     Execute(params.base_dir + '/bin/alluxio-start.sh master', user=params.alluxio_user)
-    print 'Master started...\n'
+    Logger.info('Alluxio master started...')
 
-    print 'Creating pid file for master...\n'
-    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep AlluxioMaster | awk '{print $1}'`> " + params.pid_dir + "/alluxio-master.pid"
+    Logger.info('Creating pid file for Alluxio master...')
+    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep AlluxioMaster | awk '{Logger.info($1}'`> " + params.pid_dir + "/alluxio-master.pid"
     Execute(cmd, user=params.alluxio_user)
-    print 'Pid file created for master.\n'
+    Logger.info('Pid file created for Alluxio master')
 
   #Called to stop the service using alluxio provided stop
   def stop(self, env):
