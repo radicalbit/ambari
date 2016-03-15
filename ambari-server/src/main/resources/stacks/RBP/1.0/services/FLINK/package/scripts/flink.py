@@ -15,134 +15,71 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
+Ambari Agent
+
 """
-import sys, os, pwd, grp, signal, time, glob, hashlib
+import os
 from resource_management import *
-from subprocess import call
 
-class Master(Script):
-  def install(self, env):
+def flink():
+  import params
 
-    import params
-    import status_params
-
-    if not os.path.exists(params.flink_tmp_file):
-      Execute(
-          'wget '+params.flink_download_url+' -O '+params.flink_tmp_file+' -a /tmp/flink_download.log',
-          user=params.flink_user
-      )
-    else:
-      hadoop_tmp_file_md5 = hashlib.md5(open(params.flink_tmp_file, "rb").read()).hexdigest()
-
-      if not hadoop_tmp_file_md5 == params.binary_file_md5:
-        Execute(
-            'rm -f '+params.flink_tmp_file,
-            user=params.flink_user
-        )
-
-        Execute(
-            'wget '+params.flink_download_url+' -O '+params.flink_tmp_file+' -a /tmp/flink_download.log',
-            user=params.flink_user
-        )
-            
-    Directory([params.flink_install_dir],
-            owner=params.flink_user,
-            group=params.flink_group,
-            recursive=True
+  if not os.path.exists(format('{flink_install_dir}/ship/')):
+    Directory([format('{flink_install_dir}/ship')],
+        owner='root',
+        group='root',
+        recursive=True
     )
 
-    Directory([status_params.flink_pid_dir, params.flink_log_dir],
-              owner=params.flink_user,
-              group=params.flink_group,
-              recursive=True
-    )
+  alluxio_jar_name = 'alluxio-core-client-1.0.0-jar-with-dependencies.jar'
 
-    File(params.flink_log_file,
-            mode=0644,
-            owner=params.flink_user,
-            group=params.flink_group,
-            content=''
-    )
+  # if not os.path.exists(format('{flink_install_dir}/lib/{alluxio_jar_name}')):
+  #   download_alluxio_client_jar(alluxio_jar_name)
+  #   Execute(format('cp /tmp/{alluxio_jar_name} {flink_install_dir}/lib/'), user='root')
 
-    Execute('echo Installing packages')
+  if not os.path.exists(format('{flink_install_dir}/ship/{alluxio_jar_name}')):
+    download_alluxio_client_jar(alluxio_jar_name)
+    Execute(format('cp /tmp/{alluxio_jar_name} {flink_install_dir}/ship/'), user='root')
 
+  Directory([params.flink_log_dir],
+      owner=params.flink_user,
+      group=params.user_group,
+      recursive=True
+  )
+
+  File(params.flink_log_file,
+      mode=0644,
+      owner=params.flink_user,
+      group=params.user_group,
+      content=''
+  )
+
+  File(
+      format("{params.conf_dir}/flink-conf.yaml"),
+      owner=params.flink_user,
+      mode=0644,
+      content=Template('flink-conf.yaml.j2', conf_dir=params.conf_dir)
+  )
+
+  if not is_empty(params.log4j_props):
+    File(format("{params.conf_dir}/log4j.properties"),
+         mode=0644,
+         group=params.user_group,
+         owner=params.flink_user,
+         content=params.log4j_props
+         )
+  elif (os.path.exists(format("{params.conf_dir}/log4j.properties"))):
+    File(format("{params.conf_dir}/log4j.properties"),
+         mode=0644,
+         group=params.user_group,
+         owner=params.flink_user
+         )
+
+def download_alluxio_client_jar(jar_name):
+  jar_url = 'http://public-repo.readicalbit.io/jars'
+
+  if not os.path.exists(format('/tmp/{jar_name}')):
     Execute(
-        '/bin/tar -zxvf ' + params.flink_tmp_file + ' --strip 1 -C ' + params.flink_install_dir,
-        user=params.flink_user
+        format('wget {jar_url}/{jar_name} -O /tmp/{jar_name} -a /tmp/alluxio_download.log'),
+        user='root'
     )
-    self.configure(env, True)
-
-  def configure(self, env, isInstall=False):
-    import params
-    import status_params
-    env.set_params(params)
-    env.set_params(status_params)
-    
-    self.set_conf_bin(env)
-        
-    #write out nifi.properties
-    #properties_content=InlineTemplate(params.flink_yaml_content)
-    #File(format("{conf_dir}/flink-conf.yaml"), content=properties_content, owner=params.flink_user)
-
-    File(
-        format("{conf_dir}/flink-conf.yaml"),
-        owner=params.flink_user,
-        mode=0644,
-        content=Template('flink-conf.yaml.j2', conf_dir=params.conf_dir)
-    )
-
-    File(
-        format("{conf_dir}/core-site.xml"),
-        owner=params.flink_user,
-        mode=0644,
-        content=Template('core-site.xml', conf_dir=params.conf_dir)
-    )
-        
-    
-  def stop(self, env):
-    import params
-    import status_params    
-    Execute ('pkill -f org.apache.flink.yarn.ApplicationMaster', ignore_failures=True)
-    Execute ('rm -f ' + status_params.flink_pid_file, ignore_failures=True)
- 
-      
-  def start(self, env):
-    import params
-    import status_params
-    self.set_conf_bin(env)  
-    self.configure(env) 
-    
-    self.create_hdfs_user(params.flink_user)
-
-    Execute('echo bin dir ' + params.bin_dir)        
-    Execute('echo pid file ' + status_params.flink_pid_file)
-    #cmd = format("export HADOOP_CONF_DIR={hadoop_conf_dir}; {bin_dir}/yarn-session.sh -n {flink_numcontainers} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
-    cmd = format("{bin_dir}/yarn-session.sh -n {flink_numcontainers} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
-
-    if params.flink_streaming:
-      cmd = cmd + ' -st '
-    Execute (cmd + format(" >> {flink_log_file}"), user=params.flink_user)
-
-    Execute("ps -ef | grep org.apache.flink.yarn.ApplicationMaster | awk {'print $2'} | head -n 1 > " + status_params.flink_pid_file, user=params.flink_user)
-
-    if os.path.exists(params.temp_file):
-      os.remove(params.temp_file)
-    
-  def status(self, env):
-    import status_params
-    env.set_params(status_params)
-    check_process_status(status_params.flink_pid_file)
-
-
-  def set_conf_bin(self, env):
-    import params
-    params.conf_dir =  params.flink_install_dir+ '/conf'
-    params.bin_dir =  params.flink_install_dir+ '/bin'
-
-  def create_hdfs_user(self, user):
-    Execute('hadoop fs -mkdir -p /user/'+user, user='hdfs', ignore_failures=True)
-    Execute('hadoop fs -chown ' + user + ' /user/'+user, user='hdfs')
-    Execute('hadoop fs -chgrp ' + user + ' /user/'+user, user='hdfs')
-          
-if __name__ == "__main__":
-  Master().execute()

@@ -18,47 +18,73 @@ limitations under the License.
 """
 #!/usr/bin/env python
 from resource_management import *
+from resource_management.libraries.functions import conf_select
 from resource_management.libraries.script.script import Script
 import sys, os, glob
-from resource_management.libraries.functions.version import format_hdp_stack_version
-from resource_management.libraries.functions.default import default
 
-
-    
 # server configurations
 config = Script.get_config()
 
-binary_file_md5 = '0efef9dc038834823e62f9d305300c2c'
-flink_download_url = 'https://dist.apache.org/repos/dist/release/flink/flink-0.10.1/flink-0.10.1-bin-hadoop27-scala_2.11.tgz'
-flink_tmp_file = '/tmp/flink-0.10.1-bin-hadoop27-scala_2.11.tgz'
+# usefull dirs
+hadoop_conf_dir = conf_select.get_hadoop_conf_dir()
+hdfs_default_name = config['configurations']['core-site']['fs.defaultFS']
+flink_install_dir = '/usr/lib/flink'
+conf_dir =  flink_install_dir + '/conf'
+bin_dir =  flink_install_dir + '/bin'
 
-#service_packagedir = os.path.realpath(__file__).split('/scripts')[0]
-#flink_archive_file = service_packagedir + '/files/flink-0.10.1-bin-hadoop27-scala_2.11.tgz'
+# params from flink-config
 
-# params from flink-ambari-config
-flink_install_dir = config['configurations']['flink-ambari-config']['flink_install_dir']
-flink_numcontainers = config['configurations']['flink-ambari-config']['flink_numcontainers']
-flink_jobmanager_memory = config['configurations']['flink-ambari-config']['flink_jobmanager_memory']
-flink_container_memory = config['configurations']['flink-ambari-config']['flink_container_memory']
-#setup_prebuilt = config['configurations']['flink-ambari-config']['setup_prebuilt']
-flink_appname = config['configurations']['flink-ambari-config']['flink_appname']
-flink_queue = config['configurations']['flink-ambari-config']['flink_queue']
-flink_streaming = config['configurations']['flink-ambari-config']['flink_streaming']
+# jobmanager_rpc_address = config['configurations']['flink-config']['jobmanager.rpc.address']
+# jobmanager_rpc_port = config['configurations']['flink-config']['jobmanager.rpc.port']
+jobmanager_heap_mb = config['configurations']['flink-config']['jobmanager.heap.mb']
+# taskmanager_heap_mb = config['configurations']['flink-config']['taskmanager.heap.mb']
+taskmanager_numberOfTaskSlots = config['configurations']['flink-config']['taskmanager.numberOfTaskSlots']
+# parallelism_default = config['configurations']['flink-config']['parallelism.default']
+fs_default_scheme = hdfs_default_name
+fs_hdfs_hadoopconf = hadoop_conf_dir
 
-#hadoop_conf_dir = config['configurations']['flink-ambari-config']['hadoop_conf_dir']
-#flink_download_url = config['configurations']['flink-ambari-config']['flink_download_url']
- 
 
-conf_dir=''
-bin_dir=''
+taskmanage_memory_size = config['configurations']['flink-config']['taskmanager.memory.size']
+taskmanager_memory_fraction = config['configurations']['flink-config']['taskmanager.memory.fraction']
+taskmanager_memory_segment_size = config['configurations']['flink-config']['taskmanager.memory.segment-size']
+taskmanager_memory_preallocate = config['configurations']['flink-config']['taskmanager.memory.preallocate']
+taskmanager_tmp_dirs = config['configurations']['flink-config']['taskmanager.tmp.dirs']
+jobmanager_web_port = config['configurations']['flink-config']['jobmanager.web.port']
+fs_output_always_create_directory = config['configurations']['flink-config']['fs.output.always-create-directory']
+taskmanager_network_numberOfBuffers = config['configurations']['flink-config']['taskmanager.network.numberOfBuffers']
+state_backend = config['configurations']['flink-config']['state.backend']
+blob_storage_directory = config['configurations']['flink-config']['blob.storage.directory']
+blob_server_port = config['configurations']['flink-config']['blob.server.port']
+state_backend_fs_checkpointdir = format('{fs_default_scheme}/flink/checkpoint')
 
-# params from flink-conf.yaml
-flink_yaml_content = config['configurations']['flink-env']['content']
+
+jobmanager_web_port = config['configurations']['flink-config']['jobmanager.web.port']
+jobmanager_web_history = config['configurations']['flink-config']['jobmanager.web.history']
+jobmanager_web_checkpoints_disable = config['configurations']['flink-config']['jobmanager.web.checkpoints.disable']
+jobmanager_web_checkpoints_history = config['configurations']['flink-config']['jobmanager.web.checkpoints.history']
+
+
+yarn_application_master_port = config['configurations']['flink-config']['yarn.application-master.port']
+
+
+# recovery_mode = config['configurations']['flink-config']['recovery.mode']
+# recovery_zookeeper_path_root = format('{fs_default_scheme}/flink/recovery')
+
+# log4j configs
+log4j_props = config['configurations']['flink-log4j']['content']
+
+# params from flink-env.yaml
 flink_user = config['configurations']['flink-env']['flink_user']
-flink_group = config['configurations']['flink-env']['flink_group']
+user_group = config['configurations']['cluster-env']['user_group']
+#flink_group = config['configurations']['flink-env']['flink_group']
+#flink_pid_dir = config['configurations']['flink-env']['flink_pid_dir']
 flink_log_dir = config['configurations']['flink-env']['flink_log_dir']
-flink_log_file = os.path.join(flink_log_dir,'flink-setup.log')
+flink_log_file = os.path.join(flink_log_dir,'flink.log')
 
-
-
-temp_file='/tmp/flink.tgz'
+#
+zookeeper_quorum = ''
+zookeeper_port = str(config['configurations']['zoo.cfg']['clientPort'])
+if 'zookeeper_hosts' in config['clusterHostInfo']:
+  zookeeper_hosts_list = config['clusterHostInfo']['zookeeper_hosts']
+  if len(zookeeper_hosts_list) > 0:
+    zookeeper_quorum = ':' + zookeeper_port + ','.join(zookeeper_hosts_list) + ':' + zookeeper_port

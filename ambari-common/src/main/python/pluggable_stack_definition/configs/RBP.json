@@ -28,7 +28,7 @@
           "name": "ZOOKEEPER"
         },
         {
-          "name": "TACHYON"
+          "name": "ALLUXIO"
         }
       ]
     }

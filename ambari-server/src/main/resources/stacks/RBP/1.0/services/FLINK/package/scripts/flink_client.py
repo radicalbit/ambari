@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
@@ -17,9 +16,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
-from resource_management.libraries.script.script import Script
+from resource_management import *
+from flink import flink
 
-config = Script.get_config()
+class FlinkClient(Script):
 
-# alluxio pid dir
-pid_dir = config['configurations']['alluxio-env']['alluxio.pid.dir']
+  def install(self, env):
+    self.install_packages(env)
+    self.configure(env)
+
+  def configure(self, env, isInstall=False):
+    import params
+    env.set_params(params)
+    flink()
+    # self.create_hdfs_user(params.flink_user)
+        
+
+  def status(self, env):
+    raise ClientComponentHasNoStatus()
+
+
+  # def create_hdfs_user(self, user):
+  #   Execute('hadoop fs -mkdir -p /user/'+user, user='hdfs', ignore_failures=True)
+  #   Execute('hadoop fs -chown ' + user + ' /user/'+user, user='hdfs')
+  #   Execute('hadoop fs -chgrp ' + user + ' /user/'+user, user='hdfs')
+          
+if __name__ == "__main__":
+  FlinkClient().execute()
