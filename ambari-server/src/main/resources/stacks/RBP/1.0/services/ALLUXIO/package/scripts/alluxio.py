@@ -49,8 +49,6 @@ class Alluxio(Script):
 
     env.set_params(params)
 
-
-
     File(
         format("{params.alluxio_config_dir}/alluxio-env.sh"),
         owner=params.alluxio_user,
