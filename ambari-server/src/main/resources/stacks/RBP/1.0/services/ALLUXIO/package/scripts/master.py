@@ -43,7 +43,7 @@ class Master(Alluxio):
 
       # the following steps are needed to format correctly the journal of alluxio
       # 1-create as hdfs the journal folder
-      folders = journal_relative_path.split('/')[1:]
+      folders = params.journal_relative_path.split('/')[1:]
       Execute('hdfs dfs -mkdir ' + params.journal_addr, user='hdfs')
       # 2-change owner to root
       Execute(format('hdfs dfs -chown -R {params.root_user}:{params.root_user} {folders[0]}', user='hdfs'))
