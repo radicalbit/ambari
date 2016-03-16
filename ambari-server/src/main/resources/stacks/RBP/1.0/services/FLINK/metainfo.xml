@@ -66,6 +66,7 @@
 
       	    <configuration-dependencies>
 	        	<config-type>flink-config</config-type>
+                <config-type>flink-advanced</config-type>
                 <config-type>flink-log4j</config-type>
       	    </configuration-dependencies>
             <restartRequiredAfterChange>false</restartRequiredAfterChange>

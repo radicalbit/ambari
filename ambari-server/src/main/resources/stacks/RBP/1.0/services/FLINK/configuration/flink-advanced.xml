@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  ~ Licensed to the Apache Software Foundation (ASF) under one
+  ~ or more contributor license agreements.  See the NOTICE file
+  ~ distributed with this work for additional information
+  ~ regarding copyright ownership.  The ASF licenses this file
+  ~ to you under the Apache License, Version 2.0 (the
+  ~ "License"); you may not use this file except in compliance
+  ~ with the License.  You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<configuration>
+
+    <!--Advanced Options-->
+
+    <property>
+        <name>taskmanager.memory.size</name>
+        <value>-1</value>
+        <description>The amount of memory (in megabytes) that the task manager reserves on the JVM’s heap space for
+            sorting, hash tables, and caching of intermediate results. If unspecified (-1), the memory manager will
+            take a fixed ratio of the heap memory available to the JVM,
+            as specified by taskmanager.memory.fraction.</description>
+    </property>
+
+    <property>
+        <name>taskmanager.memory.fraction</name>
+        <value>0.7</value>
+        <description>The relative amount of memory that the task manager reserves for sorting,
+            hash tables, and caching of intermediate results. For example,
+            a value of 0.8 means that TaskManagers reserve 80% of the JVM’s heap space
+            for internal data buffers, leaving 20% of the JVM’s heap space free for
+            objects created by user-defined functions. This parameter is only evaluated,
+            if taskmanager.memory.size is not set.</description>
+    </property>
+
+    <property>
+        <name>taskmanager.memory.segment-size</name>
+        <value>32768</value>
+        <description>The size of memory buffers used by the memory manager and the network stack in bytes</description>
+    </property>
+
+    <property>
+        <name>taskmanager.memory.preallocate</name>
+        <value>false</value>
+        <description>Can be either of true or false. Specifies whether task managers should
+            allocate all managed memory when starting up.</description>
+    </property>
+
+    <property>
+        <name>taskmanager.tmp.dirs</name>
+        <value>/tmp</value>
+        <description>The directory for temporary files, or a list of directories separated by the systems
+            directory delimiter (for example ‘:’ (colon) on Linux/Unix). If multiple directories are specified,
+            then the temporary files will be distributed across the directories in a round-robin fashion.
+            The I/O manager component will spawn one reading and one writing thread per directory.
+            A directory may be listed multiple times to have the I/O manager use multiple threads
+            for it (for example if it is physically stored on a very fast disc or RAID)</description>
+    </property>
+
+    <property>
+        <name>taskmanager.network.numberOfBuffers</name>
+        <value>2048</value>
+        <description>The number of buffers available to the network stack.
+            This number determines how many streaming data exchange channels a TaskManager
+            can have at the same time and how well buffered the channels are. If a job is
+            rejected or you get a warning that the system has not enough buffers available,
+            increase this value</description>
+    </property>
+
+    <property>
+        <name>state.backend</name>
+        <value>filesystem</value>
+        <description>The backend that will be used to store operator state checkpoints if
+            checkpointing is enabled. Supported backends: filesystem, jobmanager</description>
+    </property>
+
+    <property>
+        <name>blob.storage.directory</name>
+        <value></value>
+        <description>Directory for storing blobs (such as user jar’s) on the TaskManagers.</description>
+        <value-attributes>
+            <empty-value-valid>true</empty-value-valid>
+        </value-attributes>
+    </property>
+
+    <property>
+        <name>blob.server.port</name>
+        <value>0</value>
+        <description>Port definition for the blob server (serving user jar’s) on the Taskmanagers.
+            By default the port is set to 0, which means that the operating system is
+            picking an ephemeral port. Flink also accepts a list of ports (“50100,50101”),
+            ranges (“50100-50200”) or a combination of both. It is recommended to set a
+            range of ports to avoid collisions when multiple JobManagers are running on
+            the same machine.</description>
+    </property>
+
+    <property>
+        <name>fs.output.always-create-directory</name>
+        <value>false</value>
+        <description>File writers running with a parallelism larger than one create a directory
+            for the output file path and put the different result files (one per parallel writer task)
+            into that directory. If this option is set to true, writers with a parallelism of
+            1 will also create a directory and place a single result file into it. If the option
+            is set to false, the writer will directly create the file directly at the output path,
+            without creating a containing directory.</description>
+    </property>
+
+</configuration>
