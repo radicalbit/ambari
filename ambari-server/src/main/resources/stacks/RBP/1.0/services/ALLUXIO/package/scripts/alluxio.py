@@ -20,7 +20,7 @@ import os, hashlib
 from resource_management import *
 from resource_management.libraries.script.script import Script
 from resource_management.core.resources.system import File, Execute, Directory
-
+from resource_management.core.logger import Logger
 
 class Alluxio(Script):
 
@@ -29,17 +29,20 @@ class Alluxio(Script):
 
     self.install_packages(env)
 
+    Logger.info('Checking sudoers...')
     if not os.path.isfile('/etc/sudoers.pre_alluxio.bak'):
       Execute('cp /etc/sudoers /etc/sudoers.pre_alluxio.bak')
       Execute('echo "'+params.alluxio_user+'    ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers')
 
+    Logger.info('Creating Alluxio pid dir...')
     if not os.path.exists(params.pid_dir):
       Directory(
           [params.pid_dir],
-          owner=params.alluxio_user,
+          owner=params.root_user,
           group=params.user_group,
           recursive=True
       )
+      Logger.info('Created Alluxio pid dir ' + params.pid_dir)
 
     Execute('chown -R ' + params.alluxio_user + ':' + params.user_group + ' ' + params.pid_dir, user='root')
     Execute('chown -R ' + params.alluxio_user + ':' + params.user_group + ' ' + params.log_dir, user='root')

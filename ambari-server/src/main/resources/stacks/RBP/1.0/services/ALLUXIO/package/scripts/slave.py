@@ -35,7 +35,7 @@ class Slave(Alluxio):
     self.configure(env)
     env.set_params(params)
 
-    self.alluxio_worker_format_marker = os.path.join(params.alluxio_config_dir, 'ALLUXIO_WORKER_FORMATTED')
+    self.alluxio_worker_format_marker = os.path.join(params.pid_dir, 'ALLUXIO_WORKER_FORMATTED')
     if not os.path.exists(self.alluxio_worker_format_marker):
       Logger.info('Formatting the Alluxio worker...')
       Execute(params.base_dir + '/bin/alluxio formatWorker', user=params.root_user)
@@ -47,7 +47,7 @@ class Slave(Alluxio):
     Logger.info('Alluxio worker started...')
 
     Logger.info('Creating pid file for Alluxio worker...')
-    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep AlluxioWorker | awk '{Logger.info($1}'`> " + params.pid_dir + "/alluxio-worker.pid"
+    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep AlluxioWorker | awk '{print $1}'`> " + params.pid_dir + "/alluxio-worker.pid"
     Execute(cmd, user=params.alluxio_user)
     Logger.info('Pid file created for Alluxio worker.')
 

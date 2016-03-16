@@ -36,7 +36,7 @@ class Master(Alluxio):
     self.configure(env)
     env.set_params(params)
 
-    self.alluxio_master_format_marker = os.path.join(params.alluxio_config_dir, 'ALLUXIO_MASTER_FORMATTED')
+    self.alluxio_master_format_marker = os.path.join(params.pid_dir, 'ALLUXIO_MASTER_FORMATTED')
     if not os.path.exists(self.alluxio_master_format_marker):
 
       Logger.info('Formatting the Alluxio master...')
@@ -62,7 +62,7 @@ class Master(Alluxio):
     Logger.info('Alluxio master started...')
 
     Logger.info('Creating pid file for Alluxio master...')
-    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep AlluxioMaster | awk '{Logger.info($1}'`> " + params.pid_dir + "/alluxio-master.pid"
+    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep AlluxioMaster | awk '{print $1}'`> " + params.pid_dir + "/alluxio-master.pid"
     Execute(cmd, user=params.alluxio_user)
     Logger.info('Pid file created for Alluxio master')
 
@@ -80,4 +80,3 @@ class Master(Alluxio):
 
 if __name__ == "__main__":
   Master().execute()
-  
