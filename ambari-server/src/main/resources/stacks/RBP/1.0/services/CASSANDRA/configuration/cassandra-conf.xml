@@ -19,7 +19,7 @@
 
 <configuration supports_final="true">
 
-  <property>
+  <property require-input="true">
       <name>cluster_name</name>
       <display-name>Cluster Name</display-name>
       <description>The name of the cluster. This setting prevents nodes in one logical cluster
@@ -27,16 +27,14 @@
       <value>Cassandra Cluster</value>
   </property>
 
-  <property>
-      <name>listen_address</name>
-      <display-name>Listen Address</display-name>
-      <description>The IP address or hostname that Cassandra binds to for listening to other
-          Cassandra nodes. If you do not know if or have your networking properly configured,
-          it's best to use your private IP addresses.</description>
-      <value>localhost</value>
-  </property>
+    <property require-input="true">
+        <name>authorizer</name>
+        <display-name>Authorization backend</display-name>
+        <description>Authorization backend, implementing IAuthorizer; used to limit access</description>
+        <value>AllowAllAuthorizer</value>
+    </property>
 
-  <property>
+  <property require-input="true">
       <name>commitlog_directory</name>
       <display-name>Commit Log Directory</display-name>
       <description>The directory where the commit log is stored. For optimal write performance, it
@@ -46,7 +44,7 @@
       <value>/var/lib/cassandra/commitlog</value>
   </property>
 
-  <property>
+  <property require-input="true">
       <name>data_file_directories</name>
       <display-name>Data File Directories</display-name>
       <description>The directory or directories where table data (SSTables) is stored.  Provide a
@@ -55,7 +53,7 @@
       <value>/var/lib/cassandra/data</value>
   </property>
 
-  <property>
+  <property require-input="true">
       <name>saved_caches_directory</name>
       <display-name>Saved Caches Directory</display-name>
       <description>The directory where table key and row caches are stored.</description>

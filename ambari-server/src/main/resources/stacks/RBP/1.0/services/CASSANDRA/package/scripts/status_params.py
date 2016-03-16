@@ -21,4 +21,4 @@ from resource_management.libraries.script.script import Script
 
 config = Script.get_config()
 
-cassandra_pid_file = config['configurations']['cassandra-env']['cassandra_pid_dir']
+cassandra_pid_dir = config['configurations']['cassandra-env']['cassandra_pid_dir']
