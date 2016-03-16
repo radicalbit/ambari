@@ -30,8 +30,7 @@
     <property require-input="true">
         <name>authorizer</name>
         <display-name>Authorization backend</display-name>
-        <description>Authorization backend, implementing IAuthorizer; used to limit
-            access/provide permissions</description>
+        <description>Authorization backend, implementing IAuthorizer; used to limit access</description>
         <value>AllowAllAuthorizer</value>
     </property>
 
