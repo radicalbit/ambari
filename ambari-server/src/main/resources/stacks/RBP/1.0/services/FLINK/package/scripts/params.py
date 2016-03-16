@@ -28,7 +28,11 @@ config = Script.get_config()
 # usefull dirs
 hadoop_conf_dir = conf_select.get_hadoop_conf_dir()
 hdfs_default_name = config['configurations']['core-site']['fs.defaultFS']
-alluxio_default_name = 'alluxio://' + config['clusterHostInfo']['alluxio_master_hosts'][0] + ':19998'
+
+alluxio_default_name = 'file:///'
+if 'alluxio_master_hosts' in config['clusterHostInfo']:
+  alluxio_default_name = 'alluxio://' + config['clusterHostInfo']['alluxio_master_hosts'][0] + ':19998/'
+
 flink_install_dir = '/usr/lib/flink'
 conf_dir = flink_install_dir + '/conf'
 bin_dir = flink_install_dir + '/bin'
