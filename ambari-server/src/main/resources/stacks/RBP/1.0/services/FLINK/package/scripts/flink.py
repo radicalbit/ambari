@@ -76,7 +76,7 @@ def flink():
          )
 
 def download_alluxio_client_jar(jar_name):
-  jar_url = 'http://public-repo.readicalbit.io/jars'
+  jar_url = 'http://public-repo.radicalbit.io/jars'
 
   if not os.path.exists(format('/tmp/{jar_name}')):
     Execute(
