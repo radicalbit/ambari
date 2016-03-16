@@ -44,13 +44,14 @@ class Master(Alluxio):
       # the following steps are needed to format correctly the journal of alluxio
       # 1-create as hdfs the journal folder
       folders = params.journal_relative_path.split('/')[1:]
-      Execute('hdfs dfs -mkdir ' + params.journal_addr, user='hdfs')
+      Execute('hdfs dfs -mkdir /' + folders[0], user='hdfs')
+      Execute('hdfs dfs -mkdir ' + params.journal_relative_path, user='hdfs')
       # 2-change owner to root
-      Execute(format('hdfs dfs -chown -R {params.root_user}:{params.root_user} {folders[0]}', user='hdfs'))
+      Execute('hdfs dfs -chown -R ' + params.root_user + ':' + params.user_group + ' /' + folders[0], user='hdfs')
       # 3-format the cluster as root
       Execute(params.base_dir + '/bin/alluxio format', user=params.root_user)
       # 4-change owner to alluxio
-      Execute(format('hdfs dfs -chown -R {params.alluxio_user}:{params.alluxio_user} {folders[0]}', user='hdfs'))
+      Execute('hdfs dfs -chown -R ' + params.alluxio_user + ':' + params.user_group + ' /' + folders[0], user='hdfs')
 
       # create marker
       open(self.alluxio_master_format_marker, 'a').close()
@@ -79,3 +80,4 @@ class Master(Alluxio):
 
 if __name__ == "__main__":
   Master().execute()
+  

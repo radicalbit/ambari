@@ -25,6 +25,9 @@ from resource_management.libraries.functions import conf_select
 config = Script.get_config()
 tmp_dir = Script.get_tmp_dir()
 
+# alluxio installation dir
+base_dir = '/usr/lib/alluxio'
+
 # alluxio config dir
 alluxio_config_dir = '/etc/alluxio/conf'
 
@@ -103,9 +106,6 @@ log_dir = config['configurations']['alluxio-env']['alluxio.log.dir']
 
 # alluxio pid dir
 pid_dir = config['configurations']['alluxio-env']['alluxio.pid.dir']
-
-# alluxio installation dir
-base_dir = '/usr/lib/alluxio'
 
 root_user = config['configurations']['alluxio-env']['root_user']
 alluxio_user = config['configurations']['alluxio-env']['alluxio_user']
