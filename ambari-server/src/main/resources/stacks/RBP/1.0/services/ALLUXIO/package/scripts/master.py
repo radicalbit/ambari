@@ -53,6 +53,9 @@ class Master(Alluxio):
       # 4-change owner to alluxio
       Execute('hdfs dfs -chown -R ' + params.alluxio_user + ':' + params.user_group + ' /' + folders[0], user='hdfs')
 
+      # update permissions on log folder
+      Execute('chown -R ' + params.alluxio_user + ':' + params.user_group + ' ' + params.log_dir, user=params.root_user)
+
       # create marker
       open(self.alluxio_master_format_marker, 'a').close()
       Logger.info('Alluxio master formatted')

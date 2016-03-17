@@ -39,6 +39,11 @@ class Slave(Alluxio):
     if not os.path.exists(self.alluxio_worker_format_marker):
       Logger.info('Formatting the Alluxio worker...')
       Execute(params.base_dir + '/bin/alluxio formatWorker', user=params.root_user)
+
+      # update permissions on log folder
+      Execute('chown -R ' + params.alluxio_user + ':' + params.user_group + ' ' + params.log_dir, user=params.root_user)
+
+      # create marker
       open(self.alluxio_worker_format_marker, 'a').close()
       Logger.info('Alluxio worker formatted.')
 
