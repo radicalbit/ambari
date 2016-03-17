@@ -56,6 +56,9 @@ class Master(Alluxio):
       # update permissions on log folder
       Execute('chown -R ' + params.alluxio_user + ':' + params.user_group + ' ' + params.log_dir, user=params.root_user)
 
+      # update permissions on user.log file
+      Execute('chmod u=rw,g=rw,o=r ' + params.log_dir + '/user.log', user=params.root_user)
+
       # create marker
       open(self.alluxio_master_format_marker, 'a').close()
       Logger.info('Alluxio master formatted')
