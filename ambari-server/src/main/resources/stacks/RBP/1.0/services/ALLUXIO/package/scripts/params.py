@@ -32,7 +32,7 @@ base_dir = '/usr/lib/alluxio'
 alluxio_config_dir = '/etc/alluxio/conf'
 
 # alluxio underfs address
-underfs_addr = config['configurations']['core-site']['fs.defaultFS']
+underfs_addr = config['configurations']['core-site']['fs.defaultFS'] + '/alluxio'
 #fs_root = config['configurations']['core-site']['fs.defaultFS']
 
 # hadoop core-site.xml dir
