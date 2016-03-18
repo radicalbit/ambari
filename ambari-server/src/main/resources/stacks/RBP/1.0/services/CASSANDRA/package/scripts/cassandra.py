@@ -65,3 +65,10 @@ def cassandra(action = None):
         mode=0700,
         content=Template('cassandra-env.sh.j2', conf_dir=params.cassandra_conf_dir)
     )
+
+    File(
+        format("{params.cassandra_bin_dir}/cassandra"),
+        owner=params.cassandra_user,
+        mode=0700,
+        content=Template('cassandra.j2', conf_dir=params.cassandra_bin_dir)
+    )
