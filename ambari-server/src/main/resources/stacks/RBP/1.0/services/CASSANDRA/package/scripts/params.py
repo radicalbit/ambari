@@ -67,4 +67,4 @@ else:
   seeds = get_host_ip(cassandra_nodes[0], nodes_hostname, nodes_ip)
 
 max_heap_size = cassandra_env['max_heap_size']
-heap_newsize = cassandra_env['heap_newsize']
+heap_new_size = cassandra_env['heap_new_size']
