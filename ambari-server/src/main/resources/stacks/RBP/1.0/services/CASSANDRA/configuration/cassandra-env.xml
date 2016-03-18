@@ -41,7 +41,7 @@
   </property>
 
   <property require-input="true">
-    <name>heap_newsize</name>
+    <name>heap_new_size</name>
     <display-name>Heap Newsize</display-name>
     <description>Size of the young generation.</description>
     <value>2G</value>
