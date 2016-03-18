@@ -72,3 +72,6 @@ class Alluxio(Script):
         mode=0644,
         content=Template('alluxio-site.properties.j2', conf_dir=params.alluxio_config_dir)
     )
+
+    # update permissions on alluxio-env.sh file
+    Execute('chmod u=rw,g=rx,o=r ' + params.alluxio_config_dir + '/alluxio-env.sh', user=params.root_user)
