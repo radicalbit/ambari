@@ -60,12 +60,12 @@ class FlinkMaster(Script):
         content=Template('flink-conf.yaml.j2', conf_dir=params.conf_dir)
     )
 
-    File(
-        format("{conf_dir}/core-site.xml"),
-        owner=params.flink_user,
-        mode=0644,
-        content=Template('core-site.xml', conf_dir=params.conf_dir)
-    )
+    # File(
+    #     format("{conf_dir}/core-site.xml"),
+    #     owner=params.flink_user,
+    #     mode=0644,
+    #     content=Template('core-site.xml', conf_dir=params.conf_dir)
+    # )
         
     
   def stop(self, env):

@@ -190,4 +190,40 @@
       last checkpointed JobManager state.</description>
   </property>
 
+  <property>
+    <name>flink_numcontainers</name>
+    <value>1</value>
+    <description>Number of YARN container to allocate (=Number of Task Managers)</description>
+  </property>
+
+  <property>
+    <name>flink_appname</name>
+    <value>flinkapp-from-ambari</value>
+    <description>Flink application name</description>
+  </property>
+
+  <property>
+    <name>flink_queue</name>
+    <value>default</value>
+    <description>YARN queue to schedule Flink job on</description>
+  </property>
+
+  <property>
+    <name>flink_jobmanager_memory</name>
+    <value>768</value>
+    <description>Memory for JobManager Container [in MB]. Must be at least 768</description>
+  </property>
+
+  <property>
+    <name>flink_container_memory</name>
+    <value>1024</value>
+    <description>Memory per TaskManager Container [in MB]</description>
+  </property>
+
+  <property>
+    <name>flink_streaming</name>
+    <value>false</value>
+    <description>If true, Flink will be started in streaming mode: to be used when only streaming jobs will be executed on Flink</description>
+  </property>
+
 </configuration>
