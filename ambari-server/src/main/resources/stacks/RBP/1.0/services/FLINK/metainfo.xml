@@ -27,16 +27,27 @@
             <version>1.0.0</version>
             <components>
                 <component>
-                  <name>FLINK_CLIENT</name>
-                  <displayName>Flink</displayName>
-                  <category>CLIENT</category>
-                  <cardinality>0+</cardinality>
-                  <commandScript>
-                    <script>scripts/flink_client.py</script>
-                    <scriptType>PYTHON</scriptType>
-                    <timeout>10000</timeout>
-                  </commandScript>
+                    <name>FLINK_MASTER</name>
+                    <displayName>Flink</displayName>
+                    <category>MASTER</category>
+                    <cardinality>0+</cardinality>
+                    <commandScript>
+                        <script>scripts/flink_master.py</script>
+                        <scriptType>PYTHON</scriptType>
+                        <timeout>10000</timeout>
+                    </commandScript>
                 </component>
+                <!--<component>-->
+                  <!--<name>FLINK_CLIENT</name>-->
+                  <!--<displayName>Flink</displayName>-->
+                  <!--<category>CLIENT</category>-->
+                  <!--<cardinality>0+</cardinality>-->
+                  <!--<commandScript>-->
+                    <!--<script>scripts/flink_client.py</script>-->
+                    <!--<scriptType>PYTHON</scriptType>-->
+                    <!--<timeout>10000</timeout>-->
+                  <!--</commandScript>-->
+                <!--</component>-->
             </components>
 
             <osSpecifics>
@@ -53,15 +64,16 @@
               </osSpecific>
             </osSpecifics>
 
-            <!--<commandScript>-->
-                <!--<script>scripts/service_check.py</script>-->
-                <!--<scriptType>PYTHON</scriptType>-->
-                <!--<timeout>300</timeout>-->
-            <!--</commandScript>-->
+            <commandScript>
+                <script>scripts/service_check.py</script>
+                <scriptType>PYTHON</scriptType>
+                <timeout>300</timeout>
+            </commandScript>
 
             <requiredServices>
                 <service>ZOOKEEPER</service>
                 <service>YARN</service>
+                <service>HDFS</service>
             </requiredServices>
 
       	    <configuration-dependencies>
