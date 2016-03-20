@@ -34,8 +34,9 @@ class FlinkMaster(Script):
               recursive=True
     )
 
+    # Everyone can read and write
     File(params.flink_log_file,
-            mode=0644,
+            mode=0666,
             owner=params.flink_user,
             group=params.user_group,
             content=''
