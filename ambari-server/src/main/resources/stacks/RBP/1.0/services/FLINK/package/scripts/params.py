@@ -100,4 +100,4 @@ if 'zookeeper_hosts' in config['clusterHostInfo']:
   if len(zookeeper_hosts_list) > 0:
     zookeeper_quorum = ':' + zookeeper_port + ','.join(zookeeper_hosts_list) + ':' + zookeeper_port
 
-recovery_zookeeper_path_root = format('{hdfs_default_name}/flink/recovery')
+recovery_zookeeper_path_root = '/flink/recovery'
