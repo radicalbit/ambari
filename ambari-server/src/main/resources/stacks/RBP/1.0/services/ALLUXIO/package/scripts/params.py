@@ -129,7 +129,7 @@ zookeeper_port = str(config['configurations']['zoo.cfg']['clientPort'])
 if 'zookeeper_hosts' in config['clusterHostInfo']:
   zookeeper_hosts_list = config['clusterHostInfo']['zookeeper_hosts']
   if len(zookeeper_hosts_list) > 0:
-      zookeeper_hosts = ':' + zookeeper_port + ','.join(zookeeper_hosts_list) + ':' + zookeeper_port
+      zookeeper_hosts = (':' + zookeeper_port + ',').join(zookeeper_hosts_list) + ':' + zookeeper_port
 
 use_zookeeper = False
 if zookeeper_hosts != '' and config['configurations']['alluxio-env']['alluxio.usezookeeper'] == 'True':
