@@ -38,6 +38,7 @@ def cassandra(action = None):
       Execute(format('echo "* - nproc 32768" >> {security_folder}/90-nproc.conf'), user='root')
 
     if not os.path.isfile(format('/etc/sysctl.conf.pre_cassandra.bak')):
+      Execute(format('cp /etc/sysctl.conf /etc/sysctl.conf.pre_cassandra.bak'))
       Execute('echo "vm.max_map_count = 131072" >> /etc/sysctl.conf', user='root')
 
     Execute('sysctl -p', user='root')
