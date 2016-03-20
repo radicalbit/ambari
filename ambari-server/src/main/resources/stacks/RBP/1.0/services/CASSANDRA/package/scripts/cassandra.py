@@ -58,12 +58,12 @@ def cassandra(action = None):
     Execute(format('chown -R {params.cassandra_user}:{params.user_group} {params.data_file_directories}'), user='root')
     Execute(format('chown -R {params.cassandra_user}:{params.user_group} {params.saved_caches_directory}'), user='root')
 
-    # File(
-    #     format("{params.cassandra_conf_dir}/cassandra.yaml"),
-    #     owner=params.cassandra_user,
-    #     mode=0644,
-    #     content=Template('cassandra.yaml.j2', conf_dir=params.cassandra_conf_dir)
-    # )
+    File(
+        format("{params.cassandra_conf_dir}/cassandra.yaml"),
+        owner=params.cassandra_user,
+        mode=0644,
+        content=Template('cassandra.yaml.j2', conf_dir=params.cassandra_conf_dir)
+    )
 
     File(
         format("{params.cassandra_conf_dir}/cassandra-env.sh"),
