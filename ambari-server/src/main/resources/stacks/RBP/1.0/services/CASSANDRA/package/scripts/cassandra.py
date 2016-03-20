@@ -58,6 +58,7 @@ def cassandra(action = None):
     Execute(format('chown -R {params.cassandra_user}:{params.user_group} {params.commitlog_directory}'), user='root')
     Execute(format('chown -R {params.cassandra_user}:{params.user_group} {params.data_file_directories}'), user='root')
     Execute(format('chown -R {params.cassandra_user}:{params.user_group} {params.saved_caches_directory}'), user='root')
+    Execute(format('chown -R {params.cassandra_user}:{params.user_group} {params.cassandra_pid_dir}'), user='root')
 
     File(
         format("{params.cassandra_conf_dir}/cassandra.yaml"),
