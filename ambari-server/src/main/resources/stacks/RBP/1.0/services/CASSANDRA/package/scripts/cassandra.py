@@ -34,7 +34,7 @@ def cassandra(action = None):
 
     if not os.path.isfile(format('{security_folder}/90-nproc.conf.pre_cassandra.bak')):
       if os.path.isfile(format('{security_folder}/90-nproc.conf')):
-        Execute('cp {security_folder}/90-nproc.conf {security_folder}/90-nproc.conf.pre_cassandra.bak')
+        Execute(format('cp {security_folder}/90-nproc.conf {security_folder}/90-nproc.conf.pre_cassandra.bak'))
       Execute(format('echo "* - nproc 32768" >> {security_folder}/90-nproc.conf'), user='root')
 
     if not os.path.isfile(format('/etc/sysctl.conf.pre_cassandra.bak')):
