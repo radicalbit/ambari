@@ -153,7 +153,7 @@
   <property require-input="true">
     <name>alluxio.user.file.writetype.default</name>
     <description>Alluxio User File Writetype Default</description>
-    <value>MUST_CACHE</value>
+    <value>CACHE_THROUGH</value>
   </property>
 
   <property require-input="false">
