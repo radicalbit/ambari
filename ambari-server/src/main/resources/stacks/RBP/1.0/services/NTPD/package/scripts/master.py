@@ -16,41 +16,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
+import sys, os, pwd, signal, time
 from resource_management import *
-from cassandra import cassandra
+from subprocess import call
 
-class CassandraNode(Script):
-
+class Master(Script):
   def install(self, env):
-    import params
-    env.set_params(params)
     self.install_packages(env)
-    cassandra('install')
-
-
-  def configure(self, env):
-    import params
-    env.set_params(params)
-    cassandra()
+    
+  def stop(self, env):
+    import params 
+    Execute('service ntpd stop >>' + params.stack_log)
 
   def start(self, env):
     import params
-    self.configure(env)
-    Execute(
-        format('{params.cassandra_bin_dir}/cassandra -p {params.cassandra_pid_dir}/cassandra.pid'),
-        user=params.cassandra_user
-    )
-
-  def stop(self, env):
-    import params
-    Execute(format('kill `cat {params.cassandra_pid_dir}/cassandra.pid`'), user=params.cassandra_user)
-
+    Execute('service ntpd start >>' + params.stack_log)
+	
   def status(self, env):
-    import status_params as params
-    env.set_params(params)
-    pid_file = format("{cassandra_pid_dir}/cassandra.pid")
-    check_process_status(pid_file)
+    import params
+    Execute('service ntpd status')
 
-
-if __name__ == '__main__':
-  CassandraNode().execute()
+if __name__ == "__main__":
+  Master().execute()
