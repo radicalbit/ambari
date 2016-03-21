@@ -18,11 +18,13 @@ limitations under the License.
 
 """
 from resource_management import *
+import time
 
 class ServiceCheck(Script):
   def service_check(self, env):
     import params
     env.set_params(params)
+    time.sleep(10)
     seeds = params.seeds.split(",")
     host=seeds[0]
     cmdfile=format("/tmp/cmds")
