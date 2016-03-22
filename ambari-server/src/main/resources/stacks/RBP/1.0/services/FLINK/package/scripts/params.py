@@ -104,4 +104,4 @@ if 'zookeeper_hosts' in config['clusterHostInfo']:
     zookeeper_quorum = (':' + zookeeper_port + ',').join(zookeeper_hosts_list) + ':' + zookeeper_port
 
 recovery_zookeeper_path_root = '/flink/recovery'
-recovery_zookeeper_storage_dir = format('{hdfs_default_name}/flink/recovery')
+recovery_zookeeper_storage_dir = format('{hdfs_default_name}{recovery_zookeeper_path_root}')

@@ -122,8 +122,11 @@ class FlinkMaster(Script):
 
   def create_hdfs_user(self, user):
     Execute('hadoop fs -mkdir -p /user/'+user, user='hdfs', ignore_failures=True)
+    Execute('hadoop fs -mkdir -p ' + recovery_zookeeper_path_root, user='hdfs', ignore_failures=True)
     Execute('hadoop fs -chown ' + user + ' /user/'+user, user='hdfs')
+    Execute('hadoop fs -chown ' + user + ' ' + recovery_zookeeper_path_root, user='hdfs')
     Execute('hadoop fs -chgrp ' + user + ' /user/'+user, user='hdfs')
+    Execute('hadoop fs -chgrp ' + user + ' ' + recovery_zookeeper_path_root, user='hdfs')
 
   def download_alluxio_client_jar(jar_name):
     jar_url = 'http://public-repo.radicalbit.io/jars'
