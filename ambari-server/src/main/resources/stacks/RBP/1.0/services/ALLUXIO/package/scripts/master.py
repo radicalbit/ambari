@@ -31,6 +31,11 @@ class Master(Alluxio):
     self.configure(env)
     Logger.info('Alluxio master installed')
 
+  def start(self, env):
+    import params
+    self.configure(env)
+    env.set_params(params)
+
     if params.current_host == params.alluxio_master_head:
 
       self.alluxio_master_format_marker = os.path.join(params.pid_dir, 'ALLUXIO_MASTER_FORMATTED')
@@ -59,11 +64,6 @@ class Master(Alluxio):
         # create marker
         open(self.alluxio_master_format_marker, 'a').close()
         Logger.info('Alluxio master formatted')
-
-  def start(self, env):
-    import params
-    self.configure(env)
-    env.set_params(params)
 
     Logger.info('Starting Alluxio master...')
     Execute(params.base_dir + '/bin/alluxio-start.sh master', user=params.alluxio_user)
