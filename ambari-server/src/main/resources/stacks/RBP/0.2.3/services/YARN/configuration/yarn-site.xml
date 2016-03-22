@@ -70,7 +70,7 @@
   </property>
   <property>
     <name>yarn.timeline-service.store-class</name>
-    <value>org.apache.hadoop.yarn.server.timeline.EntityGroupFSTimelineStore</value>
+    <value>org.apache.hadoop.yarn.server.timeline.LeveldbTimelineStore</value>
     <description>Main storage class for YARN timeline server.</description>
   </property>
   <property>
