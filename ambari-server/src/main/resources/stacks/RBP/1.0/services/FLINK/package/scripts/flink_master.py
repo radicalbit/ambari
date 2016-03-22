@@ -42,6 +42,9 @@ class FlinkMaster(Script):
             content=''
     )
 
+    download_alluxio_client_jar(alluxio_jar_name)
+    Execute(format('cp /tmp/{alluxio_jar_name} {flink_lib}/'), user='root')
+
     self.configure(env, True)
 
   def configure(self, env, isInstall=False):
@@ -68,7 +71,7 @@ class FlinkMaster(Script):
     #     content=Template('core-site.xml', conf_dir=params.conf_dir)
     # )
 
-    Execute(format("scp {alluxio_master}:/etc/alluxio/alluxio-site.properties /tmp/alluxio-site.properties"),
+    Execute(format("scp {alluxio_master}:/etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
         tries = 10,
         try_sleep=3,
         logoutput=True
@@ -121,6 +124,16 @@ class FlinkMaster(Script):
     Execute('hadoop fs -mkdir -p /user/'+user, user='hdfs', ignore_failures=True)
     Execute('hadoop fs -chown ' + user + ' /user/'+user, user='hdfs')
     Execute('hadoop fs -chgrp ' + user + ' /user/'+user, user='hdfs')
-          
+
+  def download_alluxio_client_jar(jar_name):
+    jar_url = 'http://public-repo.radicalbit.io/jars'
+
+    if not os.path.exists(format('/tmp/{jar_name}')):
+    Execute(
+      format('wget {jar_url}/{jar_name} -O /tmp/{jar_name} -a /tmp/alluxio_download.log'),
+      user='root'
+    )
+
+
 if __name__ == "__main__":
   FlinkMaster().execute()
