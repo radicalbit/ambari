@@ -67,7 +67,22 @@ class FlinkMaster(Script):
     #     mode=0644,
     #     content=Template('core-site.xml', conf_dir=params.conf_dir)
     # )
-        
+
+    Execute(format("scp {alluxio_master}:/etc/alluxio/alluxio-site.properties /tmp/alluxio-site.properties"),
+        tries = 10,
+        try_sleep=3,
+        logoutput=True
+    )
+    Execute(format("zip /tmp/alluxio-site.jar /tmp/alluxio-site.properties"),
+        tries = 10,
+        try_sleep=3,
+        logoutput=True
+    )
+    Execute(format("cp /tmp/alluxio-site.jar {flink_lib}"),
+        tries = 10,
+        try_sleep=3,
+        logoutput=True
+    )
     
   def stop(self, env):
     import params
