@@ -37,6 +37,14 @@ flink_install_dir = '/usr/lib/flink'
 conf_dir = flink_install_dir + '/conf'
 bin_dir = flink_install_dir + '/bin'
 
+# flink_install_dir = config['configurations']['flink-config']['flink_install_dir']
+flink_numcontainers = config['configurations']['flink-config']['flink_numcontainers']
+flink_jobmanager_memory = config['configurations']['flink-config']['flink_jobmanager_memory']
+flink_container_memory = config['configurations']['flink-config']['flink_container_memory']
+flink_appname = config['configurations']['flink-config']['flink_appname']
+flink_queue = config['configurations']['flink-config']['flink_queue']
+flink_streaming = config['configurations']['flink-config']['flink_streaming']
+
 # params from flink-config
 
 standalone_only = 'use this config only for a standalone deploy of Flink'
@@ -79,7 +87,7 @@ log4j_props = config['configurations']['flink-log4j']['content']
 flink_user = config['configurations']['flink-env']['flink_user']
 user_group = config['configurations']['cluster-env']['user_group']
 #flink_group = config['configurations']['flink-env']['flink_group']
-#flink_pid_dir = config['configurations']['flink-env']['flink_pid_dir']
+flink_pid_dir = config['configurations']['flink-env']['flink_pid_dir']
 flink_log_dir = config['configurations']['flink-env']['flink_log_dir']
 flink_log_file = os.path.join(flink_log_dir,'flink.log')
 
@@ -90,6 +98,6 @@ zookeeper_port = str(config['configurations']['zoo.cfg']['clientPort'])
 if 'zookeeper_hosts' in config['clusterHostInfo']:
   zookeeper_hosts_list = config['clusterHostInfo']['zookeeper_hosts']
   if len(zookeeper_hosts_list) > 0:
-    zookeeper_quorum = ':' + zookeeper_port + ','.join(zookeeper_hosts_list) + ':' + zookeeper_port
+    zookeeper_quorum = (':' + zookeeper_port + ',').join(zookeeper_hosts_list) + ':' + zookeeper_port
 
-recovery_zookeeper_path_root = format('{hdfs_default_name}/flink/recovery')
+recovery_zookeeper_path_root = '/flink/recovery'

@@ -175,19 +175,42 @@
       physical host, fixed port assignments prevent the AM from starting.</description>
   </property>
 
-  <!--High Availability Mode-->
+
 
   <property>
-    <name>recovery.mode</name>
-    <value>zookeeper</value>
-    <description>Defines the recovery mode used for the cluster execution. Currently,
-      Flink supports the ‘standalone’ mode where only a single JobManager runs and
-      no JobManager state is checkpointed. The high availability mode ‘zookeeper’
-      supports the execution of multiple JobManagers and JobManager state checkpointing.
-      Among the group of JobManagers, ZooKeeper elects one of them as the leader which
-      is responsible for the cluster execution. In case of a JobManager failure,
-      a standby JobManager will be elected as the new leader and is given the
-      last checkpointed JobManager state.</description>
+    <name>flink_numcontainers</name>
+    <value>1</value>
+    <description>Number of YARN container to allocate (=Number of Task Managers)</description>
+  </property>
+
+  <property>
+    <name>flink_appname</name>
+    <value>flinkapp-from-ambari</value>
+    <description>Flink application name</description>
+  </property>
+
+  <property>
+    <name>flink_queue</name>
+    <value>default</value>
+    <description>YARN queue to schedule Flink job on</description>
+  </property>
+
+  <property>
+    <name>flink_jobmanager_memory</name>
+    <value>768</value>
+    <description>Memory for JobManager Container [in MB]. Must be at least 768</description>
+  </property>
+
+  <property>
+    <name>flink_container_memory</name>
+    <value>1024</value>
+    <description>Memory per TaskManager Container [in MB]</description>
+  </property>
+
+  <property>
+    <name>flink_streaming</name>
+    <value>false</value>
+    <description>If true, Flink will be started in streaming mode: to be used when only streaming jobs will be executed on Flink</description>
   </property>
 
 </configuration>

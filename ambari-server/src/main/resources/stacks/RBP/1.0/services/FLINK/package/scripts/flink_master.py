@@ -34,8 +34,9 @@ class FlinkMaster(Script):
               recursive=True
     )
 
+    # Everyone can read and write
     File(params.flink_log_file,
-            mode=0644,
+            mode=0666,
             owner=params.flink_user,
             group=params.user_group,
             content=''
@@ -60,14 +61,14 @@ class FlinkMaster(Script):
         content=Template('flink-conf.yaml.j2', conf_dir=params.conf_dir)
     )
 
-    File(
-        format("{conf_dir}/core-site.xml"),
-        owner=params.flink_user,
-        mode=0644,
-        content=Template('core-site.xml', conf_dir=params.conf_dir)
-    )
+    # File(
+    #     format("{conf_dir}/core-site.xml"),
+    #     owner=params.flink_user,
+    #     mode=0644,
+    #     content=Template('core-site.xml', conf_dir=params.conf_dir)
+    # )
         
-    
+  # TODO: Use the YARN utilities (yarn application -kill <appId) to stop the YARN session.
   def stop(self, env):
     import params
     import status_params

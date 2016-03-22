@@ -24,17 +24,18 @@
 
   <property>
     <name>mapreduce.admin.user.env</name>
-    <value>LD_LIBRARY_PATH=/usr/hdp/${hdp.version}/hadoop/lib/native:/usr/hdp/${hdp.version}/hadoop/lib/native/Linux-amd64-64</value>
-    <description>
-      Additional execution environment entries for map and reduce task processes.
-      This is not an additive property. You must preserve the original value if
-      you want your map and reduce tasks to have access to native libraries (compression, etc)
-    </description>
+    <deleted>true</deleted>
+    <!--<value>LD_LIBRARY_PATH=/usr/hdp/${hdp.version}/hadoop/lib/native:/usr/hdp/${hdp.version}/hadoop/lib/native/Linux-amd64-64</value>-->
+    <!--<description>-->
+      <!--Additional execution environment entries for map and reduce task processes.-->
+      <!--This is not an additive property. You must preserve the original value if-->
+      <!--you want your map and reduce tasks to have access to native libraries (compression, etc)-->
+    <!--</description>-->
   </property>
 
   <property>
     <name>mapreduce.application.classpath</name>
-    <value>$PWD/mr-framework/hadoop/share/hadoop/mapreduce/*:$PWD/mr-framework/hadoop/share/hadoop/mapreduce/lib/*:$PWD/mr-framework/hadoop/share/hadoop/common/*:$PWD/mr-framework/hadoop/share/hadoop/common/lib/*:$PWD/mr-framework/hadoop/share/hadoop/yarn/*:$PWD/mr-framework/hadoop/share/hadoop/yarn/lib/*:$PWD/mr-framework/hadoop/share/hadoop/hdfs/*:$PWD/mr-framework/hadoop/share/hadoop/hdfs/lib/*:$PWD/mr-framework/hadoop/share/hadoop/tools/lib/*:/usr/hdp/${hdp.version}/hadoop/lib/hadoop-lzo-0.6.0.${hdp.version}.jar:/etc/hadoop/conf/secure</value>
+    <value>$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,/etc/hadoop/conf,/usr/lib/hadoop/*,/usr/lib/hadoop/lib,/usr/lib/hadoop/lib/*,/usr/lib/hadoop-hdfs,/usr/lib/hadoop-hdfs/*,/usr/lib/hadoop-hdfs/lib/*,/usr/lib/hadoop-yarn/*,/usr/lib/hadoop-yarn/lib/*,/usr/lib/hadoop-mapreduce/*,/usr/lib/hadoop-mapreduce/lib/*</value>
     <description>
       CLASSPATH for MR applications. A comma-separated list of CLASSPATH
       entries.
@@ -43,37 +44,40 @@
 
   <property>
     <name>mapreduce.application.framework.path</name>
-    <value>/hdp/apps/${hdp.version}/mapreduce/mapreduce.tar.gz#mr-framework</value>
-    <description></description>
+    <deleted>true</deleted>
+    <!--<value>/mapred/framework/hadoop-mapreduce-2.7.2.tar.gz#mr-framework</value>-->
+    <!--<description></description>-->
   </property>
 
   <property>
     <name>yarn.app.mapreduce.am.admin-command-opts</name>
-    <value>-Dhdp.version=${hdp.version}</value>
-    <description>
-      Java opts for the MR App Master processes.
-      The following symbol, if present, will be interpolated: @taskid@ is replaced
-      by current TaskID. Any other occurrences of '@' will go unchanged.
-      For example, to enable verbose gc logging to a file named for the taskid in
-      /tmp and to set the heap maximum to be a gigabyte, pass a 'value' of:
-      -Xmx1024m -verbose:gc -Xloggc:/tmp/@taskid@.gc
+    <deleted>true</deleted>
+    <!--<value>-Dhdp.version=${hdp.version}</value>-->
+    <!--<description>-->
+      <!--Java opts for the MR App Master processes.-->
+      <!--The following symbol, if present, will be interpolated: @taskid@ is replaced-->
+      <!--by current TaskID. Any other occurrences of '@' will go unchanged.-->
+      <!--For example, to enable verbose gc logging to a file named for the taskid in-->
+      <!--/tmp and to set the heap maximum to be a gigabyte, pass a 'value' of:-->
+      <!-- -Xmx1024m -verbose:gc -Xloggc:/tmp/@taskid@.gc-->
 
-      Usage of -Djava.library.path can cause programs to no longer function if
-      hadoop native libraries are used. These values should instead be set as part
-      of LD_LIBRARY_PATH in the map / reduce JVM env using the mapreduce.map.env and
-      mapreduce.reduce.env config settings.
-    </description>
+      <!--Usage of -Djava.library.path can cause programs to no longer function if-->
+      <!--hadoop native libraries are used. These values should instead be set as part-->
+      <!--of LD_LIBRARY_PATH in the map / reduce JVM env using the mapreduce.map.env and-->
+      <!--mapreduce.reduce.env config settings.-->
+    <!--</description>-->
   </property>
 
   <property>
     <name>mapreduce.admin.map.child.java.opts</name>
-    <value>-server -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true -Dhdp.version=${hdp.version}</value>
+    <deleted>true</deleted>
+    <value>-server -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true</value>
     <description></description>
   </property>
 
   <property>
     <name>mapreduce.admin.reduce.child.java.opts</name>
-    <value>-server -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true -Dhdp.version=${hdp.version}</value>
+    <value>-server -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true</value>
     <description></description>
   </property>
 

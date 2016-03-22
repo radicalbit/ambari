@@ -141,7 +141,7 @@ esac
 # 100 MB per physical CPU core.
 
 MAX_HEAP_SIZE="{{ max_heap_size }}"
-HEAP_NEWSIZE="{{ heap_newsize }}"
+HEAP_NEWSIZE="{{ heap_new_size }}"
 
 # Set this to control the amount of arenas per-thread in glibc
 #export MALLOC_ARENA_MAX=4
@@ -308,7 +308,7 @@ fi
 # for SIGAR we have to set the java.library.path
 # to the location of the native libraries.
 JVM_OPTS="$JVM_OPTS -Djava.library.path=$CASSANDRA_HOME/lib/sigar-bin"
-JVM_OPTS="$JVM_OPTS -Dcassandra.logdir={{ cassandra_log_dir }}"
+
 
 JVM_OPTS="$JVM_OPTS $MX4J_ADDRESS"
 JVM_OPTS="$JVM_OPTS $MX4J_PORT"
