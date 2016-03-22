@@ -113,13 +113,14 @@ user_group = config['configurations']['cluster-env']['user_group']
 
 ambari_server = config['clusterHostInfo']['ambari_server_host']
 
-# alluxio addresses
+current_host = config['hostname']
+alluxio_master_head = config['clusterHostInfo']['alluxio_master_hosts'][0]
 
 # alluxio_master = config['clusterHostInfo']['alluxio_master_hosts'][0]
-if config['hostname'] in config['clusterHostInfo']['alluxio_master_hosts']:
-  alluxio_master = config['hostname']
+if current_host in config['clusterHostInfo']['alluxio_master_hosts']:
+  alluxio_master = current_host
 else:
-  alluxio_master = config['clusterHostInfo']['alluxio_master_hosts'][0]
+  alluxio_master = alluxio_master_head
 
 alluxio_workers = config['clusterHostInfo']['alluxio_slave_hosts']
 
