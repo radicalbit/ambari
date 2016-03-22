@@ -29,13 +29,16 @@ config = Script.get_config()
 hadoop_conf_dir = conf_select.get_hadoop_conf_dir()
 hdfs_default_name = config['configurations']['core-site']['fs.defaultFS']
 
+alluxio_master = ''
 alluxio_default_name = 'file:///'
 if 'alluxio_master_hosts' in config['clusterHostInfo']:
-  alluxio_default_name = 'alluxio://' + config['clusterHostInfo']['alluxio_master_hosts'][0] + ':19998/'
+  alluxio_master = config['clusterHostInfo']['alluxio_master_hosts'][0]
+  alluxio_default_name = 'alluxio://' + alluxio_master + ':19998/'
 
 flink_install_dir = '/usr/lib/flink'
 conf_dir = flink_install_dir + '/conf'
 bin_dir = flink_install_dir + '/bin'
+flink_lib = flink_install_dir + '/lib'
 
 # flink_install_dir = config['configurations']['flink-config']['flink_install_dir']
 flink_numcontainers = config['configurations']['flink-config']['flink_numcontainers']
@@ -101,3 +104,4 @@ if 'zookeeper_hosts' in config['clusterHostInfo']:
     zookeeper_quorum = (':' + zookeeper_port + ',').join(zookeeper_hosts_list) + ':' + zookeeper_port
 
 recovery_zookeeper_path_root = '/flink/recovery'
+recovery_zookeeper_storage_dir = format('{hdfs_default_name}{recovery_zookeeper_path_root}')
