@@ -68,7 +68,7 @@ class FlinkMaster(Script):
     #     content=Template('core-site.xml', conf_dir=params.conf_dir)
     # )
         
-    
+  # TODO: Use the YARN utilities (yarn application -kill <appId) to stop the YARN session.
   def stop(self, env):
     import params
     import status_params
