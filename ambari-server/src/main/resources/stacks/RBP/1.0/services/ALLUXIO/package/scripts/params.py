@@ -115,11 +115,11 @@ ambari_server = config['clusterHostInfo']['ambari_server_host']
 
 # alluxio addresses
 
-alluxio_master = config['clusterHostInfo']['alluxio_master_hosts'][0]
-# if config['clusterHostInfo']['hostname'] in config['clusterHostInfo']['alluxio_master_hosts']:
-#   alluxio_master = config['clusterHostInfo']['hostname']
-# else:
-#   alluxio_master = config['clusterHostInfo']['alluxio_master_hosts'][0]
+# alluxio_master = config['clusterHostInfo']['alluxio_master_hosts'][0]
+if config['hostname'] in config['clusterHostInfo']['alluxio_master_hosts']:
+  alluxio_master = config['hostname']
+else:
+  alluxio_master = config['clusterHostInfo']['alluxio_master_hosts'][0]
 
 alluxio_workers = config['clusterHostInfo']['alluxio_slave_hosts']
 
