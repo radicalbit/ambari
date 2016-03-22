@@ -71,12 +71,6 @@
         </osSpecific>
       </osSpecifics>
 
-      <commandScript>
-        <script>scripts/fake_service_check.py</script>
-        <scriptType>PYTHON</scriptType>
-        <timeout>300</timeout>
-      </commandScript>
-
     </service>
 
   </services>
