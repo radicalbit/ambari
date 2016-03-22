@@ -43,7 +43,7 @@
 
   <property>
     <name>mapreduce.application.framework.path</name>
-    <value>/hdp/apps/${hdp.version}/mapreduce/mapreduce.tar.gz#mr-framework</value>
+    <value>/mapred/framework/hadoop-mapreduce-2.7.2.tar.gz#mr-framework</value>
     <description></description>
   </property>
 
