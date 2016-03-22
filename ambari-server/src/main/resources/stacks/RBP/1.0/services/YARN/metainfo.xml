@@ -23,13 +23,13 @@
       <name>YARN</name>
       <version>2.7.1</version>
 
-      <components>
-        <component>
-          <name>APP_TIMELINE_SERVER</name>
-          <category>MASTER</category>
-          <deleted>true</deleted>
-        </component>
-      </components>
+      <!--<components>-->
+        <!--<component>-->
+          <!--<name>APP_TIMELINE_SERVER</name>-->
+          <!--<category>MASTER</category>-->
+          <!--<deleted>true</deleted>-->
+        <!--</component>-->
+      <!--</components>-->
 
       <osSpecifics>
         <osSpecific>
