@@ -48,20 +48,28 @@
 
     <service>
       <name>MAPREDUCE2</name>
-      <version>2.7.1.2.3</version>
-      <deleted>true</deleted>
-      <!--<version>2.7.1</version>-->
+      <!--<version>2.7.1.2.3</version>-->
+      <!--<deleted>true</deleted>-->
+      <version>2.7.1</version>
 
-      <!--<osSpecifics>-->
-        <!--<osSpecific>-->
-          <!--<osFamily>redhat7,redhat6,suse11</osFamily>-->
-          <!--<packages>-->
-            <!--<package>-->
-              <!--<name>hadoop-mapreduce-*</name>-->
-            <!--</package>-->
-          <!--</packages>-->
-        <!--</osSpecific>-->
-      <!--</osSpecifics>-->
+      <components>
+        <component>
+          <name>MAPREDUCE2_CLIENT</name>
+          <category>CLIENT</category>
+          <deleted>true</deleted>
+        </component>
+      </components>
+
+      <osSpecifics>
+        <osSpecific>
+          <osFamily>redhat7,redhat6,suse11</osFamily>
+          <packages>
+            <package>
+              <name>hadoop-mapreduce-*</name>
+            </package>
+          </packages>
+        </osSpecific>
+      </osSpecifics>
 
     </service>
 
