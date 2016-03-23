@@ -50,9 +50,7 @@ class FlinkMaster(Script):
 
   def configure(self, env, isInstall=False):
     import params
-    import status_params
     env.set_params(params)
-    env.set_params(status_params)
 
     #write out nifi.properties
     #properties_content=InlineTemplate(params.flink_yaml_content)
@@ -83,7 +81,7 @@ class FlinkMaster(Script):
         mode=0644,
         group=params.user_group,
         owner=params.flink_user,
-        content=params.log4j_props
+        content=InlineTemplate(params.log4j_props)
       )
     elif (os.path.exists(format("{params.conf_dir}/log4j.properties"))):
       File(format("{params.conf_dir}/log4j.properties"),
@@ -117,7 +115,6 @@ class FlinkMaster(Script):
 
   # TODO: Use the YARN utilities (yarn application -kill <appId) to stop the YARN session.
   def stop(self, env):
-    import params
     import status_params
     cmd = format('pkill -f {params.flink_appname} & pkill -f org.apache.flink.yarn.ApplicationMaster')
     Execute (cmd, ignore_failures=True)
@@ -166,7 +163,6 @@ class FlinkMaster(Script):
         format('wget {jar_url}/{jar_name} -O /tmp/{jar_name} -a /tmp/alluxio_download.log'),
         user='root'
       )
-
 
 if __name__ == "__main__":
   FlinkMaster().execute()
