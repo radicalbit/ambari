@@ -34,14 +34,6 @@ class FlinkMaster(Script):
               recursive=True
     )
 
-    # Everyone can read and write
-    File(params.flink_log_file,
-            mode=0666,
-            owner=params.flink_user,
-            group=params.user_group,
-            content=''
-    )
-
     alluxio_jar_name = 'alluxio-core-client-1.0.1-jar-with-dependencies.jar'
     self.download_alluxio_client_jar(alluxio_jar_name)
     Execute(format('cp /tmp/{alluxio_jar_name} {params.flink_lib}/'), user='root')
@@ -62,12 +54,13 @@ class FlinkMaster(Script):
             recursive=True
             )
 
+    # Everyone can read and write
     File(params.flink_log_file,
-       mode=0644,
+       mode=0666,
        owner=params.flink_user,
        group=params.user_group,
        content=''
-       )
+    )
 
     File(
       format("{conf_dir}/flink-conf.yaml"),
@@ -134,7 +127,7 @@ class FlinkMaster(Script):
 
     if params.flink_streaming:
       cmd = cmd + ' -st '
-    Execute (cmd + format(" >> {flink_log_file} & echo $! > {status_params.flink_pid_file}"), user=params.flink_user)
+    Execute (cmd + format(" >> {flink_cluster_log_file} & echo $! > {status_params.flink_pid_file}"), user=params.flink_user)
 
     #Execute("ps -ef | grep org.apache.flink.yarn.ApplicationMaster | awk {'print $2'} | head -n 1 > " + status_params.flink_pid_file, user=params.flink_user)
 
