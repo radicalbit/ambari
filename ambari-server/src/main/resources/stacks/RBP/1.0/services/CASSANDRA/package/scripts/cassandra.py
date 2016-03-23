@@ -48,7 +48,7 @@ def cassandra(action = None):
   else :
 
     Directory(
-        [params.commitlog_directory, params.data_file_directories, params.saved_caches_directory],
+        [params.commitlog_directory, params.data_file_directories, params.saved_caches_directory, params.cassandra_pid_dir],
         owner=params.cassandra_user,
         group=params.user_group,
         recursive=True
