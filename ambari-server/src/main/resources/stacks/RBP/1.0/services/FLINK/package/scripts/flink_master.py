@@ -42,7 +42,7 @@ class FlinkMaster(Script):
             content=''
     )
 
-    alluxio_jar_name = 'alluxio-core-client-1.0.0-jar-with-dependencies.jar'
+    alluxio_jar_name = 'alluxio-core-client-1.0.1-jar-with-dependencies.jar'
     self.download_alluxio_client_jar(alluxio_jar_name)
     Execute(format('cp /tmp/{alluxio_jar_name} {params.flink_lib}/'), user='root')
 
