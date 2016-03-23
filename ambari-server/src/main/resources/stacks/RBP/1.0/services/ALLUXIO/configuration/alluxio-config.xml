@@ -51,7 +51,7 @@
   <property require-input="true">
     <name>alluxio.worker.tieredstore.level0.dirs.quota</name>
     <description>Alluxio Worker Tieredstore Level0 Dirs Quota</description>
-    <value>${alluxio.worker.memory.size}</value>
+    <value>2GB</value>
   </property>
 
   <property require-input="true">
