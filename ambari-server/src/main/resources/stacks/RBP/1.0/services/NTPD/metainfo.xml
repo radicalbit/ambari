@@ -28,7 +28,10 @@
                   <name>NTPD_MASTER</name>
                   <displayName>Ntpd</displayName>
                   <category>MASTER</category>
-                  <cardinality>1</cardinality>
+                  <cardinality>ALL</cardinality>
+                  <auto-deploy>
+                    <enabled>true</enabled>
+                  </auto-deploy>
                   <commandScript>
                     <script>scripts/master.py</script>
                     <scriptType>PYTHON</scriptType>
