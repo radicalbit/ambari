@@ -111,10 +111,10 @@
 
   <property>
     <name>yarn.application-master.port</name>
-    <value>0</value>
+    <value>6123</value>
     <description>With this configuration option, users can specify a port, a range of ports
       or a list of ports for the Application Master (and JobManager) RPC port.
-      By default we recommend using the default value (0) to let the operating system
+      Using the default value (0) let the operating system
       choose an appropriate port. In particular when multiple AMs are running on the same
       physical host, fixed port assignments prevent the AM from starting.</description>
   </property>
@@ -133,49 +133,6 @@
       a standby JobManager will be elected as the new leader and is given the
       last checkpointed JobManager state.</description>
   </property>
-
-  <!--JobManager Web Frontend-->
-
-  <property>
-    <name>jobmanager.web.port</name>
-    <value>8081</value>
-    <description>Port of the JobManager’s web interface that displays status of running
-      jobs and execution time breakdowns of finished jobs.
-      Setting this value to -1 disables the web frontend.</description>
-  </property>
-
-  <property>
-    <name>jobmanager.web.history</name>
-    <value>5</value>
-    <description>The number of latest jobs that the JobManager’s web
-      front-end in its history</description>
-  </property>
-
-  <property>
-    <name>jobmanager.web.checkpoints.disable</name>
-    <value>false</value>
-    <description>Disables checkpoint statistics</description>
-  </property>
-
-  <property>
-    <name>jobmanager.web.checkpoints.history</name>
-    <value>10</value>
-    <description>Number of checkpoint statistics to remember</description>
-  </property>
-
-  <!--YARN-->
-
-  <property>
-    <name>yarn.application-master.port</name>
-    <value>0</value>
-    <description>With this configuration option, users can specify a port, a range of ports
-      or a list of ports for the Application Master (and JobManager) RPC port.
-      By default we recommend using the default value (0) to let the operating system
-      choose an appropriate port. In particular when multiple AMs are running on the same
-      physical host, fixed port assignments prevent the AM from starting.</description>
-  </property>
-
-
 
   <property>
     <name>flink_numcontainers</name>
