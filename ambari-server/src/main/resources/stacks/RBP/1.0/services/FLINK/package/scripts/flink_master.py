@@ -90,7 +90,7 @@ class FlinkMaster(Script):
         logoutput=True
     )
     Execute(
-        format("zip /tmp/alluxio-site.jar /tmp/alluxio-site.properties"),
+        format("zip -j /tmp/alluxio-site.jar /tmp/alluxio-site.properties"),
         tries = 10,
         try_sleep=3,
         logoutput=True
