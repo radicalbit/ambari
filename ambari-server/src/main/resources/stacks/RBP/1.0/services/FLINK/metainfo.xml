@@ -30,7 +30,7 @@
                     <name>FLINK_MASTER</name>
                     <displayName>Flink Master</displayName>
                     <category>MASTER</category>
-                    <cardinality>0+</cardinality>
+                    <cardinality>1</cardinality>
                     <commandScript>
                         <script>scripts/flink_master.py</script>
                         <scriptType>PYTHON</scriptType>
@@ -42,10 +42,11 @@
                   <name>FLINK_CLIENT</name>
                   <displayName>Flink Client</displayName>
                   <category>CLIENT</category>
-                  <cardinality>ALL</cardinality>
-                  <auto-deploy>
-                    <enabled>true</enabled>
-                  </auto-deploy>
+                  <cardinality>1+</cardinality>
+                  <!--<cardinality>ALL</cardinality>-->
+                  <!--<auto-deploy>-->
+                    <!--<enabled>true</enabled>-->
+                  <!--</auto-deploy>-->
                   <commandScript>
                     <script>scripts/flink_client.py</script>
                     <scriptType>PYTHON</scriptType>
