@@ -46,8 +46,8 @@ class Master(Alluxio):
         # the following steps are needed to format correctly the journal of alluxio
         # 1-create as hdfs the journal folder
         folders = params.journal_relative_path.split('/')[1:]
-        Execute('hdfs dfs -mkdir /' + folders[0], user='hdfs')
-        Execute('hdfs dfs -mkdir ' + params.journal_relative_path, user='hdfs')
+        Execute('hdfs dfs -mkdir /' + folders[0], user='hdfs', not_if ='hdfs dfs -ls /' + folders[0])
+        Execute('hdfs dfs -mkdir ' + params.journal_relative_path, user='hdfs', not_if ='hdfs dfs -ls /' + params.journal_relative_path)
         # 2-change owner to root
         Execute('hdfs dfs -chown -R ' + params.root_user + ':' + params.user_group + ' /' + folders[0], user='hdfs')
         # 3-format the cluster as root
@@ -57,6 +57,9 @@ class Master(Alluxio):
 
         # update permissions on log folder
         Execute('chown -R ' + params.alluxio_user + ':' + params.user_group + ' ' + params.log_dir, user=params.root_user)
+
+        #update permissions on alluxio folder on hdfs
+        Execute('hdfs dfs -chmod -R 775 /' + folders[0], user='hdfs')
 
         # update permissions on user.log file
         Execute('chmod u=rw,g=rw,o=r ' + params.log_dir + '/user.log', user=params.root_user)
