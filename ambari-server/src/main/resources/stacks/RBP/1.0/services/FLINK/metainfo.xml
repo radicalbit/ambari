@@ -43,9 +43,9 @@
                   <displayName>Flink Client</displayName>
                   <category>CLIENT</category>
                   <cardinality>ALL</cardinality>
-                  <!--<auto-deploy>-->
-                    <!--<enabled>true</enabled>-->
-                  <!--</auto-deploy>-->
+                  <auto-deploy>
+                    <enabled>true</enabled>
+                  </auto-deploy>
                   <commandScript>
                     <script>scripts/flink_client.py</script>
                     <scriptType>PYTHON</scriptType>
