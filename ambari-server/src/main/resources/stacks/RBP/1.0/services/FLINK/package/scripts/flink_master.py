@@ -142,11 +142,19 @@ class FlinkMaster(Script):
     import params
 
     Execute('hadoop fs -mkdir -p /user/'+user, user='hdfs', ignore_failures=True)
+    Execute('hadoop fs -mkdir -p /'+user, user='hdfs', ignore_failures=True)
     Execute('hadoop fs -mkdir -p ' + params.recovery_zookeeper_path_root, user='hdfs', ignore_failures=True)
+    Execute('hadoop fs -mkdir -p ' + params.state_backend_checkpointdir, user='hdfs', ignore_failures=True)
+
     Execute('hadoop fs -chown ' + user + ' /user/'+user, user='hdfs')
+    Execute('hadoop fs -chown ' + user + ' /'+user, user='hdfs')
     Execute('hadoop fs -chown ' + user + ' ' + params.recovery_zookeeper_path_root, user='hdfs')
+    Execute('hadoop fs -chown ' + user + ' ' + params.state_backend_checkpointdir, user='hdfs')
+
     Execute('hadoop fs -chgrp ' + user + ' /user/'+user, user='hdfs')
+    Execute('hadoop fs -chgrp ' + user + ' /'+user, user='hdfs')
     Execute('hadoop fs -chgrp ' + user + ' ' + params.recovery_zookeeper_path_root, user='hdfs')
+    Execute('hadoop fs -chgrp ' + user + ' ' + params.state_backend_checkpointdir, user='hdfs')
 
   def download_alluxio_client_jar(self, jar_name):
     jar_url = 'http://public-repo.radicalbit.io/jars'
