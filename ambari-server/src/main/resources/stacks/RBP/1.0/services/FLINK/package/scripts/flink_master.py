@@ -32,7 +32,7 @@ class FlinkMaster(Script):
               owner=params.flink_user,
               group=params.user_group,
               recursive=True
-    )
+              )
 
     alluxio_jar_name = 'alluxio-core-client-1.0.1-jar-with-dependencies.jar'
     self.download_alluxio_client_jar(alluxio_jar_name)
@@ -44,63 +44,59 @@ class FlinkMaster(Script):
     import params
     env.set_params(params)
 
-    #write out nifi.properties
-    #properties_content=InlineTemplate(params.flink_yaml_content)
-    #File(format("{conf_dir}/flink-conf.yaml"), content=properties_content, owner=params.flink_user)
-
-    Directory([params.flink_log_dir],
-            owner=params.flink_user,
-            group=params.user_group,
-            recursive=True
-            )
+    Directory(
+        [params.flink_log_dir,params.flink_pid_dir],
+        owner=params.flink_user,
+        group=params.user_group,
+        recursive=True
+    )
 
     # Everyone can read and write
-    File(params.flink_log_file,
-       mode=0666,
-       owner=params.flink_user,
-       group=params.user_group,
-       content=''
+    File(
+        params.flink_log_file,
+        mode=0666,
+        owner=params.flink_user,
+        group=params.user_group,
+        content=''
     )
 
     File(
-      format("{conf_dir}/flink-conf.yaml"),
-      owner=params.flink_user,
-      mode=0644,
-      content=Template('flink-conf.yaml.j2', conf_dir=params.conf_dir)
+        format("{conf_dir}/flink-conf.yaml"),
+        owner=params.flink_user,
+        mode=0644,
+        content=Template('flink-conf.yaml.j2', conf_dir=params.conf_dir)
     )
 
     if not is_empty(params.log4j_props):
-      File(format("{params.conf_dir}/log4j.properties"),
-        mode=0644,
-        group=params.user_group,
-        owner=params.flink_user,
-        content=InlineTemplate(params.log4j_props)
+      File(
+          format("{params.conf_dir}/log4j.properties"),
+          mode=0644,
+          group=params.user_group,
+          owner=params.flink_user,
+          content=InlineTemplate(params.log4j_props)
       )
     elif (os.path.exists(format("{params.conf_dir}/log4j.properties"))):
-      File(format("{params.conf_dir}/log4j.properties"),
-        mode=0644,
-        group=params.user_group,
-        owner=params.flink_user
+      File(
+          format("{params.conf_dir}/log4j.properties"),
+          mode=0644,
+          group=params.user_group,
+          owner=params.flink_user
       )
 
-    # File(
-    #     format("{conf_dir}/core-site.xml"),
-    #     owner=params.flink_user,
-    #     mode=0644,
-    #     content=Template('core-site.xml', conf_dir=params.conf_dir)
-    # )
-
-    Execute(format("scp {alluxio_master}:/etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
+    Execute(
+        format("scp {alluxio_master}:/etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
         tries = 10,
         try_sleep=3,
         logoutput=True
     )
-    Execute(format("zip /tmp/alluxio-site.jar /tmp/alluxio-site.properties"),
+    Execute(
+        format("zip /tmp/alluxio-site.jar /tmp/alluxio-site.properties"),
         tries = 10,
         try_sleep=3,
         logoutput=True
     )
-    Execute(format("cp /tmp/alluxio-site.jar {params.flink_lib}"),
+    Execute(
+        format("cp /tmp/alluxio-site.jar {params.flink_lib}"),
         tries = 10,
         try_sleep=3,
         logoutput=True
@@ -108,10 +104,12 @@ class FlinkMaster(Script):
 
   # TODO: Use the YARN utilities (yarn application -kill <appId) to stop the YARN session.
   def stop(self, env):
+    import params
     import status_params
-    cmd = format('pkill -f {params.flink_appname} & pkill -f org.apache.flink.yarn.ApplicationMaster')
-    Execute (cmd, ignore_failures=True)
-    Execute ('rm -f ' + status_params.flink_pid_file, ignore_failures=True)
+    #cmd = format('pkill -f {params.flink_appname} & pkill -f org.apache.flink.yarn.ApplicationMaster')
+    #Execute (cmd, ignore_failures=True)
+    #Execute ('rm -f ' + status_params.flink_pid_file, ignore_failures=True)
+    Execute(format('kill `cat {flink_pid_file}`'), user=params.flink_user)
 
 
   def start(self, env):
@@ -127,9 +125,11 @@ class FlinkMaster(Script):
 
     if params.flink_streaming:
       cmd = cmd + ' -st '
-    Execute (cmd + format(" >> {flink_cluster_log_file} & echo $! > {status_params.flink_pid_file}"), user=params.flink_user)
+    Execute (cmd + format(" >> {flink_cluster_log_file}"), user=params.flink_user)
 
-    #Execute("ps -ef | grep org.apache.flink.yarn.ApplicationMaster | awk {'print $2'} | head -n 1 > " + status_params.flink_pid_file, user=params.flink_user)
+    ps_template = "ps -A -o pid,command | grep -i \"[j]ava\" | grep "
+
+    Execute("echo `(" + ps_template + " org.apache.flink.yarn.ApplicationMaster & " + ps_template + " grep org.apache.flink.yarn.YarnTaskManagerRunner)  | awk '{print $1}'` > " + status_params.flink_pid_file, user=params.flink_user)
 
 
   def status(self, env):
@@ -153,8 +153,8 @@ class FlinkMaster(Script):
 
     if not os.path.exists(format('/tmp/{jar_name}')):
       Execute(
-        format('wget {jar_url}/{jar_name} -O /tmp/{jar_name} -a /tmp/alluxio_download.log'),
-        user='root'
+          format('wget {jar_url}/{jar_name} -O /tmp/{jar_name} -a /tmp/alluxio_download.log'),
+          user='root'
       )
 
 if __name__ == "__main__":

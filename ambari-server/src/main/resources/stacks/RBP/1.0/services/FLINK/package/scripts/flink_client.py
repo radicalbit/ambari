@@ -22,24 +22,31 @@ from flink import flink
 class FlinkClient(Script):
 
   def install(self, env):
-    self.install_packages(env)
     self.configure(env)
 
   def configure(self, env, isInstall=False):
     import params
-    env.set_params(params)
-    flink()
-    # self.create_hdfs_user(params.flink_user)
-        
+    Directory(
+        [params.flink_log_dir],
+        owner=params.flink_user,
+        group=params.user_group,
+        recursive=True
+    )
+
+    # Everyone can read and write
+    File(
+        params.flink_log_file,
+        mode=0666,
+        owner=params.flink_user,
+        group=params.user_group,
+        content=''
+    )
+    # env.set_params(params)
+    # flink()
 
   def status(self, env):
     raise ClientComponentHasNoStatus()
 
 
-  # def create_hdfs_user(self, user):
-  #   Execute('hadoop fs -mkdir -p /user/'+user, user='hdfs', ignore_failures=True)
-  #   Execute('hadoop fs -chown ' + user + ' /user/'+user, user='hdfs')
-  #   Execute('hadoop fs -chgrp ' + user + ' /user/'+user, user='hdfs')
-          
 if __name__ == "__main__":
   FlinkClient().execute()
