@@ -38,20 +38,20 @@
                     </commandScript>
                 </component>
 
-                <component>
-                  <name>FLINK_CLIENT</name>
-                  <displayName>Flink</displayName>
-                  <category>CLIENT</category>
-                  <cardinality>ALL</cardinality>
-                    <auto-deploy>
-                        <enabled>true</enabled>
-                    </auto-deploy>
-                  <commandScript>
-                    <script>scripts/flink_client.py</script>
-                    <scriptType>PYTHON</scriptType>
-                    <timeout>10000</timeout>
-                  </commandScript>
-                </component>
+                <!--<component>-->
+                  <!--<name>FLINK_CLIENT</name>-->
+                  <!--<displayName>Flink</displayName>-->
+                  <!--<category>CLIENT</category>-->
+                  <!--<cardinality>ALL</cardinality>-->
+                  <!--<auto-deploy>-->
+                    <!--<enabled>true</enabled>-->
+                  <!--</auto-deploy>-->
+                  <!--<commandScript>-->
+                    <!--<script>scripts/flink_client.py</script>-->
+                    <!--<scriptType>PYTHON</scriptType>-->
+                    <!--<timeout>10000</timeout>-->
+                  <!--</commandScript>-->
+                <!--</component>-->
 
             </components>
 
