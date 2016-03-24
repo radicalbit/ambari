@@ -30,7 +30,8 @@ class FlinkClient(Script):
         [params.flink_log_dir],
         owner=params.flink_user,
         group=params.user_group,
-        recursive=True
+        recursive=True,
+        cd_access='a'
     )
 
     # Everyone can read and write
