@@ -27,7 +27,6 @@
                 <component>
                   <name>NTPD_MASTER</name>
                   <displayName>Ntpd</displayName>
-                  <!--<category>MASTER</category>-->
                   <category>SLAVE</category>
                   <cardinality>ALL</cardinality>
                   <versionAdvertised>false</versionAdvertised>
@@ -35,7 +34,7 @@
                     <enabled>true</enabled>
                   </auto-deploy>
                   <commandScript>
-                    <script>scripts/master.py</script>
+                    <script>scripts/ntpd.py</script>
                     <scriptType>PYTHON</scriptType>
                     <timeout>5000</timeout>
                   </commandScript>
