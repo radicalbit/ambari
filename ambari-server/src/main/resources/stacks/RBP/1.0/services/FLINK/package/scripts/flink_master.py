@@ -90,7 +90,7 @@ class FlinkMaster(Script):
         logoutput=True
     )
     Execute(
-        format("zip /tmp/alluxio-site.jar /tmp/alluxio-site.properties"),
+        format("zip -j /tmp/alluxio-site.jar /tmp/alluxio-site.properties"),
         tries = 10,
         try_sleep=3,
         logoutput=True
@@ -106,10 +106,8 @@ class FlinkMaster(Script):
   def stop(self, env):
     import params
     import status_params
-    #cmd = format('pkill -f {params.flink_appname} & pkill -f org.apache.flink.yarn.ApplicationMaster')
-    #Execute (cmd, ignore_failures=True)
-    #Execute ('rm -f ' + status_params.flink_pid_file, ignore_failures=True)
-    Execute(format('kill `cat {flink_pid_file}`'), user=params.flink_user)
+    Execute(format('yarn application -kill `cat {flink_pid_file}`'), user=params.flink_user)
+    Execute(format('rm -f {flink_pid_file}'), user=params.flink_user)
 
 
   def start(self, env):
@@ -127,26 +125,42 @@ class FlinkMaster(Script):
       cmd = cmd + ' -st '
     Execute (cmd + format(" >> {flink_cluster_log_file}"), user=params.flink_user)
 
-    ps_template = "ps -A -o pid,command | grep -i \"[j]ava\" | grep "
 
-    Execute("echo `(" + ps_template + " org.apache.flink.yarn.ApplicationMaster & " + ps_template + " grep org.apache.flink.yarn.YarnTaskManagerRunner)  | awk '{print $1}'` > " + status_params.flink_pid_file, user=params.flink_user)
+    Execute(format("yarn application -list | grep {flink_appname} | grep -o '\\bapplication_\w*' > {flink_pid_file}"), user=params.flink_user)
+
+    # ps_template = "ps -A -o pid,command | grep -i \"[j]ava\" | grep "
+    #
+    # Execute("echo `(" + ps_template + " org.apache.flink.yarn.ApplicationMaster & " + ps_template + " grep org.apache.flink.yarn.YarnTaskManagerRunner)  | awk '{print $1}'` > " + status_params.flink_pid_file, user=params.flink_user)
 
 
   def status(self, env):
+    import params
     import status_params
-    env.set_params(status_params)
-    check_process_status(status_params.flink_pid_file)
+    if os.path.isfile(status_params.flink_pid_file):
+      Execute(format('yarn application -status `cat {flink_pid_file}`'), user=params.flink_user)
+    else:
+      raise ComponentIsNotRunning()
+    # env.set_params(status_params)
+    # check_process_status(status_params.flink_pid_file)
 
 
   def create_hdfs_user(self, user):
     import params
 
     Execute('hadoop fs -mkdir -p /user/'+user, user='hdfs', ignore_failures=True)
+    Execute('hadoop fs -mkdir -p /'+user, user='hdfs', ignore_failures=True)
     Execute('hadoop fs -mkdir -p ' + params.recovery_zookeeper_path_root, user='hdfs', ignore_failures=True)
+    Execute('hadoop fs -mkdir -p ' + params.state_backend_checkpointdir, user='hdfs', ignore_failures=True)
+
     Execute('hadoop fs -chown ' + user + ' /user/'+user, user='hdfs')
+    Execute('hadoop fs -chown ' + user + ' /'+user, user='hdfs')
     Execute('hadoop fs -chown ' + user + ' ' + params.recovery_zookeeper_path_root, user='hdfs')
+    Execute('hadoop fs -chown ' + user + ' ' + params.state_backend_checkpointdir, user='hdfs')
+
     Execute('hadoop fs -chgrp ' + user + ' /user/'+user, user='hdfs')
+    Execute('hadoop fs -chgrp ' + user + ' /'+user, user='hdfs')
     Execute('hadoop fs -chgrp ' + user + ' ' + params.recovery_zookeeper_path_root, user='hdfs')
+    Execute('hadoop fs -chgrp ' + user + ' ' + params.state_backend_checkpointdir, user='hdfs')
 
   def download_alluxio_client_jar(self, jar_name):
     jar_url = 'http://public-repo.radicalbit.io/jars'

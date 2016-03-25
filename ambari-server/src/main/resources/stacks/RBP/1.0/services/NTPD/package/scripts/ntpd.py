@@ -16,24 +16,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
-import sys, os, pwd, signal, time
 from resource_management import *
-from subprocess import call
 
 class Master(Script):
   def install(self, env):
     self.install_packages(env)
-    
-  def stop(self, env):
-    import params 
-    Execute('service ntpd stop >>' + params.stack_log)
 
   def start(self, env):
     import params
     Execute('service ntpd start >>' + params.stack_log)
+    
+  def stop(self, env):
+    import params 
+    Execute('service ntpd stop >>' + params.stack_log)
 	
   def status(self, env):
-    import params
     Execute('service ntpd status')
 
 if __name__ == "__main__":

@@ -17,7 +17,6 @@ limitations under the License.
 
 """
 from resource_management import *
-from flink import flink
 
 class FlinkClient(Script):
 
@@ -30,7 +29,8 @@ class FlinkClient(Script):
         [params.flink_log_dir],
         owner=params.flink_user,
         group=params.user_group,
-        recursive=True
+        recursive=True,
+        cd_access='a'
     )
 
     # Everyone can read and write
@@ -41,8 +41,6 @@ class FlinkClient(Script):
         group=params.user_group,
         content=''
     )
-    # env.set_params(params)
-    # flink()
 
   def status(self, env):
     raise ClientComponentHasNoStatus()
