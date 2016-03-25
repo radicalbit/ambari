@@ -102,12 +102,6 @@ class FlinkMaster(Script):
         logoutput=True
     )
 
-  def stop(self, env):
-    import params
-    import status_params
-    Execute('yarn application -kill `cat ' + status_params.flink_pid_file + '`', user=params.flink_user)
-    Execute('rm -f ' + status_params.flink_pid_file, user=params.flink_user)
-
 
   def start(self, env):
     import params
@@ -126,15 +120,15 @@ class FlinkMaster(Script):
 
     Execute(format("yarn application -list | grep {flink_appname} | grep -o '\\bapplication_\w*' >") + status_params.flink_pid_file, user=params.flink_user)
 
-  def status(self, env):
+  def stop(self, env):
     import params
     import status_params
-    if os.path.isfile(status_params.flink_pid_file):
-      Execute('yarn application -status `cat ' + status_params.flink_pid_file + '`', user=params.flink_user)
-    else:
-      raise ComponentIsNotRunning()
-    # env.set_params(status_params)
-    # check_process_status(status_params.flink_pid_file)
+    Execute('yarn application -kill `cat ' + status_params.flink_pid_file + '`', user=params.flink_user)
+    Execute('rm -f ' + status_params.flink_pid_file, user=params.flink_user)
+
+  def status(self, env):
+    import status_params
+    Execute('yarn application -status `cat ' + status_params.flink_pid_file + '`')
 
 
   def create_hdfs_user(self, user):

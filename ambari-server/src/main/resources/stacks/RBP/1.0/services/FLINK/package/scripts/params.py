@@ -89,6 +89,7 @@ log4j_props = config['configurations']['flink-log4j']['content']
 
 # params from flink-env.yaml
 flink_user = config['configurations']['flink-env']['flink_user']
+yarn_user = config['configurations']['yarn-env']['yarn_user']
 user_group = config['configurations']['cluster-env']['user_group']
 #flink_group = config['configurations']['flink-env']['flink_group']
 flink_pid_dir = config['configurations']['flink-env']['flink_pid_dir']
