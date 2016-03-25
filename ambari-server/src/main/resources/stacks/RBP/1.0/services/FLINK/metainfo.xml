@@ -42,7 +42,6 @@
                     <name>FLINK_CLIENT</name>
                     <displayName>Flink Client</displayName>
                     <category>CLIENT</category>
-                    <!--<cardinality>1+</cardinality>-->
                     <cardinality>ALL</cardinality>
                     <versionAdvertised>false</versionAdvertised>
                     <auto-deploy>
