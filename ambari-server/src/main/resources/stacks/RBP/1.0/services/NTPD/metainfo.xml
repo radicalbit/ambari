@@ -26,7 +26,7 @@
 
             <components>
                 <component>
-                  <name>NTPD_MASTER</name>
+                  <name>NTPD_SLAVE</name>
                   <displayName>Ntpd</displayName>
                   <category>SLAVE</category>
                   <cardinality>ALL</cardinality>
