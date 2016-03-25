@@ -23,6 +23,7 @@
             <displayName>Ntpd</displayName>
             <comment>The Network Time Protocol daemon (ntpd) is an operating system program that maintains the system time in synchronization with time servers using the Network Time Protocol</comment>
             <version>0.0.1</version>
+
             <components>
                 <component>
                   <name>NTPD_MASTER</name>
@@ -40,6 +41,7 @@
                   </commandScript>
                 </component>
             </components>
+
             <osSpecifics>
               <osSpecific>
                 <osFamily>any</osFamily>
@@ -48,9 +50,11 @@
                 </packages>
               </osSpecific>
             </osSpecifics>
+
       	    <configuration-dependencies>
-        	<config-type>ntpd-config</config-type>
+        	  <config-type>ntpd-config</config-type>
       	    </configuration-dependencies>
+
             <restartRequiredAfterChange>false</restartRequiredAfterChange>
         </service>
     </services>
