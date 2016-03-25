@@ -105,8 +105,8 @@ class FlinkMaster(Script):
   def stop(self, env):
     import params
     import status_params
-    Execute(format('yarn application -kill `cat {flink_pid_file}`'), user=params.flink_user)
-    Execute(format('rm -f {flink_pid_file}'), user=params.flink_user)
+    Execute('yarn application -kill `cat ' + status_params.flink_pid_file + '`', user=params.flink_user)
+    Execute('rm -f ' + status_params.flink_pid_file, user=params.flink_user)
 
 
   def start(self, env):
