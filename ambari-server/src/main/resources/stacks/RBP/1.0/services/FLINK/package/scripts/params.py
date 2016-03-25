@@ -108,3 +108,5 @@ if 'zookeeper_hosts' in config['clusterHostInfo']:
 
 recovery_zookeeper_path_root = '/flink/recovery'
 recovery_zookeeper_storage_dir = format('{hdfs_default_name}{recovery_zookeeper_path_root}')
+
+nodes_number = len(config['clusterHostInfo']['all_hosts'])

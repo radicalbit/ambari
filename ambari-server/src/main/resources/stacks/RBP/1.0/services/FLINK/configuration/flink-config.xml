@@ -136,7 +136,7 @@
 
   <property>
     <name>flink_numcontainers</name>
-    <value>1</value>
+    <value>{{nodes_number}}</value>
     <description>Number of YARN container to allocate (=Number of Task Managers)</description>
   </property>
 
