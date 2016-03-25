@@ -102,7 +102,6 @@ class FlinkMaster(Script):
         logoutput=True
     )
 
-  # TODO: Use the YARN utilities (yarn application -kill <appId) to stop the YARN session.
   def stop(self, env):
     import params
     import status_params
@@ -125,19 +124,13 @@ class FlinkMaster(Script):
       cmd = cmd + ' -st '
     Execute (cmd + format(" >> {flink_cluster_log_file}"), user=params.flink_user)
 
-
-    Execute(format("yarn application -list | grep {flink_appname} | grep -o '\\bapplication_\w*' > {flink_pid_file}"), user=params.flink_user)
-
-    # ps_template = "ps -A -o pid,command | grep -i \"[j]ava\" | grep "
-    #
-    # Execute("echo `(" + ps_template + " org.apache.flink.yarn.ApplicationMaster & " + ps_template + " grep org.apache.flink.yarn.YarnTaskManagerRunner)  | awk '{print $1}'` > " + status_params.flink_pid_file, user=params.flink_user)
-
+    Execute(format("yarn application -list | grep {flink_appname} | grep -o '\\bapplication_\w*' >") + status_params.flink_pid_file, user=params.flink_user)
 
   def status(self, env):
     import params
     import status_params
     if os.path.isfile(status_params.flink_pid_file):
-      Execute(format('yarn application -status `cat {flink_pid_file}`'), user=params.flink_user)
+      Execute('yarn application -status `cat ' + status_params.flink_pid_file + '`', user=params.flink_user)
     else:
       raise ComponentIsNotRunning()
     # env.set_params(status_params)
