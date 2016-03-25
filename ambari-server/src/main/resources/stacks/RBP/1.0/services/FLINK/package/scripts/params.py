@@ -21,6 +21,7 @@ from resource_management import *
 from resource_management.libraries.functions import conf_select
 from resource_management.libraries.script.script import Script
 import sys, os, glob
+import multiprocessing
 
 # server configurations
 config = Script.get_config()
@@ -28,6 +29,9 @@ config = Script.get_config()
 # usefull dirs
 hadoop_conf_dir = conf_select.get_hadoop_conf_dir()
 hdfs_default_name = config['configurations']['core-site']['fs.defaultFS']
+
+nodes_number = len(config['clusterHostInfo']['all_hosts'])
+cores_number = multiprocessing.cpu_count()
 
 alluxio_master = ''
 alluxio_default_name = 'file:///'
@@ -41,7 +45,10 @@ bin_dir = flink_install_dir + '/bin'
 flink_lib = flink_install_dir + '/lib'
 
 # flink_install_dir = config['configurations']['flink-config']['flink_install_dir']
-flink_numcontainers = config['configurations']['flink-config']['flink_numcontainers']
+if config['configurations']['flink-config']['flink_numcontainers'] == '{{nodes_number}}':
+  flink_numcontainers = nodes_number
+else:
+  flink_numcontainers = config['configurations']['flink-config']['flink_numcontainers']
 flink_jobmanager_memory = config['configurations']['flink-config']['flink_jobmanager_memory']
 flink_container_memory = config['configurations']['flink-config']['flink_container_memory']
 flink_appname = config['configurations']['flink-config']['flink_appname']
@@ -108,5 +115,3 @@ if 'zookeeper_hosts' in config['clusterHostInfo']:
 
 recovery_zookeeper_path_root = '/flink/recovery'
 recovery_zookeeper_storage_dir = format('{hdfs_default_name}{recovery_zookeeper_path_root}')
-
-nodes_number = len(config['clusterHostInfo']['all_hosts'])

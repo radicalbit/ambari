@@ -112,7 +112,7 @@ class FlinkMaster(Script):
 
     Execute('echo bin dir ' + params.bin_dir)
     Execute('echo pid file ' + status_params.flink_pid_file)
-    cmd = format("export HADOOP_CONF_DIR={hadoop_conf_dir}; nohup {bin_dir}/yarn-session.sh -n {flink_numcontainers} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
+    cmd = format("export HADOOP_CONF_DIR={hadoop_conf_dir}; nohup {bin_dir}/yarn-session.sh -n {flink_numcontainers} -s {cores_number} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
 
     if params.flink_streaming:
       cmd = cmd + ' -st '
