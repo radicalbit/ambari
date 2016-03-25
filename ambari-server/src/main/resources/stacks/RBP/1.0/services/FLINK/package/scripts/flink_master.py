@@ -106,9 +106,6 @@ class FlinkMaster(Script):
   def stop(self, env):
     import params
     import status_params
-    #cmd = format('pkill -f {params.flink_appname} & pkill -f org.apache.flink.yarn.ApplicationMaster')
-    #Execute (cmd, ignore_failures=True)
-    #Execute ('rm -f ' + status_params.flink_pid_file, ignore_failures=True)
     Execute(format('kill `cat {flink_pid_file}`'), user=params.flink_user)
 
 

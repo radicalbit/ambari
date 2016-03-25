@@ -17,7 +17,6 @@ limitations under the License.
 
 """
 from resource_management import *
-from flink import flink
 
 class FlinkClient(Script):
 
@@ -42,8 +41,6 @@ class FlinkClient(Script):
         group=params.user_group,
         content=''
     )
-    # env.set_params(params)
-    # flink()
 
   def status(self, env):
     raise ClientComponentHasNoStatus()
