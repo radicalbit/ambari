@@ -141,7 +141,7 @@
   <property require-input="true">
     <name>alluxio.user.file.readtype.default</name>
     <description>Alluxio User File Readtype Default</description>
-    <value>NO_CACHE</value>
+    <value>CACHE_PROMOTE</value>
   </property>
 
   <property require-input="true">
@@ -153,7 +153,7 @@
   <property require-input="true">
     <name>alluxio.user.file.writetype.default</name>
     <description>Alluxio User File Writetype Default</description>
-    <value>THROUGH</value>
+    <value>CACHE_THROUGH</value>
   </property>
 
   <property require-input="false">
