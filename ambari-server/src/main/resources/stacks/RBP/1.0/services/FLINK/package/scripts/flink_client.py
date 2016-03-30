@@ -33,14 +33,7 @@ class FlinkClient(Script):
         cd_access='a'
     )
 
-    # Everyone can read and write
-    # File(
-    #     params.flink_log_file,
-    #     mode=0666,
-    #     owner=params.flink_user,
-    #     group=params.user_group,
-    #     content=''
-    # )
+    Execute('chmod 777 ' + params.flink_log_dir, user='root')
 
   def status(self, env):
     raise ClientComponentHasNoStatus()
