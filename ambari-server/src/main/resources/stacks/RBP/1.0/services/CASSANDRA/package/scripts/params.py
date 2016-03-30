@@ -59,13 +59,15 @@ saved_caches_directory = cassandra_conf['saved_caches_directory']
 listen_address = hostname
 rpc_address = hostname
 
-cassandra_nodes = config['clusterHostInfo']['cassandra_node_hosts']
-if len(cassandra_nodes) > 8:
-  seeds = cassandra_nodes[0] + "," + cassandra_nodes[1] + "," + cassandra_nodes[2]
-elif len(cassandra_nodes) >= 3:
-  seeds = cassandra_nodes[0] + "," + cassandra_nodes[1]
-else:
-  seeds = cassandra_nodes[0]
+# cassandra_nodes = config['clusterHostInfo']['cassandra_node_hosts']
+# if len(cassandra_nodes) > 8:
+#   seeds = cassandra_nodes[0] + "," + cassandra_nodes[1] + "," + cassandra_nodes[2]
+# elif len(cassandra_nodes) >= 3:
+#   seeds = cassandra_nodes[0] + "," + cassandra_nodes[1]
+# else:
+#   seeds = cassandra_nodes[0]
+
+seeds = ",".join(config['clusterHostInfo']['cassandra_seed_hosts'])
 
 max_heap_size = cassandra_env['max_heap_size']
 heap_new_size = cassandra_env['heap_new_size']
