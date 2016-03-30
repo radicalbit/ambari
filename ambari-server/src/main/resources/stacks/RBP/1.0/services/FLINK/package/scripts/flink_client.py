@@ -34,13 +34,13 @@ class FlinkClient(Script):
     )
 
     # Everyone can read and write
-    File(
-        params.flink_log_file,
-        mode=0666,
-        owner=params.flink_user,
-        group=params.user_group,
-        content=''
-    )
+    # File(
+    #     params.flink_log_file,
+    #     mode=0666,
+    #     owner=params.flink_user,
+    #     group=params.user_group,
+    #     content=''
+    # )
 
   def status(self, env):
     raise ClientComponentHasNoStatus()

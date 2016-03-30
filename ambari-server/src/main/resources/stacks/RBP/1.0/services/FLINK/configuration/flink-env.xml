@@ -20,11 +20,11 @@
 
 <configuration>
 
-    <property>
-        <name>flink_log_dir</name>
-        <value>/var/log/flink</value>
-        <description>flink Log dir</description>
-    </property>
+    <!--<property>-->
+        <!--<name>flink_log_dir</name>-->
+        <!--<value>/var/log/flink</value>-->
+        <!--<description>flink Log dir</description>-->
+    <!--</property>-->
 
     <property>
         <name>flink_pid_dir</name>

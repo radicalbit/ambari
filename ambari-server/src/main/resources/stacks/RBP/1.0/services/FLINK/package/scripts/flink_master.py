@@ -52,13 +52,13 @@ class FlinkMaster(Script):
     )
 
     # Everyone can read and write
-    File(
-        params.flink_log_file,
-        mode=0666,
-        owner=params.flink_user,
-        group=params.user_group,
-        content=''
-    )
+    # File(
+    #     params.flink_log_file,
+    #     mode=0666,
+    #     owner=params.flink_user,
+    #     group=params.user_group,
+    #     content=''
+    # )
 
     File(
         format("{conf_dir}/flink-conf.yaml"),
@@ -67,21 +67,21 @@ class FlinkMaster(Script):
         content=Template('flink-conf.yaml.j2', conf_dir=params.conf_dir)
     )
 
-    if not is_empty(params.log4j_props):
-      File(
-          format("{params.conf_dir}/log4j.properties"),
-          mode=0644,
-          group=params.user_group,
-          owner=params.flink_user,
-          content=InlineTemplate(params.log4j_props)
-      )
-    elif (os.path.exists(format("{params.conf_dir}/log4j.properties"))):
-      File(
-          format("{params.conf_dir}/log4j.properties"),
-          mode=0644,
-          group=params.user_group,
-          owner=params.flink_user
-      )
+    # if not is_empty(params.log4j_props):
+    #   File(
+    #       format("{params.conf_dir}/log4j.properties"),
+    #       mode=0644,
+    #       group=params.user_group,
+    #       owner=params.flink_user,
+    #       content=InlineTemplate(params.log4j_props)
+    #   )
+    # elif (os.path.exists(format("{params.conf_dir}/log4j.properties"))):
+    #   File(
+    #       format("{params.conf_dir}/log4j.properties"),
+    #       mode=0644,
+    #       group=params.user_group,
+    #       owner=params.flink_user
+    #   )
 
     Execute(
         format("scp {alluxio_master}:/etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
@@ -119,7 +119,8 @@ class FlinkMaster(Script):
 
     if params.flink_streaming:
       cmd = cmd + ' -st '
-    Execute (cmd + format(" >> {flink_cluster_log_file}"), user=params.flink_user, not_if = check_cmd)
+    Execute (cmd, user=params.flink_user, not_if = check_cmd)
+    #Execute (cmd + format(" >> {flink_cluster_log_file}"), user=params.flink_user, not_if = check_cmd)
 
     Execute(format("yarn application -list | grep {flink_appname} | grep -o '\\bapplication_\w*' >") + status_params.flink_pid_file, user=params.flink_user)
 

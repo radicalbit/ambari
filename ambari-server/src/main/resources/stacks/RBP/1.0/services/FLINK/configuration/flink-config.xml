@@ -77,6 +77,12 @@
   <!--</property>-->
 
 
+  <property>
+    <name>env.log.dir</name>
+    <value>/var/log/flink</value>
+    <description>Default directory for Flink logs.</description>
+  </property>
+
 
   <!--JobManager Web Frontend-->
 
