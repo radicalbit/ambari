@@ -47,7 +47,7 @@ class Master(Alluxio):
         # 1-create as hdfs the journal folder
         folders = params.journal_relative_path.split('/')[1:]
         Execute('hdfs dfs -mkdir /' + folders[0], user='hdfs', not_if ='hdfs dfs -ls /' + folders[0])
-        Execute('hdfs dfs -mkdir ' + params.journal_relative_path, user='hdfs', not_if ='hdfs dfs -ls /' + params.journal_relative_path)
+        Execute('hdfs dfs -mkdir ' + params.journal_relative_path, user='hdfs', not_if ='hdfs dfs -ls ' + params.journal_relative_path)
         # 2-change owner to root
         Execute('hdfs dfs -chown -R ' + params.root_user + ':' + params.user_group + ' /' + folders[0], user='hdfs')
         # 3-format the cluster as root
