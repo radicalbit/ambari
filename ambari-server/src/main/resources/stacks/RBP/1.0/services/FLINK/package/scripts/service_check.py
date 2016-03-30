@@ -23,22 +23,16 @@ import subprocess
 class FlinkServiceCheck(Script):
   # Service check for VSFTPD service
   def service_check(self, env):
+    import params
 
-    bin_dir = '/usr/lib/flink/bin'
-    example_dir = '/usr/share/doc/flink/examples/batch'
-    full_command = format("{bin_dir}/flink run {example_dir}/WordCount.jar")
-    #proc = subprocess.Popen(full_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    #(stdout, stderr) = proc.communicate()
-    #response = stdout
-    Execute(format(full_command))
+    if params.hostname == params.alluxio_master:
+      bin_dir = '/usr/lib/flink/bin'
+      example_dir = '/usr/share/doc/flink/examples/batch'
+      full_command = format("{bin_dir}/flink run {example_dir}/WordCount.jar")
+      Execute(format(full_command))
+    else:
+      Execute("test -d " + params.flink_log_dir)
 
-    # response is
-    # Passed the test
-    # or
-    # Failed the test!
-
-    # if 'Failed' in response:
-    #   raise ComponentIsNotRunning()
 
 if __name__ == "__main__":
   FlinkServiceCheck().execute()
