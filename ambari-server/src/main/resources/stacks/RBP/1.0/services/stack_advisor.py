@@ -17,12 +17,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from stack_advisor import DefaultStackAdvisor
 
-class RBP30StackAdvisor(DefaultStackAdvisor):
+class RBP30StackAdvisor(RBP023StackAdvisor):
 
   def getComponentLayoutValidations(self, services, hosts):
-    #parentItems = super(RBP30StackAdvisor, self).getComponentLayoutValidations(services, hosts)
+    parentItems = super(RBP30StackAdvisor, self).getComponentLayoutValidations(services, hosts)
 
     childItems = []
 
@@ -38,6 +37,5 @@ class RBP30StackAdvisor(DefaultStackAdvisor):
         message = "Cassandra Seed and Cassandra Node should not be deployed on the same host."
         childItems.append( { "type": 'host-component', "level": 'ERROR', "message": message, "component-name": 'CASSANDRA_NODE', "host": host } )
 
-    # parentItems.extend(childItems)
-    # return parentItems
-    return childItems
+    parentItems.extend(childItems)
+    return parentItems
