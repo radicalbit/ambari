@@ -24,20 +24,20 @@ configurations = config['configurations']
 cassandra_env = configurations['cassandra-env']
 cassandra_conf = configurations['cassandra-conf']
 
-# def get_host_ip(name, host_names, host_ips):
-#   host_ip = ''
-#   counter = 0
-#   for hostname in host_names:
-#     if name == hostname:
-#       host_ip = host_ips[counter]
-#     counter = counter + 1
-#   return host_ip
+def get_host_ip(name, host_names, host_ips):
+  host_ip = ''
+  counter = 0
+  for hostname in host_names:
+    if name == hostname:
+      host_ip = host_ips[counter]
+    counter = counter + 1
+  return host_ip
 
 nodes_hostname = config['clusterHostInfo']['all_hosts']
 nodes_ip = config['clusterHostInfo']['all_ipv4_ips']
 
 hostname = config['hostname']
-#host_ip = get_host_ip(hostname, nodes_hostname, nodes_ip)
+host_ip = get_host_ip(hostname, nodes_hostname, nodes_ip)
 
 cassandra_user = cassandra_env['cassandra_user']
 user_group = config['configurations']['cluster-env']['user_group']
@@ -58,16 +58,11 @@ saved_caches_directory = cassandra_conf['saved_caches_directory']
 
 listen_address = hostname
 rpc_address = hostname
+
 cassandra_nodes = config['clusterHostInfo']['cassandra_node_hosts']
-# if len(cassandra_nodes) > 8:
-#   seeds = get_host_ip(cassandra_nodes[0], nodes_hostname, nodes_ip) + "," + get_host_ip(cassandra_nodes[1], nodes_hostname, nodes_ip) + "," + get_host_ip(cassandra_nodes[2], nodes_hostname, nodes_ip)
-# elif len(cassandra_nodes) >= 5:
-#   seeds = get_host_ip(cassandra_nodes[0], nodes_hostname, nodes_ip) + "," + get_host_ip(cassandra_nodes[1], nodes_hostname, nodes_ip)
-# else:
-#   seeds = get_host_ip(cassandra_nodes[0], nodes_hostname, nodes_ip)
 if len(cassandra_nodes) > 8:
   seeds = cassandra_nodes[0] + "," + cassandra_nodes[1] + "," + cassandra_nodes[2]
-elif len(cassandra_nodes) >= 5:
+elif len(cassandra_nodes) >= 3:
   seeds = cassandra_nodes[0] + "," + cassandra_nodes[1]
 else:
   seeds = cassandra_nodes[0]
