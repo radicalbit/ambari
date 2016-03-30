@@ -34,6 +34,11 @@ class Alluxio(Script):
       Execute('cp /etc/sudoers /etc/sudoers.pre_alluxio.bak')
       Execute('echo "'+params.alluxio_user+'    ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers')
 
+  def configure(self, env):
+    import params
+
+    env.set_params(params)
+
     Logger.info('Creating Alluxio pid dir...')
     if not os.path.exists(params.pid_dir):
       Directory(
@@ -46,11 +51,6 @@ class Alluxio(Script):
 
     Execute('chown -R ' + params.alluxio_user + ':' + params.user_group + ' ' + params.pid_dir, user='root')
     Execute('chown -R ' + params.alluxio_user + ':' + params.user_group + ' ' + params.log_dir, user='root')
-
-  def configure(self, env):
-    import params
-
-    env.set_params(params)
 
     File(
         format("{params.alluxio_config_dir}/alluxio-env.sh"),

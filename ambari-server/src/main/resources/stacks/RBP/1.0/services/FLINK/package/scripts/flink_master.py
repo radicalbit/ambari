@@ -112,11 +112,14 @@ class FlinkMaster(Script):
 
     Execute('echo bin dir ' + params.bin_dir)
     Execute('echo pid file ' + status_params.flink_pid_file)
+
+    check_cmd = as_sudo(["test", "-f", status_params.flink_pid_file]) + " && " + as_sudo(["pgrep", "-F", status_params.flink_pid_file])
+
     cmd = format("export HADOOP_CONF_DIR={hadoop_conf_dir}; nohup {bin_dir}/yarn-session.sh -n {flink_numcontainers} -s {cores_number} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
 
     if params.flink_streaming:
       cmd = cmd + ' -st '
-    Execute (cmd + format(" >> {flink_cluster_log_file}"), user=params.flink_user)
+    Execute (cmd + format(" >> {flink_cluster_log_file}"), user=params.flink_user, not_if = check_cmd)
 
     Execute(format("yarn application -list | grep {flink_appname} | grep -o '\\bapplication_\w*' >") + status_params.flink_pid_file, user=params.flink_user)
 
@@ -134,20 +137,20 @@ class FlinkMaster(Script):
   def create_hdfs_user(self, user):
     import params
 
-    Execute('hadoop fs -mkdir -p /user/'+user, user='hdfs', ignore_failures=True)
-    Execute('hadoop fs -mkdir -p /'+user, user='hdfs', ignore_failures=True)
-    Execute('hadoop fs -mkdir -p ' + params.recovery_zookeeper_path_root, user='hdfs', ignore_failures=True)
-    Execute('hadoop fs -mkdir -p ' + params.state_backend_checkpointdir, user='hdfs', ignore_failures=True)
+    Execute('hdfs dfs -mkdir -p /user/' + user, user='hdfs', not_if ='hdfs dfs -ls /user/' + user)
+    Execute('hdfs dfs -mkdir -p /' + user, user='hdfs', not_if ='hdfs dfs -ls /' + user)
+    Execute('hdfs dfs -mkdir -p ' + params.recovery_zookeeper_path_root, user='hdfs', not_if ='hdfs dfs -ls ' + params.recovery_zookeeper_path_root)
+    Execute('hdfs dfs -mkdir -p ' + params.state_backend_checkpointdir, user='hdfs', not_if ='hdfs dfs -ls ' + params.state_backend_checkpointdir)
 
-    Execute('hadoop fs -chown ' + user + ' /user/'+user, user='hdfs')
-    Execute('hadoop fs -chown ' + user + ' /'+user, user='hdfs')
-    Execute('hadoop fs -chown ' + user + ' ' + params.recovery_zookeeper_path_root, user='hdfs')
-    Execute('hadoop fs -chown ' + user + ' ' + params.state_backend_checkpointdir, user='hdfs')
+    Execute('hdfs dfs -chown ' + user + ' /user/'+user, user='hdfs')
+    Execute('hdfs dfs -chown ' + user + ' /'+user, user='hdfs')
+    Execute('hdfs dfs -chown ' + user + ' ' + params.recovery_zookeeper_path_root, user='hdfs')
+    Execute('hdfs dfs -chown ' + user + ' ' + params.state_backend_checkpointdir, user='hdfs')
 
-    Execute('hadoop fs -chgrp ' + user + ' /user/'+user, user='hdfs')
-    Execute('hadoop fs -chgrp ' + user + ' /'+user, user='hdfs')
-    Execute('hadoop fs -chgrp ' + user + ' ' + params.recovery_zookeeper_path_root, user='hdfs')
-    Execute('hadoop fs -chgrp ' + user + ' ' + params.state_backend_checkpointdir, user='hdfs')
+    Execute('hdfs dfs -chgrp ' + user + ' /user/'+user, user='hdfs')
+    Execute('hdfs dfs -chgrp ' + user + ' /'+user, user='hdfs')
+    Execute('hdfs dfs -chgrp ' + user + ' ' + params.recovery_zookeeper_path_root, user='hdfs')
+    Execute('hdfs dfs -chgrp ' + user + ' ' + params.state_backend_checkpointdir, user='hdfs')
 
   def download_alluxio_client_jar(self, jar_name):
     jar_url = 'http://public-repo.radicalbit.io/jars'
