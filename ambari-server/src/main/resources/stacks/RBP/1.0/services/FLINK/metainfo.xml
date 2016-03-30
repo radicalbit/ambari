@@ -87,7 +87,7 @@
 	        	<config-type>flink-config</config-type>
                 <config-type>flink-advanced</config-type>
       	    </configuration-dependencies>
-            <restartRequiredAfterChange>false</restartRequiredAfterChange>
+            <restartRequiredAfterChange>true</restartRequiredAfterChange>
         </service>
     </services>
 </metainfo>
