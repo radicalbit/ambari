@@ -20,7 +20,7 @@ from resource_management import *
 from cassandra import cassandra
 from join_check import join_check
 
-class CassandraNode(Script):
+class CassandraSeed(Script):
 
   def install(self, env):
     import params
@@ -38,11 +38,10 @@ class CassandraNode(Script):
     import params
     self.configure(env)
 
-    if join_check(params.host_ip) == True:
-      Execute(
-          format('{params.cassandra_bin_dir}/cassandra -p {params.cassandra_pid_dir}/cassandra.pid'),
-          user=params.cassandra_user
-      )
+    Execute(
+        format('{params.cassandra_bin_dir}/cassandra -p {params.cassandra_pid_dir}/cassandra.pid'),
+        user=params.cassandra_user
+    )
 
   def stop(self, env):
     import params
@@ -56,4 +55,4 @@ class CassandraNode(Script):
 
 
 if __name__ == '__main__':
-  CassandraNode().execute()
+  CassandraSeed().execute()

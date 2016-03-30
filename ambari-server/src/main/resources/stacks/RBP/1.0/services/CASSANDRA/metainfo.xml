@@ -28,7 +28,7 @@
             <components>
                 <component>
                     <name>CASSANDRA_SEED</name>
-                    <displayName>Cassandra Node</displayName>
+                    <displayName>Cassandra Seed</displayName>
                     <category>MASTER</category>
                     <cardinality>1-3</cardinality>
                     <commandScript>
