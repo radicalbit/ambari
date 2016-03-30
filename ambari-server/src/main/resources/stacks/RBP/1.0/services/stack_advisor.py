@@ -18,7 +18,7 @@ limitations under the License.
 """
 
 
-class RBP30StackAdvisor(RBP023StackAdvisor):
+class RBP10StackAdvisor(RBP023StackAdvisor):
 
   def getComponentLayoutValidations(self, services, hosts):
     parentItems = super(RBP30StackAdvisor, self).getComponentLayoutValidations(services, hosts)
