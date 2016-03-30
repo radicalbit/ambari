@@ -23,14 +23,6 @@
       <name>YARN</name>
       <version>2.7.1</version>
 
-      <!--<components>-->
-        <!--<component>-->
-          <!--<name>APP_TIMELINE_SERVER</name>-->
-          <!--<category>MASTER</category>-->
-          <!--<deleted>true</deleted>-->
-        <!--</component>-->
-      <!--</components>-->
-
       <osSpecifics>
         <osSpecific>
           <osFamily>redhat7,redhat6,suse11</osFamily>
@@ -48,8 +40,6 @@
 
     <service>
       <name>MAPREDUCE2</name>
-      <!--<version>2.7.1.2.3</version>-->
-      <!--<deleted>true</deleted>-->
       <version>2.7.1</version>
 
       <components>
