@@ -198,6 +198,11 @@ App.StackServiceComponent = DS.Model.extend({
   /** @property {Boolean} isNotAddableOnlyInInstall - is this component addable, except Install and Add Service Wizards  **/
   isNotAddableOnlyInInstall: function() {
     return ['HIVE_METASTORE', 'HIVE_SERVER', 'RANGER_KMS_SERVER', 'OOZIE_SERVER'].contains(this.get('componentName'));
+  }.property('componentName'),
+
+    /** @property {Boolean} isNotAddableOnlyInInstall - is this component addable, except Install and Add Service Wizards  **/
+  isNotAddableComponentOnSameHost: function() {
+    return ['CASSANDRA_NODE'].contains(this.get('componentName'));
   }.property('componentName')
 
 });
