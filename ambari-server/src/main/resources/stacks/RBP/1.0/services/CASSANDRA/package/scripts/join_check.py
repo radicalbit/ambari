@@ -37,7 +37,7 @@ def join_check(ip_address, seed_node):
 
 
   def moving_nodes(exclude, seed_node):
-    output = subprocess.check_output("nodetool --host " + seed_node + " status".split())
+    output = subprocess.check_output(["nodetool", "--host", seed_node, "status"])
     lines = output.splitlines()
 
     r = re.compile("[U|D][J|L|M]\s\s.*")
@@ -50,7 +50,7 @@ def join_check(ip_address, seed_node):
   def check(node, seed_node):
     moving = moving_nodes(node, seed_node)
     pause = 0.5
-    max_count = 10
+    max_count = 20
     count = 0
 
     while len(moving) > 0 and count < max_count:
