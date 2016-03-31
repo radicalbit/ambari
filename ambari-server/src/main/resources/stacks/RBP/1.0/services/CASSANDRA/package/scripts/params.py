@@ -61,14 +61,6 @@ rpc_address = hostname
 
 seed_node_head = config['clusterHostInfo']['cassandra_seed_hosts'][0]
 
-# cassandra_nodes = config['clusterHostInfo']['cassandra_node_hosts']
-# if len(cassandra_nodes) > 8:
-#   seeds = cassandra_nodes[0] + "," + cassandra_nodes[1] + "," + cassandra_nodes[2]
-# elif len(cassandra_nodes) >= 3:
-#   seeds = cassandra_nodes[0] + "," + cassandra_nodes[1]
-# else:
-#   seeds = cassandra_nodes[0]
-
 seeds = ",".join(config['clusterHostInfo']['cassandra_seed_hosts'])
 
 max_heap_size = cassandra_env['max_heap_size']
