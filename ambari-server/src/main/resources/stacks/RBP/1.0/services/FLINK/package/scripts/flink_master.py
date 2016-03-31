@@ -16,9 +16,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
-import sys, os, pwd, grp, signal, time, glob, hashlib
+import sys, os, pwd, grp, signal, time, glob, hashlib, subprocess
 from resource_management import *
-from subprocess import call
 
 class FlinkMaster(Script):
   def install(self, env):
@@ -92,11 +91,16 @@ class FlinkMaster(Script):
 
     check_cmd = as_sudo(["test", "-f", status_params.flink_pid_file]) + " && " + as_sudo(["pgrep", "-F", status_params.flink_pid_file])
 
-    cmd = format("export HADOOP_CONF_DIR={hadoop_conf_dir}; nohup {bin_dir}/yarn-session.sh -n {flink_numcontainers} -s {cores_number} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
+    # try:
+    #   subprocess.check_output('yarn application -status `cat ' + status_params.flink_pid_file + '` | grep "State : RUNNING"', shell=True)
+    # except subprocess.CalledProcessError as grepexc:
+    #   self.stop(env)
+
+    longRunningCmd = format("export HADOOP_CONF_DIR={hadoop_conf_dir}; nohup {bin_dir}/yarn-session.sh -n {flink_numcontainers} -s {cores_number} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
 
     if params.flink_streaming:
-      cmd = cmd + ' -st '
-    Execute (cmd, user=params.flink_user, not_if = check_cmd)
+      longRunningCmd = longRunningCmd + ' -st '
+    Execute (longRunningCmd, user=params.flink_user, not_if = check_cmd)
 
     Execute(format("yarn application -list | grep {flink_appname} | grep -o '\\bapplication_\w*' >") + status_params.flink_pid_file, user=params.flink_user)
 
@@ -108,7 +112,7 @@ class FlinkMaster(Script):
 
   def status(self, env):
     import status_params
-    Execute('yarn application -status `cat ' + status_params.flink_pid_file + '`')
+    Execute('yarn application -status `cat ' + status_params.flink_pid_file + '` | grep "State : RUNNING"')
 
 
   def create_hdfs_user(self, user):

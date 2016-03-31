@@ -93,6 +93,7 @@ jobmanager_web_checkpoints_history = config['configurations']['flink-config']['j
 
 # yarn
 yarn_application_master_port = config['configurations']['flink-config']['yarn.application-master.port']
+yarn_application_attempts = config['configurations']['flink-config']['yarn.application-attempts']
 
 # params from flink-env.yaml
 flink_user = config['configurations']['flink-env']['flink_user']
