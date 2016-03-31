@@ -684,7 +684,6 @@ App.WizardStep6Controller = Em.Controller.extend(App.BlueprintMixin, {
       }
     });
 
-    this.set('submitDisabled', anyErrors);
     // use this.set('submitDisabled', anyErrors); is validation results should block next button
     // It's because showValidationIssuesAcceptBox allow use accept validation issues and continue
     // this.set('submitDisabled', false);
