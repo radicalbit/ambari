@@ -38,7 +38,7 @@ class CassandraNode(Script):
     import params
     self.configure(env)
 
-    if join_check(params.host_ip) == True:
+    if join_check(params.host_ip, params.seed_node_head) == True:
       Execute(
           format('{params.cassandra_bin_dir}/cassandra -p {params.cassandra_pid_dir}/cassandra.pid'),
           user=params.cassandra_user

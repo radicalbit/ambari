@@ -59,6 +59,8 @@ saved_caches_directory = cassandra_conf['saved_caches_directory']
 listen_address = hostname
 rpc_address = hostname
 
+seed_node_head = config['clusterHostInfo']['cassandra_seed_hosts'][0]
+
 # cassandra_nodes = config['clusterHostInfo']['cassandra_node_hosts']
 # if len(cassandra_nodes) > 8:
 #   seeds = cassandra_nodes[0] + "," + cassandra_nodes[1] + "," + cassandra_nodes[2]

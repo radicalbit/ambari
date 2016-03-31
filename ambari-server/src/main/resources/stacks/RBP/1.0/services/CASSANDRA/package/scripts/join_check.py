@@ -21,7 +21,7 @@ import re
 # import argparse
 from time import sleep
 
-def join_check(ip_address):
+def join_check(ip_address, seed_node):
 
   def valid_ip(address):
     a = address.split('.')
@@ -36,8 +36,8 @@ def join_check(ip_address):
     return True
 
 
-  def moving_nodes(exclude):
-    output = subprocess.check_output("nodetool status".split())
+  def moving_nodes(exclude, seed_node):
+    output = subprocess.check_output("nodetool --host " + seed_node + " status".split())
     lines = output.splitlines()
 
     r = re.compile("[U|D][J|L|M]\s\s.*")
@@ -47,8 +47,8 @@ def join_check(ip_address):
     return res
 
 
-  def check(node):
-    moving = moving_nodes(node)
+  def check(node, seed_node):
+    moving = moving_nodes(node, seed_node)
     pause = 0.5
     max_count = 10
     count = 0
@@ -56,7 +56,7 @@ def join_check(ip_address):
     while len(moving) > 0 and count < max_count:
       sleep(pause)
       count += 1
-      moving = moving_nodes(node)
+      moving = moving_nodes(node, seed_node)
 
     print "Finished after", count, "try"
     result = len(moving) == 0
@@ -70,7 +70,7 @@ def join_check(ip_address):
   #   args = parser.parse_args()
 
   if valid_ip(ip_address):
-    return check(ip_address)
+    return check(ip_address, seed_node)
   else:
     print "Invalid IP", ip_address
     return False
