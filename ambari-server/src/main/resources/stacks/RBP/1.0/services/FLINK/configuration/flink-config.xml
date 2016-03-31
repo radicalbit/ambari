@@ -125,6 +125,16 @@
       physical host, fixed port assignments prevent the AM from starting.</description>
   </property>
 
+  <property>
+    <name>yarn.application-attempts</name>
+    <value>1</value>
+    <description>Number of ApplicationMaster restarts.
+      Note that that the entire Flink cluster will restart and the YARN Client will loose
+      the connection. Also, the JobManager address will change and you'll need to set
+      the JM host:port manually. It is recommended to leave this option at 1.</description>
+  </property>
+
+
   <!--High Availability Mode-->
 
   <property>
