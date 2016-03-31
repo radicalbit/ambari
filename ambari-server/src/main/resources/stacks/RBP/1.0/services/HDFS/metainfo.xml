@@ -44,7 +44,7 @@
           <osFamily>redhat7,redhat6,suse11</osFamily>
           <packages>
             <package>
-              <name>hadoop*</name>
+              <name>hadoop</name>
             </package>
             <package>
               <name>snappy</name>

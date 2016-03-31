@@ -55,7 +55,7 @@
                 <osSpecific>
                     <osFamily>any</osFamily>
                     <packages>
-                        <package><name>cassandra-2.2.5*</name></package>
+                        <package><name>cassandra</name></package>
                     </packages>
                 </osSpecific>
             </osSpecifics>

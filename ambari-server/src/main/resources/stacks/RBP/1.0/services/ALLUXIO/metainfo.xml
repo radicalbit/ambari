@@ -53,7 +53,7 @@
                     <osFamily>redhat6,redhat7</osFamily>
                     <packages>
                         <package>
-                            <name>alluxio*</name>
+                            <name>alluxio</name>
                         </package>
                     </packages>
                 </osSpecific>

@@ -28,10 +28,13 @@
           <osFamily>redhat7,redhat6,suse11</osFamily>
           <packages>
             <package>
-              <name>hadoop-yarn-*</name>
+              <name>hadoop-yarn</name>
             </package>
             <package>
-              <name>hadoop-mapreduce-*</name>
+              <name>hadoop-hdfs</name>
+            </package>
+            <package>
+              <name>hadoop-mapreduce</name>
             </package>
           </packages>
         </osSpecific>
@@ -55,7 +58,7 @@
           <osFamily>redhat7,redhat6,suse11</osFamily>
           <packages>
             <package>
-              <name>hadoop-mapreduce-*</name>
+              <name>hadoop-mapreduce</name>
             </package>
           </packages>
         </osSpecific>
