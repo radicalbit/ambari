@@ -31,7 +31,8 @@ hadoop_conf_dir = conf_select.get_hadoop_conf_dir()
 hdfs_default_name = config['configurations']['core-site']['fs.defaultFS']
 
 nodes_number = len(config['clusterHostInfo']['all_hosts'])
-cores_number = multiprocessing.cpu_count()
+cores_number = config['configurations']['yarn-site']['yarn.scheduler.maximum-allocation-vcores']
+#cores_number = multiprocessing.cpu_count()
 
 hostname = config['hostname']
 flink_master = config['clusterHostInfo']['flink_master_hosts'][0]
