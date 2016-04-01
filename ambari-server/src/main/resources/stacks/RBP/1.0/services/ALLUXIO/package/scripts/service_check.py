@@ -32,15 +32,13 @@ class AlluxioServiceCheck(Script):
     import params
     env.set_params(params)
 
-    # if params.security_enabled:
-    #   spark_kinit_cmd = format("{kinit_path_local} -kt {spark_kerberos_keytab} {spark_principal}; ")
-    #   Execute(spark_kinit_cmd, user=params.spark_user)
+    Execute(format('{base_dir}/bin/alluxio runTest Basic {readtype} {writetype}'), user=params.alluxio_user, logoutput=True)
 
-    Execute(format("curl -s -o /dev/null -w '%{{http_code}}' --negotiate -u: -k http://{alluxio_master}:19999 | grep 200"),
-            tries = 10,
-            try_sleep=3,
-            logoutput=True
-            )
+    # Execute(format("curl -s -o /dev/null -w '%{{http_code}}' --negotiate -u: -k http://{alluxio_master}:19999 | grep 200"),
+    #         tries = 10,
+    #         try_sleep=3,
+    #         logoutput=True
+    #         )
 
 if __name__ == "__main__":
   AlluxioServiceCheck().execute()
