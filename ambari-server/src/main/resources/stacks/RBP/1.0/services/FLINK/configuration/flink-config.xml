@@ -20,62 +20,7 @@
 
 <configuration>
 
-  <!--Common Options-->
-
-  <!--<property>-->
-    <!--<name>jobmanager.rpc.address</name>-->
-    <!--<value>localhost</value>-->
-    <!--<description>The IP address of the JobManager, which is the master/coordinator of the distributed system</description>-->
-  <!--</property>-->
-
-  <!--<property>-->
-    <!--<name>jobmanager.rpc.port</name>-->
-    <!--<value>6123</value>-->
-    <!--<description>The port number of the JobManager</description>-->
-  <!--</property>-->
-
-  <!--<property>-->
-    <!--<name>jobmanager.heap.mb</name>-->
-    <!--<value>512</value>-->
-    <!--<description>JVM heap size (in megabytes) for the JobManager.-->
-      <!--You may have to increase the heap size for the JobManager if you are running very large-->
-      <!--applications (with many operators), or if you are keeping a long history of them.</description>-->
-  <!--</property>-->
-
-  <!--<property>-->
-    <!--<name>taskmanager.heap.mb</name>-->
-    <!--<value>1024</value>-->
-    <!--<description>JVM heap size (in megabytes) for the TaskManagers, which are the parallel workers of the system.-->
-      <!--In contrast to Hadoop, Flink runs operators (e.g., join, aggregate) and user-defined functions-->
-      <!--(e.g., Map, Reduce, CoGroup) inside the TaskManager (including sorting/hashing/caching),-->
-      <!--so this value should be as large as possible. If the cluster is exclusively running Flink,-->
-      <!--the total amount of available memory per machine minus some memory for the operating system (maybe 1-2 GB)-->
-      <!--is a good value. On YARN setups, this value is automatically configured to the size of the TaskManager’s YARN container,-->
-      <!--minus a certain tolerance value.</description>-->
-  <!--</property>-->
-
-  <!--<property>-->
-    <!--<name>taskmanager.numberOfTaskSlots</name>-->
-    <!--<value>1</value>-->
-    <!--<description>The number of parallel operator or user function instances that a single TaskManager can run.-->
-      <!--If this value is larger than 1, a single TaskManager takes multiple instances of a function or operator.-->
-      <!--That way, the TaskManager can utilize multiple CPU cores, but at the same time, the available memory is-->
-      <!--divided between the different operator or function instances. This value is typically proportional to-->
-      <!--the number of physical CPU cores that the TaskManager’s machine has (e.g., equal to the number of cores,-->
-      <!--or half the number of cores).</description>-->
-  <!--</property>-->
-
-  <!--<property>-->
-    <!--<name>parallelism.default</name>-->
-    <!--<value>1</value>-->
-    <!--<description>The default parallelism to use for programs that have no parallelism specified.-->
-      <!--For setups that have no concurrent jobs running, setting this value to NumTaskManagers * NumSlotsPerTaskManager-->
-      <!--will cause the system to use all available execution resources for the program’s execution. Note: The default-->
-      <!--parallelism can be overwriten for an entire job by calling setParallelism(int parallelism) on the-->
-      <!--ExecutionEnvironment or by passing -p [parallelism] to the Flink Command-line frontend. It can be overwritten-->
-      <!--for single transformations by calling setParallelism(int parallelism) on an operator. </description>-->
-  <!--</property>-->
-
+  <!--General-->
 
   <property>
     <name>env.log.dir</name>
@@ -125,6 +70,16 @@
       physical host, fixed port assignments prevent the AM from starting.</description>
   </property>
 
+  <property>
+    <name>yarn.application-attempts</name>
+    <value>10</value>
+    <description>Number of ApplicationMaster restarts.
+      Note that that the entire Flink cluster will restart and the YARN Client will loose
+      the connection. Also, the JobManager address will change and you'll need to set
+      the JM host:port manually.</description>
+  </property>
+
+
   <!--High Availability Mode-->
 
   <property>
@@ -139,6 +94,8 @@
       a standby JobManager will be elected as the new leader and is given the
       last checkpointed JobManager state.</description>
   </property>
+
+  <!--Service configs-->
 
   <property>
     <name>flink_numcontainers</name>

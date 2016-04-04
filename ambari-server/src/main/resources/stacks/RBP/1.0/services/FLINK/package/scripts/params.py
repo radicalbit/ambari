@@ -31,7 +31,8 @@ hadoop_conf_dir = conf_select.get_hadoop_conf_dir()
 hdfs_default_name = config['configurations']['core-site']['fs.defaultFS']
 
 nodes_number = len(config['clusterHostInfo']['all_hosts'])
-cores_number = multiprocessing.cpu_count()
+cores_number = config['configurations']['yarn-site']['yarn.scheduler.maximum-allocation-vcores']
+#cores_number = multiprocessing.cpu_count()
 
 hostname = config['hostname']
 flink_master = config['clusterHostInfo']['flink_master_hosts'][0]
@@ -93,18 +94,14 @@ jobmanager_web_checkpoints_history = config['configurations']['flink-config']['j
 
 # yarn
 yarn_application_master_port = config['configurations']['flink-config']['yarn.application-master.port']
-
-# log4j configs
-#log4j_props = config['configurations']['flink-log4j']['content']
+yarn_application_attempts = config['configurations']['flink-config']['yarn.application-attempts']
 
 # params from flink-env.yaml
 flink_user = config['configurations']['flink-env']['flink_user']
 yarn_user = config['configurations']['yarn-env']['yarn_user']
 user_group = config['configurations']['cluster-env']['user_group']
-#flink_group = config['configurations']['flink-env']['flink_group']
 flink_pid_dir = config['configurations']['flink-env']['flink_pid_dir']
 flink_log_dir = config['configurations']['flink-config']['env.log.dir']
-#flink_log_file = os.path.join(flink_log_dir,'flink.log')
 flink_cluster_log_file = os.path.join(flink_log_dir,'flink-cluster.log')
 
 recovery_mode = config['configurations']['flink-config']['recovery.mode']

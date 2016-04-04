@@ -32,15 +32,6 @@
   </property>
 
   <property>
-    <name>alluxio.usezookeeper</name>
-    <description>Use zookeeper to grant fault tolerance</description>
-    <value>true</value>
-    <value-attributes>
-      <type>boolean</type>
-    </value-attributes>
-  </property>
-
-  <property>
     <name>alluxio_user</name>
     <value>alluxio</value>
     <property-type>USER</property-type>

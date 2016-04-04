@@ -132,10 +132,6 @@ if 'zookeeper_hosts' in config['clusterHostInfo']:
   if len(zookeeper_hosts_list) > 0:
       zookeeper_hosts = (':' + zookeeper_port + ',').join(zookeeper_hosts_list) + ':' + zookeeper_port
 
-use_zookeeper = False
-if zookeeper_hosts != '' and config['configurations']['alluxio-env']['alluxio.usezookeeper'] == 'True':
-  use_zookeeper = True
-
 # alluxio master keytab file
 master_keytab = config['configurations']['alluxio-config']['alluxio.master.keytab.file']
 

@@ -26,7 +26,7 @@
           <osFamily>redhat7,redhat6,suse11</osFamily>
           <packages>
             <package>
-              <name>zookeeper-*</name>
+              <name>zookeeper</name>
             </package>
           </packages>
         </osSpecific>

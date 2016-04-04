@@ -18,6 +18,7 @@ limitations under the License.
 """
 from resource_management import *
 from cassandra import cassandra
+from join_check import join_check
 
 class CassandraNode(Script):
 
@@ -36,10 +37,12 @@ class CassandraNode(Script):
   def start(self, env):
     import params
     self.configure(env)
-    Execute(
-        format('{params.cassandra_bin_dir}/cassandra -p {params.cassandra_pid_dir}/cassandra.pid'),
-        user=params.cassandra_user
-    )
+
+    if join_check(params.host_ip, params.seed_node_head) == True:
+      Execute(
+          format('{params.cassandra_bin_dir}/cassandra -p {params.cassandra_pid_dir}/cassandra.pid'),
+          user=params.cassandra_user
+      )
 
   def stop(self, env):
     import params

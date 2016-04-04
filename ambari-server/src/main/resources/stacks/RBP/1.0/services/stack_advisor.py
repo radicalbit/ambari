@@ -18,4 +18,24 @@ limitations under the License.
 """
 
 
-class RBP30StackAdvisor(HDP23StackAdvisor): pass
+class RBP10StackAdvisor(RBP023StackAdvisor):
+
+  def getComponentLayoutValidations(self, services, hosts):
+    parentItems = super(RBP10StackAdvisor, self).getComponentLayoutValidations(services, hosts)
+
+    childItems = []
+
+    componentsListList = [service["components"] for service in services["services"]]
+    componentsList = [item for sublist in componentsListList for item in sublist]
+    cassandraSeedHosts = [component["StackServiceComponents"]["hostnames"] for component in componentsList if component["StackServiceComponents"]["component_name"] == "CASSANDRA_SEED"]
+    cassandraNodeHosts = [component["StackServiceComponents"]["hostnames"] for component in componentsList if component["StackServiceComponents"]["component_name"] == "CASSANDRA_NODE"]
+
+    # single node case is not analyzed because HAWQ Standby Master will not be present in single node topology due to logic in createComponentLayoutRecommendations()
+    if len(cassandraSeedHosts) > 0 and len(cassandraNodeHosts) > 0:
+      commonHosts = [host for host in cassandraSeedHosts[0] if host in cassandraNodeHosts[0]]
+      for host in commonHosts:
+        message = "Cassandra Seed and Cassandra Node should not be deployed on the same host."
+        childItems.append( { "type": 'host-component', "level": 'ERROR', "message": message, "component-name": 'CASSANDRA_NODE', "host": host } )
+
+    parentItems.extend(childItems)
+    return parentItems

@@ -28,6 +28,7 @@
 # parallelism.default: {{ parallelism_default }}
 fs.default-scheme: {{ alluxio_default_name }}
 fs.hdfs.hadoopconf: {{ fs_hdfs_hadoopconf }}
+env.log.dir: {{ flink_log_dir }}
 
 #==============================================================================
 # Advanced
@@ -59,6 +60,7 @@ jobmanager.web.checkpoints.history: {{ jobmanager_web_checkpoints_history }}
 #==============================================================================
 
 yarn.application-master.port: {{ yarn_application_master_port }}
+yarn.application-attempts: {{ yarn_application_attempts }}
 
 #==============================================================================
 # Master High Availability (required configuration)

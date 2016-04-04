@@ -26,10 +26,10 @@ import socket
 import re
 import xml.etree.ElementTree as ET
 
-class HDP22StackAdvisor(HDP21StackAdvisor):
+class RBP022StackAdvisor(RBP021StackAdvisor):
 
   def getServiceConfigurationRecommenderDict(self):
-    parentRecommendConfDict = super(HDP22StackAdvisor, self).getServiceConfigurationRecommenderDict()
+    parentRecommendConfDict = super(RBP022StackAdvisor, self).getServiceConfigurationRecommenderDict()
     childRecommendConfDict = {
       "HDFS": self.recommendHDFSConfigurations,
       "HIVE": self.recommendHIVEConfigurations,
@@ -46,7 +46,7 @@ class HDP22StackAdvisor(HDP21StackAdvisor):
     return parentRecommendConfDict
 
   def recommendYARNConfigurations(self, configurations, clusterData, services, hosts):
-    super(HDP22StackAdvisor, self).recommendYARNConfigurations(configurations, clusterData, services, hosts)
+    super(RBP022StackAdvisor, self).recommendYARNConfigurations(configurations, clusterData, services, hosts)
     putYarnProperty = self.putProperty(configurations, "yarn-site", services)
     putYarnProperty('yarn.nodemanager.resource.cpu-vcores', clusterData['cpu'])
     putYarnProperty('yarn.scheduler.minimum-allocation-vcores', 1)
@@ -95,7 +95,7 @@ class HDP22StackAdvisor(HDP21StackAdvisor):
           putYarnPropertyAttribute('yarn.nodemanager.linux-container-executor.cgroups.mount-path', 'delete', 'true')
 
   def recommendHDFSConfigurations(self, configurations, clusterData, services, hosts):
-    super(HDP22StackAdvisor, self).recommendHDFSConfigurations(configurations, clusterData, services, hosts)
+    super(RBP022StackAdvisor, self).recommendHDFSConfigurations(configurations, clusterData, services, hosts)
     putHdfsSiteProperty = self.putProperty(configurations, "hdfs-site", services)
     putHdfsSitePropertyAttribute = self.putPropertyAttribute(configurations, "hdfs-site")
     putHdfsSiteProperty("dfs.datanode.max.transfer.threads", 16384 if clusterData["hBaseInstalled"] else 4096)
@@ -248,7 +248,7 @@ class HDP22StackAdvisor(HDP21StackAdvisor):
       putHdfsRangerPluginProperty("ranger-hdfs-plugin-enabled", rangerEnvHdfsPluginProperty)
 
   def recommendHIVEConfigurations(self, configurations, clusterData, services, hosts):
-    super(HDP22StackAdvisor, self).recommendHiveConfigurations(configurations, clusterData, services, hosts)
+    super(RBP022StackAdvisor, self).recommendHiveConfigurations(configurations, clusterData, services, hosts)
 
     putHiveServerProperty = self.putProperty(configurations, "hiveserver2-site", services)
     putHiveEnvProperty = self.putProperty(configurations, "hive-env", services)
@@ -539,7 +539,7 @@ class HDP22StackAdvisor(HDP21StackAdvisor):
 
 
   def recommendHBASEConfigurations(self, configurations, clusterData, services, hosts):
-    super(HDP22StackAdvisor, self).recommendHbaseConfigurations(configurations, clusterData, services, hosts)
+    super(RBP022StackAdvisor, self).recommendHbaseConfigurations(configurations, clusterData, services, hosts)
     putHbaseEnvPropertyAttributes = self.putPropertyAttribute(configurations, "hbase-env")
 
     hmaster_host = self.getHostWithComponent("HBASE", "HBASE_MASTER", services, hosts)
@@ -786,7 +786,7 @@ class HDP22StackAdvisor(HDP21StackAdvisor):
     pass
 
   def recommendStormConfigurations(self, configurations, clusterData, services, hosts):
-    super(HDP22StackAdvisor, self).recommendStormConfigurations(configurations, clusterData, services, hosts)
+    super(RBP022StackAdvisor, self).recommendStormConfigurations(configurations, clusterData, services, hosts)
     putStormSiteProperty = self.putProperty(configurations, "storm-site", services)
     putStormSiteAttributes = self.putPropertyAttribute(configurations, "storm-site")
     storm_site = getServicesSiteProperties(services, "storm-site")
@@ -891,7 +891,7 @@ class HDP22StackAdvisor(HDP21StackAdvisor):
 
 
   def recommendRangerConfigurations(self, configurations, clusterData, services, hosts):
-    super(HDP22StackAdvisor, self).recommendRangerConfigurations(configurations, clusterData, services, hosts)
+    super(RBP022StackAdvisor, self).recommendRangerConfigurations(configurations, clusterData, services, hosts)
     putRangerEnvProperty = self.putProperty(configurations, "ranger-env")
     cluster_env = getServicesSiteProperties(services, "cluster-env")
     security_enabled = cluster_env is not None and "security_enabled" in cluster_env and \
@@ -900,7 +900,7 @@ class HDP22StackAdvisor(HDP21StackAdvisor):
       putRangerEnvProperty("ranger-storm-plugin-enabled", "No")
 
   def getServiceConfigurationValidators(self):
-    parentValidators = super(HDP22StackAdvisor, self).getServiceConfigurationValidators()
+    parentValidators = super(RBP022StackAdvisor, self).getServiceConfigurationValidators()
     childValidators = {
       "HDFS": {"hdfs-site": self.validateHDFSConfigurations,
                "hadoop-env": self.validateHDFSConfigurationsEnv,
@@ -1263,7 +1263,7 @@ class HDP22StackAdvisor(HDP21StackAdvisor):
     return self.toConfigurationValidationProblems(validationItems, "hive-env")
 
   def validateHiveConfigurations(self, properties, recommendedDefaults, configurations, services, hosts):
-    parentValidationProblems = super(HDP22StackAdvisor, self).validateHiveConfigurations(properties, recommendedDefaults, configurations, services, hosts)
+    parentValidationProblems = super(RBP022StackAdvisor, self).validateHiveConfigurations(properties, recommendedDefaults, configurations, services, hosts)
     hive_site = properties
     validationItems = []
     stripe_size_values = [8388608, 16777216, 33554432, 67108864, 134217728, 268435456]
@@ -1487,22 +1487,22 @@ class HDP22StackAdvisor(HDP21StackAdvisor):
     return self.toConfigurationValidationProblems(validationItems, "ranger-env")
 
   def getMastersWithMultipleInstances(self):
-    result = super(HDP22StackAdvisor, self).getMastersWithMultipleInstances()
+    result = super(RBP022StackAdvisor, self).getMastersWithMultipleInstances()
     result.extend(['METRICS_COLLECTOR'])
     return result
 
   def getNotValuableComponents(self):
-    result = super(HDP22StackAdvisor, self).getNotValuableComponents()
+    result = super(RBP022StackAdvisor, self).getNotValuableComponents()
     result.extend(['METRICS_MONITOR'])
     return result
 
   def getCardinalitiesDict(self):
-    result = super(HDP22StackAdvisor, self).getCardinalitiesDict()
+    result = super(RBP022StackAdvisor, self).getCardinalitiesDict()
     result['METRICS_COLLECTOR'] = {"min": 1}
     return result
 
   def getAffectedConfigs(self, services):
-    affectedConfigs = super(HDP22StackAdvisor, self).getAffectedConfigs(services)
+    affectedConfigs = super(RBP022StackAdvisor, self).getAffectedConfigs(services)
 
     # There are configs that are not defined in the stack but added/removed by 
     # stack-advisor. Here we add such configs in order to clear the config

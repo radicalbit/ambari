@@ -16,9 +16,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
-import sys, os, pwd, grp, signal, time, glob, hashlib
+import sys, os, pwd, grp, signal, time, glob, hashlib, subprocess
 from resource_management import *
-from subprocess import call
 
 class FlinkMaster(Script):
   def install(self, env):
@@ -51,14 +50,7 @@ class FlinkMaster(Script):
         recursive=True
     )
 
-    # Everyone can read and write
-    # File(
-    #     params.flink_log_file,
-    #     mode=0666,
-    #     owner=params.flink_user,
-    #     group=params.user_group,
-    #     content=''
-    # )
+    Execute('chmod 777 ' + params.flink_log_dir, user='root')
 
     File(
         format("{conf_dir}/flink-conf.yaml"),
@@ -66,22 +58,6 @@ class FlinkMaster(Script):
         mode=0644,
         content=Template('flink-conf.yaml.j2', conf_dir=params.conf_dir)
     )
-
-    # if not is_empty(params.log4j_props):
-    #   File(
-    #       format("{params.conf_dir}/log4j.properties"),
-    #       mode=0644,
-    #       group=params.user_group,
-    #       owner=params.flink_user,
-    #       content=InlineTemplate(params.log4j_props)
-    #   )
-    # elif (os.path.exists(format("{params.conf_dir}/log4j.properties"))):
-    #   File(
-    #       format("{params.conf_dir}/log4j.properties"),
-    #       mode=0644,
-    #       group=params.user_group,
-    #       owner=params.flink_user
-    #   )
 
     Execute(
         format("scp {alluxio_master}:/etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
@@ -107,20 +83,18 @@ class FlinkMaster(Script):
     import params
     import status_params
     self.configure(env)
-
     self.create_hdfs_user(params.flink_user)
 
-    Execute('echo bin dir ' + params.bin_dir)
-    Execute('echo pid file ' + status_params.flink_pid_file)
+    # try:
+    #   subprocess.check_output('test -f ' + status_params.flink_pid_file + ' && yarn application -status `cat ' + status_params.flink_pid_file + '` | grep "State : RUNNING"', shell=True)
+    # except subprocess.CalledProcessError as grepexc:
+    #   self.stop(env)
 
     check_cmd = as_sudo(["test", "-f", status_params.flink_pid_file]) + " && " + as_sudo(["pgrep", "-F", status_params.flink_pid_file])
-
-    cmd = format("export HADOOP_CONF_DIR={hadoop_conf_dir}; nohup {bin_dir}/yarn-session.sh -n {flink_numcontainers} -s {cores_number} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
-
+    longRunningCmd = format("export HADOOP_CONF_DIR={hadoop_conf_dir}; nohup {bin_dir}/yarn-session.sh -n {flink_numcontainers} -s {cores_number} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
     if params.flink_streaming:
-      cmd = cmd + ' -st '
-    Execute (cmd, user=params.flink_user, not_if = check_cmd)
-    #Execute (cmd + format(" >> {flink_cluster_log_file}"), user=params.flink_user, not_if = check_cmd)
+      longRunningCmd = longRunningCmd + ' -st '
+    Execute (longRunningCmd, user=params.flink_user, not_if=check_cmd)
 
     Execute(format("yarn application -list | grep {flink_appname} | grep -o '\\bapplication_\w*' >") + status_params.flink_pid_file, user=params.flink_user)
 
@@ -132,7 +106,7 @@ class FlinkMaster(Script):
 
   def status(self, env):
     import status_params
-    Execute('yarn application -status `cat ' + status_params.flink_pid_file + '`')
+    Execute('yarn application -status `cat ' + status_params.flink_pid_file + '` | grep "State : RUNNING"')
 
 
   def create_hdfs_user(self, user):
