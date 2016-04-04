@@ -85,28 +85,28 @@ class FlinkMaster(Script):
     self.configure(env)
     self.create_hdfs_user(params.flink_user)
 
-    # try:
-    #   subprocess.check_output('test -f ' + status_params.flink_pid_file + ' && yarn application -status `cat ' + status_params.flink_pid_file + '` | grep "State : RUNNING"', shell=True)
-    # except subprocess.CalledProcessError as grepexc:
-    #   self.stop(env)
+    try:
+      Execute('yarn application -status $(yarn application -list | grep ' + status_params.flink_appname + ' | grep -o "\\bapplication_\w*") | grep "State : RUNNING"')
+    except subprocess.CalledProcessError as grepexc:
+      check_cmd = as_sudo(["test", "-f", status_params.flink_pid_file]) + " && " + as_sudo(["pgrep", "-F", status_params.flink_pid_file])
+      longRunningCmd = format("export HADOOP_CONF_DIR={hadoop_conf_dir}; nohup {bin_dir}/yarn-session.sh -n {flink_numcontainers} -s {cores_number} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
+      if params.flink_streaming:
+        longRunningCmd = longRunningCmd + ' -st '
+      Execute (longRunningCmd, user=params.flink_user, not_if=check_cmd)
 
-    check_cmd = as_sudo(["test", "-f", status_params.flink_pid_file]) + " && " + as_sudo(["pgrep", "-F", status_params.flink_pid_file])
-    longRunningCmd = format("export HADOOP_CONF_DIR={hadoop_conf_dir}; nohup {bin_dir}/yarn-session.sh -n {flink_numcontainers} -s {cores_number} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
-    if params.flink_streaming:
-      longRunningCmd = longRunningCmd + ' -st '
-    Execute (longRunningCmd, user=params.flink_user, not_if=check_cmd)
-
-    Execute(format("yarn application -list | grep {flink_appname} | grep -o '\\bapplication_\w*' >") + status_params.flink_pid_file, user=params.flink_user)
+    #Execute(format("yarn application -list | grep {flink_appname} | grep -o '\\bapplication_\w*' >") + status_params.flink_pid_file, user=params.flink_user)
 
   def stop(self, env):
     import params
     import status_params
-    Execute('yarn application -kill `cat ' + status_params.flink_pid_file + '`', user=params.flink_user)
-    Execute('rm -f ' + status_params.flink_pid_file, user=params.flink_user)
+    #Execute('yarn application -kill `cat ' + status_params.flink_pid_file + '`', user=params.flink_user)
+    #Execute('rm -f ' + status_params.flink_pid_file, user=params.flink_user)
+    Execute('yarn application -kill $(yarn application -list | grep ' + status_params.flink_appname + ' | grep -o "\\bapplication_\w*")', user=params.flink_user)
 
   def status(self, env):
     import status_params
-    Execute('yarn application -status `cat ' + status_params.flink_pid_file + '` | grep "State : RUNNING"')
+    #Execute('yarn application -status `cat ' + status_params.flink_pid_file + '` | grep "State : RUNNING"')
+    Execute('yarn application -status $(yarn application -list | grep ' + status_params.flink_appname + ' | grep -o "\\bapplication_\w*") | grep "State : RUNNING"')
 
 
   def create_hdfs_user(self, user):
