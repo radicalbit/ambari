@@ -50,21 +50,20 @@ class Master(Script):
     import params
     env.set_params(params)
 
+    #write out zeppelin-site.xml
+    XmlConfig("zeppelin-site.xml",
+            conf_dir = params.conf_dir,
+            configurations = params.config['configurations']['zeppelin-config'],
+            owner=params.zeppelin_user,
+            group=params.user_group
+    )
+    #write out zeppelin-env.sh
     File(
         format("{params.conf_dir}/zeppelin-env.sh"),
         owner=params.zeppelin_user,
         mode=0700,
         content=Template('zeppelin-env.sh.j2', conf_dir=params.conf_dir)
     )
-
-    # #write out zeppelin-site.xml
-    # XmlConfig("zeppelin-site.xml",
-    #         conf_dir = params.conf_dir,
-    #         configurations = params.config['configurations']['zeppelin-config'],
-    #         owner=params.zeppelin_user,
-    #         group=params.user_group
-    # )
-    # #write out zeppelin-env.sh
     # env_content=InlineTemplate(params.zeppelin_env_content)
     # File(format("{params.conf_dir}/zeppelin-env.sh"), content=env_content, owner=params.zeppelin_user, group=params.user_group) # , mode=0777)
 

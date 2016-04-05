@@ -19,24 +19,30 @@
 
 <configuration>
 
- <property>
-    <name>zeppelin_pid_dir</name>
-    <value>/var/run/zeppelin</value>
-    <description>Dir containing process ID file</description>
-  </property>
+    <property>
+        <name>zeppelin_user</name>
+        <value>zeppelin</value>
+        <property-type>USER</property-type>
+        <description>User zeppelin daemon runs as</description>
+    </property>
 
-  <property>
-    <name>zeppelin_user</name>
-    <value>zeppelin</value>
-    <property-type>USER</property-type>
-    <description>User zeppelin daemon runs as</description>
-  </property>
+    <property>
+        <name>zeppelin_port</name>
+        <value>9995</value>
+        <description>Server port.The subsequent port (e.g. 9996) should also be open as it will be used by the web socket</description>
+    </property>
           
-  <property>
-    <name>zeppelin_log_dir</name>
-    <value>/var/log/zeppelin</value>
-    <description>Zeppelin Log dir</description>
-  </property> 
+    <property>
+        <name>zeppelin_log_dir</name>
+        <value>/var/log/zeppelin</value>
+        <description>Zeppelin Log dir</description>
+    </property>
+
+    <property>
+        <name>zeppelin_pid_dir</name>
+        <value>/var/run/zeppelin</value>
+        <description>Dir containing process ID file</description>
+    </property>
 
   
   <!--<property>-->

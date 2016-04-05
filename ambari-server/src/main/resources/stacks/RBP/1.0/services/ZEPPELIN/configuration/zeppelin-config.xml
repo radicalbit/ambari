@@ -28,12 +28,6 @@
   <!--<description>Server address</description>-->
 <!--</property>-->
 
-<property>
-  <name>zeppelin.server.port</name>
-  <value>9995</value>
-  <description>Server port.The subsequent port (e.g. 9996) should also be open as it will be used by the web socket</description>
-</property>
-
 <!--<property>-->
   <!--<name>zeppelin.notebook.dir</name>-->
   <!--<value>notebook</value>-->
@@ -89,69 +83,69 @@
   <!--<description>Interpreter process connect timeout in msec.</description>-->
 <!--</property>-->
 
-<!--<property>-->
-  <!--<name>zeppelin.ssl</name>-->
-  <!--<value>false</value>-->
-  <!--<description>Should SSL be used by the servers?</description>-->
-<!--</property>-->
+<property>
+  <name>zeppelin.ssl</name>
+  <value>false</value>
+  <description>Should SSL be used by the servers?</description>
+</property>
 
 
-<!--<property>-->
-  <!--<name>zeppelin.ssl.client.auth</name>-->
-  <!--<value>false</value>-->
-  <!--<description>Should client authentication be used for SSL connections?</description>-->
-<!--</property>-->
+<property>
+  <name>zeppelin.ssl.client.auth</name>
+  <value>false</value>
+  <description>Should client authentication be used for SSL connections?</description>
+</property>
 
-<!--<property>-->
-  <!--<name>zeppelin.ssl.keystore.path</name>-->
-  <!--<value>conf/keystore</value>-->
-  <!--<description>Path to keystore relative to Zeppelin home</description>-->
-<!--</property>-->
+<property>
+  <name>zeppelin.ssl.keystore.path</name>
+  <value>conf/keystore</value>
+  <description>Path to keystore relative to Zeppelin home</description>
+</property>
 
-<!--<property>-->
-  <!--<name>zeppelin.ssl.keystore.type</name>-->
-  <!--<value>JKS</value>-->
-  <!--<description>The format of the given keystore (e.g. JKS or PKCS12)</description>-->
-<!--</property>-->
+<property>
+  <name>zeppelin.ssl.keystore.type</name>
+  <value>JKS</value>
+  <description>The format of the given keystore (e.g. JKS or PKCS12)</description>
+</property>
 
-<!--<property>-->
-  <!--<name>zeppelin.ssl.keystore.password</name>-->
-  <!--<value>change me</value>-->
-  <!--<description>Keystore password. Can be obfuscated by the Jetty Password tool</description>-->
-<!--</property>-->
-
-
-<!--<property>-->
-  <!--<name>zeppelin.ssl.key.manager.password</name>-->
-  <!--<value>change me</value>-->
-  <!--<description>Key Manager password. Defaults to keystore password. Can be obfuscated.</description>-->
-<!--</property>-->
+<property>
+  <name>zeppelin.ssl.keystore.password</name>
+  <value>change me</value>
+  <description>Keystore password. Can be obfuscated by the Jetty Password tool</description>
+</property>
 
 
-<!--<property>-->
-  <!--<name>zeppelin.ssl.truststore.path</name>-->
-  <!--<value>conf/truststore</value>-->
-  <!--<description>Path to truststore relative to Zeppelin home. Defaults to the keystore path</description>-->
-<!--</property>-->
-
-<!--<property>-->
-  <!--<name>zeppelin.ssl.truststore.type</name>-->
-  <!--<value>JKS</value>-->
-  <!--<description>The format of the given truststore (e.g. JKS or PKCS12). Defaults to the same type as the keystore type</description>-->
-<!--</property>-->
+<property>
+  <name>zeppelin.ssl.key.manager.password</name>
+  <value>change me</value>
+  <description>Key Manager password. Defaults to keystore password. Can be obfuscated.</description>
+</property>
 
 
-<!--<property>-->
-  <!--<name>zeppelin.ssl.truststore.password</name>-->
-  <!--<value>change me</value>-->
-  <!--<description>Truststore password. Can be obfuscated by the Jetty Password tool. Defaults to the keystore password</description>-->
-<!--</property>-->
+<property>
+  <name>zeppelin.ssl.truststore.path</name>
+  <value>conf/truststore</value>
+  <description>Path to truststore relative to Zeppelin home. Defaults to the keystore path</description>
+</property>
 
-<!--<property>-->
-  <!--<name>zeppelin.server.allowed.origins</name>-->
-  <!--<value>*</value>-->
-  <!--<description>Allowed sources for REST and WebSocket requests (i.e. http://onehost:8080,http://otherhost.com). If you leave * you are vulnerable to https://issues.apache.org/jira/browse/ZEPPELIN-173</description>-->
-<!--</property>-->
+<property>
+  <name>zeppelin.ssl.truststore.type</name>
+  <value>JKS</value>
+  <description>The format of the given truststore (e.g. JKS or PKCS12). Defaults to the same type as the keystore type</description>
+</property>
+
+
+<property>
+  <name>zeppelin.ssl.truststore.password</name>
+  <value>change me</value>
+  <description>Truststore password. Can be obfuscated by the Jetty Password tool. Defaults to the keystore password</description>
+</property>
+
+<property>
+  <name>zeppelin.server.allowed.origins</name>
+  <value>*</value>
+  <description>Allowed sources for REST and WebSocket requests (i.e. http://onehost:8080,http://otherhost.com). If you leave * you are vulnerable to https://issues.apache.org/jira/browse/ZEPPELIN-173</description>
+</property>
 
 
 </configuration>

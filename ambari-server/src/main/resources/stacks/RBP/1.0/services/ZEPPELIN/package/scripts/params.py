@@ -61,7 +61,7 @@ config = Script.get_config()
 # spark_version = re.search('Spark (\d\.\d).+',fline).group(1)
 
 # params from zeppelin-config
-zeppelin_port = str(config['configurations']['zeppelin-config']['zeppelin.server.port'])
+zeppelin_port = str(config['configurations']['zeppelin-env']['zeppelin_port'])
 
 # params from zeppelin-env
 zeppelin_user= config['configurations']['zeppelin-env']['zeppelin_user']
