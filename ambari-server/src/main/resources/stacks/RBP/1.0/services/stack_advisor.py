@@ -27,6 +27,7 @@ class RBP10StackAdvisor(RBP023StackAdvisor):
 
     componentsListList = [service["components"] for service in services["services"]]
     componentsList = [item for sublist in componentsListList for item in sublist]
+
     cassandraSeedHosts = [component["StackServiceComponents"]["hostnames"] for component in componentsList if component["StackServiceComponents"]["component_name"] == "CASSANDRA_SEED"]
     cassandraNodeHosts = [component["StackServiceComponents"]["hostnames"] for component in componentsList if component["StackServiceComponents"]["component_name"] == "CASSANDRA_NODE"]
 
@@ -47,7 +48,7 @@ class RBP10StackAdvisor(RBP023StackAdvisor):
       commonHost = [host for host in flinkMasterHost[0] if host in resourceManagerHost[0]]
       for len(commonHost) == 0:
         message = "Flink Master and YARN Resource Manager should be deployed on the same host."
-        childItems.append( { "type": 'host-component', "level": 'ERROR', "message": message, "component-name": 'FLINK_MASTER', "host": host } )
+        childItems.append( { "type": 'host-component', "level": 'ERROR', "message": message, "component-name": 'FLINK_MASTER', "host": "-" } )
 
     parentItems.extend(childItems)
     return parentItems

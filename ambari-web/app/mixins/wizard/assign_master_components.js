@@ -1100,7 +1100,7 @@ App.AssignMasterComponents = Em.Mixin.create({
     var self = this;
     if (self.get('anyWarning') || self.get('anyError')) {
       App.ModalPopup.show({
-        primary: Em.I18n.t('common.continueAnyway'),
+        primary: Em.I18n.t('ok'),
         header: Em.I18n.t('installer.step5.validationIssuesAttention.header'),
         body: Em.I18n.t('installer.step5.validationIssuesAttention'),
         onPrimary: function () {

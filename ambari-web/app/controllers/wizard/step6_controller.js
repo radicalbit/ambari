@@ -684,7 +684,7 @@ App.WizardStep6Controller = Em.Controller.extend(App.BlueprintMixin, {
       }
     });
 
-    this.set('submitDisabled', anyErrors);
+    //this.set('submitDisabled', anyErrors);
     // use this.set('submitDisabled', anyErrors); is validation results should block next button
     // It's because showValidationIssuesAcceptBox allow use accept validation issues and continue
     // this.set('submitDisabled', false);
@@ -797,12 +797,12 @@ App.WizardStep6Controller = Em.Controller.extend(App.BlueprintMixin, {
 
     if (self.get('anyWarnings') || self.get('anyErrors')) {
       App.ModalPopup.show({
-        primary: Em.I18n.t('common.continueAnyway'),
+        primary: Em.I18n.t('ok'),
         header: Em.I18n.t('installer.step6.validationIssuesAttention.header'),
         body: Em.I18n.t('installer.step6.validationIssuesAttention'),
         onPrimary: function () {
           this.hide();
-          callback();
+          //callback();
         }
       });
     } else {
