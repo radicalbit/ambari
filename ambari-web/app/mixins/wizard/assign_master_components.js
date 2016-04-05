@@ -1086,7 +1086,7 @@ App.AssignMasterComponents = Em.Mixin.create({
           self.showValidationIssuesAcceptBox(goNextStepIfValid);
         });
       } else {
-        self.updateIsSubmitDisabled();
+        //self.updateIsSubmitDisabled();
         goNextStepIfValid();
       }
     }
