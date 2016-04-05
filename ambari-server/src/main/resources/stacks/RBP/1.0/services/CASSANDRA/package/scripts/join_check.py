@@ -48,8 +48,6 @@ def join_check(ip_address, seed_node):
 
 
   def check(node, seed_node):
-    from random import randint
-    sleep(randint(1,30) / 3.0)
     moving = moving_nodes(node, seed_node)
     pause = 0.5
     max_count = 20

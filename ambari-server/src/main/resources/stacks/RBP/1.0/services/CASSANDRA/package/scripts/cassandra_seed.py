@@ -38,6 +38,9 @@ class CassandraSeed(Script):
     import params
     self.configure(env)
 
+    from random import randint
+    sleep(randint(1,30) / 3.0)
+
     Execute(
         format('{params.cassandra_bin_dir}/cassandra -p {params.cassandra_pid_dir}/cassandra.pid'),
         user=params.cassandra_user
