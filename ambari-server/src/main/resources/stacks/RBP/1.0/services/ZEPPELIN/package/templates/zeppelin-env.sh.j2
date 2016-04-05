@@ -13,3 +13,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+export ZEPPELIN_INTERPRETERS="org.apache.zeppelin.markdown.Markdown,org.apache.zeppelin.angular.AngularInterpreter,org.apache.zeppelin.shell.ShellInterpreter,org.apache.zeppelin.alluxio.AlluxioInterpreter,org.apache.zeppelin.file.HDFSFileInterpreter,org.apache.zeppelin.flink.FlinkInterpreter,org.apache.zeppelin.cassandra.CassandraInterpreter,org.apache.zeppelin.jdbc.JDBCInterpreter"
+export ZEPPELIN_PORT={{ zeppelin_port }}
+export ZEPPELIN_CONF_DIR=/etc/zeppelin/conf
+export ZEPPELIN_LOG_DIR={{ zeppelin_log_dir }}
+export ZEPPELIN_PID_DIR={{ zeppelin_pid_dir }}
+export ZEPPELIN_WAR_TEMPDIR=/var/run/zeppelin/webapps
+export ZEPPELIN_NOTEBOOK_DIR=/var/lib/zeppelin/notebook
+export MASTER=yarn-client
+export HADOOP_CONF_DIR=/etc/hadoop/conf
