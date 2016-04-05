@@ -1105,7 +1105,7 @@ App.AssignMasterComponents = Em.Mixin.create({
         body: Em.I18n.t('installer.step5.validationIssuesAttention'),
         onPrimary: function () {
           this.hide();
-          callback();
+          //callback();
         }
       });
     } else {
