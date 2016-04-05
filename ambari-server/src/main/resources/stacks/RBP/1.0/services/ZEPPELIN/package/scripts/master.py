@@ -77,14 +77,6 @@ class Master(Script):
     import params
     self.configure(env)
 
-    # first_setup=False
-    #
-    # if glob.glob('/tmp/zeppelin-spark-dependencies-*.jar') and os.path.exists(glob.glob('/tmp/zeppelin-spark-dependencies-*.jar')[0]):
-    #     first_setup=True
-    #     self.create_hdfs_user(params.zeppelin_user, params.spark_jar_dir)
-    #     Execute ('hadoop fs -put /tmp/zeppelin-spark-dependencies-*.jar ' + params.spark_jar, user=params.zeppelin_user, ignore_failures=True)
-    #     Execute ('rm /tmp/zeppelin-spark-dependencies-*.jar')
-
     Execute (params.zeppelin_dir+'/bin/zeppelin-daemon.sh start', user=params.zeppelin_user)
 
   def status(self, env):
