@@ -126,7 +126,7 @@ class FlinkMaster(Script):
     Execute('hdfs dfs -chgrp ' + user + ' ' + params.state_backend_checkpointdir, user='hdfs')
 
   def download_alluxio_client_jar(self, jar_name):
-    jar_url = 'http://public-repo.radicalbit.io/jars'
+    jar_url = 'https://public-repo.radicalbit.io/jars'
 
     if not os.path.exists(format('/tmp/{jar_name}')):
       Execute(
