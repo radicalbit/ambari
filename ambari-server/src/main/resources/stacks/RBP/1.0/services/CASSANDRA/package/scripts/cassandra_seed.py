@@ -39,6 +39,7 @@ class CassandraSeed(Script):
     self.configure(env)
 
     from random import randint
+    from time import sleep
     sleep(randint(1,30) / 3.0)
 
     Execute(
