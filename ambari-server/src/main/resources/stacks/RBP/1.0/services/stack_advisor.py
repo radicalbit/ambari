@@ -49,3 +49,11 @@ class RBP10StackAdvisor(RBP023StackAdvisor):
 
     parentItems.extend(childItems)
     return parentItems
+
+  def getComponentLayoutSchemes(self):
+    parentSchemes = super(RBP10StackAdvisor, self).getComponentLayoutSchemes()
+    childSchemes = {
+      'FLINK_MASTER': {31: 1, "else": 2}
+    }
+    parentSchemes.update(childSchemes)
+    return parentSchemes
