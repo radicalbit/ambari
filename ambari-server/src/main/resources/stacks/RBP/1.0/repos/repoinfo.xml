@@ -19,24 +19,24 @@
   <latest>http://s3.amazonaws.com/dev.hortonworks.com/HDP/hdp_urlinfo.json</latest>
   <os family="redhat6">
     <repo>
-      <baseurl>http://public-repo.radicalbit.io/rbp/centos6/2.2.0.0</baseurl>
+      <baseurl>https://public-repo.radicalbit.io/rbp/centos6/2.2.0.0</baseurl>
       <repoid>RBP-1.0</repoid>
       <reponame>RBP</reponame>
     </repo>
     <repo>
-      <baseurl>http://public-repo.radicalbit.io/rbp-utils/centos6/2.2.0.0</baseurl>
+      <baseurl>https://public-repo.radicalbit.io/rbp-utils/centos6/2.2.0.0</baseurl>
       <repoid>RBP-UTILS-1.1.0.20</repoid>
       <reponame>RBP-UTILS</reponame>
     </repo>
   </os>
   <os family="redhat7">
     <repo>
-      <baseurl>http://public-repo.radicalbit.io/rbp/centos7/2.2.0.0</baseurl>
+      <baseurl>https://public-repo.radicalbit.io/rbp/centos7/2.2.0.0</baseurl>
       <repoid>RBP-1.0</repoid>
       <reponame>RBP</reponame>
     </repo>
     <repo>
-      <baseurl>http://public-repo.radicalbit.io/rbp-utils/centos7/2.2.0.0</baseurl>
+      <baseurl>https://public-repo.radicalbit.io/rbp-utils/centos7/2.2.0.0</baseurl>
       <repoid>RBP-UTILS-1.1.0.20</repoid>
       <reponame>RBP-UTILS</reponame>
     </repo>
