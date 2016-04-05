@@ -315,11 +315,17 @@ App.AssignMasterComponents = Em.Mixin.create({
    */
   updateIsSubmitDisabled: function () {
 
+    console.log('updateIsSubmitDisabled/thereIsNoMasters -> ' + this.thereIsNoMasters());
     if (this.thereIsNoMasters()) {
       return false;
     }
 
     var isSubmitDisabled = this.get('servicesMasters').someProperty('isHostNameValid', false);
+    console.log('updateIsSubmitDisabled/isSubmitDisabled -> ' + isSubmitDisabled);
+    console.log('updateIsSubmitDisabled/useServerValidation -> ' + this.get('useServerValidation'));
+    console.log('updateIsSubmitDisabled/submitDisabled -> ' + this.get('submitDisabled'));
+    console.log('updateIsSubmitDisabled/servicesMasters.lenght -> ' + this.get('servicesMasters').length);
+    console.log('updateIsSubmitDisabled/isInitialLayout -> ' + this.get('isInitialLayout'));
 
     if (this.get('useServerValidation')) {
       this.set('submitDisabled', true);
@@ -357,6 +363,7 @@ App.AssignMasterComponents = Em.Mixin.create({
    * @param blueprint - blueprint for validation (can be with/withour slave/client components)
    */
   validate: function(blueprint, callback) {
+    console.log("VALIDATE")
     var self = this;
 
     var selectedServices = App.StackService.find().filterProperty('isSelected').mapProperty('serviceName');
@@ -1052,6 +1059,7 @@ App.AssignMasterComponents = Em.Mixin.create({
   },
 
   recommendAndValidate: function(callback) {
+    console.log('recommendAndValidate');
     var self = this;
 
     // load recommendations with partial request
@@ -1071,6 +1079,9 @@ App.AssignMasterComponents = Em.Mixin.create({
    */
   submit: function () {
     var self = this;
+    console.log('submit/submitButtonClicked -> ' + this.get('submitButtonClicked'));
+    console.log('submit/submitDisabled -> ' + this.get('submitDisabled'));
+    console.log('submit/useServerValidation -> ' + this.get('useServerValidation'));
     if (!this.get('submitButtonClicked')) {
       this.set('submitButtonClicked', true);
 
@@ -1086,7 +1097,7 @@ App.AssignMasterComponents = Em.Mixin.create({
           self.showValidationIssuesAcceptBox(goNextStepIfValid);
         });
       } else {
-        //self.updateIsSubmitDisabled();
+        self.updateIsSubmitDisabled();
         goNextStepIfValid();
       }
     }
