@@ -41,7 +41,9 @@ class CassandraNode(Script):
     #from random import randint
     from time import sleep
     #sleep(randint(1,30) / 3.0)
-    sleep(5 * (params.cassandra_nodes.index(params.hostname) + 1))
+    sleep_time = 10 * (params.cassandra_nodes.index(params.hostname) + 1)
+    Logger.info('Sleeping for {0} seconds for waiting join'.format(sleep_time))
+    sleep(sleep_time)
 
     if join_check(params.host_ip, params.seed_node_head) == True:
       Execute(

@@ -41,7 +41,9 @@ class CassandraSeed(Script):
     #from random import randint
     from time import sleep
     #sleep(randint(1,30) / 3.0)
-    sleep(5 * (params.cassandra_seeds.index(params.hostname)))
+    sleep_time = 10 * (params.cassandra_seeds.index(params.hostname))
+    Logger.info('Sleeping for {0} seconds for waiting join'.format(sleep_time))
+    sleep(sleep_time)
 
     Execute(
         format('{params.cassandra_bin_dir}/cassandra -p {params.cassandra_pid_dir}/cassandra.pid'),

@@ -20,6 +20,7 @@ import subprocess
 import re
 # import argparse
 from time import sleep
+from resource_management import *
 
 def join_check(ip_address, seed_node):
 
@@ -38,15 +39,14 @@ def join_check(ip_address, seed_node):
 
   def moving_nodes(exclude, seed_node):
     output = subprocess.check_output(["nodetool", "--host", seed_node, "status"])
-    print "CURRENT IP --> ", exclude, " SEED --> ", seed_node
-    print "NODETOOL OUT --> ", output
+    Logger.info("[nodetool --host {0} status] result:\n{1}".format(seed_node, output))
     lines = output.splitlines()
 
     r = re.compile("[U|D][J|L|M]\s\s.*")
 
     filtered = filter(r.match, lines)
     res = [k for k in filtered if exclude not in k]
-    print "FILTERED RESULT --> ", "-".join(res)
+    Logger.info("Moving nodes count: {0}".format(len(res)))
     return res
 
 
@@ -61,9 +61,9 @@ def join_check(ip_address, seed_node):
       count += 1
       moving = moving_nodes(node, seed_node)
 
-    print "Finished after", count, "try"
+    Logger.info("Finished after {0} try".format(count))
     result = len(moving) == 0
-    print "Node", "is" if result else "is not", "ready to join"
+    Logger.info("Node {0} ready to join".format("is" if result else "is not"))
     return result
 
 
@@ -73,7 +73,8 @@ def join_check(ip_address, seed_node):
   #   args = parser.parse_args()
 
   if valid_ip(ip_address):
+    Logger.info("Asking to seed node {0} the cluster status excluded node {1}".format(seed_node, ip_address))
     return check(ip_address, seed_node)
   else:
-    print "Invalid IP", ip_address
+    Logger.error("Invalid IP {0}".format(ip_address))
     return False
