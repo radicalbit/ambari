@@ -45,6 +45,7 @@ class CassandraNode(Script):
     Logger.info('Sleeping for {0} seconds for waiting join'.format(sleep_time))
     sleep(sleep_time)
 
+    Logger.info('Starting node...')
     if join_check(params.host_ip, params.seed_node_head) == True:
       Execute(
           format('{params.cassandra_bin_dir}/cassandra -p {params.cassandra_pid_dir}/cassandra.pid'),
