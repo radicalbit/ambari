@@ -38,9 +38,10 @@ class CassandraNode(Script):
     import params
     self.configure(env)
 
-    from random import randint
+    #from random import randint
     from time import sleep
-    sleep(randint(1,30) / 3.0)
+    #sleep(randint(1,30) / 3.0)
+    sleep(5 * (params.cassandra_nodes.index(params.hostname) + 1))
 
     if join_check(params.host_ip, params.seed_node_head) == True:
       Execute(

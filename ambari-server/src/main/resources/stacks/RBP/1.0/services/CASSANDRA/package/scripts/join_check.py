@@ -52,8 +52,8 @@ def join_check(ip_address, seed_node):
 
   def check(node, seed_node):
     moving = moving_nodes(node, seed_node)
-    pause = 0.5
-    max_count = 20
+    pause = 0.75
+    max_count = 50
     count = 0
 
     while len(moving) > 0 and count < max_count:
