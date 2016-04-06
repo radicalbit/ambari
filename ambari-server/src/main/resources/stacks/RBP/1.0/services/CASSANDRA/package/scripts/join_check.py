@@ -38,6 +38,7 @@ def join_check(ip_address, seed_node):
 
   def moving_nodes(exclude, seed_node):
     output = subprocess.check_output(["nodetool", "--host", seed_node, "status"])
+    print "CURRENT IP --> ", exclude, " SEED --> ", seed_node
     print "NODETOOL OUT --> ", output
     lines = output.splitlines()
 
