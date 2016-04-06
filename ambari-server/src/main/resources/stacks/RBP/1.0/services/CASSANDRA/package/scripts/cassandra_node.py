@@ -38,19 +38,17 @@ class CassandraNode(Script):
     import params
     self.configure(env)
 
-    #from random import randint
-    from time import sleep
-    #sleep(randint(1,30) / 3.0)
-    sleep_time = 10 * (params.cassandra_nodes.index(params.hostname) + 1)
-    Logger.info('Sleeping for {0} seconds for waiting join'.format(sleep_time))
-    sleep(sleep_time)
+    # from time import sleep
+    # sleep_time = 10 * (params.cassandra_nodes.index(params.hostname) + 1)
+    # Logger.info('Sleeping for {0} seconds for waiting join'.format(sleep_time))
+    # sleep(sleep_time)
 
     Logger.info('Starting node...')
-    if join_check(params.host_ip, params.seed_node_head) == True:
-      Execute(
-          format('{params.cassandra_bin_dir}/cassandra -p {params.cassandra_pid_dir}/cassandra.pid'),
-          user=params.cassandra_user
-      )
+    # if join_check(params.host_ip, params.seed_node_head) == True:
+    Execute(
+        format('{params.cassandra_bin_dir}/cassandra -p {params.cassandra_pid_dir}/cassandra.pid'),
+        user=params.cassandra_user
+    )
 
     sleep(5)
     join_check(params.host_ip, params.seed_node_head)

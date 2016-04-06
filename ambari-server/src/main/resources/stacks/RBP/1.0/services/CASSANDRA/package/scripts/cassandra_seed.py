@@ -38,12 +38,10 @@ class CassandraSeed(Script):
     import params
     self.configure(env)
 
-    #from random import randint
-    from time import sleep
-    #sleep(randint(1,30) / 3.0)
-    sleep_time = 10 * (params.cassandra_seeds.index(params.hostname))
-    Logger.info('Sleeping for {0} seconds for waiting join'.format(sleep_time))
-    sleep(sleep_time)
+    # from time import sleep
+    # sleep_time = 10 * (params.cassandra_seeds.index(params.hostname))
+    # Logger.info('Sleeping for {0} seconds for waiting join'.format(sleep_time))
+    # sleep(sleep_time)
 
     Logger.info('Starting seed...')
     Execute(
