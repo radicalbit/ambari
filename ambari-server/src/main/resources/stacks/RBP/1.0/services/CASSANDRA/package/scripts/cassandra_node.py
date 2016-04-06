@@ -50,8 +50,8 @@ class CassandraNode(Script):
         user=params.cassandra_user
     )
 
-    sleep(5)
-    join_check(params.host_ip, params.seed_node_head)
+    # sleep(5)
+    # join_check(params.host_ip, params.seed_node_head)
 
   def stop(self, env):
     import params
