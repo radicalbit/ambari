@@ -48,6 +48,9 @@ class CassandraNode(Script):
           user=params.cassandra_user
       )
 
+    sleep(5)
+    join_check(params.host_ip, params.seed_node_head)
+
   def stop(self, env):
     import params
     Execute(format('kill `cat {params.cassandra_pid_dir}/cassandra.pid`'), user=params.cassandra_user)

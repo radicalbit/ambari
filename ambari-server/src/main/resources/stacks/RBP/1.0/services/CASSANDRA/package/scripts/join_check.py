@@ -38,12 +38,14 @@ def join_check(ip_address, seed_node):
 
   def moving_nodes(exclude, seed_node):
     output = subprocess.check_output(["nodetool", "--host", seed_node, "status"])
+    print "NODETOOL OUT --> ", output
     lines = output.splitlines()
 
     r = re.compile("[U|D][J|L|M]\s\s.*")
 
     filtered = filter(r.match, lines)
     res = [k for k in filtered if exclude not in k]
+    print "FILTERED RESULT --> ", "-".join(res)
     return res
 
 

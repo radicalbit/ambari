@@ -33,7 +33,7 @@ class HdfsClient(Script):
     import params
     self.install_packages(env, params.exclude_packages)
     env.set_params(params)
-    self.configure(env)
+    #self.configure(env)
 
   def configure(self, env):
     import params
@@ -43,6 +43,7 @@ class HdfsClient(Script):
   def start(self, env, upgrade_type=None):
     import params
     env.set_params(params)
+    self.configure(env)
 
   def stop(self, env, upgrade_type=None):
     import params
