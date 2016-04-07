@@ -75,16 +75,16 @@ def link_configs(struct_out_file):
   """
   Links configs, only on a fresh install of HDP-2.3 and higher
   """
-
-  if not Script.is_hdp_stack_greater_or_equal("2.3"):
-    Logger.info("Can only link configs for HDP-2.3 and higher.")
-    return
-
-  json_version = load_version(struct_out_file)
-
-  if not json_version:
-    Logger.info("Could not load 'version' from {0}".format(struct_out_file))
-    return
-
-  for k, v in conf_select.PACKAGE_DIRS.iteritems():
-    conf_select.convert_conf_directories_to_symlinks(k, json_version, v)
+  pass
+  # if not Script.is_hdp_stack_greater_or_equal("2.3"):
+  #   Logger.info("Can only link configs for HDP-2.3 and higher.")
+  #   return
+  #
+  # json_version = load_version(struct_out_file)
+  #
+  # if not json_version:
+  #   Logger.info("Could not load 'version' from {0}".format(struct_out_file))
+  #   return
+  #
+  # for k, v in conf_select.PACKAGE_DIRS.iteritems():
+  #   conf_select.convert_conf_directories_to_symlinks(k, json_version, v)
