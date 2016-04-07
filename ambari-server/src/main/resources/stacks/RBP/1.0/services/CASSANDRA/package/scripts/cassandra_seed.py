@@ -38,12 +38,7 @@ class CassandraSeed(Script):
     import params
     self.configure(env)
 
-    # from time import sleep
-    # sleep_time = 10 * (params.cassandra_seeds.index(params.hostname))
-    # Logger.info('Sleeping for {0} seconds for waiting join'.format(sleep_time))
-    # sleep(sleep_time)
-
-    Logger.info('Starting seed...')
+    Logger.info('Starting Cassandra seed...')
     Execute(
         format('{params.cassandra_bin_dir}/cassandra -p {params.cassandra_pid_dir}/cassandra.pid'),
         user=params.cassandra_user
