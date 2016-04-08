@@ -16,18 +16,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
-import sys, os, pwd, grp, signal, time, glob
+import glob
 from resource_management import *
-from subprocess import call
 
-reload(sys)
-sys.setdefaultencoding('utf8')
-
-class Master(Script):
+class Zeppelin(Script):
 
   def install(self, env):
     import params
-    #env.set_params(params)
     self.install_packages(env)
     #self.create_hdfs_user(params.zeppelin_user, params.spark_jar_dir)
 
@@ -37,14 +32,14 @@ class Master(Script):
             recursive=True
     )
 
-  def create_hdfs_user(self, user, spark_jar_dir):
-    Execute('hadoop fs -mkdir -p /user/'+user, user='hdfs', ignore_failures=True)
-    Execute('hadoop fs -chown ' + user + ' /user/'+user, user='hdfs')
-    Execute('hadoop fs -chgrp ' + user + ' /user/'+user, user='hdfs')
-
-    Execute('hadoop fs -mkdir -p '+spark_jar_dir, user='hdfs', ignore_failures=True)
-    Execute('hadoop fs -chown ' + user + ' ' + spark_jar_dir, user='hdfs')
-    Execute('hadoop fs -chgrp ' + user + ' ' + spark_jar_dir, user='hdfs')
+  # def create_hdfs_user(self, user, spark_jar_dir):
+  #   Execute('hadoop fs -mkdir -p /user/'+user, user='hdfs', ignore_failures=True)
+  #   Execute('hadoop fs -chown ' + user + ' /user/'+user, user='hdfs')
+  #   Execute('hadoop fs -chgrp ' + user + ' /user/'+user, user='hdfs')
+  #
+  #   Execute('hadoop fs -mkdir -p '+spark_jar_dir, user='hdfs', ignore_failures=True)
+  #   Execute('hadoop fs -chown ' + user + ' ' + spark_jar_dir, user='hdfs')
+  #   Execute('hadoop fs -chgrp ' + user + ' ' + spark_jar_dir, user='hdfs')
 
   def configure(self, env):
     import params
@@ -61,7 +56,7 @@ class Master(Script):
     File(
         format("{params.conf_dir}/zeppelin-env.sh"),
         owner=params.zeppelin_user,
-        mode=0700,
+        mode=0775,
         content=Template('zeppelin-env.sh.j2', conf_dir=params.conf_dir)
     )
     # env_content=InlineTemplate(params.zeppelin_env_content)
@@ -91,4 +86,4 @@ class Master(Script):
 
 
 if __name__ == "__main__":
-  Master().execute()
+  Zeppelin().execute()

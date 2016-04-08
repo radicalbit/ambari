@@ -40,9 +40,11 @@
 
             <osSpecifics>
                 <osSpecific>
-                    <osFamily>all</osFamily>
+                    <osFamily>any</osFamily>
                     <packages>
-                        <package><name>zeppelin</name></package>
+                        <package>
+                            <name>zeppelin*</name>
+                        </package>
                     </packages>
                 </osSpecific>
             </osSpecifics>
