@@ -51,12 +51,12 @@ class Master(Script):
     env.set_params(params)
 
     #write out zeppelin-site.xml
-    XmlConfig("zeppelin-site.xml",
-            conf_dir = params.conf_dir,
-            configurations = params.config['configurations']['zeppelin-config'],
-            owner=params.zeppelin_user,
-            group=params.user_group
-    )
+    # XmlConfig("zeppelin-site.xml",
+    #         conf_dir = params.conf_dir,
+    #         configurations = params.config['configurations']['zeppelin-config'],
+    #         owner=params.zeppelin_user,
+    #         group=params.user_group
+    # )
     #write out zeppelin-env.sh
     File(
         format("{params.conf_dir}/zeppelin-env.sh"),
