@@ -29,7 +29,7 @@ class Master(Script):
     import params
     env.set_params(params)
     self.install_packages(env)
-    self.create_hdfs_user(params.zeppelin_user, params.spark_jar_dir)
+    #self.create_hdfs_user(params.zeppelin_user, params.spark_jar_dir)
 
     Directory([params.zeppelin_pid_dir, params.zeppelin_log_dir],
             owner=params.zeppelin_user,
