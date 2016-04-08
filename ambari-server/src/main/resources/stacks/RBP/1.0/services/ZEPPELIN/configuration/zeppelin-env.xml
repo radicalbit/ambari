@@ -28,7 +28,7 @@
 
     <property>
         <name>zeppelin_port</name>
-        <value>9995</value>
+        <value>18080</value>
         <description>Server port.The subsequent port (e.g. 9996) should also be open as it will be used by the web socket</description>
     </property>
           
