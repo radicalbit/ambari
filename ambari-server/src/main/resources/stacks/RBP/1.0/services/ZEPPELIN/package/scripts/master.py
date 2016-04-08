@@ -24,10 +24,10 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 
 class Master(Script):
-  def install(self, env):
 
+  def install(self, env):
     import params
-    env.set_params(params)
+    #env.set_params(params)
     self.install_packages(env)
     #self.create_hdfs_user(params.zeppelin_user, params.spark_jar_dir)
 
@@ -78,6 +78,10 @@ class Master(Script):
     self.configure(env)
 
     Execute (params.zeppelin_dir+'/bin/zeppelin-daemon.sh start', user=params.zeppelin_user)
+    Execute(
+        "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep org.apache.zeppelin.server.ZeppelinServer | awk '{print $1}'`> " + params.zeppelin_pid_dir + "/zeppelin.pid",
+        user=params.zeppelin_user
+    )
 
   def status(self, env):
     import status_params
