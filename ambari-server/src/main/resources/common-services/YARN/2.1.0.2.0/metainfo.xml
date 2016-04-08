@@ -236,11 +236,11 @@
         </osSpecific>
       </osSpecifics>
 
-      <commandScript>
-        <script>scripts/mapred_service_check.py</script>
-        <scriptType>PYTHON</scriptType>
-        <timeout>300</timeout>
-      </commandScript>
+      <!--<commandScript>-->
+        <!--<script>scripts/mapred_service_check.py</script>-->
+        <!--<scriptType>PYTHON</scriptType>-->
+        <!--<timeout>300</timeout>-->
+      <!--</commandScript>-->
       
       <requiredServices>
         <service>YARN</service>
