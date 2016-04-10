@@ -24,7 +24,7 @@ import sys, os, re
 config = Script.get_config()
 
 # params from zeppelin-config
-zeppelin_port = str(config['configurations']['zeppelin-env']['zeppelin_port'])
+#zeppelin_port = str(config['configurations']['zeppelin-env']['zeppelin_port'])
 
 # params from zeppelin-env
 zeppelin_user= config['configurations']['zeppelin-env']['zeppelin_user']
