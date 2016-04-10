@@ -343,6 +343,17 @@ App.QuickLinks.FIXTURES = [
     regex: '^(\\d+)$',
     default_http_port: 21000,
     default_https_port: 21443
+  },
+  {
+    id: 37,
+    label:'Zeppelin Notebook UI',
+    url:'%@://%@:%@/',
+    service_id: 'ZEPPELIN',
+    template:'%@://%@:%@/',
+    http_config: 'zeppelin.server.port',
+    site: 'zeppelin-config',
+    regex: '^(\\d+)$',
+    default_http_port: 8008
   }
 
 ];
