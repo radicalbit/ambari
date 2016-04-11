@@ -25,7 +25,7 @@ App.WizardStep1Controller = Em.Controller.extend({
    * Skip repo-validation
    * @type {bool}
    */
-  skipValidationChecked: false,
+  skipValidationChecked: true,
 
   selectedStack: function() {
     return App.Stack.find().findProperty('isSelected');
