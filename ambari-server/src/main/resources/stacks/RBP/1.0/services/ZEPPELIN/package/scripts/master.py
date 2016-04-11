@@ -50,7 +50,7 @@ class Zeppelin(Script):
     #write out zeppelin-site.xml
     XmlConfig("zeppelin-site.xml",
             conf_dir = params.conf_dir,
-            configurations = params.config['configurations']['zeppelin-config'],
+            configurations = params.config['configurations']['zeppelin-site'],
             owner=params.zeppelin_user,
             group=params.user_group
     )

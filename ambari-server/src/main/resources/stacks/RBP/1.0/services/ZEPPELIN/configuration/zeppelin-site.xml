@@ -20,21 +20,15 @@
 <configuration>
 
   <property>
-    <name>zeppelin.server.addr</name>
-    <value>localhost</value>
-    <description>Server address</description>
-  </property>
-
-  <property>
     <name>zeppelin.server.port</name>
-    <value>8008</value>
+    <value>18080</value>
     <description>Server port.</description>
   </property>
 
   <property>
     <name>zeppelin.notebook.homescreen</name>
-    <value></value>
-    <description>id of notebook to be displayed in homescreen. ex) 2A94M5J1Z Empty value displays default home screen</description>
+    <value>2A94M5J1Z</value>
+    <description>id of notebook to be displayed in homescreen. (2A94M5J1Z is the default notebook)</description>
   </property>
 
   <property>
@@ -48,18 +42,6 @@
     <name>zeppelin.notebook.storage</name>
     <value>org.apache.zeppelin.notebook.repo.VFSNotebookRepo</value>
     <description>notebook persistence layer implementation</description>
-  </property>
-
-  <property>
-    <name>zeppelin.interpreter.dir</name>
-    <value>interpreter</value>
-    <description>Interpreter implementation base directory</description>
-  </property>
-
-  <property>
-    <name>zeppelin.interpreters</name>
-    <value>org.apache.zeppelin.markdown.Markdown,org.apache.zeppelin.angular.AngularInterpreter,org.apache.zeppelin.shell.ShellInterpreter,org.apache.zeppelin.alluxio.AlluxioInterpreter,org.apache.zeppelin.file.HDFSFileInterpreter,org.apache.zeppelin.flink.FlinkInterpreter,org.apache.zeppelin.cassandra.CassandraInterpreter,org.apache.zeppelin.jdbc.JDBCInterpreter</value>
-    <description>Comma separated interpreter configurations. First interpreter become a default</description>
   </property>
 
   <property>
