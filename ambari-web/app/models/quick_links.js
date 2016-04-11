@@ -353,7 +353,7 @@ App.QuickLinks.FIXTURES = [
     http_config: 'zeppelin.server.port',
     site: 'zeppelin-site',
     regex: '^(\\d+)$',
-    default_http_port: 8008
+    default_http_port: 18080
   }
 
 ];

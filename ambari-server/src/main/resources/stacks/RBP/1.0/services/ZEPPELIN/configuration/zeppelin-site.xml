@@ -27,8 +27,11 @@
 
   <property>
     <name>zeppelin.notebook.homescreen</name>
-    <value>2A94M5J1Z</value>
-    <description>id of notebook to be displayed in homescreen. (2A94M5J1Z is the default notebook)</description>
+    <value></value>
+    <description>id of notebook to be displayed in homescreen (ex. 2A94M5J1Z). Empty value displays default home screen</description>
+    <value-attributes>
+      <empty-value-valid>true</empty-value-valid>
+    </value-attributes>
   </property>
 
   <property>
