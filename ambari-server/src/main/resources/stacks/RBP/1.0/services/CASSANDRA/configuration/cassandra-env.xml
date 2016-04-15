@@ -50,6 +50,7 @@
   <property require-input="true">
     <name>cassandra_user</name>
     <value>cassandra</value>
+    <display-name>Cassandra User</display-name>
     <property-type>USER</property-type>
     <description>Cassandra user</description>
   </property>

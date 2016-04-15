@@ -34,6 +34,7 @@
 
     <property>
         <name>flink_user</name>
+        <display-name>Flink User</display-name>
         <value>flink</value>
         <property-type>USER</property-type>
         <description>User flink daemon runs as</description>

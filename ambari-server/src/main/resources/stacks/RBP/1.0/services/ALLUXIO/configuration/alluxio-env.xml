@@ -33,6 +33,7 @@
 
   <property>
     <name>alluxio_user</name>
+    <display-name>Alluxio User</display-name>
     <value>alluxio</value>
     <property-type>USER</property-type>
     <description>Alluxio Service Account User</description>
@@ -40,6 +41,7 @@
 
   <property>
     <name>root_user</name>
+    <display-name>Root User</display-name>
     <value>root</value>
     <property-type>USER</property-type>
     <description>Root User</description>
