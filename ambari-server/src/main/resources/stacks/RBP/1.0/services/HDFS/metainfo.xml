@@ -22,6 +22,41 @@
       <name>HDFS</name>
       <version>2.7.1</version>
 
+      <component>
+        <name>HDFS_CLIENT</name>
+        <displayName>HDFS Client</displayName>
+        <category>CLIENT</category>
+        <cardinality>ALL</cardinality>
+        <versionAdvertised>true</versionAdvertised>
+        <commandScript>
+          <script>scripts/hdfs_client.py</script>
+          <scriptType>PYTHON</scriptType>
+          <timeout>1200</timeout>
+        </commandScript>
+        <configFiles>
+          <configFile>
+            <type>xml</type>
+            <fileName>hdfs-site.xml</fileName>
+            <dictionaryName>hdfs-site</dictionaryName>
+          </configFile>
+          <configFile>
+            <type>xml</type>
+            <fileName>core-site.xml</fileName>
+            <dictionaryName>core-site</dictionaryName>
+          </configFile>
+          <configFile>
+            <type>env</type>
+            <fileName>log4j.properties</fileName>
+            <dictionaryName>hdfs-log4j,yarn-log4j</dictionaryName>
+          </configFile>
+          <configFile>
+            <type>env</type>
+            <fileName>hadoop-env.sh</fileName>
+            <dictionaryName>hadoop-env</dictionaryName>
+          </configFile>
+        </configFiles>
+      </component>
+
       <components>
         <component>
           <name>NFS_GATEWAY</name>
