@@ -22,7 +22,7 @@
             <name>ALLUXIO</name>
             <displayName>Alluxio</displayName>
             <comment>Memory Centric Reliable Distributed Storage</comment>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
             <components>
                 <component>
                     <name>ALLUXIO_MASTER</name>
