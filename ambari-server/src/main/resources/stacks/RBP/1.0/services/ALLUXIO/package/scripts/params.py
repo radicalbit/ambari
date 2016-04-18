@@ -37,6 +37,7 @@ underfs_addr = config['configurations']['core-site']['fs.defaultFS'] + '/alluxio
 
 # hadoop core-site.xml dir
 hadoop_core_site = conf_select.get_hadoop_conf_dir() + '/core-site.xml'
+hadoop_hdfs_site = conf_select.get_hadoop_conf_dir() + '/hdfs-site.xml'
 
 # alluxio master journal relative path
 journal_relative_path = '/alluxio/journal'

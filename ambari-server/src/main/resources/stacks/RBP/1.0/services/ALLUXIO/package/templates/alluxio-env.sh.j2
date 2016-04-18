@@ -64,10 +64,11 @@
 # Uncomment this section to add a local installation of Hadoop to Alluxio's CLASSPATH.
 # The hadoop command must be in the path to automatically populate the Hadoop classpath.
 #
-if type "hadoop" > /dev/null 2>&1; then
-  export HADOOP_ALLUXIO_CLASSPATH=$(hadoop classpath)
-fi
-export ALLUXIO_CLASSPATH=${ALLUXIO_CLASSPATH:-${HADOOP_ALLUXIO_CLASSPATH}}
+# if type "hadoop" > /dev/null 2>&1; then
+#  export HADOOP_ALLUXIO_CLASSPATH=$(hadoop classpath)
+# fi
+# export ALLUXIO_CLASSPATH=${ALLUXIO_CLASSPATH:-${HADOOP_ALLUXIO_CLASSPATH}}
+export ALLUXIO_CLASSPATH=$ALLUXIO_CLASSPATH:{{ hadoop_hdfs_site }}:{{ hadoop_core_site }}
 
 if [[ $(uname -s) == Darwin ]]; then
   # Assuming Mac OS X
