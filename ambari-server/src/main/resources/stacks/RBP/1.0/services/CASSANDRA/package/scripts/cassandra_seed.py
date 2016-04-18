@@ -40,9 +40,11 @@ class CassandraSeed(Script):
 
     Logger.info('Starting Cassandra seed...')
     Execute(
-        format('{params.cassandra_bin_dir}/cassandra -p {params.cassandra_pid_dir}/cassandra.pid'),
+        format('{params.cassandra_bin_dir}/cassandra'),
         user=params.cassandra_user
     )
+    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep CassandraDaemon | awk '{print $1}'`> " + params.cassandra_pid_dir + "/cassandra.pid"
+    Execute(cmd, user=params.cassandra_user)
 
   def stop(self, env):
     import params
