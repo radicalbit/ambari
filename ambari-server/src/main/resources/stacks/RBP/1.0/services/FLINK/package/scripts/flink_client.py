@@ -36,6 +36,10 @@ class FlinkClient(FlinkService):
   #
   #   Execute('chmod 777 ' + params.flink_log_dir, user='root')
 
+  def install(self, env):
+    super(FlinkClient, self).install(env)
+    self.configure(env)
+
   def status(self, env):
     raise ClientComponentHasNoStatus()
 
