@@ -62,7 +62,7 @@ class Master(Alluxio):
         Execute('hdfs dfs -chmod -R 775 /' + folders[0], user='hdfs')
 
         # update permissions on user.log file
-        Execute('chmod u=rw,g=rw,o=r ' + params.log_dir + '/user.log', user=params.root_user)
+        Execute('chmod u=rw,g=rw,o=rw ' + params.log_dir + '/user.log', user=params.root_user)
 
         # create marker
         open(self.alluxio_master_format_marker, 'a').close()
