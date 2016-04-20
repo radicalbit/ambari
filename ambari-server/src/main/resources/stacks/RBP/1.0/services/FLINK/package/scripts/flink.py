@@ -37,7 +37,7 @@ def flink(action = None):
     Execute(
         format('cp /tmp/{alluxio_jar_name} {params.flink_lib}/'),
         user='root',
-        not_if=format('test -d /{params.flink_lib}/{jar_name}')
+        not_if=format('test -d /{params.flink_lib}/{alluxio_jar_name}')
     )
 
   elif action == 'configure':
