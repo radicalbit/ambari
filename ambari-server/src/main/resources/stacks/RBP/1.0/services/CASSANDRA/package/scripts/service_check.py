@@ -37,7 +37,7 @@ class ServiceCheck(Script):
                                 "DROP TABLE smokedemotest.smokeusers;\n"
                                 "DROP KEYSPACE smokedemotest;\n\n")
          )
-    Execute(format("{cassandra_bin_dir}/cqlsh {host} 9042 -f {cmdfile}"))
+    Execute(format("{cassandra_bin_dir}/cqlsh {host} 9042 -f {cmdfile}"), logoutput=True)
 
 
 if __name__ == "__main__":

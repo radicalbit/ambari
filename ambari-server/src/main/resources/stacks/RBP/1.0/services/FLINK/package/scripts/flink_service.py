@@ -27,7 +27,7 @@ class FlinkService(Script):
     self.install_packages(env)
     flink('install')
 
-  def configure(self, env, isInstall=False):
+  def configure(self, env):
     import params
     env.set_params(params)
     flink('configure')

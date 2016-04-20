@@ -21,21 +21,6 @@ from flink_service import FlinkService
 
 class FlinkClient(FlinkService):
 
-  # def install(self, env):
-  #   self.configure(env)
-  #
-  # def configure(self, env, isInstall=False):
-  #   import params
-  #   Directory(
-  #       [params.flink_log_dir],
-  #       owner=params.flink_user,
-  #       group=params.user_group,
-  #       recursive=True,
-  #       cd_access='a'
-  #   )
-  #
-  #   Execute('chmod 777 ' + params.flink_log_dir, user='root')
-
   def install(self, env):
     super(FlinkClient, self).install(env)
     self.configure(env)

@@ -16,7 +16,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
-import os
 from resource_management import *
 
 def flink(action = None):
@@ -25,18 +24,21 @@ def flink(action = None):
   def download_alluxio_client_jar(jar_name):
     jar_url = 'https://public-repo.radicalbit.io/jars'
 
-    if not os.path.exists(format('/tmp/{jar_name}')):
-      Execute(
-          format('wget {jar_url}/{jar_name} -O /tmp/{jar_name} -a /tmp/alluxio_download.log'),
-          user='root'
-      )
+    Execute(
+        format('wget {jar_url}/{jar_name} -O /tmp/{jar_name} -a /tmp/alluxio_download.log'),
+        user='root',
+        not_if=format('test -d /tmp/{jar_name}')
+    )
 
 
   if action == 'install':
     alluxio_jar_name = 'alluxio-core-client-1.0.1-jar-with-dependencies.jar'
     download_alluxio_client_jar(alluxio_jar_name)
-    if not os.path.exists(format('/{params.flink_lib}/{jar_name}')):
-      Execute(format('cp /tmp/{alluxio_jar_name} {params.flink_lib}/'), user='root')
+    Execute(
+        format('cp /tmp/{alluxio_jar_name} {params.flink_lib}/'),
+        user='root',
+        not_if=format('test -d /{params.flink_lib}/{jar_name}')
+    )
 
   elif action == 'configure':
     Directory(
