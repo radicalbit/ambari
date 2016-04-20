@@ -17,28 +17,19 @@ limitations under the License.
 
 """
 from resource_management import *
-from flink_service import FlinkService
+from flink import flink
 
-class FlinkClient(FlinkService):
+class FlinkService(Script):
 
-  # def install(self, env):
-  #   self.configure(env)
-  #
-  # def configure(self, env, isInstall=False):
-  #   import params
-  #   Directory(
-  #       [params.flink_log_dir],
-  #       owner=params.flink_user,
-  #       group=params.user_group,
-  #       recursive=True,
-  #       cd_access='a'
-  #   )
-  #
-  #   Execute('chmod 777 ' + params.flink_log_dir, user='root')
+  def install(self, env):
+    import params
+    env.set_params(params)
+    self.install_packages(env)
+    flink('install')
+    self.configure(env)
 
-  def status(self, env):
-    raise ClientComponentHasNoStatus()
+  def configure(self, env, isInstall=False):
+    import params
+    env.set_params(params)
+    flink('configure')
 
-
-if __name__ == "__main__":
-  FlinkClient().execute()

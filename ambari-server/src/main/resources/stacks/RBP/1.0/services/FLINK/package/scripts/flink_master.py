@@ -18,65 +18,66 @@ limitations under the License.
 """
 import sys, os, pwd, grp, signal, time, glob, hashlib, subprocess
 from resource_management import *
+from flink_service import FlinkService
 
-class FlinkMaster(Script):
-  def install(self, env):
-
-    import params
-    import status_params
-
-    self.install_packages(env)
-
-    Directory([status_params.flink_pid_dir, params.flink_log_dir],
-              owner=params.flink_user,
-              group=params.user_group,
-              recursive=True
-              )
-
-    alluxio_jar_name = 'alluxio-core-client-1.0.1-jar-with-dependencies.jar'
-    self.download_alluxio_client_jar(alluxio_jar_name)
-    Execute(format('cp /tmp/{alluxio_jar_name} {params.flink_lib}/'), user='root')
-
-    self.configure(env, True)
-
-  def configure(self, env, isInstall=False):
-    import params
-    env.set_params(params)
-
-    Directory(
-        [params.flink_log_dir,params.flink_pid_dir],
-        owner=params.flink_user,
-        group=params.user_group,
-        recursive=True
-    )
-
-    Execute('chmod 777 ' + params.flink_log_dir, user='root')
-
-    File(
-        format("{conf_dir}/flink-conf.yaml"),
-        owner=params.flink_user,
-        mode=0644,
-        content=Template('flink-conf.yaml.j2', conf_dir=params.conf_dir)
-    )
-
-    Execute(
-        format("scp -o StrictHostKeyChecking=no {alluxio_master}:/etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
-        tries = 10,
-        try_sleep=3,
-        logoutput=True
-    )
-    Execute(
-        format("zip -j /tmp/alluxio-site.jar /tmp/alluxio-site.properties"),
-        tries = 10,
-        try_sleep=3,
-        logoutput=True
-    )
-    Execute(
-        format("cp /tmp/alluxio-site.jar {params.flink_lib}"),
-        tries = 10,
-        try_sleep=3,
-        logoutput=True
-    )
+class FlinkMaster(FlinkService):
+  # def install(self, env):
+  #
+  #   import params
+  #   import status_params
+  #
+  #   self.install_packages(env)
+  #
+  #   Directory([status_params.flink_pid_dir, params.flink_log_dir],
+  #             owner=params.flink_user,
+  #             group=params.user_group,
+  #             recursive=True
+  #             )
+  #
+  #   alluxio_jar_name = 'alluxio-core-client-1.0.1-jar-with-dependencies.jar'
+  #   self.download_alluxio_client_jar(alluxio_jar_name)
+  #   Execute(format('cp /tmp/{alluxio_jar_name} {params.flink_lib}/'), user='root')
+  #
+  #   self.configure(env, True)
+  #
+  # def configure(self, env, isInstall=False):
+  #   import params
+  #   env.set_params(params)
+  #
+  #   Directory(
+  #       [params.flink_log_dir,params.flink_pid_dir],
+  #       owner=params.flink_user,
+  #       group=params.user_group,
+  #       recursive=True
+  #   )
+  #
+  #   Execute('chmod 777 ' + params.flink_log_dir, user='root')
+  #
+  #   File(
+  #       format("{conf_dir}/flink-conf.yaml"),
+  #       owner=params.flink_user,
+  #       mode=0644,
+  #       content=Template('flink-conf.yaml.j2', conf_dir=params.conf_dir)
+  #   )
+  #
+  #   Execute(
+  #       format("scp -o StrictHostKeyChecking=no {alluxio_master}:/etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
+  #       tries = 10,
+  #       try_sleep=3,
+  #       logoutput=True
+  #   )
+  #   Execute(
+  #       format("zip -j /tmp/alluxio-site.jar /tmp/alluxio-site.properties"),
+  #       tries = 10,
+  #       try_sleep=3,
+  #       logoutput=True
+  #   )
+  #   Execute(
+  #       format("cp /tmp/alluxio-site.jar {params.flink_lib}"),
+  #       tries = 10,
+  #       try_sleep=3,
+  #       logoutput=True
+  #   )
 
 
   def start(self, env):
@@ -125,14 +126,14 @@ class FlinkMaster(Script):
     Execute('hdfs dfs -chgrp ' + user + ' ' + params.recovery_zookeeper_path_root, user='hdfs')
     Execute('hdfs dfs -chgrp ' + user + ' ' + params.state_backend_checkpointdir, user='hdfs')
 
-  def download_alluxio_client_jar(self, jar_name):
-    jar_url = 'https://public-repo.radicalbit.io/jars'
-
-    if not os.path.exists(format('/tmp/{jar_name}')):
-      Execute(
-          format('wget {jar_url}/{jar_name} -O /tmp/{jar_name} -a /tmp/alluxio_download.log'),
-          user='root'
-      )
+  # def download_alluxio_client_jar(self, jar_name):
+  #   jar_url = 'https://public-repo.radicalbit.io/jars'
+  #
+  #   if not os.path.exists(format('/tmp/{jar_name}')):
+  #     Execute(
+  #         format('wget {jar_url}/{jar_name} -O /tmp/{jar_name} -a /tmp/alluxio_download.log'),
+  #         user='root'
+  #     )
 
 if __name__ == "__main__":
   FlinkMaster().execute()
