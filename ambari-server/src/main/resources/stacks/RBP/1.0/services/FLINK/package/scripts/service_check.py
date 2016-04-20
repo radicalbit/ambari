@@ -25,13 +25,18 @@ class FlinkServiceCheck(Script):
   def service_check(self, env):
     import params
 
-    if params.hostname == params.alluxio_master:
-      bin_dir = '/usr/lib/flink/bin'
-      example_dir = '/usr/share/doc/flink/examples/batch'
-      full_command = format("{bin_dir}/flink run {example_dir}/WordCount.jar")
-      Execute(format(full_command))
-    else:
-      Execute("test -d " + params.flink_log_dir)
+    bin_dir = '/usr/lib/flink/bin'
+    example_dir = '/usr/share/doc/flink/examples/batch'
+    full_command = format("{bin_dir}/flink run {example_dir}/WordCount.jar")
+    Execute(format(full_command))
+
+    # if params.hostname == params.alluxio_master:
+    #   bin_dir = '/usr/lib/flink/bin'
+    #   example_dir = '/usr/share/doc/flink/examples/batch'
+    #   full_command = format("{bin_dir}/flink run {example_dir}/WordCount.jar")
+    #   Execute(format(full_command))
+    # else:
+    #   Execute("test -d " + params.flink_log_dir)
 
 
 if __name__ == "__main__":
