@@ -61,6 +61,13 @@ class Zeppelin(Script):
         mode=0775,
         content=Template('zeppelin-env.sh.j2', conf_dir=params.conf_dir)
     )
+    #write out interpreter.json
+    File(
+        format("{params.conf_dir}/interpreter.json"),
+        owner=params.zeppelin_user,
+        mode=0755,
+        content=Template('interpreter.json', conf_dir=params.conf_dir)
+    )
     # env_content=InlineTemplate(params.zeppelin_env_content)
     # File(format("{params.conf_dir}/zeppelin-env.sh"), content=env_content, owner=params.zeppelin_user, group=params.user_group) # , mode=0777)
 

@@ -36,6 +36,34 @@ zeppelin_hdfs_user_dir = format("/user/{zeppelin_user}")
 zeppelin_dir = '/usr/lib/zeppelin'
 conf_dir = zeppelin_dir + '/conf'
 
+hadoop_conf_dir = conf_select.get_hadoop_conf_dir()
+
+flink_hosts = default('/clusterHostInfo/flink_master_hosts', None)
+alluxio_master_hosts = default('/clusterHostInfo/alluxio_master_hosts', None)
+cassandra_seeds = default('/clusterHostInfo/cassandra_seed_hosts', None)
+cassandra_nodes = default('/clusterHostInfo/cassandra_node_hosts', None)
+
+if flink_hosts is not None:
+  has_flink_master = True
+  flink_conf_dir = '/etc/flink/conf'
+  flink_user = config['configurations']['flink-env']['flink_user']
+else:
+  has_flink_master = False
+
+if alluxio_master_hosts is not None:
+  alluxio_master_host = alluxio_master_hosts[0]
+else:
+  alluxio_master_host = 'localhost'
+
+if cassandra_seeds is not None:
+  if cassandra_nodes is not None:
+    cassandra_all_hosts = cassandra_seeds + cassandra_nodes
+    cassandra_hosts = ','.join(cassandra_all_hosts)
+  else:
+    cassandra_hosts = ','.join(cassandra_seeds)
+else:
+  cassandra_hosts = 'localhost'
+
 #zeppelin-env.sh
 # zeppelin_env_content = config['configurations']['zeppelin-env']['content']
 

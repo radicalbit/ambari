@@ -22,4 +22,8 @@ export ZEPPELIN_PID_DIR={{ zeppelin_pid_dir }}
 export ZEPPELIN_WAR_TEMPDIR=/var/run/zeppelin/webapps
 export ZEPPELIN_NOTEBOOK_DIR=/var/lib/zeppelin/notebook
 export MASTER=yarn-client
-export HADOOP_CONF_DIR=/etc/hadoop/conf
+export HADOOP_CONF_DIR={{ hadoop_conf_dir }}
+{% if has_flink_master %}
+export FLINK_CONF_DIR={{ flink_conf_dir }}
+export FLINK_USER={{ flink_user }}
+{% endif %}

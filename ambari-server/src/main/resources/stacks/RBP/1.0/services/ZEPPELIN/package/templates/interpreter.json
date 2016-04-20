@@ -1,0 +1,169 @@
+{
+  "interpreterSettings": {
+    "2B6QGC4UX": {
+      "id": "2B6QGC4UX",
+      "name": "sh",
+      "group": "sh",
+      "properties": {},
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.shell.ShellInterpreter",
+          "name": "sh"
+        }
+      ],
+      "dependencies": [],
+      "option": {
+        "remote": true,
+        "perNoteSession": false
+      }
+    },
+    "2B6SP421F": {
+      "id": "2B6SP421F",
+      "name": "cassandra",
+      "group": "cassandra",
+      "properties": {
+        "cassandra.query.default.consistency": "ONE",
+        "cassandra.pooling.max.connection.per.host.local": "8",
+        "cassandra.load.balancing.policy": "DEFAULT",
+        "cassandra.pooling.new.connection.threshold.local": "100",
+        "cassandra.credentials.password": "none",
+        "cassandra.native.port": "9042",
+        "cassandra.hosts": "{{ cassandra_hosts }}",
+        "cassandra.pooling.core.connection.per.host.local": "2",
+        "cassandra.retry.policy": "DEFAULT",
+        "cassandra.pooling.pool.timeout.millisecs": "5000",
+        "cassandra.protocol.version": "3",
+        "cassandra.pooling.new.connection.threshold.remote": "100",
+        "cassandra.pooling.core.connection.per.host.remote": "1",
+        "cassandra.pooling.max.request.per.connection.remote": "256",
+        "cassandra.cluster": "Test Cluster",
+        "cassandra.pooling.max.request.per.connection.local": "1024",
+        "cassandra.speculative.execution.policy": "DEFAULT",
+        "cassandra.compression.protocol": "NONE",
+        "cassandra.query.default.fetchSize": "5000",
+        "cassandra.pooling.idle.timeout.seconds": "120",
+        "cassandra.keyspace": "system",
+        "cassandra.max.schema.agreement.wait.second": "10",
+        "cassandra.socket.tcp.no_delay": "true",
+        "cassandra.credentials.username": "none",
+        "cassandra.socket.connection.timeout.millisecs": "5000",
+        "cassandra.interpreter.parallelism": "10",
+        "cassandra.query.default.serial.consistency": "SERIAL",
+        "cassandra.pooling.max.connection.per.host.remote": "2",
+        "cassandra.pooling.heartbeat.interval.seconds": "30",
+        "cassandra.reconnection.policy": "DEFAULT",
+        "cassandra.socket.read.timeout.millisecs": "12000"
+      },
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.cassandra.CassandraInterpreter",
+          "name": "cassandra"
+        }
+      ],
+      "dependencies": [],
+      "option": {
+        "remote": true,
+        "perNoteSession": false
+      }
+    },
+    "2B713J2C4": {
+      "id": "2B713J2C4",
+      "name": "alluxio",
+      "group": "alluxio",
+      "properties": {
+        "alluxio.master.port": "19998",
+        "alluxio.master.hostname": "{{ alluxio_master_host }}"
+      },
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.alluxio.AlluxioInterpreter",
+          "name": "alluxio"
+        }
+      ],
+      "dependencies": [],
+      "option": {
+        "remote": true,
+        "perNoteSession": false
+      }
+    },
+    "2B5PGUKUQ": {
+      "id": "2B5PGUKUQ",
+      "name": "angular",
+      "group": "angular",
+      "properties": {},
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.angular.AngularInterpreter",
+          "name": "angular"
+        }
+      ],
+      "dependencies": [],
+      "option": {
+        "remote": true,
+        "perNoteSession": false
+      }
+    },
+    "2B6U1MESG": {
+      "id": "2B6U1MESG",
+      "name": "flink",
+      "group": "flink",
+      "properties": {
+        "port": "6123",
+        "zeppelin.interpreter.localRepo": "/var/lib/zeppelin/local-repo/2B6U1MESG",
+        "host": "yarn"
+      },
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.flink.FlinkInterpreter",
+          "name": "flink"
+        }
+      ],
+      "dependencies": [],
+      "option": {
+        "remote": true,
+        "perNoteSession": false
+      }
+    },
+    "2B6FF8NNU": {
+      "id": "2B6FF8NNU",
+      "name": "md",
+      "group": "md",
+      "properties": {},
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.markdown.Markdown",
+          "name": "md"
+        }
+      ],
+      "dependencies": [],
+      "option": {
+        "remote": true,
+        "perNoteSession": false
+      }
+    }
+  },
+  "interpreterBindings": {
+    "2A94M5J1Z": [
+      "2B6FF8NNU"
+    ]
+  },
+  "interpreterRepositories": [
+    {
+      "id": "central",
+      "type": "default",
+      "url": "http://repo1.maven.org/maven2/",
+      "releasePolicy": {
+        "enabled": true,
+        "updatePolicy": "daily",
+        "checksumPolicy": "warn"
+      },
+      "snapshotPolicy": {
+        "enabled": true,
+        "updatePolicy": "daily",
+        "checksumPolicy": "warn"
+      },
+      "mirroredRepositories": [],
+      "repositoryManager": false
+    }
+  ]
+}
