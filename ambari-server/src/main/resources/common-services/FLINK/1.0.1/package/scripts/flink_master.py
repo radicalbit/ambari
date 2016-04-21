@@ -31,7 +31,7 @@ class FlinkMaster(FlinkService):
     Execute(
       "rm -f /tmp/.yarn-properties-flink",
       user = "root",
-      only_if = "test -d /tmp/.yarn-properties-flink"
+      only_if = "test -a /tmp/.yarn-properties-flink"
     )
 
     check_cmd = 'yarn application -status $(yarn application -list | grep ' + status_params.flink_appname + ' | grep -o "\\bapplication_\w*") | (grep "State : RUNNING" || grep "State : ACCEPTED")'
