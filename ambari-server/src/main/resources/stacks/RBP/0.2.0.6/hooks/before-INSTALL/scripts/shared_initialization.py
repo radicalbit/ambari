@@ -26,7 +26,7 @@ def install_packages():
   if params.host_sys_prepped:
     return
 
-  packages = ['unzip', 'zip', 'curl']
+  packages = ['unzip', 'zip', 'curl', 'ntp']
   if params.hdp_stack_version != "" and compare_versions(params.hdp_stack_version, '2.2') >= 0:
     packages.append('hdp-select')
   Package(packages)
