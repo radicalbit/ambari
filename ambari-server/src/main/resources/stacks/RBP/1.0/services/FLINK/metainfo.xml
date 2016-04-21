@@ -16,78 +16,12 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-
 <metainfo>
     <schemaVersion>2.0</schemaVersion>
     <services>
         <service>
             <name>FLINK</name>
-            <displayName>Flink</displayName>
-            <comment>Apache Flink is a streaming dataflow engine that provides data distribution, communication, and fault tolerance for distributed computations over data streams.</comment>
-            <version>1.0.1</version>
-            <components>
-                <component>
-                    <name>FLINK_MASTER</name>
-                    <displayName>Flink Master</displayName>
-                    <category>MASTER</category>
-                    <cardinality>1</cardinality>
-                    <commandScript>
-                        <script>scripts/flink_master.py</script>
-                        <scriptType>PYTHON</scriptType>
-                        <timeout>10000</timeout>
-                    </commandScript>
-                </component>
-
-                <component>
-                    <name>FLINK_CLIENT</name>
-                    <displayName>Flink Client</displayName>
-                    <category>CLIENT</category>
-                    <cardinality>ALL</cardinality>
-                    <versionAdvertised>false</versionAdvertised>
-                    <auto-deploy>
-                        <enabled>true</enabled>
-                    </auto-deploy>
-                    <commandScript>
-                        <script>scripts/flink_client.py</script>
-                        <scriptType>PYTHON</scriptType>
-                        <timeout>10000</timeout>
-                    </commandScript>
-                </component>
-
-            </components>
-
-            <osSpecifics>
-              <osSpecific>
-                <osFamily>any</osFamily>
-                <packages>
-                    <package>
-                        <name>wget</name>
-                    </package>
-                    <package>
-                        <name>flink</name>
-                    </package>
-                </packages>
-              </osSpecific>
-            </osSpecifics>
-
-            <commandScript>
-                <script>scripts/service_check.py</script>
-                <scriptType>PYTHON</scriptType>
-                <timeout>300</timeout>
-            </commandScript>
-
-            <requiredServices>
-                <service>ZOOKEEPER</service>
-                <service>YARN</service>
-                <service>HDFS</service>
-                <service>ALLUXIO</service>
-            </requiredServices>
-
-      	    <configuration-dependencies>
-	        	<config-type>flink-config</config-type>
-                <config-type>flink-advanced</config-type>
-      	    </configuration-dependencies>
-            <restartRequiredAfterChange>true</restartRequiredAfterChange>
+            <extends>common-services/FLINK/1.0.1</extends>
         </service>
     </services>
 </metainfo>

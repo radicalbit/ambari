@@ -20,41 +20,7 @@
     <services>
         <service>
             <name>ZEPPELIN</name>
-            <displayName>Zeppelin Notebook</displayName>
-            <comment>A web-based notebook that enables interactive data analytics. It enables you to make beautiful data-driven, interactive and collaborative documents with Scala and more.</comment>
-            <version>0.6.0</version>
-            <deleted>true</deleted>
-
-            <components>
-                <component>
-                  <name>ZEPPELIN_MASTER</name>
-                  <displayName>Zeppelin Notebook</displayName>
-                  <category>MASTER</category>
-                  <cardinality>1</cardinality>
-                  <commandScript>
-                    <script>scripts/master.py</script>
-                    <scriptType>PYTHON</scriptType>
-                    <timeout>10000</timeout>
-                  </commandScript>
-                </component>
-            </components>
-
-            <osSpecifics>
-                <osSpecific>
-                    <osFamily>any</osFamily>
-                    <packages>
-                        <package>
-                            <name>zeppelin*</name>
-                        </package>
-                    </packages>
-                </osSpecific>
-            </osSpecifics>
-
-      	    <configuration-dependencies>
-        	    <config-type>zeppelin-site</config-type>
-                <config-type>zeppelin-env</config-type>
-      	    </configuration-dependencies>
-            <restartRequiredAfterChange>false</restartRequiredAfterChange>
+            <extends>common-services/ZEPPELIN/0.6.0</extends>
         </service>
     </services>
 </metainfo>
