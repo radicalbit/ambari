@@ -19,8 +19,8 @@
     <schemaVersion>2.0</schemaVersion>
     <services>
         <service>
-            <name>NTPD</name>
-            <extends>common-services/NTPD/1.0.0</extends>
+            <name>NTP</name>
+            <extends>common-services/NTP/1.0.0</extends>
         </service>
     </services>
 </metainfo>

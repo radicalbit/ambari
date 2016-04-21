@@ -67,7 +67,7 @@
             </commandScript>
 
             <requiredServices>
-                <service>NTPD</service>
+                <service>NTP</service>
             </requiredServices>
 
             <configuration-dependencies>
