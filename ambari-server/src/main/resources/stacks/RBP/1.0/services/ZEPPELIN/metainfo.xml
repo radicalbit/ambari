@@ -21,6 +21,7 @@
         <service>
             <name>ZEPPELIN</name>
             <extends>common-services/ZEPPELIN/0.6.0</extends>
+            <deleted>true</deleted>
         </service>
     </services>
 </metainfo>
