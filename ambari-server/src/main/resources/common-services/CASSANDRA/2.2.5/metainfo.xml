@@ -66,9 +66,9 @@
                 <timeout>300</timeout>
             </commandScript>
 
-            <requiredServices>
-                <service>NTPD</service>
-            </requiredServices>
+            <!--<requiredServices>-->
+                <!--<service>NTPD</service>-->
+            <!--</requiredServices>-->
 
             <configuration-dependencies>
                 <config-type>cassandra-env</config-type>
