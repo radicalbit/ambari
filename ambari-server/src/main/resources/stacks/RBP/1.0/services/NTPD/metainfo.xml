@@ -20,7 +20,7 @@
     <services>
         <service>
             <name>NTP</name>
-            <extends>common-services/NTP/1.0.0</extends>
+            <extends>common-services/NTPD/1.0.0</extends>
         </service>
     </services>
 </metainfo>

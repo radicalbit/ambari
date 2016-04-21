@@ -19,17 +19,18 @@
     <schemaVersion>2.0</schemaVersion>
     <services>
         <service>
-            <name>NTP</name>
+            <name>NTPD</name>
             <displayName>Ntpd</displayName>
             <comment>The Network Time Protocol daemon (ntpd) is an operating system program that maintains the system time in synchronization with time servers using the Network Time Protocol</comment>
             <version>1.0.0</version>
 
             <components>
                 <component>
-                  <name>NTP_SLAVE</name>
+                  <name>NTPD_SLAVE</name>
                   <displayName>Ntpd</displayName>
                   <category>SLAVE</category>
-                  <cardinality>ALL</cardinality>
+                  <cardinality>1+</cardinality>
+                  <!--<cardinality>ALL</cardinality>-->
                   <!--<auto-deploy>-->
                     <!--<enabled>true</enabled>-->
                   <!--</auto-deploy>-->
