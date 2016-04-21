@@ -18,6 +18,7 @@ limitations under the License.
 
 """
 from resource_management import *
+from resource_management.libraries.functions import conf_select
 import sys, os, re
 
 # server configurations
