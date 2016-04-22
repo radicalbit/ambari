@@ -20,7 +20,7 @@ limitations under the License.
 import sys
 from resource_management import *
 from rack_awareness import create_topology_script_and_mapping
-from shared_initialization import setup_hadoop, setup_configs, create_javahome_symlink
+from shared_initialization import setup_hadoop, setup_configs, create_javahome_symlink, start_service
 
 class BeforeStartHook(Hook):
 
@@ -30,6 +30,7 @@ class BeforeStartHook(Hook):
     self.run_custom_hook('before-ANY')
     env.set_params(params)
 
+    start_service('ntpd')
     setup_hadoop()
     setup_configs()
     create_javahome_symlink()

@@ -148,3 +148,12 @@ def create_javahome_symlink():
          to="/usr/jdk64/jdk1.6.0_31",
     )
 
+def start_service(service_name):
+  Execute(
+      format("service {service_name} start"),
+      not_if = format("ps -ef | grep -v grep | grep {service_name} > /dev/null")
+  )
+
+  # Execute(
+  #     format("ps -ef | grep -v grep | grep {service_name} > /dev/null; if ! [ $? -eq 0 ]; then service {service_name} start; fi")
+  # )
