@@ -48,8 +48,11 @@ if flink_hosts is not None:
   has_flink_master = True
   flink_conf_dir = '/etc/flink/conf'
   flink_user = config['configurations']['flink-env']['flink_user']
+  flink_master = config['clusterHostInfo']['flink_master_hosts'][0]
+  flink_host = 'yarn'
 else:
   has_flink_master = False
+  flink_host = 'local'
 
 if alluxio_master_hosts is not None:
   alluxio_master_host = alluxio_master_hosts[0]

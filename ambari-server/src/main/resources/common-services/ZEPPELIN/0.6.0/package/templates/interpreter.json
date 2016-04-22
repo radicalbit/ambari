@@ -110,7 +110,7 @@
       "properties": {
         "port": "6123",
         "zeppelin.interpreter.localRepo": "/var/lib/zeppelin/local-repo/2B6U1MESG",
-        "host": "yarn"
+        "host": "{{ flink_host }}"
       },
       "interpreterGroup": [
         {

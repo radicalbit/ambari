@@ -20,12 +20,6 @@
 
 <configuration>
 
-    <!--<property>-->
-        <!--<name>flink_log_dir</name>-->
-        <!--<value>/var/log/flink</value>-->
-        <!--<description>flink Log dir</description>-->
-    <!--</property>-->
-
     <property>
         <name>flink_pid_dir</name>
         <value>/var/run/flink</value>
@@ -39,13 +33,6 @@
         <property-type>USER</property-type>
         <description>User flink daemon runs as</description>
     </property>
-        
-    <!--<property>-->
-        <!--<name>flink_group</name>-->
-        <!--<value>flink</value>-->
-        <!--<property-type>GROUP</property-type>-->
-        <!--<description>flink group</description>-->
-    <!--</property> -->
 
 </configuration>
 

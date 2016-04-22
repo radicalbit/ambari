@@ -37,9 +37,15 @@ class FlinkMaster(FlinkService):
     check_cmd = 'yarn application -status $(yarn application -list | grep ' + status_params.flink_appname + ' | grep -o "\\bapplication_\w*") | (grep "State : RUNNING" || grep "State : ACCEPTED")'
 
     longRunningCmd = format("export HADOOP_CONF_DIR={hadoop_conf_dir}; nohup {bin_dir}/yarn-session.sh -n {flink_numcontainers} -s {cores_number} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
-    if params.flink_streaming:
-      longRunningCmd = longRunningCmd + ' -st '
     Execute (longRunningCmd, user=params.flink_user, not_if=check_cmd)
+
+    for cluster_host in params.custer_hosts:
+      if cluster_host != params.flink_master:
+        Execute(
+            format("scp -o StrictHostKeyChecking=no /tmp/.yarn-properties-{flink_user} {cluster_host}:/tmp/.yarn-properties-{flink_user}"),
+            tries = 10,
+            try_sleep=3
+        )
 
     Execute(format("yarn application -list | grep {flink_appname} | grep -o '\\bapplication_\w*' >") + status_params.flink_pid_file, user=params.flink_user)
 

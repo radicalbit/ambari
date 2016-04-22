@@ -36,6 +36,7 @@ cores_number = config['configurations']['yarn-site']['yarn.scheduler.maximum-all
 
 hostname = config['hostname']
 flink_master = config['clusterHostInfo']['flink_master_hosts'][0]
+custer_hosts = config['clusterHostInfo']['all_hosts']
 
 alluxio_master = ''
 alluxio_default_name = 'file:///'
@@ -57,7 +58,6 @@ flink_jobmanager_memory = config['configurations']['flink-config']['flink_jobman
 flink_container_memory = config['configurations']['flink-config']['flink_container_memory']
 flink_appname = config['configurations']['flink-config']['flink_appname']
 flink_queue = config['configurations']['flink-config']['flink_queue']
-flink_streaming = config['configurations']['flink-config']['flink_streaming']
 
 # params from flink-config
 

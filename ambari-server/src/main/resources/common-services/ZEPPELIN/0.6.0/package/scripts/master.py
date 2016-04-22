@@ -24,22 +24,12 @@ class Zeppelin(Script):
   def install(self, env):
     import params
     self.install_packages(env)
-    #self.create_hdfs_user(params.zeppelin_user, params.spark_jar_dir)
 
     Directory([params.zeppelin_pid_dir, params.zeppelin_log_dir],
             owner=params.zeppelin_user,
             group=params.user_group,
             recursive=True
     )
-
-  # def create_hdfs_user(self, user, spark_jar_dir):
-  #   Execute('hadoop fs -mkdir -p /user/'+user, user='hdfs', ignore_failures=True)
-  #   Execute('hadoop fs -chown ' + user + ' /user/'+user, user='hdfs')
-  #   Execute('hadoop fs -chgrp ' + user + ' /user/'+user, user='hdfs')
-  #
-  #   Execute('hadoop fs -mkdir -p '+spark_jar_dir, user='hdfs', ignore_failures=True)
-  #   Execute('hadoop fs -chown ' + user + ' ' + spark_jar_dir, user='hdfs')
-  #   Execute('hadoop fs -chgrp ' + user + ' ' + spark_jar_dir, user='hdfs')
 
   def configure(self, env):
     import params

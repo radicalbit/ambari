@@ -129,10 +129,4 @@
     <description>Memory per TaskManager Container [in MB]</description>
   </property>
 
-  <property>
-    <name>flink_streaming</name>
-    <value>false</value>
-    <description>If true, Flink will be started in streaming mode: to be used when only streaming jobs will be executed on Flink</description>
-  </property>
-
 </configuration>
