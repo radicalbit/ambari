@@ -47,6 +47,13 @@ class Zeppelin(Script):
 
     Execute(format('chown -R {zeppelin_user}:{user_group} {zeppelin_dir}'), user='root')
 
+    Directory(
+        [params.zeppelin_log_dir, params.zeppelin_pid_dir],
+        owner=params.zeppelin_user,
+        group=params.user_group,
+        recursive=True
+    )
+
     #write out zeppelin-site.xml
     XmlConfig("zeppelin-site.xml",
             conf_dir = params.conf_dir,

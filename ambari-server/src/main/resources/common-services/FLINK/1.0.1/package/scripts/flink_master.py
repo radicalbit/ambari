@@ -29,7 +29,7 @@ class FlinkMaster(FlinkService):
     self.create_hdfs_user(params.flink_user)
 
     Execute(
-      "rm -f /tmp/.yarn-properties-flink",
+      "chmod u=rw,g=rw,o=rw /tmp/.yarn-properties-flink",
       user = "root",
       only_if = "test -a /tmp/.yarn-properties-flink"
     )
