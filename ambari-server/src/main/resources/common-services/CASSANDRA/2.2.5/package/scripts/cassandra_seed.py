@@ -18,7 +18,6 @@ limitations under the License.
 """
 from resource_management import *
 from cassandra import cassandra
-from join_check import join_check
 
 class CassandraSeed(Script):
 
