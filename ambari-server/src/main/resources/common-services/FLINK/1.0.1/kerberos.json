@@ -9,10 +9,10 @@
       ],
       "components": [
         {
-          "name": "FLINK_MASTER"
+          "name": "FLINK_CLIENT",
         },
         {
-          "name": "FLINK_CLIENT"
+          "name": "FLINK_MASTER"
         }
       ]
     }
