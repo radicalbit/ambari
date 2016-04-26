@@ -71,6 +71,11 @@ def kafka(upgrade_type=None):
     # else:
     #   kafka_server_config['host.name'] = params.hostname
 
+    if len(params.kafka_hosts) > 0 and params.hostname in params.kafka_hosts:
+        brokerid = str(sorted(params.kafka_hosts).index(params.hostname))
+        kafka_server_config['broker.id'] = brokerid
+        Logger.info(format("Calculating broker.id as {brokerid}"))
+
     listeners = kafka_server_config['listeners'].replace("localhost", params.hostname)
     Logger.info(format("Kafka listeners: {listeners}"))
 
