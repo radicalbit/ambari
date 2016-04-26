@@ -1,7 +1,7 @@
 {
   "services": [
     {
-      "name": "FLINK",
+      "name": "CASSANDRA",
       "identities": [
         {
           "name": "/smokeuser"
@@ -9,10 +9,10 @@
       ],
       "components": [
         {
-          "name": "FLINK_MASTER"
+          "name": "CASSANDRA_SEED"
         },
         {
-          "name": "FLINK_CLIENT"
+          "name": "CASSANDRA_NODE"
         }
       ]
     }

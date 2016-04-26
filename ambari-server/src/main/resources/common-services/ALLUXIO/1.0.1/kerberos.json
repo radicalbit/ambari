@@ -1,7 +1,7 @@
 {
   "services": [
     {
-      "name": "FLINK",
+      "name": "ALLUXIO",
       "identities": [
         {
           "name": "/smokeuser"
@@ -9,10 +9,10 @@
       ],
       "components": [
         {
-          "name": "FLINK_MASTER"
+          "name": "ALLUXIO_MASTER"
         },
         {
-          "name": "FLINK_CLIENT"
+          "name": "ALLUXIO_SLAVE"
         }
       ]
     }
