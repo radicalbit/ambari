@@ -13,7 +13,7 @@
               "authorizer.class.name": "kafka.security.auth.SimpleAclAuthorizer",
               "principal.to.local.class":"kafka.security.auth.KerberosPrincipalToLocal",
               "super.users": "user:${kafka-env/kafka_user}",
-              "security.inter.broker.protocol": "PLAINTEXT"
+              "security.inter.broker.protocol": "SASL_PLAINTEXT"
           }
         }
       ],

@@ -123,7 +123,7 @@ if has_metric_collector:
 # Security-related params
 security_enabled = config['configurations']['cluster-env']['security_enabled']
 kafka_kerberos_enabled = ('security.inter.broker.protocol' in config['configurations']['kafka-broker'] and
-                          config['configurations']['kafka-broker']['security.inter.broker.protocol'] == "PLAINTEXT")
+                          config['configurations']['kafka-broker']['security.inter.broker.protocol'] == "SASL_PLAINTEXT")
 
 if security_enabled and 'kafka_principal_name' in config['configurations']['kafka-env']:
     _hostname_lowercase = config['hostname'].lower()
@@ -131,9 +131,11 @@ if security_enabled and 'kafka_principal_name' in config['configurations']['kafk
     kafka_jaas_principal = _kafka_principal_name.replace('_HOST',_hostname_lowercase)
     kafka_keytab_path = config['configurations']['kafka-env']['kafka_keytab']
     kafka_bare_jaas_principal = get_bare_principal(_kafka_principal_name)
-    kafka_kerberos_params = "-Djava.security.auth.login.config="+ conf_dir +"/kafka_jaas.conf"
+    kafka_kerberos_params = "-Djava.security.krb5.conf=/etc/krb5.conf -Djava.security.auth.login.config="+ conf_dir +"/kafka_server_jaas.conf"
+    kafka_client_kerberos_params = "-Djava.security.krb5.conf=/etc/krb5.conf -Djava.security.auth.login.config="+ conf_dir +"/kafka_client_jaas.conf"
 else:
     kafka_kerberos_params = ''
+    kafka_client_kerberos_params = ''
 
 # ***********************  RANGER PLUGIN CHANGES ***********************
 # ranger host

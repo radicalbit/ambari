@@ -81,8 +81,8 @@ def kafka(upgrade_type=None):
 
     if params.security_enabled and params.kafka_kerberos_enabled:
       Logger.info("Kafka kerberos security is enabled.")
-      # if "SASL" not in listeners:
-      #   listeners = listeners.replace("PLAINTEXT", "SASL_PLAINTEXT")
+      if "SASL" not in listeners:
+        listeners = listeners.replace("PLAINTEXT", "SASL_PLAINTEXT")
 
       kafka_server_config['listeners'] = listeners
       kafka_server_config['advertised.listeners'] = listeners
@@ -133,7 +133,7 @@ def kafka(upgrade_type=None):
          )
 
     if params.security_enabled and params.kafka_kerberos_enabled:
-        TemplateConfig(format("{conf_dir}/kafka_jaas.conf"),
+        TemplateConfig(format("{conf_dir}/kafka_server_jaas.conf"),
                          owner=params.kafka_user)
 
         TemplateConfig(format("{conf_dir}/kafka_client_jaas.conf"),
