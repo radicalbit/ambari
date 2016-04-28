@@ -57,3 +57,12 @@ class RBP10StackAdvisor(RBP023StackAdvisor):
     }
     parentSchemes.update(childSchemes)
     return parentSchemes
+
+  def validateAmsHbaseEnvConfigurations(self, properties, recommendedDefaults, configurations, services, hosts):
+    return []
+
+  def validateHbaseEnvConfigurations(self, properties, recommendedDefaults, configurations, services, hosts):
+    return []
+
+  def validateStormConfigurations(self, properties, recommendedDefaults, configurations, services, hosts):
+    return []

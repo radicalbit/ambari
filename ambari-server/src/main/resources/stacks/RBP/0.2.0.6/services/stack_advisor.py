@@ -769,8 +769,8 @@ class RBP0206StackAdvisor(DefaultStackAdvisor):
       "HDFS": {"hadoop-env": self.validateHDFSConfigurationsEnv},
       "MAPREDUCE2": {"mapred-site": self.validateMapReduce2Configurations},
       "YARN": {"yarn-site": self.validateYARNConfigurations},
-      # "HBASE": {"hbase-env": self.validateHbaseEnvConfigurations},
-      # "STORM": {"storm-site": self.validateStormConfigurations},
+      "HBASE": {"hbase-env": self.validateHbaseEnvConfigurations},
+      "STORM": {"storm-site": self.validateStormConfigurations},
       "AMBARI_METRICS": {"ams-hbase-site": self.validateAmsHbaseSiteConfigurations,
               "ams-hbase-env": self.validateAmsHbaseEnvConfigurations,
               "ams-site": self.validateAmsSiteConfigurations}
