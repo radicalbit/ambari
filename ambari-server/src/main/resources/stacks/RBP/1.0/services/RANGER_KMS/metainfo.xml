@@ -24,7 +24,7 @@
     <service>
       <name>RANGER_KMS</name>
       <version>0.5.0.2.3</version>
-      <!--<deleted>true</deleted>-->
+      <deleted>true</deleted>
     </service>
   </services>
 </metainfo>
