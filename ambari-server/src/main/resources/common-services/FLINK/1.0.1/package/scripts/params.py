@@ -19,6 +19,7 @@ limitations under the License.
 #!/usr/bin/env python
 from resource_management import *
 from resource_management.libraries.functions import conf_select
+from resource_management.libraries.functions import get_kinit_path
 from resource_management.libraries.script.script import Script
 import sys, os, glob
 import multiprocessing
@@ -33,6 +34,17 @@ hdfs_default_name = config['configurations']['core-site']['fs.defaultFS']
 nodes_number = len(config['clusterHostInfo']['all_hosts'])
 cores_number = config['configurations']['yarn-site']['yarn.scheduler.maximum-allocation-vcores']
 #cores_number = multiprocessing.cpu_count()
+
+security_enabled = config['configurations']['cluster-env']['security_enabled']
+
+if security_enabled:
+  kinit_path_local = get_kinit_path(default('/configurations/kerberos-env/executable_search_paths', None))
+  _hostname_lowercase = config['hostname'].lower()
+  _flink_principal_name = config['configurations']['flink-env']['flink_principal_name']
+  flink_jaas_principal = _flink_principal_name.replace('_HOST',_hostname_lowercase)
+  flink_client_jass_path = "/etc/flink/conf.dist/flink_client_jaas.conf"
+  flink_keytab = "/etc/security/keytabs/flink.service.keytab"
+  krb5_conf_path = "/etc/krb5.conf"
 
 hostname = config['hostname']
 flink_master = config['clusterHostInfo']['flink_master_hosts'][0]

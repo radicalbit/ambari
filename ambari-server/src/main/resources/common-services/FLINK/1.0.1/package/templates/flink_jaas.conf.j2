@@ -15,21 +15,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #}
+
+#KafkaClient {
+#   com.sun.security.auth.module.Krb5LoginModule required
+#   useKeyTab=true
+#   keyTab="{{flink_keytab_path}}"
+#   storeKey=true
+#   useTicketCache=true
+#   renewTicket=true
+#   principal="{{flink_jaas_principal}}";
+#};
+
 KafkaClient {
    com.sun.security.auth.module.Krb5LoginModule required
    useTicketCache=true
-   renewTicket=true
-   serviceName="{{kafka_bare_jaas_principal}}";
-};
-FlinkClient {
-   com.sun.security.auth.module.Krb5LoginModule required
-   useTicketCache=true
-   renewTicket=true
-   serviceName="flink";
-};
-Client {
-   com.sun.security.auth.module.Krb5LoginModule required
-   useTicketCache=true
-   renewTicket=true
-   serviceName="zookeeper";
+   renewTicket=true;
 };

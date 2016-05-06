@@ -9,10 +9,38 @@
       ],
       "components": [
         {
-          "name": "FLINK_CLIENT"
+          "name": "FLINK_CLIENT",
+          "identities": [
+            {
+              "name": "/FLINK/FLINK_MASTER/flink"
+            }
+          ]
         },
         {
-          "name": "FLINK_MASTER"
+          "name": "FLINK_MASTER",
+          "identities": [
+            {
+              "name": "flink",
+              "principal": {
+                "value": "${flink-env/flink_user}-${cluster_name}@${realm}",
+                "type": "user",
+                "configuration": "flink-env/flink_principal_name",
+                "local_username" : "${flink-env/flink_user}"
+              },
+              "keytab": {
+                "file": "${keytab_dir}/flink.service.keytab",
+                "owner": {
+                  "name": "${flink-env/flink_user}",
+                  "access": "r"
+                },
+                "group": {
+                  "name": "${cluster-env/user_group}",
+                  "access": "r"
+                },
+                "configuration": "flink-env/flink_keytab"
+              }
+            }
+          ]
         }
       ]
     }

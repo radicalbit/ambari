@@ -76,5 +76,9 @@ def flink(action = None):
         logoutput=True
     )
 
+    if params.security_enabled:
+      TemplateConfig(format("{conf_dir}/flink_jaas.conf"),
+                     owner=params.flink_user)
+
   else:
     pass
