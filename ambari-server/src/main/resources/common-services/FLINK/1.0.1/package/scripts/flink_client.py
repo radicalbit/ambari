@@ -25,8 +25,8 @@ class FlinkClient(FlinkService):
     import params
     super(FlinkClient, self).install(env)
     self.configure(env)
-    if params.security_enabled:
-      Execute(format("{kinit_path_local} {flink_user} -kt {flink_keytab}"), user=params.flink_user)
+    #if params.security_enabled:
+    #  Execute(format("{kinit_path_local} {flink_user} -kt {flink_keytab}"), user=params.flink_user)
 
   def status(self, env):
     raise ClientComponentHasNoStatus()
