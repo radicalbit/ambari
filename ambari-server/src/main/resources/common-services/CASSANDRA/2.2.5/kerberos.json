@@ -9,10 +9,56 @@
       ],
       "components": [
         {
-          "name": "CASSANDRA_SEED"
+          "name": "CASSANDRA_SEED",
+          "identities": [
+            {
+              "name": "cassandra_seed_cs",
+              "principal": {
+                "value": "cs/_HOST@${realm}",
+                "type" : "service",
+                "configuration": "cassandra-env/cassandra_principal_name",
+                "local_username" : "${cassandra-env/cassandra_user}"
+              },
+              "keytab": {
+                "file": "${keytab_dir}/cs.service.keytab",
+                "owner": {
+                  "name": "${cassandra-env/cassandra_user}",
+                  "access": "r"
+                },
+                "group": {
+                  "name": "${cluster-env/user_group}",
+                  "access": ""
+                },
+                "configuration": "cassandra-env/cassandra_principal_name"
+              }
+            }
+          ]
         },
         {
-          "name": "CASSANDRA_NODE"
+          "name": "CASSANDRA_NODE",
+          "identities": [
+            {
+              "name": "cassandra_node_cn",
+              "principal": {
+                "value": "cn/_HOST@${realm}",
+                "type" : "service",
+                "configuration": "cassandra-env/cassandra_principal_name",
+                "local_username" : "${cassandra-env/cassandra_user}"
+              },
+              "keytab": {
+                "file": "${keytab_dir}/cn.service.keytab",
+                "owner": {
+                  "name": "${cassandra-env/cassandra_user}",
+                  "access": "r"
+                },
+                "group": {
+                  "name": "${cluster-env/user_group}",
+                  "access": ""
+                },
+                "configuration": "cassandra-env/cassandra_principal_name"
+              }
+            }
+          ]
         }
       ]
     }
