@@ -16,7 +16,7 @@
               "principal": {
                 "value": "cs/_HOST@${realm}",
                 "type" : "service",
-                "configuration": "cassandra-env/cassandra_principal_name",
+                "configuration": "cassandra-env/cassandra_seed_principal_name",
                 "local_username" : "${cassandra-env/cassandra_user}"
               },
               "keytab": {
@@ -29,7 +29,7 @@
                   "name": "${cluster-env/user_group}",
                   "access": ""
                 },
-                "configuration": "cassandra-env/cassandra_principal_name"
+                "configuration": "cassandra-env/cassandra_seed_keytab"
               }
             }
           ]
@@ -42,7 +42,7 @@
               "principal": {
                 "value": "cn/_HOST@${realm}",
                 "type" : "service",
-                "configuration": "cassandra-env/cassandra_principal_name",
+                "configuration": "cassandra-env/cassandra_node_principal_name",
                 "local_username" : "${cassandra-env/cassandra_user}"
               },
               "keytab": {
@@ -55,7 +55,7 @@
                   "name": "${cluster-env/user_group}",
                   "access": ""
                 },
-                "configuration": "cassandra-env/cassandra_principal_name"
+                "configuration": "cassandra-env/cassandra_node_keytab"
               }
             }
           ]
