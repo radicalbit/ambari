@@ -16,6 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
+from utils import get_property_value
 from resource_management.libraries.script.script import Script
 
 config = Script.get_config()
@@ -23,6 +24,8 @@ config = Script.get_config()
 configurations = config['configurations']
 cassandra_env = configurations['cassandra-env']
 cassandra_conf = configurations['cassandra-conf']
+
+security_enabled = configurations['cluster-env']['security_enabled']
 
 def get_host_ip(name, host_names, host_ips):
   host_ip = ''
@@ -62,9 +65,30 @@ rpc_address = hostname
 cassandra_seeds = config['clusterHostInfo']['cassandra_seed_hosts']
 cassandra_nodes = config['clusterHostInfo']['cassandra_node_hosts']
 
+cassandra_nodes_number = len(cassandra_seeds) + len(cassandra_nodes)
+
 seed_node_head = cassandra_seeds[0]
 
 seeds = ",".join(cassandra_seeds)
 
 max_heap_size = cassandra_env['max_heap_size']
 heap_new_size = cassandra_env['heap_new_size']
+
+if security_enabled:
+  realm = 'EXAMPLE.COM'
+  krb5_conf_data = get_property_value(configurations, 'krb5-conf')
+  kerberos_env = get_property_value(configurations, "kerberos-env")
+  if kerberos_env is not None:
+    realm = get_property_value(kerberos_env, "realm", None, True, None)
+  if krb5_conf_data is not None:
+    realm = get_property_value(krb5_conf_data, 'realm', realm)
+
+  authenticator = 'io.radicalbit.cassandra.kerberosauthentication.KerberosAuthenticator'
+
+  if hostname in cassandra_seeds:
+    cassandra_keytab = config['configurations']['cassandra-env']['cassandra_seed_keytab']
+  else:
+    cassandra_keytab = config['configurations']['cassandra-env']['cassandra_node_keytab']
+
+else:
+  authenticator = 'AllowAllAuthenticator'

@@ -45,7 +45,7 @@ def cassandra(action = None):
 
     Execute('swapoff --all', user='root')
 
-  else :
+  elif action == 'configure' :
 
     Directory(
         [params.commitlog_directory, params.data_file_directories, params.saved_caches_directory, params.cassandra_pid_dir],
@@ -59,6 +59,14 @@ def cassandra(action = None):
     Execute(format('chown -R {params.cassandra_user}:{params.user_group} {params.data_file_directories}'), user='root')
     Execute(format('chown -R {params.cassandra_user}:{params.user_group} {params.saved_caches_directory}'), user='root')
     Execute(format('chown -R {params.cassandra_user}:{params.user_group} {params.cassandra_pid_dir}'), user='root')
+
+    if params.security_enabled:
+      File(
+          format("{params.cassandra_conf_dir}/kerberos.conf"),
+          owner=params.cassandra_user,
+          mode=0644,
+          content=Template('kerberos.conf.j2', conf_dir=params.cassandra_conf_dir)
+      )
 
     File(
         format("{params.cassandra_conf_dir}/cassandra.yaml"),
@@ -80,3 +88,26 @@ def cassandra(action = None):
         mode=0700,
         content=Template('cassandra.j2', conf_dir=params.cassandra_bin_dir)
     )
+
+    File(
+        format("{params.cassandra_bin_dir}/cassandra.in.sh"),
+        owner=params.cassandra_user,
+        mode=0700,
+        content=Template('cassandra.in.sh.j2', conf_dir=params.cassandra_bin_dir)
+    )
+
+  elif action == 'start':
+
+    Execute(
+        format('{params.cassandra_bin_dir}/cassandra'),
+        user=params.cassandra_user
+    )
+    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep CassandraDaemon | awk '{print $1}'`> " + params.cassandra_pid_dir + "/cassandra.pid"
+    Execute(cmd, user=params.cassandra_user)
+
+    cmdfile=format("/tmp/cmds")
+    File(cmdfile,
+         mode=0600,
+         content=InlineTemplate("ALTER KEYSPACE \"system_auth\" WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : {{ cassandra_nodes_number }};")
+         )
+    Execute(format("{cassandra_bin_dir}/cqlsh {hostname} 9042 -f {cmdfile}"), logoutput=True)

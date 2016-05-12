@@ -31,19 +31,16 @@ class CassandraNode(Script):
   def configure(self, env):
     import params
     env.set_params(params)
-    cassandra()
+    cassandra('configure')
 
   def start(self, env):
     import params
+    env.set_params(params)
     self.configure(env)
 
     Logger.info('Starting Cassandra node...')
-    Execute(
-        format('{params.cassandra_bin_dir}/cassandra'),
-        user=params.cassandra_user
-    )
-    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep CassandraDaemon | awk '{print $1}'`> " + params.cassandra_pid_dir + "/cassandra.pid"
-    Execute(cmd, user=params.cassandra_user)
+
+    cassandra('start')
 
   def stop(self, env):
     import params

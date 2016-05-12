@@ -7,6 +7,13 @@
           "name": "/smokeuser"
         }
       ],
+      "configurations": [
+        {
+          "cassandra-env": {
+            "qop": "auth"
+          }
+        }
+      ],
       "components": [
         {
           "name": "CASSANDRA_SEED",
