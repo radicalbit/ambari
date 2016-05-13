@@ -25,7 +25,7 @@ from resource_management.libraries.functions import conf_select
 config = Script.get_config()
 tmp_dir = Script.get_tmp_dir()
 
-security_enabled = config['cluster-env']['security_enabled']
+security_enabled = config['configurations']['cluster-env']['security_enabled']
 
 # alluxio installation dir
 base_dir = '/usr/lib/alluxio'
@@ -134,11 +134,12 @@ if 'zookeeper_hosts' in config['clusterHostInfo']:
       zookeeper_hosts = (':' + zookeeper_port + ',').join(zookeeper_hosts_list) + ':' + zookeeper_port
 
 if security_enabled:
+  _hostname_lowercase = config['hostname'].lower()
   alluxio_authentication_type = 'KERBEROS'
   master_keytab = config['configurations']['alluxio-env']['alluxio_master_keytab']
-  master_principal = config['configurations']['alluxio-env']['alluxio_master_principal_name']
+  master_principal = config['configurations']['alluxio-env']['alluxio_master_principal_name'].replace('_HOST',_hostname_lowercase)
   worker_keytab = config['configurations']['alluxio-env']['alluxio_worker_keytab']
-  worker_principal = config['configurations']['alluxio-env']['alluxio_worker_principal_name']
+  worker_principal = config['configurations']['alluxio-env']['alluxio_worker_principal_name'].replace('_HOST',_hostname_lowercase)
 else:
   alluxio_authentication_type = 'NOSASL'
 
