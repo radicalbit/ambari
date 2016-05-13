@@ -111,3 +111,5 @@ def cassandra(action = None):
          content=InlineTemplate("ALTER KEYSPACE \"system_auth\" WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : {{ cassandra_nodes_number }};")
          )
     Execute(format("{cassandra_bin_dir}/cqlsh {hostname} 9042 -f {cmdfile}"), logoutput=True)
+    Execute(format("{cassandra_bin_dir}/nodetool repair system_auth"), logoutput=True)
+
