@@ -134,12 +134,16 @@ if 'zookeeper_hosts' in config['clusterHostInfo']:
       zookeeper_hosts = (':' + zookeeper_port + ',').join(zookeeper_hosts_list) + ':' + zookeeper_port
 
 if security_enabled:
-  _hostname_lowercase = config['hostname'].lower()
   alluxio_authentication_type = 'KERBEROS'
-  master_keytab = config['configurations']['alluxio-env']['alluxio_master_keytab']
-  master_principal = config['configurations']['alluxio-env']['alluxio_master_principal_name'].replace('_HOST',_hostname_lowercase)
+
+  is_current_node_master = current_host in config['clusterHostInfo']['alluxio_master_hosts']
+
+  if is_current_node_master:
+    master_keytab = config['configurations']['alluxio-env']['alluxio_master_keytab']
+    master_principal = config['configurations']['alluxio-env']['alluxio_master_principal_name'].replace('_HOST',current_host.lower())
+
   worker_keytab = config['configurations']['alluxio-env']['alluxio_worker_keytab']
-  worker_principal = config['configurations']['alluxio-env']['alluxio_worker_principal_name'].replace('_HOST',_hostname_lowercase)
+  worker_principal = config['configurations']['alluxio-env']['alluxio_worker_principal_name'].replace('_HOST',current_host.lower())
 else:
   alluxio_authentication_type = 'NOSASL'
 
