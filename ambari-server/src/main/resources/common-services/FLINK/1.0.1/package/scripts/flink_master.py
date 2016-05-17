@@ -28,38 +28,20 @@ class FlinkMaster(FlinkService):
     self.configure(env)
     self.create_hdfs_user(params.flink_user)
 
-    Execute(
-      "chmod u=rw,g=rw,o=rw /tmp/.yarn-properties-flink",
-      user = "root",
-      only_if = "test -a /tmp/.yarn-properties-flink"
-    )
+    Execute(format("export HADOOP_CONF_DIR={hadoop_conf_dir}; nohup {bin_dir}/jobmanager.sh start cluster"), user=params.flink_user)
 
-    check_cmd = 'yarn application -status $(yarn application -list | grep ' + status_params.flink_appname + ' | grep -o "\\bapplication_\w*") | (grep "State : RUNNING" || grep "State : ACCEPTED")'
-
-    longRunningCmd = format("export HADOOP_CONF_DIR={hadoop_conf_dir}; nohup {bin_dir}/yarn-session.sh -n {flink_numcontainers} -s {cores_number} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
-    Execute (longRunningCmd, user=params.flink_user, not_if=check_cmd)
-
-    for cluster_host in params.custer_hosts:
-      if cluster_host != params.flink_master:
-        Execute(
-            format("scp -o StrictHostKeyChecking=no /tmp/.yarn-properties-{flink_user} {cluster_host}:/tmp/.yarn-properties-{flink_user}"),
-            tries = 10,
-            try_sleep=3
-        )
-
-    Execute(format("yarn application -list | grep {flink_appname} | grep -o '\\bapplication_\w*' >") + status_params.flink_pid_file, user=params.flink_user)
+    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep JobManager | awk '{print $1}'`> " + params.flink_pid_dir + "/flink_master.pid"
+    Execute(cmd, user=params.flink_user)
 
   def stop(self, env):
     import params
-    import status_params
-    Execute('yarn application -kill `cat ' + status_params.flink_pid_file + '`', user=params.flink_user)
-    Execute('rm -f ' + status_params.flink_pid_file, user=params.flink_user)
-    #Execute('yarn application -kill $(yarn application -list | grep ' + status_params.flink_appname + ' | grep -o "\\bapplication_\w*")', user=params.flink_user)
+    Execute(format("export HADOOP_CONF_DIR={hadoop_conf_dir}; nohup {bin_dir}/jobmanager.sh stop"), user=params.flink_user)
 
   def status(self, env):
     import status_params
-    Execute('yarn application -status `cat ' + status_params.flink_pid_file + '` | grep "State : RUNNING"')
-    #Execute('yarn application -status $(yarn application -list | grep ' + status_params.flink_appname + ' | grep -o "\\bapplication_\w*") | grep "State : RUNNING"')
+    env.set_params(status_params)
+    pid_file = format("{status_params.flink_pid_file}/flink_master.pid")
+    check_process_status(pid_file)
 
 
   def create_hdfs_user(self, user):
