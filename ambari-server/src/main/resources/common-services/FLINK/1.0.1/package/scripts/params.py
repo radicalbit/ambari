@@ -64,11 +64,11 @@ flink_queue = config['configurations']['flink-config']['flink_queue']
 standalone_only = 'use this config only for a standalone deploy of Flink'
 
 jobmanager_rpc_address = standalone_only
-jobmanager_rpc_port = standalone_only
-jobmanager_heap_mb = standalone_only
-taskmanager_heap_mb = standalone_only
-taskmanager_numberOfTaskSlots = standalone_only
-parallelism_default = standalone_only
+jobmanager_rpc_port = 6123
+jobmanager_heap_mb = 256
+taskmanager_heap_mb = 512
+taskmanager_numberOfTaskSlots = 1
+parallelism_default = 1
 
 fs_hdfs_hadoopconf = hadoop_conf_dir
 

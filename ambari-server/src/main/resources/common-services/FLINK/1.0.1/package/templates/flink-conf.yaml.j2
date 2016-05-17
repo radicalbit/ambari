@@ -20,12 +20,14 @@
 # Common
 #==============================================================================
 
-# jobmanager.rpc.address: {{ jobmanager_rpc_address }}
-# jobmanager.rpc.port: {{ jobmanager_rpc_port }}
-# jobmanager.heap.mb: {{ jobmanager_heap_mb }}
-# taskmanager.heap.mb: {{ taskmanager_heap_mb }}
-# taskmanager.numberOfTaskSlots: {{ taskmanager_numberOfTaskSlots }}
-# parallelism.default: {{ parallelism_default }}
+jobmanager.rpc.address: {{ jobmanager_rpc_address }}
+jobmanager.rpc.port: {{ jobmanager_rpc_port }}
+jobmanager.heap.mb: {{ jobmanager_heap_mb }}
+taskmanager.heap.mb: {{ taskmanager_heap_mb }}
+taskmanager.numberOfTaskSlots: {{ taskmanager_numberOfTaskSlots }}
+parallelism.default: {{ parallelism_default }}
+taskmanager.memory.preallocate: false
+
 fs.default-scheme: {{ alluxio_default_name }}
 fs.hdfs.hadoopconf: {{ fs_hdfs_hadoopconf }}
 env.log.dir: {{ flink_log_dir }}
