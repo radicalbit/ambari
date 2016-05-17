@@ -94,7 +94,7 @@
 
             <requiredServices>
                 <service>ZOOKEEPER</service>
-                <service>YARN</service>
+                <!--<service>YARN</service>-->
                 <service>HDFS</service>
                 <service>ALLUXIO</service>
             </requiredServices>

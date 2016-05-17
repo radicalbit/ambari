@@ -26,7 +26,6 @@ class FlinkSlave(FlinkService):
     import params
     import status_params
     self.configure(env)
-    self.create_hdfs_user(params.flink_user)
 
     Execute(format("export HADOOP_CONF_DIR={hadoop_conf_dir}; nohup {bin_dir}/taskmanager.sh start"), user=params.flink_user)
 
