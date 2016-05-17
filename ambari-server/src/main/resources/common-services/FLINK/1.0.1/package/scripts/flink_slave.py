@@ -30,7 +30,7 @@ class FlinkSlave(FlinkService):
 
     Execute(format("export HADOOP_CONF_DIR={hadoop_conf_dir}; nohup {bin_dir}/taskmanager.sh start"), user=params.flink_user)
 
-    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep TaskManager | awk '{print $1}'`> " + params.flink_pid_dir + "/flink_slave.pid"
+    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep org.apache.flink.runtime.taskmanager.TaskManager | awk '{print $1}'`> " + params.flink_pid_dir + "/flink_slave.pid"
     Execute(cmd, user=params.flink_user)
 
   def stop(self, env):
