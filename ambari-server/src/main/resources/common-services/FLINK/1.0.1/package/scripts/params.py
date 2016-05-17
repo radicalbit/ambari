@@ -115,3 +115,6 @@ if 'zookeeper_hosts' in config['clusterHostInfo']:
 
 recovery_zookeeper_path_root = '/flink/recovery'
 recovery_zookeeper_storage_dir = format('{hdfs_default_name}{recovery_zookeeper_path_root}')
+
+flink_masters = config['clusterHostInfo']['flink_master_hosts']
+flink_slaves = config['clusterHostInfo']['flink_slaves_hosts']

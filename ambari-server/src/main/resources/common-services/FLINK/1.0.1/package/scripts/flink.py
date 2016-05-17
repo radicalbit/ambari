@@ -56,6 +56,18 @@ def flink(action = None):
         mode=0644,
         content=Template('flink-conf.yaml.j2', conf_dir=params.conf_dir)
     )
+    File(
+        format("{conf_dir}/slaves"),
+        owner=params.flink_user,
+        mode=0644,
+        content=Template('slaves.j2', conf_dir=params.conf_dir)
+    )
+    File(
+        format("{conf_dir}/masters"),
+        owner=params.flink_user,
+        mode=0644,
+        content=Template('masters.j2', conf_dir=params.conf_dir)
+    )
 
     Execute(
         format("scp -o StrictHostKeyChecking=no {alluxio_master}:/etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
