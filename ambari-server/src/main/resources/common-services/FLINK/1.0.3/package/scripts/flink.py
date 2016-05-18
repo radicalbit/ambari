@@ -68,6 +68,12 @@ def flink(action = None):
         mode=0644,
         content=Template('masters.j2', conf_dir=params.conf_dir)
     )
+    File(
+        format("{conf_dir}/kafka_client_jaas.properties"),
+        owner=params.flink_user,
+        mode=0644,
+        content=Template('kafka_client_jaas.properties.j2', conf_dir=params.conf_dir)
+    )
 
     Execute(
         format("scp -o StrictHostKeyChecking=no {alluxio_master}:/etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
