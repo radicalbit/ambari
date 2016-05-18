@@ -28,10 +28,9 @@ class FlinkSlave(FlinkService):
 
     Execute(format("export HADOOP_CONF_DIR={hadoop_conf_dir}; {bin_dir}/taskmanager.sh start"), user=params.flink_user)
 
-    Execute(format("touch {flink_pid_dir}/flink-{flink_user}-taskmanager.test"), user=params.flink_user)
-
   def stop(self, env):
     import params
+    env.set_params(params)
     Execute(format("nohup {bin_dir}/taskmanager.sh stop"), user=params.flink_user)
     Execute(format("rm -f {flink_pid_dir}/flink-{flink_user}-taskmanager.pid"), user=params.flink_user)
 
@@ -39,6 +38,8 @@ class FlinkSlave(FlinkService):
     import status_params as params
     env.set_params(params)
     pid_file = format("{flink_pid_dir}/flink-{flink_user}-taskmanager.pid")
+    check_process_status(pid_file)
+    pid_file = "/var/run/flink/flink-flink-taskmanager.pid"
     check_process_status(pid_file)
 
 if __name__ == "__main__":

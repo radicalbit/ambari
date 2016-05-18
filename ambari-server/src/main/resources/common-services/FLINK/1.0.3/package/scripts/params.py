@@ -35,7 +35,9 @@ cores_number = config['configurations']['yarn-site']['yarn.scheduler.maximum-all
 #cores_number = multiprocessing.cpu_count()
 
 hostname = config['hostname']
-flink_master = config['clusterHostInfo']['flink_master_hosts'][0]
+flink_masters = config['clusterHostInfo']['flink_master_hosts']
+flink_slaves = config['clusterHostInfo']['flink_slave_hosts']
+flink_master = flink_masters[0]
 custer_hosts = config['clusterHostInfo']['all_hosts']
 
 alluxio_master = ''
@@ -48,15 +50,6 @@ flink_install_dir = '/usr/lib/flink'
 conf_dir = flink_install_dir + '/conf'
 bin_dir = flink_install_dir + '/bin'
 flink_lib = flink_install_dir + '/lib'
-
-# if config['configurations']['flink-config']['flink_numcontainers'] == '{{nodes_number}}':
-#   flink_numcontainers = nodes_number
-# else:
-#   flink_numcontainers = config['configurations']['flink-config']['flink_numcontainers']
-# flink_jobmanager_memory = config['configurations']['flink-config']['flink_jobmanager_memory']
-# flink_container_memory = config['configurations']['flink-config']['flink_container_memory']
-# flink_appname = config['configurations']['flink-config']['flink_appname']
-# flink_queue = config['configurations']['flink-config']['flink_queue']
 
 # params from flink-config
 
@@ -108,6 +101,3 @@ if 'zookeeper_hosts' in config['clusterHostInfo']:
 
 recovery_zookeeper_path_root = '/flink/recovery'
 recovery_zookeeper_storage_dir = format('{hdfs_default_name}{recovery_zookeeper_path_root}')
-
-flink_masters = config['clusterHostInfo']['flink_master_hosts']
-flink_slaves = config['clusterHostInfo']['flink_slave_hosts']
