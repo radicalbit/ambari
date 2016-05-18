@@ -30,7 +30,7 @@
 
   <property>
     <name>env.pid.dir</name>
-    <value>/var/log/flink</value>
+    <value>/var/run/flink</value>
     <description>Dir containing process ID files.</description>
   </property>
 
