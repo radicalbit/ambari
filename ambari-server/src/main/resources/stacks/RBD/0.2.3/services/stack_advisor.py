@@ -20,10 +20,10 @@ import os
 import fnmatch
 import socket
 
-class RBP023StackAdvisor(RBP022StackAdvisor):
+class RBD023StackAdvisor(RBD022StackAdvisor):
 
   def createComponentLayoutRecommendations(self, services, hosts):
-    parentComponentLayoutRecommendations = super(RBP023StackAdvisor, self).createComponentLayoutRecommendations(services, hosts)
+    parentComponentLayoutRecommendations = super(RBD023StackAdvisor, self).createComponentLayoutRecommendations(services, hosts)
 
     # remove HAWQSTANDBY on a single node
     hostsList = [host["Hosts"]["host_name"] for host in hosts["items"]]
@@ -37,7 +37,7 @@ class RBP023StackAdvisor(RBP022StackAdvisor):
     return parentComponentLayoutRecommendations
 
   def getComponentLayoutValidations(self, services, hosts):
-    parentItems = super(RBP023StackAdvisor, self).getComponentLayoutValidations(services, hosts)
+    parentItems = super(RBD023StackAdvisor, self).getComponentLayoutValidations(services, hosts)
 
     hiveExists = "HIVE" in [service["StackServices"]["service_name"] for service in services["services"]]
     sparkExists = "SPARK" in [service["StackServices"]["service_name"] for service in services["services"]]
@@ -94,12 +94,12 @@ class RBP023StackAdvisor(RBP022StackAdvisor):
     return parentItems
 
   def getNotPreferableOnServerComponents(self):
-    parentComponents = super(RBP023StackAdvisor, self).getNotPreferableOnServerComponents()
+    parentComponents = super(RBD023StackAdvisor, self).getNotPreferableOnServerComponents()
     parentComponents.extend(['HAWQMASTER', 'HAWQSTANDBY'])
     return parentComponents
 
   def getComponentLayoutSchemes(self):
-    parentSchemes = super(RBP023StackAdvisor, self).getComponentLayoutSchemes()
+    parentSchemes = super(RBD023StackAdvisor, self).getComponentLayoutSchemes()
     # key is max number of cluster hosts + 1, value is index in host list where to put the component
     childSchemes = {
         'HAWQMASTER' : {6: 2, 31: 1, "else": 5},
@@ -109,7 +109,7 @@ class RBP023StackAdvisor(RBP022StackAdvisor):
     return parentSchemes
 
   def getServiceConfigurationRecommenderDict(self):
-    parentRecommendConfDict = super(RBP023StackAdvisor, self).getServiceConfigurationRecommenderDict()
+    parentRecommendConfDict = super(RBD023StackAdvisor, self).getServiceConfigurationRecommenderDict()
     childRecommendConfDict = {
       "TEZ": self.recommendTezConfigurations,
       "HDFS": self.recommendHDFSConfigurations,
@@ -123,7 +123,7 @@ class RBP023StackAdvisor(RBP022StackAdvisor):
     return parentRecommendConfDict
 
   def recommendTezConfigurations(self, configurations, clusterData, services, hosts):
-    super(RBP023StackAdvisor, self).recommendTezConfigurations(configurations, clusterData, services, hosts)
+    super(RBD023StackAdvisor, self).recommendTezConfigurations(configurations, clusterData, services, hosts)
 
     putTezProperty = self.putProperty(configurations, "tez-site")
     # remove 2gb limit for tez.runtime.io.sort.mb
@@ -190,7 +190,7 @@ class RBP023StackAdvisor(RBP022StackAdvisor):
 
 
   def recommendHBASEConfigurations(self, configurations, clusterData, services, hosts):
-    super(RBP023StackAdvisor, self).recommendHBASEConfigurations(configurations, clusterData, services, hosts)
+    super(RBD023StackAdvisor, self).recommendHBASEConfigurations(configurations, clusterData, services, hosts)
     putHbaseSiteProperty = self.putProperty(configurations, "hbase-site", services)
     putHbaseSitePropertyAttributes = self.putPropertyAttribute(configurations, "hbase-site")
     putHbaseEnvProperty = self.putProperty(configurations, "hbase-env", services)
@@ -238,7 +238,7 @@ class RBP023StackAdvisor(RBP022StackAdvisor):
 
 
   def recommendHIVEConfigurations(self, configurations, clusterData, services, hosts):
-    super(RBP023StackAdvisor, self).recommendHIVEConfigurations(configurations, clusterData, services, hosts)
+    super(RBD023StackAdvisor, self).recommendHIVEConfigurations(configurations, clusterData, services, hosts)
     putHiveSiteProperty = self.putProperty(configurations, "hive-site", services)
     putHiveServerProperty = self.putProperty(configurations, "hiveserver2-site", services)
     putHiveSitePropertyAttribute = self.putPropertyAttribute(configurations, "hive-site")
@@ -311,7 +311,7 @@ class RBP023StackAdvisor(RBP022StackAdvisor):
       putHiveSitePropertyAttribute('atlas.rest.address', 'delete', 'true')
 
   def recommendHDFSConfigurations(self, configurations, clusterData, services, hosts):
-    super(RBP023StackAdvisor, self).recommendHDFSConfigurations(configurations, clusterData, services, hosts)
+    super(RBD023StackAdvisor, self).recommendHDFSConfigurations(configurations, clusterData, services, hosts)
 
     putHdfsSiteProperty = self.putProperty(configurations, "hdfs-site", services)
     putHdfsSitePropertyAttribute = self.putPropertyAttribute(configurations, "hdfs-site")
@@ -411,7 +411,7 @@ class RBP023StackAdvisor(RBP022StackAdvisor):
 
 
   def recommendRangerConfigurations(self, configurations, clusterData, services, hosts):
-    super(RBP023StackAdvisor, self).recommendRangerConfigurations(configurations, clusterData, services, hosts)
+    super(RBD023StackAdvisor, self).recommendRangerConfigurations(configurations, clusterData, services, hosts)
     servicesList = [service["StackServices"]["service_name"] for service in services["services"]]
     putRangerAdminProperty = self.putProperty(configurations, "ranger-admin-site", services)
     putRangerEnvProperty = self.putProperty(configurations, "ranger-env", services)
@@ -547,7 +547,7 @@ class RBP023StackAdvisor(RBP022StackAdvisor):
 
 
   def recommendYARNConfigurations(self, configurations, clusterData, services, hosts):
-    super(RBP023StackAdvisor, self).recommendYARNConfigurations(configurations, clusterData, services, hosts)
+    super(RBD023StackAdvisor, self).recommendYARNConfigurations(configurations, clusterData, services, hosts)
     putYarnSiteProperty = self.putProperty(configurations, "yarn-site", services)
     putYarnSitePropertyAttributes = self.putPropertyAttribute(configurations, "yarn-site")
     servicesList = [service["StackServices"]["service_name"] for service in services["services"]]
@@ -579,7 +579,7 @@ class RBP023StackAdvisor(RBP022StackAdvisor):
         putYarnSiteProperty('yarn.resourcemanager.proxy-user-privileges.enabled', 'false')
 
   def getServiceConfigurationValidators(self):
-      parentValidators = super(RBP023StackAdvisor, self).getServiceConfigurationValidators()
+      parentValidators = super(RBD023StackAdvisor, self).getServiceConfigurationValidators()
       childValidators = {
         "HDFS": {"hdfs-site": self.validateHDFSConfigurations},
         "HIVE": {"hiveserver2-site": self.validateHiveServer2Configurations,
@@ -592,7 +592,7 @@ class RBP023StackAdvisor(RBP022StackAdvisor):
       return parentValidators
 
   def validateHDFSConfigurations(self, properties, recommendedDefaults, configurations, services, hosts):
-    super(RBP023StackAdvisor, self).validateHDFSConfigurations(properties, recommendedDefaults, configurations, services, hosts)
+    super(RBD023StackAdvisor, self).validateHDFSConfigurations(properties, recommendedDefaults, configurations, services, hosts)
 
     # We can not access property hadoop.security.authentication from the
     # other config (core-site). That's why we are using another heuristics here
@@ -611,7 +611,7 @@ class RBP023StackAdvisor(RBP022StackAdvisor):
 
 
   def validateHiveConfigurations(self, properties, recommendedDefaults, configurations, services, hosts):
-    parentValidationProblems = super(RBP023StackAdvisor, self).validateHiveConfigurations(properties, recommendedDefaults, configurations, services, hosts)
+    parentValidationProblems = super(RBD023StackAdvisor, self).validateHiveConfigurations(properties, recommendedDefaults, configurations, services, hosts)
     hive_site = properties
     hive_env_properties = getSiteProperties(configurations, "hive-env")
     validationItems = []
@@ -636,7 +636,7 @@ class RBP023StackAdvisor(RBP022StackAdvisor):
     return configurationValidationProblems
 
   def validateHiveServer2Configurations(self, properties, recommendedDefaults, configurations, services, hosts):
-    super(RBP023StackAdvisor, self).validateHiveServer2Configurations(properties, recommendedDefaults, configurations, services, hosts)
+    super(RBD023StackAdvisor, self).validateHiveServer2Configurations(properties, recommendedDefaults, configurations, services, hosts)
     hive_server2 = properties
     validationItems = []
     #Adding Ranger Plugin logic here
@@ -704,7 +704,7 @@ class RBP023StackAdvisor(RBP022StackAdvisor):
     return self.toConfigurationValidationProblems(validationItems, "hiveserver2-site")
 
   def validateHBASEConfigurations(self, properties, recommendedDefaults, configurations, services, hosts):
-    super(RBP023StackAdvisor, self).validateHBASEConfigurations(properties, recommendedDefaults, configurations, services, hosts)
+    super(RBD023StackAdvisor, self).validateHBASEConfigurations(properties, recommendedDefaults, configurations, services, hosts)
     hbase_site = properties
     validationItems = []
 

@@ -18,10 +18,10 @@ limitations under the License.
 """
 
 
-class RBP10StackAdvisor(RBP023StackAdvisor):
+class RBD10StackAdvisor(RBD023StackAdvisor):
 
   def getComponentLayoutValidations(self, services, hosts):
-    parentItems = super(RBP10StackAdvisor, self).getComponentLayoutValidations(services, hosts)
+    parentItems = super(RBD10StackAdvisor, self).getComponentLayoutValidations(services, hosts)
 
     childItems = []
 
@@ -42,7 +42,7 @@ class RBP10StackAdvisor(RBP023StackAdvisor):
     return parentItems
 
   def getComponentLayoutSchemes(self):
-    parentSchemes = super(RBP10StackAdvisor, self).getComponentLayoutSchemes()
+    parentSchemes = super(RBD10StackAdvisor, self).getComponentLayoutSchemes()
 
     return parentSchemes
 

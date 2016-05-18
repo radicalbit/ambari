@@ -1,5 +1,5 @@
 {
-  "RBP-1.0": {
+  "RBD-1.0": {
     "latest": {
       "centos7": "http://public-repo.radicalbit.io/rbp/centos7/2.1.2.0/",
       "centos6": "http://public-repo.radicalbit.io/rbp/centos6/2.1.2.0/",

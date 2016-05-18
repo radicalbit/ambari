@@ -17,10 +17,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-class RBP021StackAdvisor(RBP0206StackAdvisor):
+class RBD021StackAdvisor(RBD0206StackAdvisor):
 
   def getServiceConfigurationRecommenderDict(self):
-    parentRecommendConfDict = super(RBP021StackAdvisor, self).getServiceConfigurationRecommenderDict()
+    parentRecommendConfDict = super(RBD021StackAdvisor, self).getServiceConfigurationRecommenderDict()
     childRecommendConfDict = {
       "OOZIE": self.recommendOozieConfigurations,
       "HIVE": self.recommendHiveConfigurations,
@@ -82,7 +82,7 @@ class RBP021StackAdvisor(RBP0206StackAdvisor):
     return ['JOURNALNODE', 'ZKFC', 'GANGLIA_MONITOR', 'APP_TIMELINE_SERVER']
 
   def getComponentLayoutSchemes(self):
-    parentSchemes = super(RBP021StackAdvisor, self).getComponentLayoutSchemes()
+    parentSchemes = super(RBD021StackAdvisor, self).getComponentLayoutSchemes()
     childSchemes = {
         'APP_TIMELINE_SERVER': {31: 1, "else": 2},
         'FALCON_SERVER': {6: 1, 31: 2, "else": 3}
@@ -91,7 +91,7 @@ class RBP021StackAdvisor(RBP0206StackAdvisor):
     return parentSchemes
 
   def getServiceConfigurationValidators(self):
-    parentValidators = super(RBP021StackAdvisor, self).getServiceConfigurationValidators()
+    parentValidators = super(RBD021StackAdvisor, self).getServiceConfigurationValidators()
     childValidators = {
       "HIVE": {"hive-site": self.validateHiveConfigurations},
       "TEZ": {"tez-site": self.validateTezConfigurations}

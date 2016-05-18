@@ -25,7 +25,7 @@ from math import ceil, floor
 from stack_advisor import DefaultStackAdvisor
 
 
-class RBP0206StackAdvisor(DefaultStackAdvisor):
+class RBD0206StackAdvisor(DefaultStackAdvisor):
 
   def getComponentLayoutValidations(self, services, hosts):
     """Returns array of Validation objects about issues with hostnames components assigned to"""

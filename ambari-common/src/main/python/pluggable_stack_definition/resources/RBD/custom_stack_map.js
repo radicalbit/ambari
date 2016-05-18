@@ -22,7 +22,7 @@ var App = require('app');
 sign will be compared like: <clusterSelectedStackVersion> sign <stackVersionNumber> if true use this baseStackFolder
 Example:
  {
- "stackName": "RBP",
+ "stackName": "RBD",
  "stackVersionNumber": "1.0",
  "sign": "<",
  "baseStackFolder": "HDP2"
@@ -31,13 +31,13 @@ Example:
 
 module.exports = [
   {
-    "stackName": "RBP",
+    "stackName": "RBD",
     "stackVersionNumber": "1.0",
     "sign": "=",
     "baseStackFolder": "HDP2.3"
   },
   {
-    "stackName": "RBP",
+    "stackName": "RBD",
     "stackVersionNumber": "1.0",
     "sign": "<",
     "baseStackFolder": "HDP2"

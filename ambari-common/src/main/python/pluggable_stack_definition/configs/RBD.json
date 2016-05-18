@@ -1,5 +1,5 @@
 {
-  "stackName": "RBP",
+  "stackName": "RBD",
   "baseStackName": "HDP",
   "performCommonReplacements": true,
   "textReplacements": [
