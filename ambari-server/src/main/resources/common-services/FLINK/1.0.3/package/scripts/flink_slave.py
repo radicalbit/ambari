@@ -27,19 +27,19 @@ class FlinkSlave(FlinkService):
     import status_params
     self.configure(env)
 
-    Execute(format("export HADOOP_CONF_DIR={hadoop_conf_dir}; nohup {bin_dir}/taskmanager.sh start"), user=params.flink_user)
+    Execute(format("export HADOOP_CONF_DIR={hadoop_conf_dir}; export FLINK_PID_DIR={flink_pid_dir}; nohup {bin_dir}/taskmanager.sh start"), user=params.flink_user)
 
-    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep org.apache.flink.runtime.taskmanager.TaskManager | awk '{print $1}'`> " + params.flink_pid_dir + "/flink_slave.pid"
-    Execute(cmd, user=params.flink_user)
+    # cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep org.apache.flink.runtime.taskmanager.TaskManager | awk '{print $1}'`> " + params.flink_pid_dir + "/flink_master.pid"
+    # Execute(cmd, user=params.flink_user)
 
   def stop(self, env):
     import params
-    Execute(format("export HADOOP_CONF_DIR={hadoop_conf_dir}; nohup {bin_dir}/taskmanager.sh stop"), user=params.flink_user)
+    Execute(format("nohup {bin_dir}/taskmanager.sh stop"), user=params.flink_user)
 
   def status(self, env):
     import status_params
     env.set_params(status_params)
-    pid_file = format("{status_params.flink_pid_file}/flink_slave.pid")
+    pid_file = format("{status_params.flink_pid_dir}/flink-{flink_user}-taskmanager.pid")
     check_process_status(pid_file)
 
 if __name__ == "__main__":
