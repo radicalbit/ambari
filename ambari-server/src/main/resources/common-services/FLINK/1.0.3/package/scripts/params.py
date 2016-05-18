@@ -96,7 +96,6 @@ yarn_application_attempts = config['configurations']['flink-config']['yarn.appli
 
 # params from flink-env.yaml
 flink_user = config['configurations']['flink-env']['flink_user']
-yarn_user = config['configurations']['yarn-env']['yarn_user']
 user_group = config['configurations']['cluster-env']['user_group']
 flink_pid_dir = config['configurations']['flink-config']['env.pid.dir']
 flink_log_dir = config['configurations']['flink-config']['env.log.dir']
