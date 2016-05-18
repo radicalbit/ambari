@@ -117,28 +117,6 @@
     <description>Number of checkpoint statistics to remember</description>
   </property>
 
-  <!--YARN-->
-
-  <property>
-    <name>yarn.application-master.port</name>
-    <value>6123</value>
-    <description>With this configuration option, users can specify a port, a range of ports
-      or a list of ports for the Application Master (and JobManager) RPC port.
-      Using the default value (0) let the operating system
-      choose an appropriate port. In particular when multiple AMs are running on the same
-      physical host, fixed port assignments prevent the AM from starting.</description>
-  </property>
-
-  <property>
-    <name>yarn.application-attempts</name>
-    <value>10</value>
-    <description>Number of ApplicationMaster restarts.
-      Note that that the entire Flink cluster will restart and the YARN Client will loose
-      the connection. Also, the JobManager address will change and you'll need to set
-      the JM host:port manually.</description>
-  </property>
-
-
   <!--High Availability Mode-->
 
   <property>
@@ -153,39 +131,5 @@
       a standby JobManager will be elected as the new leader and is given the
       last checkpointed JobManager state.</description>
   </property>
-
-  <!--Service configs-->
-
-  <!--<property>-->
-    <!--<name>flink_numcontainers</name>-->
-    <!--<value>{{nodes_number}}</value>-->
-    <!--<description>Number of YARN container to allocate (=Number of Task Managers).-->
-      <!--If value is setted to "{{nodes_number}}" automatically the number of containers-->
-      <!--is filled with the number of nodes in the cluster.</description>-->
-  <!--</property>-->
-
-  <!--<property>-->
-    <!--<name>flink_appname</name>-->
-    <!--<value>flinkapp-from-ambari</value>-->
-    <!--<description>Flink application name</description>-->
-  <!--</property>-->
-
-  <!--<property>-->
-    <!--<name>flink_queue</name>-->
-    <!--<value>default</value>-->
-    <!--<description>YARN queue to schedule Flink job on</description>-->
-  <!--</property>-->
-
-  <!--<property>-->
-    <!--<name>flink_jobmanager_memory</name>-->
-    <!--<value>768</value>-->
-    <!--<description>Memory for JobManager Container [in MB]. Must be at least 768</description>-->
-  <!--</property>-->
-
-  <!--<property>-->
-    <!--<name>flink_container_memory</name>-->
-    <!--<value>1024</value>-->
-    <!--<description>Memory per TaskManager Container [in MB]</description>-->
-  <!--</property>-->
 
 </configuration>
