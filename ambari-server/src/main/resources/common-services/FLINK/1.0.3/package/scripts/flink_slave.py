@@ -35,10 +35,10 @@ class FlinkSlave(FlinkService):
     Execute(format("rm -f {flink_pid_dir}/flink-{flink_user}-taskmanager.pid"), user=params.flink_user)
 
   def status(self, env):
-    import status_params as params
-    env.set_params(params)
-    pid_file = format("{flink_pid_dir}/flink-{flink_user}-taskmanager.pid")
-    check_process_status(pid_file)
+    # import status_params as params
+    # env.set_params(params)
+    # pid_file = format("{flink_pid_dir}/flink-{flink_user}-taskmanager.pid")
+    # check_process_status(pid_file)
     pid_file = "/var/run/flink/flink-flink-taskmanager.pid"
     check_process_status(pid_file)
 
