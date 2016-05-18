@@ -24,18 +24,15 @@ class FlinkMaster(FlinkService):
 
   def start(self, env):
     import params
-    import status_params
     self.configure(env)
     self.create_hdfs_user(params.flink_user)
 
-    Execute(format("export HADOOP_CONF_DIR={hadoop_conf_dir}; export FLINK_PID_DIR={flink_pid_dir}; nohup {bin_dir}/jobmanager.sh start cluster"), user=params.flink_user)
-
-    # cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep org.apache.flink.runtime.jobmanager.JobManager | awk '{print $1}'`> " + params.flink_pid_dir + "/flink_master.pid"
-    # Execute(cmd, user=params.flink_user)
+    Execute(format("export HADOOP_CONF_DIR={hadoop_conf_dir}; {bin_dir}/jobmanager.sh start cluster {hostname} {jobmanager_web_port}"), user=params.flink_user)
 
   def stop(self, env):
     import params
     Execute(format("nohup {bin_dir}/jobmanager.sh stop"), user=params.flink_user)
+    Execute(format("rm {flink_pid_dir}/flink-{flink_user}-jobmanager.pid"), user=params.flink_user)
 
   def status(self, env):
     import status_params

@@ -21,7 +21,5 @@ from resource_management import *
 
 config = Script.get_config()
 
-flink_pid_dir = config['configurations']['flink-env']['flink_pid_dir']
-#flink_pid_file = flink_pid_dir + '/flink.pid'
-#flink_appname = config['configurations']['flink-config']['flink_appname']
+flink_pid_dir = config['configurations']['flink-config']['env.pid.dir']
 flink_user = config['configurations']['flink-env']['flink_user']

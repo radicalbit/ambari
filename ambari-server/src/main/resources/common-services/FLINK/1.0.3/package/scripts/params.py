@@ -49,26 +49,24 @@ conf_dir = flink_install_dir + '/conf'
 bin_dir = flink_install_dir + '/bin'
 flink_lib = flink_install_dir + '/lib'
 
-# flink_install_dir = config['configurations']['flink-config']['flink_install_dir']
-if config['configurations']['flink-config']['flink_numcontainers'] == '{{nodes_number}}':
-  flink_numcontainers = nodes_number
-else:
-  flink_numcontainers = config['configurations']['flink-config']['flink_numcontainers']
-flink_jobmanager_memory = config['configurations']['flink-config']['flink_jobmanager_memory']
-flink_container_memory = config['configurations']['flink-config']['flink_container_memory']
-flink_appname = config['configurations']['flink-config']['flink_appname']
-flink_queue = config['configurations']['flink-config']['flink_queue']
+# if config['configurations']['flink-config']['flink_numcontainers'] == '{{nodes_number}}':
+#   flink_numcontainers = nodes_number
+# else:
+#   flink_numcontainers = config['configurations']['flink-config']['flink_numcontainers']
+# flink_jobmanager_memory = config['configurations']['flink-config']['flink_jobmanager_memory']
+# flink_container_memory = config['configurations']['flink-config']['flink_container_memory']
+# flink_appname = config['configurations']['flink-config']['flink_appname']
+# flink_queue = config['configurations']['flink-config']['flink_queue']
 
 # params from flink-config
 
-standalone_only = 'use this config only for a standalone deploy of Flink'
-
-jobmanager_rpc_address = standalone_only
-jobmanager_rpc_port = 6123
-jobmanager_heap_mb = 256
-taskmanager_heap_mb = 512
-taskmanager_numberOfTaskSlots = 1
-parallelism_default = 1
+jobmanager_rpc_address = flink_master
+jobmanager_rpc_port = config['configurations']['flink-config']['jobmanager.rpc.port']
+jobmanager_heap_mb = config['configurations']['flink-config']['jobmanager.heap.mb']
+taskmanager_heap_mb = config['configurations']['flink-config']['taskmanager.heap.mb']
+taskmanager_numberOfTaskSlots = config['configurations']['flink-config']['taskmanager.numberOfTaskSlots']
+parallelism_default = config['configurations']['flink-config']['parallelism.default']
+taskmanager_memory_preallocate = config['configurations']['flink-config']['taskmanager.memory.preallocate']
 
 fs_hdfs_hadoopconf = hadoop_conf_dir
 
@@ -100,7 +98,7 @@ yarn_application_attempts = config['configurations']['flink-config']['yarn.appli
 flink_user = config['configurations']['flink-env']['flink_user']
 yarn_user = config['configurations']['yarn-env']['yarn_user']
 user_group = config['configurations']['cluster-env']['user_group']
-flink_pid_dir = config['configurations']['flink-env']['flink_pid_dir']
+flink_pid_dir = config['configurations']['flink-config']['env.pid.dir']
 flink_log_dir = config['configurations']['flink-config']['env.log.dir']
 flink_cluster_log_file = os.path.join(flink_log_dir,'flink-cluster.log')
 

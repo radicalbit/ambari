@@ -43,32 +43,12 @@
                     <displayName>Flink TaskManager</displayName>
                     <category>SLAVE</category>
                     <cardinality>1+</cardinality>
-                    <!--<versionAdvertised>false</versionAdvertised>-->
-                    <!--<auto-deploy>-->
-                        <!--<enabled>true</enabled>-->
-                    <!--</auto-deploy>-->
                     <commandScript>
                         <script>scripts/flink_slave.py</script>
                         <scriptType>PYTHON</scriptType>
                         <timeout>10000</timeout>
                     </commandScript>
                 </component>
-
-                <!--<component>-->
-                    <!--<name>FLINK_CLIENT</name>-->
-                    <!--<displayName>Flink Client</displayName>-->
-                    <!--<category>CLIENT</category>-->
-                    <!--<cardinality>ALL</cardinality>-->
-                    <!--<versionAdvertised>false</versionAdvertised>-->
-                    <!--<auto-deploy>-->
-                        <!--<enabled>true</enabled>-->
-                    <!--</auto-deploy>-->
-                    <!--<commandScript>-->
-                        <!--<script>scripts/flink_client.py</script>-->
-                        <!--<scriptType>PYTHON</scriptType>-->
-                        <!--<timeout>10000</timeout>-->
-                    <!--</commandScript>-->
-                <!--</component>-->
 
             </components>
 
@@ -94,7 +74,6 @@
 
             <requiredServices>
                 <service>ZOOKEEPER</service>
-                <!--<service>YARN</service>-->
                 <service>HDFS</service>
                 <service>ALLUXIO</service>
             </requiredServices>

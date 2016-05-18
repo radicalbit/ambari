@@ -38,24 +38,12 @@ class RBP10StackAdvisor(RBP023StackAdvisor):
         message = "Cassandra Seed and Cassandra Node should not be deployed on the same host."
         childItems.append( { "type": 'host-component', "level": 'ERROR', "message": message, "component-name": 'CASSANDRA_NODE', "host": host } )
 
-    # flinkMasterHost = [component["StackServiceComponents"]["hostnames"] for component in componentsList if component["StackServiceComponents"]["component_name"] == "FLINK_MASTER"]
-    # resourceManagerHost = [component["StackServiceComponents"]["hostnames"] for component in componentsList if component["StackServiceComponents"]["component_name"] == "RESOURCEMANAGER"]
-    #
-    # if len(flinkMasterHost) > 0 and len(resourceManagerHost) > 0:
-    #   commonHost = [host for host in flinkMasterHost[0] if host in resourceManagerHost[0]]
-    #   if len(commonHost) == 0:
-    #     message = "Flink Master and YARN Resource Manager should be deployed on the same host."
-    #     childItems.append( { "type": 'host-component', "level": 'ERROR', "message": message, "component-name": 'FLINK_MASTER', "host": flinkMasterHost[0][0] } )
-
     parentItems.extend(childItems)
     return parentItems
 
   def getComponentLayoutSchemes(self):
     parentSchemes = super(RBP10StackAdvisor, self).getComponentLayoutSchemes()
-    # childSchemes = {
-    #   'FLINK_MASTER': {31: 1, "else": 2}
-    # }
-    # parentSchemes.update(childSchemes)
+
     return parentSchemes
 
   def validateAmsHbaseEnvConfigurations(self, properties, recommendedDefaults, configurations, services, hosts):

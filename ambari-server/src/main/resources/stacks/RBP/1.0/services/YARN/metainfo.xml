@@ -21,49 +21,12 @@
   <services>
     <service>
       <name>YARN</name>
-      <version>2.7.1</version>
-
-      <osSpecifics>
-        <osSpecific>
-          <osFamily>redhat7,redhat6,suse11</osFamily>
-          <packages>
-            <package>
-              <name>hadoop-yarn*</name>
-            </package>
-            <package>
-              <name>hadoop-hdfs*</name>
-            </package>
-            <package>
-              <name>hadoop-mapreduce*</name>
-            </package>
-          </packages>
-        </osSpecific>
-      </osSpecifics>
+      <deleted>true</deleted>
     </service>
 
     <service>
       <name>MAPREDUCE2</name>
-      <version>2.7.1</version>
-
-      <components>
-        <component>
-          <name>MAPREDUCE2_CLIENT</name>
-          <category>CLIENT</category>
-          <deleted>true</deleted>
-        </component>
-      </components>
-
-      <osSpecifics>
-        <osSpecific>
-          <osFamily>redhat7,redhat6,suse11</osFamily>
-          <packages>
-            <package>
-              <name>hadoop-mapreduce*</name>
-            </package>
-          </packages>
-        </osSpecific>
-      </osSpecifics>
-
+      <deleted>true</deleted>
     </service>
 
   </services>

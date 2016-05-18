@@ -21,12 +21,6 @@
 <configuration>
 
     <property>
-        <name>flink_pid_dir</name>
-        <value>/var/run/flink</value>
-        <description>Dir containing process ID file</description>
-    </property>
-
-    <property>
         <name>flink_user</name>
         <display-name>Flink User</display-name>
         <value>flink</value>
