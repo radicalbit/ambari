@@ -156,40 +156,40 @@
     <value>CACHE_THROUGH</value>
   </property>
 
-  <property require-input="false">
-    <name>alluxio.master.keytab.file</name>
-    <description>Alluxio Master Keytab File</description>
-    <value></value>
-    <value-attributes>
-      <empty-value-valid>true</empty-value-valid>
-    </value-attributes>
-  </property>
+  <!--<property require-input="false">-->
+    <!--<name>alluxio.master.keytab.file</name>-->
+    <!--<description>Alluxio Master Keytab File</description>-->
+    <!--<value></value>-->
+    <!--<value-attributes>-->
+      <!--<empty-value-valid>true</empty-value-valid>-->
+    <!--</value-attributes>-->
+  <!--</property>-->
 
-  <property require-input="false">
-    <name>alluxio.master.principal</name>
-    <description>Alluxio Master Principal</description>
-    <value></value>
-    <value-attributes>
-      <empty-value-valid>true</empty-value-valid>
-    </value-attributes>
-  </property>
+  <!--<property require-input="false">-->
+    <!--<name>alluxio.master.principal</name>-->
+    <!--<description>Alluxio Master Principal</description>-->
+    <!--<value></value>-->
+    <!--<value-attributes>-->
+      <!--<empty-value-valid>true</empty-value-valid>-->
+    <!--</value-attributes>-->
+  <!--</property>-->
 
-  <property require-input="false">
-    <name>alluxio.worker.keytab.file</name>
-    <description>Alluxio Worker Keytab File</description>
-    <value></value>
-    <value-attributes>
-      <empty-value-valid>true</empty-value-valid>
-    </value-attributes>
-  </property>
+  <!--<property require-input="false">-->
+    <!--<name>alluxio.worker.keytab.file</name>-->
+    <!--<description>Alluxio Worker Keytab File</description>-->
+    <!--<value></value>-->
+    <!--<value-attributes>-->
+      <!--<empty-value-valid>true</empty-value-valid>-->
+    <!--</value-attributes>-->
+  <!--</property>-->
 
-  <property require-input="false">
-    <name>alluxio.worker.principal</name>
-    <description>Alluxio Worker Principal</description>
-    <value></value>
-    <value-attributes>
-      <empty-value-valid>true</empty-value-valid>
-    </value-attributes>
-  </property>
+  <!--<property require-input="false">-->
+    <!--<name>alluxio.worker.principal</name>-->
+    <!--<description>Alluxio Worker Principal</description>-->
+    <!--<value></value>-->
+    <!--<value-attributes>-->
+      <!--<empty-value-valid>true</empty-value-valid>-->
+    <!--</value-attributes>-->
+  <!--</property>-->
 
 </configuration>
