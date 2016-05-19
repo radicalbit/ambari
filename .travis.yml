@@ -61,7 +61,7 @@ script:
 #  - popd
 #
 #install:
-#  - mvn -B clean install package -DnewVersion="2.2.0.0.0" -Dstack.distribution="RBP" -DskipTests -Dpython.ver="python >= 2.7" -Dfindbugs.skip=true -Preplaceurl
+#  - mvn -B clean install package -DnewVersion="2.2.0.0.0" -Dstack.distribution="RBD" -DskipTests -Dpython.ver="python >= 2.7" -Dfindbugs.skip=true -Preplaceurl
 #
 #script:
 #  - pwd

@@ -267,7 +267,7 @@
         <activation>
           <property>
             <name>stack.distribution</name>
-            <value>RBP</value>
+            <value>RBD</value>
           </property>
         </activation>
         <build>
