@@ -49,7 +49,7 @@ if flink_hosts is not None:
   flink_conf_dir = '/etc/flink/conf'
   flink_user = config['configurations']['flink-env']['flink_user']
   flink_master = config['clusterHostInfo']['flink_master_hosts'][0]
-  flink_host = 'yarn'
+  flink_host = config['clusterHostInfo']['flink_master_hosts'][0]
 else:
   has_flink_master = False
   flink_host = 'local'
