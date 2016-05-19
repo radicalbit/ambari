@@ -140,8 +140,8 @@ if security_enabled:
 
   if is_current_node_master:
     master_keytab = config['configurations']['alluxio-env']['alluxio_master_keytab']
-    master_principal = config['configurations']['alluxio-env']['alluxio_master_principal_name'].replace('_HOST',current_host.lower())
 
+  master_principal = config['configurations']['alluxio-env']['alluxio_master_principal_name'].replace('_HOST',alluxio_master_head.lower())
   worker_keytab = config['configurations']['alluxio-env']['alluxio_worker_keytab']
   worker_principal = config['configurations']['alluxio-env']['alluxio_worker_principal_name'].replace('_HOST',current_host.lower())
 else:
