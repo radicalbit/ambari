@@ -34,6 +34,10 @@ nodes_number = len(config['clusterHostInfo']['all_hosts'])
 cores_number = config['configurations']['yarn-site']['yarn.scheduler.maximum-allocation-vcores']
 #cores_number = multiprocessing.cpu_count()
 
+# alluxio jar params
+jar_url = 'https://public-repo.radicalbit.io/jars'
+alluxio_jar_name = 'alluxio-core-client-1.1.0-jar-with-dependencies.jar'
+
 security_enabled = config['configurations']['cluster-env']['security_enabled']
 
 hostname = config['hostname']

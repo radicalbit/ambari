@@ -21,9 +21,7 @@ from resource_management import *
 def flink(action = None):
   import params
 
-  def download_alluxio_client_jar(jar_name):
-    jar_url = 'https://public-repo.radicalbit.io/jars'
-
+  def download_alluxio_client_jar(jar_url, jar_name):
     Execute(
         format('wget {jar_url}/{jar_name} -O /tmp/{jar_name} -a /tmp/alluxio_download.log'),
         user='root',
@@ -32,8 +30,7 @@ def flink(action = None):
 
 
   if action == 'install':
-    alluxio_jar_name = 'alluxio-core-client-1.0.1-jar-with-dependencies.jar'
-    download_alluxio_client_jar(alluxio_jar_name)
+    download_alluxio_client_jar(params.jar_url, params.alluxio_jar_name)
     Execute(
         format('cp /tmp/{alluxio_jar_name} {params.flink_lib}/'),
         user='root',
