@@ -25,6 +25,10 @@ configurations = config['configurations']
 cassandra_env = configurations['cassandra-env']
 cassandra_conf = configurations['cassandra-conf']
 
+# alluxio jar params
+jar_url = 'https://public-repo.radicalbit.io/jars'
+cassandra_jar_name = 'cassandra‐kerberosauthentication‐1.0.jar'
+
 security_enabled = configurations['cluster-env']['security_enabled']
 
 def get_host_ip(name, host_names, host_ips):
