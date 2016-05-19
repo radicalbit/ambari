@@ -14,4 +14,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-* */{{ flink_krb_ticket_renew_window }} * * * {{ kinit_path_local }} {{ flink_user }} -kt {{ flink_keytab }}
+* */{{ flink_krb_ticket_renew_window }} * * * {{ kinit_path_local }} {{ flink_jaas_principal }} -kt {{ flink_keytab }}

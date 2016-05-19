@@ -16,6 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
+import os
 from resource_management import *
 from flink import flink
 
@@ -36,5 +37,12 @@ class FlinkService(Script):
   def start_krb_session(self, env):
     import params
     env.set_params(params)
-    Execute(format("{kinit_path_local} {flink_user} -kt {flink_keytab}"), user=params.flink_user)
+    Execute(format("{kinit_path_local} {flink_jaas_principal} -kt {flink_keytab}"), user=params.flink_user)
     Execute(format("crontab {conf_dir}/cron-kinit-flink.sh"), user=params.flink_user)
+
+  def stop_krb_session(self, env):
+    import params
+    if not os.path.isfile(format("{params.flink_pid_dir}/flink-{params.flink_user}-jobmanager.pid")) and \
+        not os.path.isfile(format("{params.flink_pid_dir}/flink-{params.flink_user}-taskmanager.pid")):
+      Execute(kdestroy_path_local, user=params.flink_user)
+      Execute("crontab -r", user=params.flink_user)

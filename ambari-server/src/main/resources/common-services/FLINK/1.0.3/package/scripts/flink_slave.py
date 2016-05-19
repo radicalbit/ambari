@@ -34,8 +34,12 @@ class FlinkSlave(FlinkService):
   def stop(self, env):
     import params
     env.set_params(params)
-    Execute(format("nohup {bin_dir}/taskmanager.sh stop"), user=params.flink_user)
+
+    Execute(format("{bin_dir}/taskmanager.sh stop"), user=params.flink_user)
     Execute(format("rm -f {flink_pid_dir}/flink-{flink_user}-taskmanager.pid"), user=params.flink_user)
+
+    if params.security_enabled:
+      self.stop_krb_session(env)
 
   def status(self, env):
     # import status_params as params
