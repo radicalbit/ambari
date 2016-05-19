@@ -44,5 +44,5 @@ class FlinkService(Script):
     import params
     if not os.path.isfile(format("{params.flink_pid_dir}/flink-{params.flink_user}-jobmanager.pid")) and \
         not os.path.isfile(format("{params.flink_pid_dir}/flink-{params.flink_user}-taskmanager.pid")):
-      Execute(kdestroy_path_local, user=params.flink_user)
+      Execute(params.kdestroy_path_local, user=params.flink_user)
       Execute("crontab -r", user=params.flink_user)
