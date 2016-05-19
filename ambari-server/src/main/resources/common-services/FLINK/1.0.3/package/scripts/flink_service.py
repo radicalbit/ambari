@@ -32,3 +32,9 @@ class FlinkService(Script):
     env.set_params(params)
     flink('configure')
 
+
+  def start_krb_session(self, env):
+    import params
+    env.set_params(params)
+    Execute(format("{kinit_path_local} {flink_user} -kt {flink_keytab}"), user=params.flink_user)
+    Execute(format("crontab {conf_dir}/cron-kinit-flink.sh"), user=params.flink_user)

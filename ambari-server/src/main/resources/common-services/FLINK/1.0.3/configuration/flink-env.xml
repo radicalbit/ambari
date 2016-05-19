@@ -21,6 +21,14 @@
 <configuration>
 
     <property>
+        <name>flink_krb_ticket_renew_window</name>
+        <display-name>Kerberos Ticket renew window in hours</display-name>
+        <value>23</value>
+        <description>Time for renew the Kerberos ticket lifetime. Value should be between 1 and 23.
+            Value should be less then ticket_lifetime into krb5.conf file.</description>
+    </property>
+
+    <property>
         <name>flink_user</name>
         <display-name>Flink User</display-name>
         <value>flink</value>

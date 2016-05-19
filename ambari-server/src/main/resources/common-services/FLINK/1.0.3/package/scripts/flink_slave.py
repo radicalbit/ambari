@@ -26,6 +26,9 @@ class FlinkSlave(FlinkService):
     import params
     self.configure(env)
 
+    if params.security_enabled:
+      self.start_krb_session(env)
+
     Execute(format("export HADOOP_CONF_DIR={hadoop_conf_dir}; {bin_dir}/taskmanager.sh start"), user=params.flink_user)
 
   def stop(self, env):

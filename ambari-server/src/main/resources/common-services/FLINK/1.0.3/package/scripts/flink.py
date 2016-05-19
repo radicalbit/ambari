@@ -41,6 +41,9 @@ def flink(action = None):
     )
 
   elif action == 'configure':
+
+    # configure folders and permissions
+
     Directory(
         [params.flink_log_dir,params.flink_pid_dir],
         owner=params.flink_user,
@@ -49,6 +52,8 @@ def flink(action = None):
     )
 
     Execute('chmod 777 ' + params.flink_log_dir, user='root')
+
+    # add flink node configurations
 
     File(
         format("{conf_dir}/flink-conf.yaml"),
@@ -69,6 +74,8 @@ def flink(action = None):
         content=Template('masters.j2', conf_dir=params.conf_dir)
     )
 
+    # add security configurations if required
+
     if params.security_enabled:
       File(
           format("{conf_dir}/kafka_client_jaas.properties"),
@@ -76,6 +83,15 @@ def flink(action = None):
           mode=0644,
           content=Template('kafka_client_jaas.properties.j2', conf_dir=params.conf_dir)
       )
+      File(
+          format("{conf_dir}/cron-kinit-flink.sh"),
+          owner=params.flink_user,
+          mode=0700,
+          content=Template('cron-kinit-flink.sh.j2', conf_dir=params.conf_dir)
+      )
+
+
+    # Create and add alluxio-site.properties jar
 
     Execute(
         format("scp -o StrictHostKeyChecking=no {alluxio_master}:/etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
