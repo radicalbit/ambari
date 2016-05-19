@@ -34,11 +34,21 @@ nodes_number = len(config['clusterHostInfo']['all_hosts'])
 cores_number = config['configurations']['yarn-site']['yarn.scheduler.maximum-allocation-vcores']
 #cores_number = multiprocessing.cpu_count()
 
+security_enabled = config['configurations']['cluster-env']['security_enabled']
+
 hostname = config['hostname']
 flink_masters = config['clusterHostInfo']['flink_master_hosts']
 flink_slaves = config['clusterHostInfo']['flink_slave_hosts']
 flink_master = flink_masters[0]
 custer_hosts = config['clusterHostInfo']['all_hosts']
+
+if security_enabled:
+  kinit_path_local = get_kinit_path(default('/configurations/kerberos-env/executable_search_paths', None))
+  _flink_principal_name = config['configurations']['flink-env']['flink_principal_name']
+  flink_jaas_principal = _flink_principal_name.replace('_HOST',hostname.lower())
+  flink_client_jass_path = "/etc/flink/conf.dist/flink_client_jaas.conf"
+  flink_keytab = "/etc/security/keytabs/flink.service.keytab"
+  krb5_conf_path = "/etc/krb5.conf"
 
 alluxio_master = ''
 alluxio_default_name = 'file:///'

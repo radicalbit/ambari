@@ -5,9 +5,33 @@
       "identities": [
         {
           "name": "/smokeuser"
+        },
+        {
+          "name": "flink",
+          "principal": {
+            "value": "${flink-env/flink_user}-${cluster_name}@${realm}",
+            "type": "user",
+            "configuration": "flink-env/flink_principal_name",
+            "local_username" : "${flink-env/flink_user}"
+          },
+          "keytab": {
+            "file": "${keytab_dir}/flink.headless.keytab",
+            "owner": {
+              "name": "${flink-env/flink_user}",
+              "access": "r"
+            },
+            "group": {
+              "name": "${cluster-env/user_group}",
+              "access": "r"
+            },
+            "configuration": "flink-env/flink_keytab"
+          }
         }
       ],
       "components": [
+        {
+          "name": "FLINK_CLIENT"
+        },
         {
           "name": "FLINK_MASTER"
         }
