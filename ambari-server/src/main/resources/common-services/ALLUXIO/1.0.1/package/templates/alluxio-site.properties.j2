@@ -177,8 +177,8 @@ alluxio.fuse.fs.name=alluxio-fuse
 # Kerberos properties
 {% if is_current_node_master %}
 alluxio.master.keytab.file={{ master_keytab }}
-alluxio.master.principal={{ master_principal }}
 {% endif %}
+alluxio.master.principal={{ master_principal }}
 alluxio.worker.keytab.file={{ worker_keytab }}
 alluxio.worker.principal={{ worker_principal }}
 {% endif %}
