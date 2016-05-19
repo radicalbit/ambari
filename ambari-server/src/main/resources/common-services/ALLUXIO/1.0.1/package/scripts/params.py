@@ -25,6 +25,8 @@ from resource_management.libraries.functions import conf_select
 config = Script.get_config()
 tmp_dir = Script.get_tmp_dir()
 
+security_enabled = config['configurations']['cluster-env']['security_enabled']
+
 # alluxio installation dir
 base_dir = '/usr/lib/alluxio'
 
@@ -33,7 +35,6 @@ alluxio_config_dir = '/etc/alluxio/conf'
 
 # alluxio underfs address
 underfs_addr = config['configurations']['core-site']['fs.defaultFS'] + '/alluxio'
-#fs_root = config['configurations']['core-site']['fs.defaultFS']
 
 # hadoop core-site.xml dir
 hadoop_core_site = conf_select.get_hadoop_conf_dir() + '/core-site.xml'
@@ -117,7 +118,6 @@ ambari_server = config['clusterHostInfo']['ambari_server_host']
 current_host = config['hostname']
 alluxio_master_head = config['clusterHostInfo']['alluxio_master_hosts'][0]
 
-# alluxio_master = config['clusterHostInfo']['alluxio_master_hosts'][0]
 if current_host in config['clusterHostInfo']['alluxio_master_hosts']:
   alluxio_master = current_host
 else:
@@ -133,14 +133,17 @@ if 'zookeeper_hosts' in config['clusterHostInfo']:
   if len(zookeeper_hosts_list) > 0:
       zookeeper_hosts = (':' + zookeeper_port + ',').join(zookeeper_hosts_list) + ':' + zookeeper_port
 
-# alluxio master keytab file
-master_keytab = config['configurations']['alluxio-config']['alluxio.master.keytab.file']
+if security_enabled:
+  alluxio_authentication_type = 'KERBEROS'
 
-# alluxio master principal
-master_principal = config['configurations']['alluxio-config']['alluxio.master.principal']
+  is_current_node_master = current_host in config['clusterHostInfo']['alluxio_master_hosts']
 
-# alluxio worker keytab file
-worker_keytab = config['configurations']['alluxio-config']['alluxio.worker.keytab.file']
+  if is_current_node_master:
+    master_keytab = config['configurations']['alluxio-env']['alluxio_master_keytab']
 
-# alluxio worker principal
-worker_principal = config['configurations']['alluxio-config']['alluxio.worker.principal']
+  master_principal = config['configurations']['alluxio-env']['alluxio_master_principal_name'].replace('_HOST',alluxio_master_head.lower())
+  worker_keytab = config['configurations']['alluxio-env']['alluxio_worker_keytab']
+  worker_principal = config['configurations']['alluxio-env']['alluxio_worker_principal_name'].replace('_HOST',current_host.lower())
+else:
+  alluxio_authentication_type = 'NOSASL'
+

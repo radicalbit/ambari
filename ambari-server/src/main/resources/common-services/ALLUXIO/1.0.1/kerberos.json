@@ -9,10 +9,56 @@
       ],
       "components": [
         {
-          "name": "ALLUXIO_MASTER"
+          "name": "ALLUXIO_MASTER",
+          "identities": [
+            {
+              "name": "alluxio_master",
+              "principal": {
+                "value": "alluxio-master/_HOST@${realm}",
+                "type" : "service",
+                "configuration": "alluxio-env/alluxio_master_principal_name",
+                "local_username" : "${alluxio-env/alluxio_user}"
+              },
+              "keytab": {
+                "file": "${keytab_dir}/alluxio-master.service.keytab",
+                "owner": {
+                  "name": "${alluxio-env/alluxio_user}",
+                  "access": "r"
+                },
+                "group": {
+                  "name": "${cluster-env/user_group}",
+                  "access": ""
+                },
+                "configuration": "alluxio-env/alluxio_master_keytab"
+              }
+            }
+          ]
         },
         {
-          "name": "ALLUXIO_SLAVE"
+          "name": "ALLUXIO_SLAVE",
+          "identities": [
+            {
+              "name": "alluxio_worker",
+              "principal": {
+                "value": "alluxio-worker/_HOST@${realm}",
+                "type" : "service",
+                "configuration": "alluxio-env/alluxio_worker_principal_name",
+                "local_username" : "${alluxio-env/alluxio_user}"
+              },
+              "keytab": {
+                "file": "${keytab_dir}/alluxio-worker.service.keytab",
+                "owner": {
+                  "name": "${alluxio-env/alluxio_user}",
+                  "access": "r"
+                },
+                "group": {
+                  "name": "${cluster-env/user_group}",
+                  "access": ""
+                },
+                "configuration": "alluxio-env/alluxio_worker_keytab"
+              }
+            }
+          ]
         }
       ]
     }
