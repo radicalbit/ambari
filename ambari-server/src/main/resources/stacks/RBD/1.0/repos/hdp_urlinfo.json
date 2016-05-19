@@ -1,8 +1,8 @@
 {
   "RBD-1.0": {
     "latest": {
-      "centos7": "http://public-repo.radicalbit.io/rbp/centos7/2.1.2.0/",
-      "centos6": "http://public-repo.radicalbit.io/rbp/centos6/2.1.2.0/",
+      "centos7": "http://public-repo.radicalbit.io/rbd/centos7/2.1.2.0/",
+      "centos6": "http://public-repo.radicalbit.io/rbd/centos6/2.1.2.0/",
       "debian6": "http://public-repo-1.hortonworks.com/HDP/debian6/2.x/updates/2.3.4.0/",
       "debian7": "http://public-repo-1.hortonworks.com/HDP/debian7/2.x/updates/2.3.4.0/",
       "suse11": "http://public-repo-1.hortonworks.com/HDP/suse11sp3/2.x/updates/2.3.4.0/",
