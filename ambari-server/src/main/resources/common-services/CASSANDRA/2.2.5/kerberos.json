@@ -1,0 +1,20 @@
+{
+  "services": [
+    {
+      "name": "CASSANDRA",
+      "identities": [
+        {
+          "name": "/smokeuser"
+        }
+      ],
+      "components": [
+        {
+          "name": "CASSANDRA_SEED"
+        },
+        {
+          "name": "CASSANDRA_NODE"
+        }
+      ]
+    }
+  ]
+}

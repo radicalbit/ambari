@@ -1,0 +1,20 @@
+{
+  "services": [
+    {
+      "name": "ALLUXIO",
+      "identities": [
+        {
+          "name": "/smokeuser"
+        }
+      ],
+      "components": [
+        {
+          "name": "ALLUXIO_MASTER"
+        },
+        {
+          "name": "ALLUXIO_SLAVE"
+        }
+      ]
+    }
+  ]
+}

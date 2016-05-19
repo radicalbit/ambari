@@ -71,19 +71,29 @@ def kafka(upgrade_type=None):
     # else:
     #   kafka_server_config['host.name'] = params.hostname
 
+    if len(params.kafka_hosts) > 0 and params.hostname in params.kafka_hosts:
+        brokerid = str(sorted(params.kafka_hosts).index(params.hostname))
+        kafka_server_config['broker.id'] = brokerid
+        Logger.info(format("Calculating broker.id as {brokerid}"))
+
     listeners = kafka_server_config['listeners'].replace("localhost", params.hostname)
     Logger.info(format("Kafka listeners: {listeners}"))
 
     if params.security_enabled and params.kafka_kerberos_enabled:
       Logger.info("Kafka kerberos security is enabled.")
       if "SASL" not in listeners:
-        listeners = listeners.replace("PLAINTEXT", "PLAINTEXTSASL")
+        listeners = listeners.replace("PLAINTEXT", "SASL_PLAINTEXT")
 
       kafka_server_config['listeners'] = listeners
       kafka_server_config['advertised.listeners'] = listeners
+      kafka_server_config['sasl.kerberos.service.name'] = params.kafka_user
       Logger.info(format("Kafka advertised listeners: {listeners}"))
     else:
       kafka_server_config['listeners'] = listeners
+      del kafka_server_config['authorizer.class.name']
+      del kafka_server_config['principal.to.local.class']
+      del kafka_server_config['security.inter.broker.protocol']
+      del kafka_server_config['super.users']
 
       if 'advertised.listeners' in kafka_server_config:
         advertised_listeners = kafka_server_config['advertised.listeners'].replace("localhost", params.hostname)
@@ -127,7 +137,7 @@ def kafka(upgrade_type=None):
          )
 
     if params.security_enabled and params.kafka_kerberos_enabled:
-        TemplateConfig(format("{conf_dir}/kafka_jaas.conf"),
+        TemplateConfig(format("{conf_dir}/kafka_server_jaas.conf"),
                          owner=params.kafka_user)
 
         TemplateConfig(format("{conf_dir}/kafka_client_jaas.conf"),

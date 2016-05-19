@@ -15,12 +15,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #}
-
-Server {
-com.sun.security.auth.module.Krb5LoginModule required
-useKeyTab=true
-storeKey=true
-useTicketCache=true
-keyTab="{{zk_keytab_path}}"
-principal="{{zk_principal}}";
+KafkaServer {
+   com.sun.security.auth.module.Krb5LoginModule required
+   useKeyTab=true
+   keyTab="{{kafka_keytab_path}}"
+   storeKey=true
+   useTicketCache=false
+   serviceName="{{kafka_bare_jaas_principal}}"
+   principal="{{kafka_jaas_principal}}";
+};
+KafkaClient {
+   com.sun.security.auth.module.Krb5LoginModule required
+   useTicketCache=true
+   renewTicket=true
+   serviceName="{{kafka_bare_jaas_principal}}";
+};
+Client {
+   com.sun.security.auth.module.Krb5LoginModule required
+   useKeyTab=true
+   keyTab="{{kafka_keytab_path}}"
+   storeKey=true
+   useTicketCache=true
+   serviceName="zookeeper"
+   principal="{{kafka_jaas_principal}}";
 };
