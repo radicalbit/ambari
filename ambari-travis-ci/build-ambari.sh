@@ -48,5 +48,5 @@ mvn versions:set -DnewVersion="2.2.0.0.0"
 pushd ambari-metrics
 mvn versions:set -DnewVersion="2.2.0.0.0"
 popd
-mvn -B clean install package -DnewVersion="2.2.0.0.0" -Dstack.distribution="RBP" $PKG -DskipTests -Dpython.ver="python >= 2.7" -Dfindbugs.skip=true -Preplaceurl
+mvn -B clean install package -DnewVersion="2.2.0.0.0" -Dstack.distribution="RBD" $PKG -DskipTests -Dpython.ver="python >= 2.7" -Dfindbugs.skip=true -Preplaceurl
 cd ..
