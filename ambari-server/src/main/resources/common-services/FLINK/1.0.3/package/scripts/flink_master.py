@@ -25,10 +25,11 @@ class FlinkMaster(FlinkService):
   def start(self, env):
     import params
     self.configure(env)
-    self.create_hdfs_user(params.flink_user)
 
     if params.security_enabled:
       self.start_krb_session(env)
+      
+    self.create_hdfs_user(params.flink_user)
 
     Execute(format("export HADOOP_CONF_DIR={hadoop_conf_dir}; {bin_dir}/jobmanager.sh start cluster {hostname} {jobmanager_web_port}"), user=params.flink_user)
 
@@ -43,13 +44,10 @@ class FlinkMaster(FlinkService):
       self.stop_krb_session(env)
 
   def status(self, env):
-    # import status_params as params
-    # env.set_params(params)
-    # pid_file = format("{flink_pid_dir}/flink-{flink_user}-jobmanager.pid")
-    # check_process_status(pid_file)
-    pid_file = "/var/run/flink/flink-flink-jobmanager.pid"
+    import status_params as params
+    env.set_params(params)
+    pid_file = format("{flink_pid_dir}/flink-{flink_user}-jobmanager.pid")
     check_process_status(pid_file)
-
 
   def create_hdfs_user(self, user):
     import params
