@@ -55,6 +55,9 @@ if security_enabled:
   flink_keytab = "/etc/security/keytabs/flink.headless.keytab"
   krb5_conf_path = "/etc/krb5.conf"
   flink_krb_ticket_renew_window = config['configurations']['flink-env']['flink_krb_ticket_renew_window']
+  hdfs_user_keytab = config['configurations']['hadoop-env']['hdfs_user_keytab']
+  hdfs_principal_name = default('/configurations/hadoop-env/hdfs_principal_name', None)
+  hdfs_user = config['configurations']['hadoop-env']['hdfs_user']
 
 alluxio_master = ''
 alluxio_default_name = 'file:///'
