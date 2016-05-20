@@ -102,8 +102,8 @@ jobmanager_web_checkpoints_history = config['configurations']['flink-config']['j
 # params from flink-env.yaml
 flink_user = config['configurations']['flink-env']['flink_user']
 user_group = config['configurations']['cluster-env']['user_group']
-flink_pid_dir = config['configurations']['flink-config']['env.pid.dir']
-flink_log_dir = config['configurations']['flink-config']['env.log.dir']
+flink_pid_dir = config['configurations']['flink-env']['env.pid.dir']
+flink_log_dir = config['configurations']['flink-env']['env.log.dir']
 flink_cluster_log_file = os.path.join(flink_log_dir,'flink-cluster.log')
 
 recovery_mode = config['configurations']['flink-config']['recovery.mode']
