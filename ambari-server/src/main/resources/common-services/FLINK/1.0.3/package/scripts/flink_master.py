@@ -28,7 +28,7 @@ class FlinkMaster(FlinkService):
 
     if params.security_enabled:
       self.start_krb_session(env)
-      
+
     self.create_hdfs_user(params.flink_user)
 
     Execute(format("export HADOOP_CONF_DIR={hadoop_conf_dir}; {bin_dir}/jobmanager.sh start cluster {hostname} {jobmanager_web_port}"), user=params.flink_user)
