@@ -95,6 +95,10 @@ tieredstore_level2_reserved_ratio = config['configurations']['alluxio-config']['
 # alluxio worker tieredstore reserver enabled
 tieredstore_reserver_enabled = config['configurations']['alluxio-config']['alluxio.worker.tieredstore.reserver.enabled']
 
+worker_web_port = config['configurations']['alluxio-config']['alluxio.worker.web.port']
+
+master_web_port = config['configurations']['alluxio-config']['alluxio.master.web.port']
+
 # alluxio user file readtype default
 readtype = config['configurations']['alluxio-config']['alluxio.user.file.readtype.default']
 
