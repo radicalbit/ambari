@@ -354,6 +354,17 @@ App.QuickLinks.FIXTURES = [
     site: 'zeppelin-site',
     regex: '^(\\d+)$',
     default_http_port: 18080
+  },
+  {
+    id: 38,
+    label:'Flink Web UI',
+    url:'%@://%@:%@/',
+    service_id: 'FLINK',
+    template:'%@://%@:%@/',
+    http_config: 'jobmanager.web.port',
+    site: 'flink-conf',
+    regex: '^(\\d+)$',
+    default_http_port: 8081
   }
 
 ];

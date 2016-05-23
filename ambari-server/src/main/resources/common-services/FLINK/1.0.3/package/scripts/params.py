@@ -27,7 +27,7 @@ import multiprocessing
 config = Script.get_config()
 
 # usefull dirs
-hadoop_conf_dir = conf_select.get_hadoop_conf_dir()
+hadoop_conf_dir = conf_select.get_hadoop_conf_dir() + '/'
 hdfs_default_name = config['configurations']['core-site']['fs.defaultFS']
 
 nodes_number = len(config['clusterHostInfo']['all_hosts'])
