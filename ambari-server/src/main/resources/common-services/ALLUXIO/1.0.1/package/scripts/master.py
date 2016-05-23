@@ -38,7 +38,7 @@ class Master(Alluxio):
 
     if params.current_host == params.alluxio_master_head:
 
-      self.alluxio_master_format_marker = os.path.join(params.pid_dir, 'ALLUXIO_MASTER_FORMATTED')
+      self.alluxio_master_format_marker = os.path.join(params.tmp_dir, 'ALLUXIO_MASTER_FORMATTED')
       if not os.path.exists(self.alluxio_master_format_marker):
 
         Logger.info('Formatting the Alluxio master...')

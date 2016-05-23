@@ -29,6 +29,7 @@ security_enabled = config['configurations']['cluster-env']['security_enabled']
 
 # alluxio installation dir
 base_dir = '/usr/lib/alluxio'
+tmp_dir = '/var/tmp/'
 
 # alluxio config dir
 alluxio_config_dir = '/etc/alluxio/conf'

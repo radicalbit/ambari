@@ -35,7 +35,7 @@ class Slave(Alluxio):
     self.configure(env)
     env.set_params(params)
 
-    self.alluxio_worker_format_marker = os.path.join(params.pid_dir, 'ALLUXIO_WORKER_FORMATTED')
+    self.alluxio_worker_format_marker = os.path.join(params.tmp_dir, 'ALLUXIO_WORKER_FORMATTED')
     if not os.path.exists(self.alluxio_worker_format_marker):
       # Logger.info('Formatting the Alluxio worker...')
       # Execute(params.base_dir + '/bin/alluxio formatWorker', user=params.root_user)

@@ -51,7 +51,7 @@ if security_enabled:
   kdestroy_path_local = kinit_path_local.replace('kinit', 'kdestroy')
   _flink_principal_name = config['configurations']['flink-env']['flink_principal_name']
   flink_jaas_principal = _flink_principal_name.replace('_HOST',hostname.lower())
-  flink_client_jass_path = "/etc/flink/conf.dist/flink_client_jaas.conf"
+  flink_client_jass_path = "/etc/flink/conf/flink_client_jaas.conf"
   flink_keytab = "/etc/security/keytabs/flink.headless.keytab"
   krb5_conf_path = "/etc/krb5.conf"
   flink_krb_ticket_renew_window = config['configurations']['flink-env']['flink_krb_ticket_renew_window']
