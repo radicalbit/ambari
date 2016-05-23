@@ -90,10 +90,14 @@ def kafka(upgrade_type=None):
       Logger.info(format("Kafka advertised listeners: {listeners}"))
     else:
       kafka_server_config['listeners'] = listeners
-      # del kafka_server_config['authorizer.class.name']
-      # del kafka_server_config['principal.to.local.class']
-      # del kafka_server_config['security.inter.broker.protocol']
-      # del kafka_server_config['super.users']
+      if hasattr(kafka_server_config, 'authorizer.class.name'):
+        del kafka_server_config['authorizer.class.name']
+      if hasattr(kafka_server_config, 'principal.to.local.class'):
+        del kafka_server_config['principal.to.local.class']
+      if hasattr(kafka_server_config, 'security.inter.broker.protocol'):
+        del kafka_server_config['security.inter.broker.protocol']
+      if hasattr(kafka_server_config, 'super.users'):
+        del kafka_server_config['super.users']
 
       if 'advertised.listeners' in kafka_server_config:
         advertised_listeners = kafka_server_config['advertised.listeners'].replace("localhost", params.hostname)
