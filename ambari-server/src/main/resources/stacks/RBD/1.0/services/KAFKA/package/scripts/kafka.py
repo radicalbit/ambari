@@ -76,6 +76,8 @@ def kafka(upgrade_type=None):
         kafka_server_config['broker.id'] = brokerid
         Logger.info(format("Calculating broker.id as {brokerid}"))
 
+    kafka_server_config['host.name'] = params.hostname
+
     listeners = kafka_server_config['listeners'].replace("localhost", params.hostname)
     Logger.info(format("Kafka listeners: {listeners}"))
 
@@ -87,6 +89,7 @@ def kafka(upgrade_type=None):
       kafka_server_config['listeners'] = listeners
       kafka_server_config['advertised.listeners'] = listeners
       kafka_server_config['sasl.kerberos.service.name'] = params.kafka_user
+      kafka_server_config['zookeeper.set.acl'] = 'true'
       Logger.info(format("Kafka advertised listeners: {listeners}"))
     else:
       kafka_server_config['listeners'] = listeners
@@ -98,11 +101,14 @@ def kafka(upgrade_type=None):
         del kafka_server_config['security.inter.broker.protocol']
       if hasattr(kafka_server_config, 'super.users'):
         del kafka_server_config['super.users']
+      if hasattr(kafka_server_config, 'zookeeper.set.acl'):
+        del kafka_server_config['zookeeper.set.acl']
 
       if 'advertised.listeners' in kafka_server_config:
         advertised_listeners = kafka_server_config['advertised.listeners'].replace("localhost", params.hostname)
         kafka_server_config['advertised.listeners'] = advertised_listeners
         Logger.info(format("Kafka advertised listeners: {advertised_listeners}"))
+
 
     # ---------------------------------------------
 
