@@ -378,7 +378,7 @@ App.QuickLinks.FIXTURES = [
     default_http_port: 19999
   },
   {
-    id: 39,
+    id: 40,
     label:'Worker Web UI',
     url:'%@://%@:%@/',
     service_id: 'ALLUXIO',
