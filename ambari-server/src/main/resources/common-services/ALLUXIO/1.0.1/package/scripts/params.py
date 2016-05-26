@@ -18,6 +18,7 @@ limitations under the License.
 
 """
 #import os
+from resource_management import *
 from resource_management.libraries.script.script import Script
 from resource_management.libraries.functions import conf_select
 
@@ -139,6 +140,9 @@ if 'zookeeper_hosts' in config['clusterHostInfo']:
       zookeeper_hosts = (':' + zookeeper_port + ',').join(zookeeper_hosts_list) + ':' + zookeeper_port
 
 if security_enabled:
+  kinit_path_local = get_kinit_path(default('/configurations/kerberos-env/executable_search_paths', None))
+  kdestroy_path_local = kinit_path_local.replace('kinit', 'kdestroy')
+
   alluxio_authentication_type = 'KERBEROS'
 
   is_current_node_master = current_host in config['clusterHostInfo']['alluxio_master_hosts']

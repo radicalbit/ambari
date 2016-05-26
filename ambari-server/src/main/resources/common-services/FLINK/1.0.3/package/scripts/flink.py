@@ -75,10 +75,10 @@ def flink(action = None):
 
     if params.security_enabled:
       File(
-          format("{conf_dir}/kafka_client_jaas.conf"),
+          format("{conf_dir}/flink_client_jaas.conf"),
           owner=params.flink_user,
           mode=0644,
-          content=Template('kafka_client_jaas.conf.j2', conf_dir=params.conf_dir)
+          content=Template('flink_client_jaas.conf.j2', conf_dir=params.conf_dir)
       )
       File(
           format("{conf_dir}/cron-kinit-flink.sh"),
