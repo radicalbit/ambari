@@ -56,6 +56,8 @@ cassandra_bin_dir = cassandra_install_dir + '/bin'
 cassandra_log_dir = cassandra_env['cassandra_log_dir']
 cassandra_pid_dir = cassandra_env['cassandra_pid_dir']
 
+tmp_dir = '/var/tmp'
+
 cluster_name = cassandra_conf['cluster_name']
 
 authorizer = cassandra_conf['authorizer']

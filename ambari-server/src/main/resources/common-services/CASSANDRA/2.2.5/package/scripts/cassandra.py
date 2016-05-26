@@ -96,6 +96,35 @@ def cassandra(action = None):
         content=Template('cassandra.in.sh.j2', conf_dir=params.cassandra_bin_dir)
     )
 
+  elif action == 'run':
+
+    filename = 'CASSANDRA_CHANGED'
+    file = os.path.join(params.tmp_dir, filename)
+
+    if params.security_enabled:
+      if not os.path.exists(file):
+        cassandra('start')
+
+        cmdfile=format("/tmp/cmds")
+        File(cmdfile,
+             mode=0600,
+             content=InlineTemplate("ALTER KEYSPACE \"system_auth\" WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : {{ cassandra_nodes_number }};")
+             )
+        Execute(format("{cassandra_bin_dir}/cqlsh {hostname} 9042 -f {cmdfile}"), logoutput=True)
+        Execute(format("{cassandra_bin_dir}/nodetool repair system_auth"), logoutput=True)
+
+        cassandra('restart')
+
+        open(file, 'a').close()
+      else:
+        cassandra('start')
+
+    else:
+      if os.path.exists(file):
+        Execute('rm -f {file}', user=params.cassandra_user)
+
+      cassandra('start')
+
   elif action == 'start':
 
     Execute(
@@ -105,11 +134,14 @@ def cassandra(action = None):
     cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep CassandraDaemon | awk '{print $1}'`> " + params.cassandra_pid_dir + "/cassandra.pid"
     Execute(cmd, user=params.cassandra_user)
 
-    cmdfile=format("/tmp/cmds")
-    File(cmdfile,
-         mode=0600,
-         content=InlineTemplate("ALTER KEYSPACE \"system_auth\" WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : {{ cassandra_nodes_number }};")
-         )
-    Execute(format("{cassandra_bin_dir}/cqlsh {hostname} 9042 -f {cmdfile}"), logoutput=True)
-    Execute(format("{cassandra_bin_dir}/nodetool repair system_auth"), logoutput=True)
+  elif action == 'stop':
+
+    Execute(format('kill `cat {params.cassandra_pid_dir}/cassandra.pid`'), user=params.cassandra_user)
+
+  elif action == 'restart':
+
+    cassandra('stop')
+    cassandra('start')
+
+
 

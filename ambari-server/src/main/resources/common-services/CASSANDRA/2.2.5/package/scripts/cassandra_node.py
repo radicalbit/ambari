@@ -44,7 +44,8 @@ class CassandraNode(Script):
 
   def stop(self, env):
     import params
-    Execute(format('kill `cat {params.cassandra_pid_dir}/cassandra.pid`'), user=params.cassandra_user)
+    env.set_params(params)
+    cassandra('stop')
 
   def status(self, env):
     import status_params as params
