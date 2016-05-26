@@ -10,7 +10,7 @@
       "configurations": [
         {
           "core-site": {
-            "hadoop.proxyuser.${alluxio-env/alluxio_user}}.groups": "*",
+            "hadoop.proxyuser.${alluxio-env/alluxio_user}.groups": "*",
             "hadoop.proxyuser.${alluxio-env/alluxio_user}.hosts": "*"
           }
         }
