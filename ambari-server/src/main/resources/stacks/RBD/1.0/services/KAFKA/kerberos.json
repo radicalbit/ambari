@@ -11,7 +11,7 @@
         {
           "kafka-broker": {
               "authorizer.class.name": "kafka.security.auth.SimpleAclAuthorizer",
-              "super.users": "user:${kafka-env/kafka_user}",
+              "super.users": "User:${kafka-env/kafka_user}",
               "sasl.mechanism.inter.broker.protocol": "GSSAPI",
               "sasl.enabled.mechanisms": "GSSAPI",
               "security.inter.broker.protocol": "SASL_PLAINTEXT"
