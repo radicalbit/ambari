@@ -91,7 +91,8 @@ def flink(action = None):
     # Create and add alluxio-site.properties jar
 
     Execute(
-        format("scp -o StrictHostKeyChecking=no {alluxio_master}:/etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
+        #format("scp -o StrictHostKeyChecking=no {alluxio_master}:/etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
+        format("cp /etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
         tries = 10,
         try_sleep=3,
         logoutput=True
