@@ -55,8 +55,9 @@ class Alluxio(Script):
     if not os.path.isfile(params.alluxio_config_dir + '/core-site.xml'):
       Execute('ln -s ' + params.hadoop_core_site + ' ' + params.alluxio_config_dir + '/core-site.xml')
 
-    Execute('chown -R ' + params.alluxio_user + ':' + params.user_group + ' ' + params.pid_dir, user='root')
-    Execute('chown -R ' + params.alluxio_user + ':' + params.user_group + ' ' + params.log_dir, user='root')
+    Execute('chown -R ' + params.alluxio_user + ':' + params.user_group + ' ' + params.pid_dir, user=params.root_user)
+    Execute('chown -R ' + params.alluxio_user + ':' + params.user_group + ' ' + params.log_dir, user=params.root_user)
+    Execute('chmod -R 777 ' + params.log_dir, user=params.root_user)
 
     File(
         format("{params.alluxio_config_dir}/alluxio-env.sh"),

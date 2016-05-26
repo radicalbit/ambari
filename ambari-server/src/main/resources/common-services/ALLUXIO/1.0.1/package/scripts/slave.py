@@ -35,17 +35,14 @@ class Slave(Alluxio):
     self.configure(env)
     env.set_params(params)
 
-    self.alluxio_worker_format_marker = os.path.join(params.tmp_dir, 'ALLUXIO_WORKER_FORMATTED')
-    if not os.path.exists(self.alluxio_worker_format_marker):
-      # Logger.info('Formatting the Alluxio worker...')
-      # Execute(params.base_dir + '/bin/alluxio formatWorker', user=params.root_user)
-
-      # update permissions on log folder
-      Execute('chown -R ' + params.alluxio_user + ':' + params.user_group + ' ' + params.log_dir, user=params.root_user)
-
-      # create marker
-      open(self.alluxio_worker_format_marker, 'a').close()
-      # Logger.info('Alluxio worker formatted.')
+    # self.alluxio_worker_format_marker = os.path.join(params.tmp_dir, 'ALLUXIO_WORKER_FORMATTED')
+    # if not os.path.exists(self.alluxio_worker_format_marker):
+    #   # Logger.info('Formatting the Alluxio worker...')
+    #   # Execute(params.base_dir + '/bin/alluxio formatWorker', user=params.root_user)
+    #
+    #   # create marker
+    #   open(self.alluxio_worker_format_marker, 'a').close()
+    #   # Logger.info('Alluxio worker formatted.')
 
     Logger.info('Starting Alluxio worker...')
     Execute(params.base_dir + '/bin/alluxio-start.sh worker SudoMount', user=params.alluxio_user)

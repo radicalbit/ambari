@@ -59,9 +59,6 @@ class Master(Alluxio):
         # 4-change owner to alluxio
         Execute('hdfs dfs -chown -R ' + params.alluxio_user + ':' + params.user_group + ' /' + folders[0], user='hdfs')
 
-        # update permissions on log folder
-        Execute('chown -R ' + params.alluxio_user + ':' + params.user_group + ' ' + params.log_dir, user=params.root_user)
-
         #update permissions on alluxio folder on hdfs
         Execute('hdfs dfs -chmod -R 775 /' + folders[0], user='hdfs')
 
