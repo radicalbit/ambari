@@ -38,7 +38,12 @@ class Master(Alluxio):
 
     if params.current_host == params.alluxio_master_head:
 
-      self.alluxio_master_format_marker = os.path.join(params.tmp_dir, 'ALLUXIO_MASTER_FORMATTED')
+      if params.security_enabled:
+        tmp_alluxio_file = 'ALLUXIO_MASTER_FORMATTED_SECURED'
+      else:
+        tmp_alluxio_file = 'ALLUXIO_MASTER_FORMATTED'
+
+      self.alluxio_master_format_marker = os.path.join(params.tmp_dir, tmp_alluxio_file)
       if not os.path.exists(self.alluxio_master_format_marker):
 
         Logger.info('Formatting the Alluxio master...')
@@ -61,9 +66,6 @@ class Master(Alluxio):
 
         #update permissions on alluxio folder on hdfs
         Execute('hdfs dfs -chmod -R 775 /' + folders[0], user='hdfs')
-
-        # update permissions on user.log file
-        Execute('chmod u=rw,g=rw,o=rw ' + params.log_dir + '/user.log', user=params.root_user)
 
         # create marker
         open(self.alluxio_master_format_marker, 'a').close()

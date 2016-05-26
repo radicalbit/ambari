@@ -14,6 +14,8 @@
               "super.users": "User:${kafka-env/kafka_user}",
               "sasl.mechanism.inter.broker.protocol": "GSSAPI",
               "sasl.enabled.mechanisms": "GSSAPI",
+              "allow.everyone.if.no.acl.found": "true",
+              "sasl.kerberos.principal.to.local.rules": "[RULE:[1:$1@$0](.*@${realm})s/@.*//, DEFAULT]",
               "security.inter.broker.protocol": "SASL_PLAINTEXT"
           }
         }

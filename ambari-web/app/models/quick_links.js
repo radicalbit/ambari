@@ -376,17 +376,6 @@ App.QuickLinks.FIXTURES = [
     site: 'alluxio-config',
     regex: '^(\\d+)$',
     default_http_port: 19999
-  },
-  {
-    id: 40,
-    label:'Worker Web UI',
-    url:'%@://%@:%@/',
-    service_id: 'ALLUXIO',
-    template:'%@://%@:%@/',
-    http_config: 'alluxio.worker.web.port',
-    site: 'alluxio-config',
-    regex: '^(\\d+)$',
-    default_http_port: 30000
   }
 
 ];
