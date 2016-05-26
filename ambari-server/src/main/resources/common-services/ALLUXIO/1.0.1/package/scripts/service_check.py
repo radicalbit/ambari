@@ -32,13 +32,10 @@ class AlluxioServiceCheck(Script):
     import params
     env.set_params(params)
 
-    Execute(format('{base_dir}/bin/alluxio runTest Basic {readtype} {writetype}'), user=params.alluxio_user, logoutput=True)
+    if params.security_enabled:
+      Execute(format('{kinit_path_local} {master_principal} -kt {master_keytab}'), user=params.alluxio_user)
 
-    # Execute(format("curl -s -o /dev/null -w '%{{http_code}}' --negotiate -u: -k http://{alluxio_master}:19999 | grep 200"),
-    #         tries = 10,
-    #         try_sleep=3,
-    #         logoutput=True
-    #         )
+    Execute(format('{base_dir}/bin/alluxio runTest Basic {readtype} {writetype}'), user=params.alluxio_user, logoutput=True)
 
 if __name__ == "__main__":
   AlluxioServiceCheck().execute()
