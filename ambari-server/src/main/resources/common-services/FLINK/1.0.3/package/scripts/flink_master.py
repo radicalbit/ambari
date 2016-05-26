@@ -56,20 +56,20 @@ class FlinkMaster(FlinkService):
   def create_hdfs_user(self, user):
     import params
 
-    Execute('hdfs dfs -mkdir -p /user/' + user, user='hdfs', not_if ='hdfs dfs -ls /user/' + user)
-    Execute('hdfs dfs -mkdir -p /' + user, user='hdfs', not_if ='hdfs dfs -ls /' + user)
-    Execute('hdfs dfs -mkdir -p ' + params.recovery_zookeeper_path_root, user='hdfs', not_if ='hdfs dfs -ls ' + params.recovery_zookeeper_path_root)
-    Execute('hdfs dfs -mkdir -p ' + params.state_backend_checkpointdir, user='hdfs', not_if ='hdfs dfs -ls ' + params.state_backend_checkpointdir)
+    Execute('hdfs dfs -mkdir -p /user/' + user, user=params.hdfs_user, not_if ='hdfs dfs -ls /user/' + user)
+    Execute('hdfs dfs -mkdir -p /' + user, user=params.hdfs_user, not_if ='hdfs dfs -ls /' + user)
+    Execute('hdfs dfs -mkdir -p ' + params.recovery_zookeeper_path_root, user=params.hdfs_user, not_if ='hdfs dfs -ls ' + params.recovery_zookeeper_path_root)
+    Execute('hdfs dfs -mkdir -p ' + params.state_backend_checkpointdir, user=params.hdfs_user, not_if ='hdfs dfs -ls ' + params.state_backend_checkpointdir)
 
-    Execute('hdfs dfs -chown ' + user + ' /user/'+user, user='hdfs')
-    Execute('hdfs dfs -chown ' + user + ' /'+user, user='hdfs')
-    Execute('hdfs dfs -chown ' + user + ' ' + params.recovery_zookeeper_path_root, user='hdfs')
-    Execute('hdfs dfs -chown ' + user + ' ' + params.state_backend_checkpointdir, user='hdfs')
+    Execute('hdfs dfs -chown ' + user + ' /user/'+user, user=params.hdfs_user)
+    Execute('hdfs dfs -chown ' + user + ' /'+user, user=params.hdfs_user)
+    Execute('hdfs dfs -chown ' + user + ' ' + params.recovery_zookeeper_path_root, user=params.hdfs_user)
+    Execute('hdfs dfs -chown ' + user + ' ' + params.state_backend_checkpointdir, user=params.hdfs_user)
 
-    Execute('hdfs dfs -chgrp ' + user + ' /user/'+user, user='hdfs')
-    Execute('hdfs dfs -chgrp ' + user + ' /'+user, user='hdfs')
-    Execute('hdfs dfs -chgrp ' + user + ' ' + params.recovery_zookeeper_path_root, user='hdfs')
-    Execute('hdfs dfs -chgrp ' + user + ' ' + params.state_backend_checkpointdir, user='hdfs')
+    Execute('hdfs dfs -chgrp ' + user + ' /user/'+user, user=params.hdfs_user)
+    Execute('hdfs dfs -chgrp ' + user + ' /'+user, user=params.hdfs_user)
+    Execute('hdfs dfs -chgrp ' + user + ' ' + params.recovery_zookeeper_path_root, user=params.hdfs_user)
+    Execute('hdfs dfs -chgrp ' + user + ' ' + params.state_backend_checkpointdir, user=params.hdfs_user)
 
 if __name__ == "__main__":
   FlinkMaster().execute()

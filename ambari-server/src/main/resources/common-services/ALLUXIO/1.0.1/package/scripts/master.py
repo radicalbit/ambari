@@ -51,13 +51,16 @@ class Master(Alluxio):
         # the following steps are needed to format correctly the journal of alluxio
         # 1-create as hdfs the journal folder
         folders = params.journal_relative_path.split('/')[1:]
-        Execute('hdfs dfs -mkdir /' + folders[0], user='hdfs', not_if ='hdfs dfs -ls /' + folders[0])
-        Execute('hdfs dfs -mkdir ' + params.journal_relative_path, user='hdfs', not_if ='hdfs dfs -ls ' + params.journal_relative_path)
+        if params.security_enabled:
+          Execute(params.kinit_path_local+' -kt '+params.hdfs_user_keytab+' '+params.hdfs_principal_name, user = 'hdfs')
+
+        Execute('hdfs dfs -mkdir -p /' + folders[0], user='hdfs', not_if ='hdfs dfs -ls /' + folders[0])
+        Execute('hdfs dfs -mkdir -p ' + params.journal_relative_path, user='hdfs', not_if ='hdfs dfs -ls ' + params.journal_relative_path)
         # 2-change owner to root
         Execute('hdfs dfs -chown -R ' + params.root_user + ':' + params.user_group + ' /' + folders[0], user='hdfs')
         # 3-format the cluster as root
         if params.security_enabled:
-          Execute(format('{kinit_path_local} {master_principal} -kt {master_keytab}'), user=params.root_user)
+          Execute(params.kinit_path_local+' '+params.master_principal+' -kt '+params.master_keytab, user=params.root_user)
         Execute(params.base_dir + '/bin/alluxio format', user=params.root_user)
         if params.security_enabled:
           Execute(params.kdestroy_path_local, user=params.root_user)

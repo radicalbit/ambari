@@ -143,6 +143,10 @@ if security_enabled:
   kinit_path_local = get_kinit_path(default('/configurations/kerberos-env/executable_search_paths', None))
   kdestroy_path_local = kinit_path_local.replace('kinit', 'kdestroy')
 
+  hdfs_user_keytab = config['configurations']['hadoop-env']['hdfs_user_keytab']
+  hdfs_principal_name = default('/configurations/hadoop-env/hdfs_principal_name', None)
+  hdfs_user = config['configurations']['hadoop-env']['hdfs_user']
+
   alluxio_authentication_type = 'KERBEROS'
 
   is_current_node_master = current_host in config['clusterHostInfo']['alluxio_master_hosts']
