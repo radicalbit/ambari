@@ -90,7 +90,7 @@ alluxio.master.port=19998
 alluxio.master.retry=29
 alluxio.master.ttl.checker.interval.ms=3600000
 alluxio.master.web.bind.host=0.0.0.0
-alluxio.master.web.port=19999
+alluxio.master.web.port={{ master_web_port }}
 alluxio.master.whitelist=/
 alluxio.master.worker.threads.max=2048
 alluxio.master.worker.timeout.ms=10000
@@ -142,7 +142,7 @@ alluxio.worker.tieredstore.level2.reserved.ratio={{ tieredstore_level2_reserved_
 alluxio.worker.tieredstore.reserver.enabled={{ tieredstore_reserver_enabled }}
 alluxio.worker.tieredstore.reserver.interval.ms=1000
 alluxio.worker.web.bind.host=0.0.0.0
-alluxio.worker.web.port=30000
+alluxio.worker.web.port={{ worker_web_port }}
 
 # User properties
 alluxio.user.block.master.client.threads=10

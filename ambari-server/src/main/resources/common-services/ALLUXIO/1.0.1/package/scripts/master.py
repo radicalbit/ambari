@@ -38,7 +38,12 @@ class Master(Alluxio):
 
     if params.current_host == params.alluxio_master_head:
 
-      self.alluxio_master_format_marker = os.path.join(params.pid_dir, 'ALLUXIO_MASTER_FORMATTED')
+      if params.security_enabled:
+        tmp_alluxio_file = 'ALLUXIO_MASTER_FORMATTED_SECURED'
+      else:
+        tmp_alluxio_file = 'ALLUXIO_MASTER_FORMATTED'
+
+      self.alluxio_master_format_marker = os.path.join(params.tmp_dir, tmp_alluxio_file)
       if not os.path.exists(self.alluxio_master_format_marker):
 
         Logger.info('Formatting the Alluxio master...')
@@ -46,23 +51,24 @@ class Master(Alluxio):
         # the following steps are needed to format correctly the journal of alluxio
         # 1-create as hdfs the journal folder
         folders = params.journal_relative_path.split('/')[1:]
-        Execute('hdfs dfs -mkdir /' + folders[0], user='hdfs', not_if ='hdfs dfs -ls /' + folders[0])
-        Execute('hdfs dfs -mkdir ' + params.journal_relative_path, user='hdfs', not_if ='hdfs dfs -ls ' + params.journal_relative_path)
+        if params.security_enabled:
+          Execute(params.kinit_path_local+' -kt '+params.hdfs_user_keytab+' '+params.hdfs_principal_name, user = 'hdfs')
+
+        Execute('hdfs dfs -mkdir -p /' + folders[0], user='hdfs', not_if ='hdfs dfs -ls /' + folders[0])
+        Execute('hdfs dfs -mkdir -p ' + params.journal_relative_path, user='hdfs', not_if ='hdfs dfs -ls ' + params.journal_relative_path)
         # 2-change owner to root
         Execute('hdfs dfs -chown -R ' + params.root_user + ':' + params.user_group + ' /' + folders[0], user='hdfs')
         # 3-format the cluster as root
+        if params.security_enabled:
+          Execute(params.kinit_path_local+' '+params.master_principal+' -kt '+params.master_keytab, user=params.root_user)
         Execute(params.base_dir + '/bin/alluxio format', user=params.root_user)
+        if params.security_enabled:
+          Execute(params.kdestroy_path_local, user=params.root_user)
         # 4-change owner to alluxio
         Execute('hdfs dfs -chown -R ' + params.alluxio_user + ':' + params.user_group + ' /' + folders[0], user='hdfs')
 
-        # update permissions on log folder
-        Execute('chown -R ' + params.alluxio_user + ':' + params.user_group + ' ' + params.log_dir, user=params.root_user)
-
         #update permissions on alluxio folder on hdfs
         Execute('hdfs dfs -chmod -R 775 /' + folders[0], user='hdfs')
-
-        # update permissions on user.log file
-        Execute('chmod u=rw,g=rw,o=rw ' + params.log_dir + '/user.log', user=params.root_user)
 
         # create marker
         open(self.alluxio_master_format_marker, 'a').close()

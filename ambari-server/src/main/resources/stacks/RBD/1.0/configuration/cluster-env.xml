@@ -50,7 +50,7 @@
     </property>
     <property>
         <name>user_group</name>
-        <value>rbp-services</value>
+        <value>rbd-services</value>
         <property-type>GROUP</property-type>
         <description>Radicalbit user group.</description>
     </property>

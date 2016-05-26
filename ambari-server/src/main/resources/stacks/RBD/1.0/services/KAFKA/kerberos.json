@@ -11,9 +11,12 @@
         {
           "kafka-broker": {
               "authorizer.class.name": "kafka.security.auth.SimpleAclAuthorizer",
-              "principal.to.local.class":"kafka.security.auth.KerberosPrincipalToLocal",
-              "super.users": "user:${kafka-env/kafka_user}",
-              "security.inter.broker.protocol": "PLAINTEXTSASL"
+              "super.users": "User:${kafka-env/kafka_user}",
+              "sasl.mechanism.inter.broker.protocol": "GSSAPI",
+              "sasl.enabled.mechanisms": "GSSAPI",
+              "allow.everyone.if.no.acl.found": "true",
+              "sasl.kerberos.principal.to.local.rules": "RULE:[1:$1@$0](.*@${realm})s/@.*//, DEFAULT",
+              "security.inter.broker.protocol": "SASL_PLAINTEXT"
           }
         }
       ],

@@ -28,7 +28,7 @@ import multiprocessing
 config = Script.get_config()
 
 # usefull dirs
-hadoop_conf_dir = conf_select.get_hadoop_conf_dir()
+hadoop_conf_dir = conf_select.get_hadoop_conf_dir() + '/'
 hdfs_default_name = config['configurations']['core-site']['fs.defaultFS']
 
 nodes_number = len(config['clusterHostInfo']['all_hosts'])
@@ -41,20 +41,24 @@ alluxio_jar_name = 'alluxio-core-client-1.1.0-jar-with-dependencies.jar'
 
 security_enabled = config['configurations']['cluster-env']['security_enabled']
 
-if security_enabled:
-  kinit_path_local = get_kinit_path(default('/configurations/kerberos-env/executable_search_paths', None))
-  _hostname_lowercase = config['hostname'].lower()
-  _flink_principal_name = config['configurations']['flink-env']['flink_principal_name']
-  flink_jaas_principal = _flink_principal_name.replace('_HOST',_hostname_lowercase)
-  flink_client_jass_path = "/etc/flink/conf.dist/flink_client_jaas.conf"
-  flink_keytab = "/etc/security/keytabs/flink.service.keytab"
-  krb5_conf_path = "/etc/krb5.conf"
-
 hostname = config['hostname']
 flink_masters = config['clusterHostInfo']['flink_master_hosts']
 flink_slaves = config['clusterHostInfo']['flink_slave_hosts']
 flink_master = flink_masters[0]
 custer_hosts = config['clusterHostInfo']['all_hosts']
+
+if security_enabled:
+  kinit_path_local = get_kinit_path(default('/configurations/kerberos-env/executable_search_paths', None))
+  kdestroy_path_local = kinit_path_local.replace('kinit', 'kdestroy')
+  _flink_principal_name = config['configurations']['flink-env']['flink_principal_name']
+  flink_jaas_principal = _flink_principal_name.replace('_HOST',hostname.lower())
+  flink_client_jass_path = "/etc/flink/conf/flink_client_jaas.conf"
+  flink_keytab = "/etc/security/keytabs/flink.headless.keytab"
+  krb5_conf_path = "/etc/krb5.conf"
+  flink_krb_ticket_renew_window = config['configurations']['flink-env']['flink_krb_ticket_renew_window']
+  hdfs_user_keytab = config['configurations']['hadoop-env']['hdfs_user_keytab']
+  hdfs_principal_name = default('/configurations/hadoop-env/hdfs_principal_name', None)
+  hdfs_user = config['configurations']['hadoop-env']['hdfs_user']
 
 alluxio_master = ''
 alluxio_default_name = 'file:///'
@@ -102,9 +106,8 @@ jobmanager_web_checkpoints_history = config['configurations']['flink-config']['j
 # params from flink-env.yaml
 flink_user = config['configurations']['flink-env']['flink_user']
 user_group = config['configurations']['cluster-env']['user_group']
-flink_pid_dir = config['configurations']['flink-config']['env.pid.dir']
-flink_log_dir = config['configurations']['flink-config']['env.log.dir']
-flink_cluster_log_file = os.path.join(flink_log_dir,'flink-cluster.log')
+flink_pid_dir = config['configurations']['flink-env']['env.pid.dir']
+flink_log_dir = config['configurations']['flink-env']['env.log.dir']
 
 recovery_mode = config['configurations']['flink-config']['recovery.mode']
 

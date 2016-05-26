@@ -21,5 +21,5 @@ from resource_management.libraries.script.script import Script
 
 config = Script.get_config()
 
-flink_pid_dir = config['configurations']['flink-config']['env.pid.dir']
+flink_pid_dir = config['configurations']['flink-env']['env.pid.dir']
 flink_user = config['configurations']['flink-env']['flink_user']

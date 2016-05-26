@@ -30,7 +30,7 @@
                     <name>FLINK_MASTER</name>
                     <displayName>Flink JobManager</displayName>
                     <category>MASTER</category>
-                    <cardinality>1</cardinality>
+                    <cardinality>1+</cardinality>
                     <commandScript>
                         <script>scripts/flink_master.py</script>
                         <scriptType>PYTHON</scriptType>

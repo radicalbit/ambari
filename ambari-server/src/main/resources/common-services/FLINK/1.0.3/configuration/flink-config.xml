@@ -23,18 +23,6 @@
   <!--General-->
 
   <property>
-    <name>env.log.dir</name>
-    <value>/var/log/flink</value>
-    <description>Default directory for Flink logs.</description>
-  </property>
-
-  <property>
-    <name>env.pid.dir</name>
-    <value>/var/run/flink</value>
-    <description>Dir containing process ID files.</description>
-  </property>
-
-  <property>
     <name>jobmanager.rpc.port</name>
     <value>6123</value>
     <description>The port number of the JobManager (DEFAULT: 6123).</description>

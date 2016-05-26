@@ -25,42 +25,51 @@ class FlinkMaster(FlinkService):
   def start(self, env):
     import params
     self.configure(env)
+
+    if params.security_enabled:
+      Execute(format("{kinit_path_local} -kt {hdfs_user_keytab} {hdfs_principal_name}"),
+              user = params.hdfs_user)
+
     self.create_hdfs_user(params.flink_user)
+
+    if params.security_enabled:
+      self.start_krb_session(env)
 
     Execute(format("export HADOOP_CONF_DIR={hadoop_conf_dir}; {bin_dir}/jobmanager.sh start cluster {hostname} {jobmanager_web_port}"), user=params.flink_user)
 
   def stop(self, env):
     import params
     env.set_params(params)
-    Execute(format("nohup {bin_dir}/jobmanager.sh stop"), user=params.flink_user)
+
+    Execute(format("{bin_dir}/jobmanager.sh stop"), user=params.flink_user)
     Execute(format("rm -f {flink_pid_dir}/flink-{flink_user}-jobmanager.pid"), user=params.flink_user)
 
-  def status(self, env):
-    # import status_params as params
-    # env.set_params(params)
-    # pid_file = format("{flink_pid_dir}/flink-{flink_user}-jobmanager.pid")
-    # check_process_status(pid_file)
-    pid_file = "/var/run/flink/flink-flink-jobmanager.pid"
-    check_process_status(pid_file)
+    if params.security_enabled:
+      self.stop_krb_session(env)
 
+  def status(self, env):
+    import status_params as params
+    env.set_params(params)
+    pid_file = format("{flink_pid_dir}/flink-{flink_user}-jobmanager.pid")
+    check_process_status(pid_file)
 
   def create_hdfs_user(self, user):
     import params
 
-    Execute('hdfs dfs -mkdir -p /user/' + user, user='hdfs', not_if ='hdfs dfs -ls /user/' + user)
-    Execute('hdfs dfs -mkdir -p /' + user, user='hdfs', not_if ='hdfs dfs -ls /' + user)
-    Execute('hdfs dfs -mkdir -p ' + params.recovery_zookeeper_path_root, user='hdfs', not_if ='hdfs dfs -ls ' + params.recovery_zookeeper_path_root)
-    Execute('hdfs dfs -mkdir -p ' + params.state_backend_checkpointdir, user='hdfs', not_if ='hdfs dfs -ls ' + params.state_backend_checkpointdir)
+    Execute('hdfs dfs -mkdir -p /user/' + user, user=params.hdfs_user, not_if ='hdfs dfs -ls /user/' + user)
+    Execute('hdfs dfs -mkdir -p /' + user, user=params.hdfs_user, not_if ='hdfs dfs -ls /' + user)
+    Execute('hdfs dfs -mkdir -p ' + params.recovery_zookeeper_path_root, user=params.hdfs_user, not_if ='hdfs dfs -ls ' + params.recovery_zookeeper_path_root)
+    Execute('hdfs dfs -mkdir -p ' + params.state_backend_checkpointdir, user=params.hdfs_user, not_if ='hdfs dfs -ls ' + params.state_backend_checkpointdir)
 
-    Execute('hdfs dfs -chown ' + user + ' /user/'+user, user='hdfs')
-    Execute('hdfs dfs -chown ' + user + ' /'+user, user='hdfs')
-    Execute('hdfs dfs -chown ' + user + ' ' + params.recovery_zookeeper_path_root, user='hdfs')
-    Execute('hdfs dfs -chown ' + user + ' ' + params.state_backend_checkpointdir, user='hdfs')
+    Execute('hdfs dfs -chown ' + user + ' /user/'+user, user=params.hdfs_user)
+    Execute('hdfs dfs -chown ' + user + ' /'+user, user=params.hdfs_user)
+    Execute('hdfs dfs -chown ' + user + ' ' + params.recovery_zookeeper_path_root, user=params.hdfs_user)
+    Execute('hdfs dfs -chown ' + user + ' ' + params.state_backend_checkpointdir, user=params.hdfs_user)
 
-    Execute('hdfs dfs -chgrp ' + user + ' /user/'+user, user='hdfs')
-    Execute('hdfs dfs -chgrp ' + user + ' /'+user, user='hdfs')
-    Execute('hdfs dfs -chgrp ' + user + ' ' + params.recovery_zookeeper_path_root, user='hdfs')
-    Execute('hdfs dfs -chgrp ' + user + ' ' + params.state_backend_checkpointdir, user='hdfs')
+    Execute('hdfs dfs -chgrp ' + user + ' /user/'+user, user=params.hdfs_user)
+    Execute('hdfs dfs -chgrp ' + user + ' /'+user, user=params.hdfs_user)
+    Execute('hdfs dfs -chgrp ' + user + ' ' + params.recovery_zookeeper_path_root, user=params.hdfs_user)
+    Execute('hdfs dfs -chgrp ' + user + ' ' + params.state_backend_checkpointdir, user=params.hdfs_user)
 
 if __name__ == "__main__":
   FlinkMaster().execute()

@@ -18,6 +18,7 @@ limitations under the License.
 
 """
 #import os
+from resource_management import *
 from resource_management.libraries.script.script import Script
 from resource_management.libraries.functions import conf_select
 
@@ -29,6 +30,7 @@ security_enabled = config['configurations']['cluster-env']['security_enabled']
 
 # alluxio installation dir
 base_dir = '/usr/lib/alluxio'
+tmp_dir = '/var/tmp/'
 
 # alluxio config dir
 alluxio_config_dir = '/etc/alluxio/conf'
@@ -94,6 +96,10 @@ tieredstore_level2_reserved_ratio = config['configurations']['alluxio-config']['
 # alluxio worker tieredstore reserver enabled
 tieredstore_reserver_enabled = config['configurations']['alluxio-config']['alluxio.worker.tieredstore.reserver.enabled']
 
+worker_web_port = config['configurations']['alluxio-config']['alluxio.worker.web.port']
+
+master_web_port = config['configurations']['alluxio-config']['alluxio.master.web.port']
+
 # alluxio user file readtype default
 readtype = config['configurations']['alluxio-config']['alluxio.user.file.readtype.default']
 
@@ -134,6 +140,13 @@ if 'zookeeper_hosts' in config['clusterHostInfo']:
       zookeeper_hosts = (':' + zookeeper_port + ',').join(zookeeper_hosts_list) + ':' + zookeeper_port
 
 if security_enabled:
+  kinit_path_local = get_kinit_path(default('/configurations/kerberos-env/executable_search_paths', None))
+  kdestroy_path_local = kinit_path_local.replace('kinit', 'kdestroy')
+
+  hdfs_user_keytab = config['configurations']['hadoop-env']['hdfs_user_keytab']
+  hdfs_principal_name = default('/configurations/hadoop-env/hdfs_principal_name', None)
+  hdfs_user = config['configurations']['hadoop-env']['hdfs_user']
+
   alluxio_authentication_type = 'KERBEROS'
 
   is_current_node_master = current_host in config['clusterHostInfo']['alluxio_master_hosts']
