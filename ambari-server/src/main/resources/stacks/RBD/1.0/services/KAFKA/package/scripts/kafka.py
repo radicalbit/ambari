@@ -147,7 +147,7 @@ def kafka(upgrade_type=None):
          )
 
     if params.security_enabled and params.kafka_kerberos_enabled:
-        TemplateConfig(format("{conf_dir}/kafka_server_jaas.conf"),
+        TemplateConfig(format("{conf_dir}/kafka_jaas.conf"),
                          owner=params.kafka_user)
 
         TemplateConfig(format("{conf_dir}/kafka_client_jaas.conf"),
