@@ -33,7 +33,7 @@ class AlluxioServiceCheck(Script):
     env.set_params(params)
 
     if params.security_enabled:
-      Execute(format('{kinit_path_local} {master_principal} -kt {master_keytab}'), user=params.alluxio_user)
+      Execute(format('{kinit_path_local} {worker_principal} -kt {worker_keytab}'), user=params.alluxio_user)
 
     Execute(format('{base_dir}/bin/alluxio runTest Basic {readtype} {writetype}'), user=params.alluxio_user, logoutput=True)
 
