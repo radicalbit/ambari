@@ -16,43 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
-from resource_management import *
-from cassandra import cassandra
+from cassandra import CassandraComponent
 
-class CassandraSeed(Script):
-
-  def install(self, env):
-    import params
-    env.set_params(params)
-    self.install_packages(env)
-    cassandra('install')
-
-
-  def configure(self, env):
-    import params
-    env.set_params(params)
-    cassandra('configure')
-
-  def start(self, env):
-    import params
-    env.set_params(params)
-    self.configure(env)
-
-    Logger.info('Starting Cassandra seed...')
-
-    cassandra('start')
-
-  def stop(self, env):
-    import params
-    env.set_params(params)
-    cassandra('stop')
-
-  def status(self, env):
-    import status_params as params
-    env.set_params(params)
-    pid_file = format("{cassandra_pid_dir}/cassandra.pid")
-    check_process_status(pid_file)
-
+class CassandraSeed(CassandraComponent): pass
 
 if __name__ == '__main__':
   CassandraSeed().execute()

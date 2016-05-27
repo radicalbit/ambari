@@ -19,10 +19,13 @@ limitations under the License.
 import os
 from resource_management import *
 
-def cassandra(action = None):
-  import params
+class CassandraComponent(Script):
 
-  if action == 'install':
+  def install(self, env):
+    import params
+    env.set_params(params)
+    self.install_packages(env)
+
     security_folder = '/etc/security/limits.d'
 
     File(
@@ -45,7 +48,9 @@ def cassandra(action = None):
 
     Execute('swapoff --all', user='root')
 
-  elif action == 'configure' :
+  def configure(self, env):
+    import params
+    env.set_params(params)
 
     Directory(
         [params.commitlog_directory, params.data_file_directories, params.saved_caches_directory, params.cassandra_pid_dir],
@@ -96,14 +101,17 @@ def cassandra(action = None):
         content=Template('cassandra.in.sh.j2', conf_dir=params.cassandra_bin_dir)
     )
 
-  elif action == 'run':
+  def start(self, env):
+    import params
+    env.set_params(params)
+    self.configure(env)
 
     filename = 'CASSANDRA_CHANGED'
     file = os.path.join(params.tmp_dir, filename)
 
     if params.security_enabled:
       if not os.path.exists(file):
-        cassandra('start')
+        self.stop(env)
 
         cmdfile=format("/tmp/cmds")
         File(cmdfile,
@@ -113,35 +121,40 @@ def cassandra(action = None):
         Execute(format("{cassandra_bin_dir}/cqlsh {hostname} 9042 -f {cmdfile}"), logoutput=True)
         Execute(format("{cassandra_bin_dir}/nodetool repair system_auth"), logoutput=True)
 
-        cassandra('restart')
+        self.restart(env)
 
         open(file, 'a').close()
       else:
-        cassandra('start')
+        self.run(env)
 
     else:
       if os.path.exists(file):
         Execute('rm -f {file}', user=params.cassandra_user)
 
-      cassandra('start')
+      self.run(env)
 
-  elif action == 'start':
+  def stop(self, env):
+    import params
+    env.set_params(params)
+    Execute(format('kill `cat {params.cassandra_pid_dir}/cassandra.pid`'), user=params.cassandra_user)
 
+  def status(self, env):
+    import status_params as params
+    env.set_params(params)
+    pid_file = format("{cassandra_pid_dir}/cassandra.pid")
+    check_process_status(pid_file)
+
+  def restart(self, env):
+    self.run(env)
+    self.stop(env)
+
+  def run(self, env):
     Execute(
         format('{params.cassandra_bin_dir}/cassandra'),
         user=params.cassandra_user
     )
     cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep CassandraDaemon | awk '{print $1}'`> " + params.cassandra_pid_dir + "/cassandra.pid"
     Execute(cmd, user=params.cassandra_user)
-
-  elif action == 'stop':
-
-    Execute(format('kill `cat {params.cassandra_pid_dir}/cassandra.pid`'), user=params.cassandra_user)
-
-  elif action == 'restart':
-
-    cassandra('stop')
-    cassandra('start')
 
 
 
