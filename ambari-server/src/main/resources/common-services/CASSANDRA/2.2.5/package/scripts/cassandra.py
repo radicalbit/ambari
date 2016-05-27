@@ -65,14 +65,6 @@ class CassandraComponent(Script):
     Execute(format('chown -R {params.cassandra_user}:{params.user_group} {params.saved_caches_directory}'), user='root')
     Execute(format('chown -R {params.cassandra_user}:{params.user_group} {params.cassandra_pid_dir}'), user='root')
 
-    if params.security_enabled:
-      File(
-          format("{params.cassandra_conf_dir}/kerberos.conf"),
-          owner=params.cassandra_user,
-          mode=0644,
-          content=Template('kerberos.conf.j2', conf_dir=params.cassandra_conf_dir)
-      )
-
     File(
         format("{params.cassandra_conf_dir}/cassandra.yaml"),
         owner=params.cassandra_user,
@@ -101,6 +93,20 @@ class CassandraComponent(Script):
         content=Template('cassandra.in.sh.j2', conf_dir=params.cassandra_bin_dir)
     )
 
+    if params.security_enabled:
+      File(
+          format("{params.cassandra_conf_dir}/kerberos.conf"),
+          owner=params.cassandra_user,
+          mode=0644,
+          content=Template('kerberos.conf.j2', conf_dir=params.cassandra_conf_dir)
+      )
+      if not os.path.exists(format("{params.cassandra_lib_dir}/{params.cassandra_jar_name}")):
+        Execute(
+            format('wget {params.jar_url}/{params.cassandra_jar_name} -O {params.cassandra_lib_dir}/{params.cassandra_jar_name} -a /tmp/cassandra_download.log'),
+            user='root',
+            not_if=format('test -d /tmp/{jar_name}')
+        )
+
   def start(self, env):
     import params
     env.set_params(params)
@@ -111,7 +117,7 @@ class CassandraComponent(Script):
 
     if params.security_enabled:
       if not os.path.exists(file):
-        self.stop(env)
+        self.run(env)
 
         cmdfile=format("/tmp/cmds")
         File(cmdfile,
@@ -149,12 +155,12 @@ class CassandraComponent(Script):
     self.stop(env)
 
   def run(self, env):
+    import params
+    env.set_params(params)
+    
     Execute(
         format('{params.cassandra_bin_dir}/cassandra'),
         user=params.cassandra_user
     )
     cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep CassandraDaemon | awk '{print $1}'`> " + params.cassandra_pid_dir + "/cassandra.pid"
     Execute(cmd, user=params.cassandra_user)
-
-
-

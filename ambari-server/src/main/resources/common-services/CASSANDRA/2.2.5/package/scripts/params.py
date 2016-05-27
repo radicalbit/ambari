@@ -16,7 +16,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
-from utils import get_property_value
 from resource_management.libraries.script.script import Script
 
 config = Script.get_config()
@@ -25,9 +24,31 @@ configurations = config['configurations']
 cassandra_env = configurations['cassandra-env']
 cassandra_conf = configurations['cassandra-conf']
 
-# alluxio jar params
+def get_property_value(dictionary, property_name, default_value=None, trim_string=False,
+                       empty_value=""):
+  # If property_name is not in the dictionary, set value to null_value
+  if property_name in dictionary:
+    value = dictionary[property_name]
+    if value is None:
+      value = default_value
+  else:
+    value = default_value
+
+  if trim_string:
+    # If the value is none, consider it empty...
+    if value is None:
+      value = empty_value
+    elif (type(value) == str) or (type(value) == unicode):
+      value = value.strip()
+
+      if len(value) == 0:
+        value = empty_value
+
+  return value
+
+# jar params
 jar_url = 'https://public-repo.radicalbit.io/jars'
-cassandra_jar_name = 'cassandra‐kerberosauthentication‐1.0.jar'
+cassandra_jar_name = 'cassandra-kerberosauthentication-1.0.jar'
 
 security_enabled = configurations['cluster-env']['security_enabled']
 
@@ -52,6 +73,7 @@ user_group = config['configurations']['cluster-env']['user_group']
 cassandra_install_dir = '/usr/lib/cassandra'
 cassandra_conf_dir = cassandra_install_dir + '/conf'
 cassandra_bin_dir = cassandra_install_dir + '/bin'
+cassandra_lib_dir = cassandra_install_dir + '/lib'
 
 cassandra_log_dir = cassandra_env['cassandra_log_dir']
 cassandra_pid_dir = cassandra_env['cassandra_pid_dir']
