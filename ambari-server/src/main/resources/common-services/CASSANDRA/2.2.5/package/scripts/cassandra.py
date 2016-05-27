@@ -110,7 +110,6 @@ class CassandraComponent(Script):
   def start(self, env):
     import params
     env.set_params(params)
-    self.configure(env)
 
     filename = 'CASSANDRA_CHANGED'
     file = os.path.join(params.tmp_dir, filename)
@@ -127,10 +126,13 @@ class CassandraComponent(Script):
         Execute(format("{cassandra_bin_dir}/cqlsh {hostname} 9042 -f {cmdfile}"), logoutput=True)
         Execute(format("{cassandra_bin_dir}/nodetool repair system_auth"), logoutput=True)
 
-        self.restart(env)
+        self.stop(env)
+        self.configure(env)
+        self.run(env)
 
         open(file, 'a').close()
       else:
+        self.configure(env)
         self.run(env)
 
     else:
@@ -150,14 +152,10 @@ class CassandraComponent(Script):
     pid_file = format("{cassandra_pid_dir}/cassandra.pid")
     check_process_status(pid_file)
 
-  def restart(self, env):
-    self.run(env)
-    self.stop(env)
-
   def run(self, env):
     import params
     env.set_params(params)
-    
+
     Execute(
         format('{params.cassandra_bin_dir}/cassandra'),
         user=params.cassandra_user
