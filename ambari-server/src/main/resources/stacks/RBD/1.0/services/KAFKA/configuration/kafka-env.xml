@@ -65,6 +65,8 @@
 # Set KAFKA specific environment variables here.
 
 # The java implementation to use.
+JAVA_HOME={{java64_home}}
+PATH=$PATH:$JAVA_HOME/bin
 export PID_DIR={{kafka_pid_dir}}
 export LOG_DIR={{kafka_log_dir}}
 # Add kafka sink to classpath and related depenencies

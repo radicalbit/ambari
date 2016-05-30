@@ -23,15 +23,18 @@ fi
 
 base_dir=$(dirname $0)/..
 
-JAVA_HOME={{java64_home}}
-PATH=$PATH:$JAVA_HOME/bin
-
 if [ -z "$SCALA_VERSION" ]; then
 	SCALA_VERSION=2.10.5
 fi
 
 if [ -z "$SCALA_BINARY_VERSION" ]; then
 	SCALA_BINARY_VERSION=2.10
+fi
+
+# run kafka-env.sh
+KAFKA_ENV=$base_dir/config/kafka-env.sh
+if [ -f $KAFKA_ENV ]; then
+    . $KAFKA_ENV
 fi
 
 # run ./gradlew copyDependantLibs to get all dependant jars in a local dir
@@ -130,6 +133,14 @@ fi
 if [ -z "$KAFKA_JVM_PERFORMANCE_OPTS" ]; then
   KAFKA_JVM_PERFORMANCE_OPTS="-server -XX:+UseG1GC -XX:MaxGCPauseMillis=20 -XX:InitiatingHeapOccupancyPercent=35 -XX:+DisableExplicitGC -Djava.awt.headless=true"
 fi
+
+{% if security_enabled %}
+if [ -z "KAFKA_KERBEROS_OPTS" ]; then
+  KAFKA_KERBEROS_OPTS="{{kafka_client_kerberos_params}}"
+else
+  KAFKA_KERBEROS_OPTS="{{kafka_kerberos_params}}"
+fi
+{% endif %}
 
 
 while [ $# -gt 0 ]; do

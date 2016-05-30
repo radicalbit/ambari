@@ -30,7 +30,7 @@ if [ "x$KAFKA_HEAP_OPTS" = "x" ]; then
 fi
 
 {% if security_enabled %}
-export KERBEROS_OPTS="{{kafka_kerberos_params}}"
+export KAFKA_KERBEROS_OPTS="{{kafka_kerberos_params}}"
 {% endif %}
 
 EXTRA_ARGS="-name kafkaServer -loggc"
