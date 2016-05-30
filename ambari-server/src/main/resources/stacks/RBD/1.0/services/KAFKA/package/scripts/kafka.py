@@ -138,6 +138,13 @@ def kafka(upgrade_type=None):
           content=InlineTemplate(params.kafka_env_sh_template)
      )
 
+    File(
+        format("{conf_dir}/kafka-run-class.sh"),
+        owner=params.kafka_user,
+        mode=0700,
+        content=Template('kafka-run-class.sh.j2', conf_dir=params.conf_dir)
+    )
+
     if (params.log4j_props != None):
         File(format("{conf_dir}/log4j.properties"),
              mode=0644,
