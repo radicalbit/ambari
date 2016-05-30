@@ -139,9 +139,9 @@ def kafka(upgrade_type=None):
      )
 
     File(
-        format("{conf_dir}/kafka-run-class.sh"),
+        format("{kafka_home}/bin/kafka-run-class.sh"),
         owner=params.kafka_user,
-        mode=0700,
+        mode=0755,
         content=Template('kafka-run-class.sh.j2', conf_dir=params.conf_dir)
     )
 
