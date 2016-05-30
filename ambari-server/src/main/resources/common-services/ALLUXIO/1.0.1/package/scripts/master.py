@@ -59,11 +59,7 @@ class Master(Alluxio):
         # 2-change owner to root
         Execute('hdfs dfs -chown -R ' + params.root_user + ':' + params.user_group + ' /' + folders[0], user='hdfs')
         # 3-format the cluster as root
-        if params.security_enabled:
-          Execute(params.kinit_path_local+' '+params.master_principal+' -kt '+params.master_keytab, user=params.root_user)
-        Execute(params.base_dir + '/bin/alluxio format', user=params.root_user)
-        if params.security_enabled:
-          Execute(params.kdestroy_path_local, user=params.root_user)
+        Execute(params.base_dir + '/bin/alluxio format', user='hdfs')
         # 4-change owner to alluxio
         Execute('hdfs dfs -chown -R ' + params.alluxio_user + ':' + params.user_group + ' /' + folders[0], user='hdfs')
 
