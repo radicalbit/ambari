@@ -59,7 +59,7 @@ hostname = config['hostname']
 # default kafka parameters
 kafka_home = '/usr/lib/kafka/'
 #kafka_bin ='/etc/default/kafka'
-conf_dir = "/etc/kafka/conf.dist"
+conf_dir = "/etc/kafka/conf"
 limits_conf_dir = "/etc/security/limits.d"
 
 # Used while upgrading the stack in a kerberized cluster and running kafka-acls.sh

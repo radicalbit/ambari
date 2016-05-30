@@ -135,10 +135,10 @@ if [ -z "$KAFKA_JVM_PERFORMANCE_OPTS" ]; then
 fi
 
 {% if security_enabled %}
-if [ -z "KAFKA_KERBEROS_OPTS" ]; then
-  KAFKA_KERBEROS_OPTS="{{kafka_client_kerberos_params}}"
-else
+if [[ "$*" =~ "kafka.Kafka" ]]; then
   KAFKA_KERBEROS_OPTS="{{kafka_kerberos_params}}"
+else
+  KAFKA_KERBEROS_OPTS="{{kafka_client_kerberos_params}}"
 fi
 {% endif %}
 

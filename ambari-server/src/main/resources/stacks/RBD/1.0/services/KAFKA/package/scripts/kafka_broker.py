@@ -46,7 +46,7 @@ class KafkaBroker(Script):
     import params
     env.set_params(params)
     self.configure(env, upgrade_type=upgrade_type)
-    daemon_cmd = format('source {params.conf_dir}/kafka-env.sh ; nohup {params.kafka_home}/bin/kafka-server-start.sh {params.conf_dir}/server.properties >>{params.conf_dir}/kafka.out 2>>{params.conf_dir}/kafka.err & echo $! > {params.kafka_pid_file}')
+    daemon_cmd = format('nohup {params.kafka_home}/bin/kafka-server-start.sh {params.conf_dir}/server.properties >>{params.conf_dir}/kafka.out 2>>{params.conf_dir}/kafka.err & echo $! > {params.kafka_pid_file}')
     no_op_test = format('ls {params.kafka_pid_file} >/dev/null 2>&1 && ps -p `cat {params.kafka_pid_file}` >/dev/null 2>&1')
     Execute(daemon_cmd,
             user=params.kafka_user,
@@ -60,7 +60,7 @@ class KafkaBroker(Script):
     # restore permissions after installing repo version bits
     # before attempting to stop Kafka Broker
     ensure_base_directories()
-    daemon_cmd = format('source {params.conf_dir}/kafka-env.sh; nohup {params.kafka_home}/bin/kafka-server-stop.sh')
+    daemon_cmd = format('nohup {params.kafka_home}/bin/kafka-server-stop.sh')
     #daemon_cmd = format('source {params.conf_dir}/kafka-env.sh; nohup {params.kafka_bin} stop')
     Execute(daemon_cmd,
             user=params.kafka_user,

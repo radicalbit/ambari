@@ -139,13 +139,6 @@ def kafka(upgrade_type=None):
      )
 
     File(
-        format("{kafka_home}/bin/{script_name}.sh"),
-        owner=params.kafka_user,
-        mode=0755,
-        content=Template(format('{script_name}.sh.j2'), conf_dir=params.conf_dir)
-    )
-
-    File(
         format("{kafka_home}/bin/kafka-server-start.sh"),
         owner=params.kafka_user,
         mode=0755,
