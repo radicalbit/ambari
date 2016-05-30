@@ -27,9 +27,7 @@ from resource_management.libraries.functions.format import format
 from resource_management.libraries.functions.check_process_status import check_process_status
 from kafka import ensure_base_directories
 
-import upgrade
 from kafka import kafka
-from setup_ranger_kafka import setup_ranger_kafka
 
 class KafkaBroker(Script):
 
@@ -44,40 +42,11 @@ class KafkaBroker(Script):
     env.set_params(params)
     kafka(upgrade_type=upgrade_type)
 
-  def pre_upgrade_restart(self, env, upgrade_type=None):
-    import params
-    env.set_params(params)
-
-    if params.version and compare_versions(format_hdp_stack_version(params.version), '2.2.0.0') >= 0:
-      hdp_select.select("kafka-broker", params.version)
-
-    if params.version and compare_versions(format_hdp_stack_version(params.version), '2.3.0.0') >= 0:
-      conf_select.select(params.stack_name, "kafka", params.version)
-
-    # This is extremely important since it should only be called if crossing the HDP 2.3.4.0 boundary. 
-    if params.current_version and params.version and params.upgrade_direction:
-      src_version = dst_version = None
-      if params.upgrade_direction == Direction.UPGRADE:
-        src_version = format_hdp_stack_version(params.current_version)
-        dst_version = format_hdp_stack_version(params.version)
-      else:
-        # These represent the original values during the UPGRADE direction
-        src_version = format_hdp_stack_version(params.version)
-        dst_version = format_hdp_stack_version(params.downgrade_from_version)
-
-      if compare_versions(src_version, '2.3.4.0') < 0 and compare_versions(dst_version, '2.3.4.0') >= 0:
-        # Calling the acl migration script requires the configs to be present.
-        self.configure(env, upgrade_type=upgrade_type)
-        upgrade.run_migration(env, upgrade_type)
-
   def start(self, env, upgrade_type=None):
     import params
     env.set_params(params)
     self.configure(env, upgrade_type=upgrade_type)
-    if params.is_supported_kafka_ranger:
-      setup_ranger_kafka() #Ranger Kafka Plugin related call 
     daemon_cmd = format('source {params.conf_dir}/kafka-env.sh ; nohup {params.kafka_home}/bin/kafka-server-start.sh {params.conf_dir}/server.properties >>{params.conf_dir}/kafka.out 2>>{params.conf_dir}/kafka.err & echo $! > {params.kafka_pid_file}')
-    #daemon_cmd = format('source {params.conf_dir}/kafka-env.sh ; nohup {params.kafka_bin} start')
     no_op_test = format('ls {params.kafka_pid_file} >/dev/null 2>&1 && ps -p `cat {params.kafka_pid_file}` >/dev/null 2>&1')
     Execute(daemon_cmd,
             user=params.kafka_user,

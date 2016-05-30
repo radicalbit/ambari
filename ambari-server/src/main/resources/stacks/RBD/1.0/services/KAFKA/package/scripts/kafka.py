@@ -138,12 +138,24 @@ def kafka(upgrade_type=None):
           content=InlineTemplate(params.kafka_env_sh_template)
      )
 
-    File(
-        format("{kafka_home}/bin/kafka-run-class.sh"),
-        owner=params.kafka_user,
-        mode=0755,
-        content=Template('kafka-run-class.sh.j2', conf_dir=params.conf_dir)
-    )
+    set_kafka_sh('connect-distribuited')
+    set_kafka_sh('connect-standalone')
+    set_kafka_sh('kafka-acls')
+    set_kafka_sh('kafka-configs')
+    set_kafka_sh('kafka-console-consumer')
+    set_kafka_sh('kafka-console-producer')
+    set_kafka_sh('kafka-consumer-groups')
+    set_kafka_sh('kafka-consumer-offset-checker')
+    set_kafka_sh('kafka-consumer-perf-test')
+    set_kafka_sh('kafka-mirror-maker')
+    set_kafka_sh('kafka-producer-perf-test')
+    set_kafka_sh('kafka-reassign-partitions')
+    set_kafka_sh('kafka-replay-verification')
+    set_kafka_sh('kafka-server-start')
+    set_kafka_sh('kafka-simple-consumer-shell')
+    set_kafka_sh('kafka-topics')
+    set_kafka_sh('kafka-verifiable-consumer')
+    set_kafka_sh('kakfa-verifiable-producer')
 
     if (params.log4j_props != None):
         File(format("{conf_dir}/log4j.properties"),
@@ -285,3 +297,12 @@ def set_dir_ownership(targets):
     else:
       Logger.warning("Permissions for the folder \"%s\" were not updated due to "
             "empty path passed: " % directory)
+
+def set_kafka_sh(script_name):
+  import params
+  File(
+      format("{kafka_home}/bin/{script_name}.sh"),
+      owner=params.kafka_user,
+      mode=0755,
+      content=Template(format('{script_name}.sh.j2'), conf_dir=params.conf_dir)
+  )
