@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
-import os
+import os, time
 from resource_management import *
 
 class CassandraComponent(Script):
@@ -53,7 +53,7 @@ class CassandraComponent(Script):
     env.set_params(params)
 
     Directory(
-        [params.commitlog_directory, params.data_file_directories, params.saved_caches_directory, params.cassandra_pid_dir],
+        [params.commitlog_directory, params.data_file_directories, params.saved_caches_directory, params.cassandra_pid_dir, params.internals_dir],
         owner=params.cassandra_user,
         group=params.user_group,
         recursive=True
@@ -93,6 +93,13 @@ class CassandraComponent(Script):
         content=Template('cassandra.in.sh.j2', conf_dir=params.cassandra_bin_dir)
     )
 
+    File(
+        format("{params.internals_dir}/cassandra_hosts"),
+        owner=params.cassandra_user,
+        mode=0644,
+        content=Template('cassandra_hosts.j2', conf_dir=params.internals_dir)
+    )
+
     if params.security_enabled:
       File(
           format("{params.cassandra_conf_dir}/kerberos.conf"),
@@ -111,35 +118,40 @@ class CassandraComponent(Script):
     import params
     env.set_params(params)
 
-    filename = 'CASSANDRA_CHANGED'
-    file = os.path.join(params.tmp_dir, filename)
+    self.configure(env)
+    self.run(env)
 
-    if params.security_enabled:
-      if not os.path.exists(file):
-        self.run(env)
-
-        cmdfile=format("/tmp/cmds")
-        File(cmdfile,
-             mode=0600,
-             content=InlineTemplate("ALTER KEYSPACE \"system_auth\" WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : {{ cassandra_nodes_number }};")
-             )
-        Execute(format("{cassandra_bin_dir}/cqlsh {hostname} 9042 -f {cmdfile}"), logoutput=True)
-        Execute(format("{cassandra_bin_dir}/nodetool repair system_auth"), logoutput=True)
-
-        self.stop(env)
-        self.configure(env)
-        self.run(env)
-
-        open(file, 'a').close()
-      else:
-        self.configure(env)
-        self.run(env)
-
-    else:
-      if os.path.exists(file):
-        Execute('rm -f {file}', user=params.cassandra_user)
-
-      self.run(env)
+    # filename = 'CASSANDRA_CHANGED'
+    # file = os.path.join(params.internals_dir, filename)
+    #
+    # if params.security_enabled:
+    #   if not os.path.exists(file):
+    #     self.run(env)
+    #
+    #     time.sleep(10 * params.cassandra_nodes_number)
+    #
+    #     cmdfile=format("/tmp/cmds")
+    #     File(cmdfile,
+    #          mode=0600,
+    #          content=InlineTemplate("ALTER KEYSPACE \"system_auth\" WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : {{ cassandra_nodes_number }} };\n")
+    #          )
+    #     Execute(format("{cassandra_bin_dir}/cqlsh {hostname} 9042 -f {cmdfile}"), logoutput=True, ignore_failures=True)
+    #     Execute(format("{cassandra_bin_dir}/nodetool repair system_auth"), logoutput=True)
+    #
+    #     self.stop(env)
+    #     self.configure(env)
+    #     self.run(env)
+    #
+    #     open(file, 'a').close()
+    #   else:
+    #     self.configure(env)
+    #     self.run(env)
+    #
+    # else:
+    #   if os.path.exists(file):
+    #     Execute('rm -f {file}', user=params.cassandra_user)
+    #
+    #   self.run(env)
 
   def stop(self, env):
     import params

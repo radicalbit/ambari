@@ -78,20 +78,20 @@ cassandra_lib_dir = cassandra_install_dir + '/lib'
 cassandra_log_dir = cassandra_env['cassandra_log_dir']
 cassandra_pid_dir = cassandra_env['cassandra_pid_dir']
 
-tmp_dir = '/var/tmp'
-
 cluster_name = cassandra_conf['cluster_name']
 
 authorizer = cassandra_conf['authorizer']
 commitlog_directory = cassandra_conf['commitlog_directory']
 data_file_directories = cassandra_conf['data_file_directories']
 saved_caches_directory = cassandra_conf['saved_caches_directory']
+internals_dir = '/var/lib/cassandra/internals'
 
 listen_address = hostname
 rpc_address = hostname
 
 cassandra_seeds = config['clusterHostInfo']['cassandra_seed_hosts']
 cassandra_nodes = config['clusterHostInfo']['cassandra_node_hosts']
+cassandra_hosts = cassandra_seeds + cassandra_nodes
 
 cassandra_nodes_number = len(cassandra_seeds) + len(cassandra_nodes)
 

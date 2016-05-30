@@ -76,5 +76,5 @@ fi
 JAVA_OPTS="$JAVA_OPTS:-Djava.library.path=$CASSANDRA_HOME/lib/sigar-bin"
 
 {% if security_enabled %}
-JAVA_OPTS="$JAVA_OPTS:‐Dconfig.file=$CASSANDRA_HOME/conf/kerberos.conf"
+JAVA_OPTS="$JAVA_OPTS:-Dconfig.file={{ cassandra_conf_dir }}/kerberos.conf"
 {% endif %}
