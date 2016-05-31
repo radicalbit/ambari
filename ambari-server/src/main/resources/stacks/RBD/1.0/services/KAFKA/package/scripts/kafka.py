@@ -138,6 +138,20 @@ def kafka(upgrade_type=None):
           content=InlineTemplate(params.kafka_env_sh_template)
      )
 
+    File(
+        format("{kafka_home}/bin/kafka-server-start.sh"),
+        owner=params.kafka_user,
+        mode=0755,
+        content=Template(format('kafka-server-start.sh.j2'), conf_dir=params.conf_dir)
+    )
+
+    File(
+        format("{kafka_home}/bin/kafka-run-class.sh"),
+        owner=params.kafka_user,
+        mode=0755,
+        content=Template(format('kafka-run-class.sh.j2'), conf_dir=params.conf_dir)
+    )
+
     if (params.log4j_props != None):
         File(format("{conf_dir}/log4j.properties"),
              mode=0644,
@@ -278,3 +292,12 @@ def set_dir_ownership(targets):
     else:
       Logger.warning("Permissions for the folder \"%s\" were not updated due to "
             "empty path passed: " % directory)
+
+def set_kafka_sh(script_name):
+  import params
+  File(
+      format("{kafka_home}/bin/{script_name}.sh"),
+      owner=params.kafka_user,
+      mode=0755,
+      content=Template(format('{script_name}.sh.j2'), conf_dir=params.conf_dir)
+  )
