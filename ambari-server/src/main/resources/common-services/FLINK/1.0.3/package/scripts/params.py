@@ -28,6 +28,7 @@ config = Script.get_config()
 
 # usefull dirs
 hadoop_conf_dir = conf_select.get_hadoop_conf_dir() + '/'
+hdfs_user = config['configurations']['hadoop-env']['hdfs_user']
 hdfs_default_name = config['configurations']['core-site']['fs.defaultFS']
 
 nodes_number = len(config['clusterHostInfo']['all_hosts'])
@@ -57,7 +58,6 @@ if security_enabled:
   flink_krb_ticket_renew_window = config['configurations']['flink-env']['flink_krb_ticket_renew_window']
   hdfs_user_keytab = config['configurations']['hadoop-env']['hdfs_user_keytab']
   hdfs_principal_name = default('/configurations/hadoop-env/hdfs_principal_name', None)
-  hdfs_user = config['configurations']['hadoop-env']['hdfs_user']
 
 alluxio_master = ''
 alluxio_default_name = 'file:///'
