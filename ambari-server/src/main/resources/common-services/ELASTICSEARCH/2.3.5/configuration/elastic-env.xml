@@ -24,6 +24,7 @@
     <name>elastic_user</name>
     <value>elasticsearch</value>
     <property-type>USER</property-type>
+    <label></label>
     <description>Elasticsearch service user</description>
   </property>
 
@@ -31,38 +32,52 @@
   <property>
     <name>user_group</name>
     <value>elasticsearch</value>
+    <label></label>
     <description></description>
   </property>
 
   <property>
     <name>elastic_log_dir</name>
     <value>/var/log/elasticsearch</value>
-    <description>Log directory for elastic</description>
+    <label></label>
+    <description>Log directory</description>
   </property>
 
   <property>
     <name>elastic_pid_dir</name>
     <value>/var/run/elasticsearch</value>
-    <description></description>
+    <label></label>
+    <description>PID directory</description>
   </property>
 
   <!--TODO: add to params-->
   <property>
     <name>elastic_data_dir</name>
     <value>/var/lib/elasticsearch/data</value>
-    <description></description>
+    <label></label>
+    <description>Data directory</description>
   </property>
 
   <!--TODO: add to params-->
   <property>
     <name>elastic_plugins_dir</name>
     <value>/var/lib/elasticsearch/plugins</value>
-    <description></description>
+    <label></label>
+    <description>Plugins directory</description>
+  </property>
+
+  <!--es.insecure.allow.root-->
+  <property>
+    <name>es_insicure_allow_root</name>
+    <value>false</value>
+    <label>ES insicure allow ROOT</label>
+    <description>Allow to run ES as root</description>
   </property>
 
   <!-- elasticsearch-env.sh -->
   <property>
     <name>content</name>
+    <value>Elasticsearch env</value>
     <description>This is the jinja template for elastic-env.sh file</description>
     <value>
 #!/bin/bash

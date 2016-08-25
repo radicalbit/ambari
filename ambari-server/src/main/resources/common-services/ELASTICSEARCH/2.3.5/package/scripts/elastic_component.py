@@ -32,34 +32,36 @@ class ElasticComponent(Script):
         env.set_params(params)
         self.install_packages(env)
 
-    def configure(self, env):
+    def base_config(self, env):
         import params
         env.set_params(params)
         elasticsearch()
-
-    def stop(self, env):
-        import params
-        env.set_params(params)
-        # TODO: use script instead of service
-        stop_cmd = format("service elasticsearch stop")
-        Execute(stop_cmd)
 
     def start(self, env):
         import params
         env.set_params(params)
         self.configure(env)
         # TODO: use script instead of service
-        start_cmd = format("service elasticsearch start")
+        # TODO: set -Des.insecure.allow.root=???
+        # start_cmd = format("service elasticsearch start")
+        start_cmd = format(
+            "bin/elasticsearch -d -p {params.pid_file} -Des.insecure.allow.root={params.es_insicure_allow_root}",
+            user=params.elastic_user
+        )
         Execute(start_cmd)
 
-    def status(self, env):
+    def stop(self, env):
         import params
         env.set_params(params)
+        # TODO: use script instead of service
+        # stop_cmd = format("service elasticsearch stop")
+        stop_cmd = Execute(format('kill `cat {params.pid_file}`'), user=params.elastic_user)
+        Execute(stop_cmd)
+
+    def status(self, env):
+        import status_params
+        env.set_params(status_params)
         # TODO: use pid file instead of service
-        status_cmd = format("service elasticsearch status")
-        Execute(status_cmd)
-
-if __name__ == "__main__":
-    ElasticComponent().execute()
-
-
+        # status_cmd = format("service elasticsearch status")
+        # Execute(status_cmd)
+        check_process_status(status_params.pid_file)

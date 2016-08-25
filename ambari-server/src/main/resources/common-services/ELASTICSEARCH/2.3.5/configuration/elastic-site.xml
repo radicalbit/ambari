@@ -23,6 +23,7 @@
 <!--TODO: check properties and remove not used or necessary-->
 <configuration supports_final="true">
     <!-- Configurations -->
+
     <property>
         <name>cluster_name</name>
         <value>ES-Cluster</value>

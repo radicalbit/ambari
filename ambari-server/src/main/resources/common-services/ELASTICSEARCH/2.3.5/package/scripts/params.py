@@ -30,12 +30,13 @@ elastic_bin = '/usr/share/elasticsearch/bin/'
 
 conf_dir = "/etc/elasticsearch"
 elastic_user = config['configurations']['elastic-env']['elastic_user']
-user_group = config['configurations']['elastic-env']['user_group']
+user_group = config['configurations']['cluster-env']['user_group']
 log_dir = config['configurations']['elastic-env']['elastic_log_dir']
-pid_dir = '/var/run/elasticsearch'
-pid_file = '/var/run/elasticsearch/elasticsearch.pid'
+pid_dir = config['configurations']['elastic-env']['elastic_pid_dir']
+pid_file = format("{pid_dir}/elasticsearch.pid")
 hostname = config['hostname']
 java64_home = config['hostLevelParams']['java_home']
+es_insicure_allow_root = config['configurations']['elastic-env']['es_insicure_allow_root']
 elastic_env_sh_template = config['configurations']['elastic-env']['content']
 
 cluster_name = config['configurations']['elastic-site']['cluster_name']
@@ -43,6 +44,7 @@ seed_node1 = config['configurations']['elastic-site']['seed_node1']
 seed_node2 = config['configurations']['elastic-site']['seed_node2']
 seed_node3 = config['configurations']['elastic-site']['seed_node3']
 
+# TODO: it's defined also into elasctic-env
 path_data = config['configurations']['elastic-site']['path_data']
 http_port = config['configurations']['elastic-site']['http_port']
 transport_tcp_port = config['configurations']['elastic-site']['transport_tcp_port']

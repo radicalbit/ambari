@@ -19,7 +19,6 @@ limitations under the License.
 #!/usr/bin/env python
 
 from resource_management import *
-from properties_config import properties_config
 import sys
 from copy import deepcopy
 
@@ -33,10 +32,9 @@ def elasticsearch():
     directories = [params.log_dir, params.pid_dir, params.conf_dir]
     directories = directories+data_path;
 
-    # TODO: fix group
     Directory(directories,
               owner=params.elastic_user,
-              group=params.elastic_user,
+              group=params.user_group,
               recursive=True
           )
     
@@ -47,20 +45,19 @@ def elasticsearch():
 
     configurations = params.config['configurations']['elastic-site']
 
-    # TODO: fix group
     File(format("{conf_dir}/elasticsearch.yml"),
        content=Template(
                         "elasticsearch.yaml.j2",
                         configurations = configurations),
        owner=params.elastic_user,
-       group=params.elastic_user
+       group=params.user_group
     )
 
     # TODO: understand if possible in other way
-    File(format("/etc/sysconfig/elasticsearch"),
-       content=Template(
-                        "elasticsearch.sysconfig.j2",
-                        configurations = configurations),
-       owner="root",
-       group="root"
-    )
+    # File(format("/etc/sysconfig/elasticsearch"),
+    #    content=Template(
+    #                     "elasticsearch.sysconfig.j2",
+    #                     configurations = configurations),
+    #    owner="root",
+    #    group="root"
+    # )
