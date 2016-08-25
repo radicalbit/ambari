@@ -28,9 +28,10 @@ config = Script.get_config()
 elastic_home = '/etc/elasticsearch/'
 elastic_bin = '/usr/share/elasticsearch/bin/'
 
-conf_dir = "/etc/elasticsearch"
+conf_dir = "/etc/elasticsearch/conf.dist/"
 elastic_user = config['configurations']['elastic-env']['elastic_user']
 user_group = config['configurations']['cluster-env']['user_group']
+plugins_dir = config['configurations']['elastic-env']['elastic_plugins_dir']
 log_dir = config['configurations']['elastic-env']['elastic_log_dir']
 pid_dir = config['configurations']['elastic-env']['elastic_pid_dir']
 pid_file = format("{pid_dir}/elasticsearch.pid")
@@ -74,5 +75,3 @@ discovery_zen_ping_timeout = config['configurations']['elastic-site']['discovery
 discovery_zen_fd_ping_interval = config['configurations']['elastic-site']['discovery_zen_fd_ping_interval']
 discovery_zen_fd_ping_timeout = config['configurations']['elastic-site']['discovery_zen_fd_ping_timeout']
 discovery_zen_fd_ping_retries = config['configurations']['elastic-site']['discovery_zen_fd_ping_retries']
-
-network_host = config['configurations']['elastic-site']['network_host']

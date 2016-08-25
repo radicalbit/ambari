@@ -20,10 +20,12 @@ cluster.name: {{cluster_name}}
 node.name: {{hostname}}
 
 path.data: {{path_data}}
-path.logs: {{path_logs}}
-path.plugins: /path/to/plugins
+path.logs: {{log_dir}}
+path.plugins: {{plugins_dir}}
 
+network.host: {{hostname}}
 http.port: {{http_port}}
+transport.tcp.port: {{transport_tcp_port}}
 
 discovery.zen.ping.unicast.hosts: ["host1", "host2"]
 

@@ -45,7 +45,7 @@ class ElasticComponent(Script):
         # TODO: set -Des.insecure.allow.root=???
         # start_cmd = format("service elasticsearch start")
         start_cmd = format(
-            "bin/elasticsearch -d -p {params.pid_file} -Des.insecure.allow.root={params.es_insicure_allow_root}",
+            "/bin/elasticsearch -d -p {params.pid_file} -Des.insecure.allow.root={params.es_insicure_allow_root}",
             user=params.elastic_user
         )
         Execute(start_cmd)

@@ -29,7 +29,7 @@ def elasticsearch():
     data_path = params.path_data.replace(' ','').split(',')
     data_path[:]=[x.replace('"','') for x in data_path]
     
-    directories = [params.log_dir, params.pid_dir, params.conf_dir]
+    directories = [params.log_dir, params.pid_dir, params.conf_dir, params.plugins_dir]
     directories = directories+data_path;
 
     Directory(directories,

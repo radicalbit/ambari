@@ -17,14 +17,14 @@
    limitations under the License.
 -->
 
-<!--TODO: add descriptions and labels to all properties-->
+<!--TODO: add descriptions and display-names to all properties-->
 <configuration>
 
   <property>
     <name>elastic_user</name>
     <value>elasticsearch</value>
     <property-type>USER</property-type>
-    <label></label>
+    <display-name>Elasticsearch user</display-name>
     <description>Elasticsearch service user</description>
   </property>
 
@@ -32,21 +32,21 @@
   <property>
     <name>user_group</name>
     <value>elasticsearch</value>
-    <label></label>
-    <description></description>
+    <display-name>Elasticsearch group</display-name>
+    <description>Elasticsearch group</description>
   </property>
 
   <property>
     <name>elastic_log_dir</name>
     <value>/var/log/elasticsearch</value>
-    <label></label>
+    <display-name>Log directory</display-name>
     <description>Log directory</description>
   </property>
 
   <property>
     <name>elastic_pid_dir</name>
     <value>/var/run/elasticsearch</value>
-    <label></label>
+    <display-name>PID directory</display-name>
     <description>PID directory</description>
   </property>
 
@@ -54,7 +54,7 @@
   <property>
     <name>elastic_data_dir</name>
     <value>/var/lib/elasticsearch/data</value>
-    <label></label>
+    <display-name>Data directory</display-name>
     <description>Data directory</description>
   </property>
 
@@ -62,7 +62,7 @@
   <property>
     <name>elastic_plugins_dir</name>
     <value>/var/lib/elasticsearch/plugins</value>
-    <label></label>
+    <display-name>Plugins directory</display-name>
     <description>Plugins directory</description>
   </property>
 
@@ -70,14 +70,14 @@
   <property>
     <name>es_insicure_allow_root</name>
     <value>false</value>
-    <label>ES insicure allow ROOT</label>
+    <display-name>ES insicure allow ROOT</display-name>
     <description>Allow to run ES as root</description>
   </property>
 
   <!-- elasticsearch-env.sh -->
   <property>
     <name>content</name>
-    <value>Elasticsearch env</value>
+    <display-name>Elasticsearch env</display-name>
     <description>This is the jinja template for elastic-env.sh file</description>
     <value>
 #!/bin/bash

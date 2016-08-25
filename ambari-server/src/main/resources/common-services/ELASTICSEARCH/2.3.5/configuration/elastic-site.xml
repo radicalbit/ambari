@@ -184,9 +184,4 @@
         <value>4</value>
         <description>Max concurrent recoveries, useful for fast recovery of the cluster nodes on restart</description>
     </property>
-    <property>
-        <name>network_host</name>
-        <value>bond0.100:ipv4</value>
-        <description>Network interface will bind to</description>
-    </property>
 </configuration>
