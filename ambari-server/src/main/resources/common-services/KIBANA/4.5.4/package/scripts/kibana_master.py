@@ -49,9 +49,10 @@ class Kibana(Script):
         Execute(format('kill `cat {params.pid_file}`'), user=params.kibana_user)
 
     def status(self, env):
-        import status_params
-        env.set_params(status_params)
-        check_process_status(status_params.kibana_pid_file)
+        import status_params as params
+        env.set_params(params)
+        pid_file = format("{pid_dir}/kibana.pid")
+        check_process_status(pid_file)
 
 if __name__ == "__main__":
     Kibana().execute()
