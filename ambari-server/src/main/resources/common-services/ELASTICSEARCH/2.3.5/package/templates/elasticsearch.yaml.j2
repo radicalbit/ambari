@@ -27,7 +27,7 @@ network.host: {{hostname}}
 http.port: {{http_port}}
 transport.tcp.port: {{transport_tcp_port}}
 
-discovery.zen.ping.unicast.hosts: ["host1", "host2"]
+discovery.zen.ping.unicast.hosts: [{{discovery_zen_ping_unicast_hosts}}]
 
 # Prevent the "split brain" by configuring the majority of nodes (total number of nodes / 2 + 1):
 # discovery.zen.minimum_master_nodes: 3

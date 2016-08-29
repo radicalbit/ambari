@@ -25,7 +25,7 @@
             <version>2.3.5</version>
             <components>
                 <component>
-                    <name>MASTER</name>
+                    <name>ELASTICSEARCH_MASTER</name>
                     <displayName>Elasticsearch Master</displayName>
                     <category>MASTER</category>
                     <cardinality>1+</cardinality>
@@ -36,7 +36,7 @@
                     </commandScript>
                 </component>
                 <component>
-                    <name>SLAVE</name>
+                    <name>ELASTICSEARCH_SLAVE</name>
                     <displayName>Elasticsearch Slave</displayName>
                     <category>SLAVE</category>
                     <cardinality>1+</cardinality>

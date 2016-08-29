@@ -17,7 +17,6 @@
    limitations under the License.
 -->
 
-<!--TODO: add descriptions and display-names to all properties-->
 <configuration>
 
   <property>
@@ -28,21 +27,6 @@
     <description>Elasticsearch service user</description>
   </property>
 
-  <!--TODO: remove and use stack group-->
-  <property>
-    <name>user_group</name>
-    <value>elasticsearch</value>
-    <display-name>Elasticsearch group</display-name>
-    <description>Elasticsearch group</description>
-  </property>
-
-  <property>
-    <name>elastic_log_dir</name>
-    <value>/var/log/elasticsearch</value>
-    <display-name>Log directory</display-name>
-    <description>Log directory</description>
-  </property>
-
   <property>
     <name>elastic_pid_dir</name>
     <value>/var/run/elasticsearch</value>
@@ -50,23 +34,6 @@
     <description>PID directory</description>
   </property>
 
-  <!--TODO: add to params-->
-  <property>
-    <name>elastic_data_dir</name>
-    <value>/var/lib/elasticsearch/data</value>
-    <display-name>Data directory</display-name>
-    <description>Data directory</description>
-  </property>
-
-  <!--TODO: add to params-->
-  <property>
-    <name>elastic_plugins_dir</name>
-    <value>/var/lib/elasticsearch/plugins</value>
-    <display-name>Plugins directory</display-name>
-    <description>Plugins directory</description>
-  </property>
-
-  <!--es.insecure.allow.root-->
   <property>
     <name>es_insicure_allow_root</name>
     <value>false</value>

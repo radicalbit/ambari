@@ -32,12 +32,12 @@ class ElasticMaster(ElasticComponent):
         env.set_params(params)
         # TODO: check if those plugins are required and use a configuration
         # TODO: change proxy port, it's already used by ambari web server
-        output = os.system("/usr/share/elasticsearch/bin/plugin -DproxyHost=proxy.ash2.symcpe.net -DproxyPort=8080 --install mobz/elasticsearch-head")
-        print output
-        output = os.system("/usr/share/elasticsearch/bin/plugin -DproxyHost=proxy.ash2.symcpe.net -DproxyPort=8080 --install elasticsearch/elasticsearch-repository-hdfs/2.1.0-hadoop2")
-        print output
-        output = os.system("/usr/share/elasticsearch/bin/plugin -DproxyHost=proxy.ash2.symcpe.net -DproxyPort=8080 --install royrusso/elasticsearch-HQ")
-        print output
+        # output = os.system("/usr/share/elasticsearch/bin/plugin -DproxyHost=proxy.ash2.symcpe.net -DproxyPort=8080 --install mobz/elasticsearch-head")
+        # print output
+        # output = os.system("/usr/share/elasticsearch/bin/plugin -DproxyHost=proxy.ash2.symcpe.net -DproxyPort=8080 --install elasticsearch/elasticsearch-repository-hdfs/2.1.0-hadoop2")
+        # print output
+        # output = os.system("/usr/share/elasticsearch/bin/plugin -DproxyHost=proxy.ash2.symcpe.net -DproxyPort=8080 --install royrusso/elasticsearch-HQ")
+        # print output
         self.base_config(env)
 
 if __name__ == "__main__":
