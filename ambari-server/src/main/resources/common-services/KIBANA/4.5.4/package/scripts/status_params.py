@@ -22,5 +22,5 @@ from resource_management import *
 
 config = Script.get_config()
 
-pid_dir = config['configurations']['kibana-site']['kibana_pid_dir']
-pid_file = format("{pid_dir}/kibana.pid")
+kibana_pid_dir = config['configurations']['kibana-site']['kibana_pid_dir']
+kibana_pid_file = format("{kibana_pid_dir}/kibana.pid")

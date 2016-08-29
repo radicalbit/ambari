@@ -24,6 +24,7 @@ from resource_management import *
 config = Script.get_config()
 
 conf_dir = '/etc/kibana/conf.dist'
+optimize_dir = '/usr/lib/kibana/optimize'
 
 hostname = config['hostname']
 
@@ -44,3 +45,4 @@ elasticsearch_shard_timeout = config['configurations']['kibana-site']['elasticse
 elasticsearch_startup_timeout = config['configurations']['kibana-site']['elasticsearch_startup_timeout']
 
 es_host = cassandra_seeds = config['clusterHostInfo']['elasticsearch_master_hosts'][0]
+es_port = config['configurations']['elastic-site']['http_port']

@@ -32,7 +32,7 @@ class Kibana(Script):
         env.set_params(params)
         self.install_packages(env)
 
-    def base_config(self, env):
+    def configure(self, env):
         import params
         env.set_params(params)
         kibana()
@@ -41,7 +41,7 @@ class Kibana(Script):
         import params
         env.set_params(params)
         self.configure(env)
-        Execute("/bin/kibana", user=params.kibana_user)
+        Execute("/bin/kibana &", user=params.kibana_user)
 
     def stop(self, env):
         import params
@@ -51,7 +51,7 @@ class Kibana(Script):
     def status(self, env):
         import status_params
         env.set_params(status_params)
-        check_process_status(status_params.pid_file)
+        check_process_status(status_params.kibana_pid_file)
 
 if __name__ == "__main__":
     Kibana().execute()

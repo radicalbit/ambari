@@ -31,6 +31,8 @@ def kibana():
               recursive=True
           )
 
+    Execute(format('chmod -R 777 {optimize_dir}'))
+
     configurations = params.config['configurations']['kibana-site']
 
     File(format("{conf_dir}/kibana.yml"),
