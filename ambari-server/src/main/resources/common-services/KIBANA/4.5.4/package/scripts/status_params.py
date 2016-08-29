@@ -22,4 +22,4 @@ from resource_management.libraries.script.script import Script
 
 config = Script.get_config()
 
-pid_dir = config['configurations']['kibana-site']['kibana_pid_dir']
+pid_dir = config['configurations']['kibana-env']['kibana_pid_dir']

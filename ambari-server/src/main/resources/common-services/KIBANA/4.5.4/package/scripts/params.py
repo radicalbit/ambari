@@ -31,9 +31,9 @@ hostname = config['hostname']
 kibana_user = config['configurations']['kibana-env']['kibana_user']
 user_group = config['configurations']['cluster-env']['user_group']
 
-log_dir = config['configurations']['kibana-site']['kibana_log_dir']
+log_dir = config['configurations']['kibana-env']['kibana_log_dir']
 log_file = format("{log_dir}/kibana.log")
-pid_dir = config['configurations']['kibana-site']['kibana_pid_dir']
+pid_dir = config['configurations']['kibana-env']['kibana_pid_dir']
 pid_file = format("{pid_dir}/kibana.pid")
 
 server_port = config['configurations']['kibana-site']['server_port']

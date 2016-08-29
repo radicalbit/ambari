@@ -17,11 +17,10 @@ limitations under the License.
 
 """
 
-from resource_management import *
-import signal
-import sys
-import os
-from os.path import isfile
+from resource_management.libraries.script.script import Script
+from resource_management.core.resources.system import File, Execute
+from resource_management.libraries.functions.check_process_status import check_process_status
+from resource_management.core.logger import Logger
 
 from kibana import kibana
 

@@ -21,20 +21,6 @@
     <!-- Configurations -->
 
     <property>
-        <name>kibana_pid_dir</name>
-        <value>/var/run/kibana</value>
-        <display-name>PID directory</display-name>
-        <description>Set the path to where you would like the process id file to be created.</description>
-    </property>
-
-    <property>
-        <name>kibana_log_dir</name>
-        <value>/var/log/kibana</value>
-        <display-name>Log directory</display-name>
-        <description>Set the path to where you would like the log file to be created.</description>
-    </property>
-
-    <property>
         <name>server_port</name>
         <value>5601</value>
         <display-name>Server port</display-name>
