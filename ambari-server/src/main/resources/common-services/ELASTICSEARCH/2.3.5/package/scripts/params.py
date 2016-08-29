@@ -44,7 +44,7 @@ transport_tcp_port = config['configurations']['elastic-site']['transport_tcp_por
 cluster_name = config['configurations']['elastic-site']['cluster_name']
 cluster_seeds = cassandra_seeds = config['clusterHostInfo']['elasticsearch_master_hosts']
 cluster_seed_head = cluster_seeds[0]
-discovery_zen_ping_unicast_hosts = (':' + transport_tcp_port + ',').join(cluster_seeds) + ':' + transport_tcp_port
+discovery_zen_ping_unicast_hosts = '"' + (':' + str(transport_tcp_port) + '","').join(cluster_seeds) + ':' + str(transport_tcp_port) + '"'
 # seed_node1 = config['configurations']['elastic-site']['seed_node1']
 # seed_node2 = config['configurations']['elastic-site']['seed_node2']
 # seed_node3 = config['configurations']['elastic-site']['seed_node3']

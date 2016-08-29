@@ -34,7 +34,7 @@ class ServiceCheck(Script):
         time.sleep(20)
         payload = {'name': 'Buddy.  Dont Worry, I am Fine '}
         # TODO: use host and port from params
-        r = requests.get('http://localhost:9200/',params=payload)
+        r = requests.get(format('http://{params.cluster_seed_head}:{params.http_port}/'),params=payload)
 
         if r.status_code == 200:
             print(r.json(), file=sys.stdout)
