@@ -45,7 +45,7 @@ class Kibana(Script):
     def stop(self, env):
         import params
         env.set_params(params)
-        Execute(format('kill `cat {params.pid_file}`'), user=params.kibana_user)
+        Execute('kill `cat ' + params.pid_file + '`', user=params.kibana_user)
 
     def status(self, env):
         import status_params as params
