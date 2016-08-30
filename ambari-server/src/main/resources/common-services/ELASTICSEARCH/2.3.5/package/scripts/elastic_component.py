@@ -41,9 +41,6 @@ class ElasticComponent(Script):
         import params
         env.set_params(params)
         self.configure(env)
-        # TODO: use script instead of service
-        # TODO: set -Des.insecure.allow.root=???
-        # start_cmd = format("service elasticsearch start")
         Execute(
             format("/bin/elasticsearch -d -p {params.pid_file} -Des.insecure.allow.root={params.es_insicure_allow_root}"),
             user=params.elastic_user
@@ -52,14 +49,9 @@ class ElasticComponent(Script):
     def stop(self, env):
         import params
         env.set_params(params)
-        # TODO: use script instead of service
-        # stop_cmd = format("service elasticsearch stop")
         Execute(format('kill `cat {params.pid_file}`'), user=params.elastic_user)
 
     def status(self, env):
         import status_params
         env.set_params(status_params)
-        # TODO: use pid file instead of service
-        # status_cmd = format("service elasticsearch status")
-        # Execute(status_cmd)
         check_process_status(status_params.elastic_pid_file)

@@ -33,7 +33,6 @@ class ServiceCheck(Script):
         # There is a race condition by the time the BDSE server starts and service checks.  Hence added the below sleep for 20 seconds
         time.sleep(20)
         payload = {'name': 'Buddy.  Dont Worry, I am Fine '}
-        # TODO: use host and port from params
         r = requests.get(format('http://{params.cluster_seed_head}:{params.http_port}/'),params=payload)
 
         if r.status_code == 200:
