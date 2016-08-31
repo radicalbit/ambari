@@ -20,7 +20,7 @@
     <services>
         <service>
             <name>ALLUXIO</name>
-            <extends>common-services/ALLUXIO/1.0.1</extends>
+            <extends>common-services/ALLUXIO/1.2.0</extends>
         </service>
     </services>
 </metainfo>
