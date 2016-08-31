@@ -23,8 +23,8 @@
 <configuration supports_final="true" xmlns:xi="http://www.w3.org/2001/XInclude">
 
   <property>
-    <name>fs.alluxio.impl</name>
-    <value>alluxio.hadoop.FileSystem</value>
+    <name>fs.alluxio-ft.impl</name>
+    <value>alluxio.hadoop.FaultTolerantFileSystem</value>
     <description></description>
   </property>
 

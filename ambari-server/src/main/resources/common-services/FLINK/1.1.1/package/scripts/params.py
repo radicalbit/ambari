@@ -37,7 +37,7 @@ cores_number = config['configurations']['yarn-site']['yarn.scheduler.maximum-all
 
 # alluxio jar params
 jar_url = 'https://public-repo.radicalbit.io/jars'
-alluxio_jar_name = 'alluxio-core-client-1.1.0-jar-with-dependencies.jar'
+alluxio_jar_name = 'alluxio-core-client-1.2.0-jar-with-dependencies.jar'
 
 security_enabled = config['configurations']['cluster-env']['security_enabled']
 
@@ -63,7 +63,7 @@ alluxio_master = ''
 alluxio_default_name = 'file:///'
 if 'alluxio_master_hosts' in config['clusterHostInfo']:
   alluxio_master = config['clusterHostInfo']['alluxio_master_hosts'][0]
-  alluxio_default_name = 'alluxio://' + alluxio_master + ':19998/'
+  alluxio_default_name = 'alluxio-ft://' + alluxio_master + ':19998/'
 
 flink_install_dir = '/usr/lib/flink'
 conf_dir = flink_install_dir + '/conf'
