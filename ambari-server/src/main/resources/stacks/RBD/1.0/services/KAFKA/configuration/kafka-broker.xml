@@ -198,7 +198,7 @@
   <property>
     <name>replica.fetch.max.bytes</name>
     <value>1048576</value>
-    <description>The number of byes of messages to attempt to fetch for each partition in the fetch requests the replicas send to the leader.</description>
+    <description>The number of bytes of messages to attempt to fetch.</description>
   </property>
   <property>
     <name>replica.fetch.wait.max.ms</name>
@@ -340,7 +340,7 @@
   <property>
     <name>min.insync.replicas</name>
     <value>1</value>
-    <description>define the minimum number of replicas in ISR needed to satisfy a produce request with required.acks=-1 (or all)</description>
+    <description>define the minimum number of replicas in ISR needed to satisfy a produce request with acks=all (or -1)</description>
   </property>
   <property>
     <name>leader.imbalance.per.broker.percentage</name>

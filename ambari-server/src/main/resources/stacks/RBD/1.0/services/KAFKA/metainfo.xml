@@ -22,7 +22,7 @@
       <name>KAFKA</name>
       <displayName>Kafka</displayName>
       <comment>A high-throughput distributed messaging system</comment>
-      <version>0.9.0.1</version>
+      <version>0.10.0.1</version>
       <components>
         <component>
           <name>KAFKA_BROKER</name>
@@ -51,7 +51,7 @@
           <osFamily>any</osFamily>
           <packages>
             <package>
-              <name>kafka</name>
+              <name>kafka-0.10.0.1*</name>
             </package>
           </packages>
         </osSpecific>
