@@ -49,13 +49,13 @@ journal_relative_path = '/alluxio/journal'
 journal_addr = config['configurations']['core-site']['fs.defaultFS'] + journal_relative_path
 
 # alluxio worker evictor class
-evictor_class = config['configurations']['alluxio-config']['alluxio.worker.evictor.class']
+# evictor_class = config['configurations']['alluxio-config']['alluxio.worker.evictor.class']
 
 # alluxio worker memory alotment
 worker_mem = config['configurations']['alluxio-config']['alluxio.worker.memory']
 
 # alluxio worker tieredstore levels
-tieredstore_levels = config['configurations']['alluxio-config']['alluxio.worker.tieredstore.levels']
+# tieredstore_levels = config['configurations']['alluxio-config']['alluxio.worker.tieredstore.levels']
 
 # alluxio worker tieredstore level0 alias
 tieredstore_level0_alias = config['configurations']['alluxio-config']['alluxio.worker.tieredstore.level0.alias']
@@ -93,8 +93,13 @@ tieredstore_level2_dirs_quota = config['configurations']['alluxio-config']['allu
 # alluxio worker tieredstore level2 reserved ratio
 tieredstore_level2_reserved_ratio = config['configurations']['alluxio-config']['alluxio.worker.tieredstore.level2.reserved.ratio']
 
+if tieredstore_level2_alias != '' and tieredstore_level2_dirs_path != '' and tieredstore_level2_dirs_quota != '' and tieredstore_level2_reserved_ratio != '':
+  is_tiredstore_level2_enabled = True
+else:
+  is_tiredstore_level2_enabled = False
+
 # alluxio worker tieredstore reserver enabled
-tieredstore_reserver_enabled = config['configurations']['alluxio-config']['alluxio.worker.tieredstore.reserver.enabled']
+# tieredstore_reserver_enabled = config['configurations']['alluxio-config']['alluxio.worker.tieredstore.reserver.enabled']
 
 worker_web_port = config['configurations']['alluxio-config']['alluxio.worker.web.port']
 
@@ -104,7 +109,7 @@ master_web_port = config['configurations']['alluxio-config']['alluxio.master.web
 readtype = config['configurations']['alluxio-config']['alluxio.user.file.readtype.default']
 
 # alluxio user file write location policy class
-write_location_policy = config['configurations']['alluxio-config']['alluxio.user.file.write.location.policy.class']
+# write_location_policy = config['configurations']['alluxio-config']['alluxio.user.file.write.location.policy.class']
 
 # alluxio user file writetype default
 writetype = config['configurations']['alluxio-config']['alluxio.user.file.writetype.default']

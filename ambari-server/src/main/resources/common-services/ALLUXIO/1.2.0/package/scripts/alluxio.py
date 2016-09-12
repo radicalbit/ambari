@@ -60,13 +60,6 @@ class Alluxio(Script):
     Execute('chmod -R 777 ' + params.log_dir, user=params.root_user)
 
     File(
-        format("{params.alluxio_config_dir}/alluxio-env.sh"),
-        owner=params.alluxio_user,
-        mode=0700,
-        content=Template('alluxio-env.sh.j2', conf_dir=params.alluxio_config_dir)
-    )
-
-    File(
         format("{params.alluxio_config_dir}/workers"),
         owner=params.alluxio_user,
         mode=0644,

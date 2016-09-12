@@ -18,11 +18,11 @@
 -->
 <configuration>
 
-  <property require-input="true">
-    <name>alluxio.worker.evictor.class</name>
-    <description>Alluxio Worker Evictor Class</description>
-    <value>alluxio.worker.block.evictor.LRUEvictor</value>
-  </property>
+  <!--<property require-input="true">-->
+    <!--<name>alluxio.worker.evictor.class</name>-->
+    <!--<description>Alluxio Worker Evictor Class</description>-->
+    <!--<value>alluxio.worker.block.evictor.LRUEvictor</value>-->
+  <!--</property>-->
 
   <property require-input="true">
     <name>alluxio.worker.memory</name>
@@ -30,11 +30,11 @@
     <value>2GB</value>
   </property>
 
-  <property require-input="true">
-    <name>alluxio.worker.tieredstore.levels</name>
-    <description>Alluxio Worker Tieredstore Levels</description>
-    <value>1</value>
-  </property>
+  <!--<property require-input="true">-->
+    <!--<name>alluxio.worker.tieredstore.levels</name>-->
+    <!--<description>Alluxio Worker Tieredstore Levels</description>-->
+    <!--<value>2</value>-->
+  <!--</property>-->
 
   <property require-input="true">
     <name>alluxio.worker.tieredstore.level0.alias</name>
@@ -51,7 +51,7 @@
   <property require-input="true">
     <name>alluxio.worker.tieredstore.level0.dirs.quota</name>
     <description>Alluxio Worker Tieredstore Level0 Dirs Quota</description>
-    <value>2GB</value>
+    <value>${alluxio.worker.memory.size}</value>
   </property>
 
   <property require-input="true">
@@ -63,37 +63,25 @@
   <property require-input="false">
     <name>alluxio.worker.tieredstore.level1.alias</name>
     <description>Alluxio Worker Tieredstore Level1 Alias</description>
-    <value></value>
-    <value-attributes>
-      <empty-value-valid>true</empty-value-valid>
-    </value-attributes>
+    <value>SSD</value>
   </property>
 
   <property require-input="false">
     <name>alluxio.worker.tieredstore.level1.dirs.path</name>
     <description>Alluxio Worker Tieredstore Level1 Dirs Path</description>
-    <value></value>
-    <value-attributes>
-      <empty-value-valid>true</empty-value-valid>
-    </value-attributes>
+    <value>/var/lib/alluxio/level1_tired_storage</value>
   </property>
 
   <property require-input="false">
     <name>alluxio.worker.tieredstore.level1.dirs.quota</name>
     <description>Alluxio Worker Tieredstore Level1 Dirs Quota</description>
-    <value></value>
-    <value-attributes>
-      <empty-value-valid>true</empty-value-valid>
-    </value-attributes>
+    <value>10GB</value>
   </property>
 
   <property require-input="false">
     <name>alluxio.worker.tieredstore.level1.reserved.ratio</name>
     <description>Alluxio Worker Tieredstore Level1 Reserved Ratio</description>
-    <value></value>
-    <value-attributes>
-      <empty-value-valid>true</empty-value-valid>
-    </value-attributes>
+    <value>0.1</value>
   </property>
 
   <property require-input="false">
@@ -132,11 +120,11 @@
     </value-attributes>
   </property>
 
-  <property require-input="true">
-    <name>alluxio.worker.tieredstore.reserver.enabled</name>
-    <description>Alluxio Worker Tieredstore Reserver Enabled</description>
-    <value>false</value>
-  </property>
+  <!--<property require-input="true">-->
+    <!--<name>alluxio.worker.tieredstore.reserver.enabled</name>-->
+    <!--<description>Alluxio Worker Tieredstore Reserver Enabled</description>-->
+    <!--<value>false</value>-->
+  <!--</property>-->
 
   <property require-input="true">
     <name>alluxio.worker.web.port</name>
@@ -156,16 +144,16 @@
     <value>CACHE_PROMOTE</value>
   </property>
 
-  <property require-input="true">
-    <name>alluxio.user.file.write.location.policy.class</name>
-    <description>Alluxio User File Write Location Policy Class</description>
-    <value>alluxio.client.file.policy.LocalFirstPolicy</value>
-  </property>
+  <!--<property require-input="true">-->
+    <!--<name>alluxio.user.file.write.location.policy.class</name>-->
+    <!--<description>Alluxio User File Write Location Policy Class</description>-->
+    <!--<value>alluxio.client.file.policy.LocalFirstPolicy</value>-->
+  <!--</property>-->
 
   <property require-input="true">
     <name>alluxio.user.file.writetype.default</name>
     <description>Alluxio User File Writetype Default</description>
-    <value>CACHE_THROUGH</value>
+    <value>MUST_CACHE</value>
   </property>
 
   <!--<property require-input="false">-->
