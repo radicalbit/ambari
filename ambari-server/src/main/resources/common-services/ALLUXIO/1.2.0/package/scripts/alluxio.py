@@ -73,5 +73,18 @@ class Alluxio(Script):
         content=Template('alluxio-site.properties.j2', conf_dir=params.alluxio_config_dir)
     )
 
+    Directory(params.tieredstore_level1_dirs_path,
+              owner=params.alluxio_user,
+              group=params.user_group,
+              recursive=True
+              )
+
+    if params.is_tiredstore_level2_enabled:
+        Directory(params.tieredstore_level2_dirs_path,
+                  owner=params.alluxio_user,
+                  group=params.user_group,
+                  recursive=True
+                  )
+
     # update permissions on alluxio-env.sh file
     Execute('chmod u=rw,g=rx,o=r ' + params.alluxio_config_dir + '/alluxio-env.sh', user=params.root_user)
