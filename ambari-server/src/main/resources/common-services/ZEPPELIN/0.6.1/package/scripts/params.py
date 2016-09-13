@@ -43,6 +43,8 @@ flink_hosts = default('/clusterHostInfo/flink_master_hosts', None)
 alluxio_master_hosts = default('/clusterHostInfo/alluxio_master_hosts', None)
 cassandra_seeds = default('/clusterHostInfo/cassandra_seed_hosts', None)
 cassandra_nodes = default('/clusterHostInfo/cassandra_node_hosts', None)
+elasticsearch_seeds = default('/clusterHostInfo/elasticsearch_master_hosts', None)
+namenode_host = default("/clusterHostInfo/namenode_host", None)
 
 if flink_hosts is not None:
   has_flink_master = True
@@ -67,6 +69,23 @@ if cassandra_seeds is not None:
     cassandra_hosts = ','.join(cassandra_seeds)
 else:
   cassandra_hosts = 'localhost'
+
+if elasticsearch_seeds is not None:
+  es_host = elasticsearch_seeds[0]
+  es_port = config['configurations']['elastic-site']['transport_tcp_port']
+  es_cluster_name = config['configurations']['elastic-site']['cluster_name']
+else:
+  es_host = 'localhost'
+  es_port = 9300
+  es_cluster_name = 'elasticsearch'
+
+if namenode_host is not None:
+  namenode_address = config['configurations']['hdfs-site']['dfs.namenode.http-address']
+  hdfs_url = 'http://' + namenode_address + '/webhdfs/v1/'
+  hdfs_user = config['configurations']['hadoop-env']['hdfs_user']
+else:
+  hdfs_url = "http://localhost:50070/webhdfs/v1/"
+  hdfs_user = 'hdfs'
 
 #zeppelin-env.sh
 # zeppelin_env_content = config['configurations']['zeppelin-env']['content']

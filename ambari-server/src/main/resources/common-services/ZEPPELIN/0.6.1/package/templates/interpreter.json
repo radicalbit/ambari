@@ -140,6 +140,49 @@
         "remote": true,
         "perNoteSession": false
       }
+    },
+    "2B6FF8NXY": {
+      "id": "2B6FF8NXY",
+      "name": "elasticsearch",
+      "group": "elasticsearch",
+      "properties": {
+        "elasticsearch.host": "{{ es_host }}",
+        "elasticsearch.port": "{{ es_port }}",
+        "elasticsearch.cluster.name": "{{ es_cluster_name }}",
+        "elasticsearch.result.size": "10"
+      },
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.elasticsearch.ElasticsearchInterpreter",
+          "name": "elasticsearch"
+        }
+      ],
+      "dependencies": [],
+      "option": {
+        "remote": true,
+        "perNoteSession": false
+      }
+    },
+    "2B6WW8NRT": {
+      "id": "2B6WW8NRT",
+      "name": "hdfs",
+      "group": "file",
+      "properties": {
+        "hdfs.url": "{{ hdfs_url }}",
+        "hdfs.user": "{{ hdfs_user }}",
+        "hdfs.maxlength": "1000"
+      },
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.file.HDFSFileInterpreter",
+          "name": "hdfs"
+        }
+      ],
+      "dependencies": [],
+      "option": {
+        "remote": true,
+        "perNoteSession": false
+      }
     }
   },
   "interpreterBindings": {
