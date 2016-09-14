@@ -24,6 +24,11 @@
     <display-name>Log Directory</display-name>
     <description>The directory where Cassandra will write log files.</description>
     <value>/var/log/cassandra</value>
+    <value-attributes>
+      <type>directory</type>
+      <overridable>false</overridable>
+      <editable-only-at-install>true</editable-only-at-install>
+    </value-attributes>
   </property>
 
   <property require-input="true">
@@ -31,6 +36,11 @@
     <display-name>Pid Directory</display-name>
     <description>Directory containing process ID file.</description>
     <value>/var/run/cassandra</value>
+    <value-attributes>
+      <type>directory</type>
+      <overridable>false</overridable>
+      <editable-only-at-install>true</editable-only-at-install>
+    </value-attributes>
   </property>
 
   <property require-input="true">

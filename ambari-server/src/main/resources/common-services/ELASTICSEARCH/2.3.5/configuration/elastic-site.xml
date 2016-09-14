@@ -47,12 +47,22 @@
         <value>/var/lib/elasticsearch/data</value>
         <display-name>Data directory</display-name>
         <description>Path to directory where to store index data allocated for this node.</description>
+        <value-attributes>
+            <type>directory</type>
+            <overridable>false</overridable>
+            <editable-only-at-install>true</editable-only-at-install>
+        </value-attributes>
     </property>
     <property>
         <name>elastic_plugins_dir</name>
         <value>/var/lib/elasticsearch/plugins</value>
         <display-name>Plugins directory</display-name>
         <description>Plugins directory</description>
+        <value-attributes>
+            <type>directory</type>
+            <overridable>false</overridable>
+            <editable-only-at-install>true</editable-only-at-install>
+        </value-attributes>
     </property>
     <!--  Logging Configurations -->
     <property>
@@ -60,6 +70,11 @@
         <value>/var/log/elasticsearch</value>
         <display-name>Log directory</display-name>
         <description>Log directory</description>
+        <value-attributes>
+            <type>directory</type>
+            <overridable>false</overridable>
+            <editable-only-at-install>true</editable-only-at-install>
+        </value-attributes>
     </property>
     <!--  Discovery -->
     <property>
@@ -67,11 +82,17 @@
         <value>9300</value>
         <display-name>Transport TCP port</display-name>
         <description>Set a custom port for the node to node communication</description>
+        <value-attributes>
+            <type>int</type>
+        </value-attributes>
     </property>
     <property>
         <name>http_port</name>
         <value>9200</value>
         <display-name>HTTP port</display-name>
         <description>Set a custom port to listen for HTTP traffic</description>
+        <value-attributes>
+            <type>int</type>
+        </value-attributes>
     </property>
 </configuration>

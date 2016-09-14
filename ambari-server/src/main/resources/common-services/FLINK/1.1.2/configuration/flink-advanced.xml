@@ -29,6 +29,10 @@
             sorting, hash tables, and caching of intermediate results. If unspecified (-1), the memory manager will
             take a fixed ratio of the heap memory available to the JVM,
             as specified by taskmanager.memory.fraction.</description>
+        <value-attributes>
+            <type>int</type>
+            <unit>MB</unit>
+        </value-attributes>
     </property>
 
     <property>
@@ -46,6 +50,9 @@
         <name>taskmanager.memory.segment-size</name>
         <value>32768</value>
         <description>The size of memory buffers used by the memory manager and the network stack in bytes</description>
+        <value-attributes>
+            <type>int</type>
+        </value-attributes>
     </property>
 
     <property>
@@ -53,6 +60,9 @@
         <value>false</value>
         <description>Can be either of true or false. Specifies whether task managers should
             allocate all managed memory when starting up.</description>
+        <value-attributes>
+            <type>boolean</type>
+        </value-attributes>
     </property>
 
     <property>
@@ -64,6 +74,9 @@
             The I/O manager component will spawn one reading and one writing thread per directory.
             A directory may be listed multiple times to have the I/O manager use multiple threads
             for it (for example if it is physically stored on a very fast disc or RAID)</description>
+        <value-attributes>
+            <type>directory</type>
+        </value-attributes>
     </property>
 
     <property>
@@ -74,6 +87,9 @@
             can have at the same time and how well buffered the channels are. If a job is
             rejected or you get a warning that the system has not enough buffers available,
             increase this value</description>
+        <value-attributes>
+            <type>int</type>
+        </value-attributes>
     </property>
 
     <property>
@@ -81,12 +97,29 @@
         <value>filesystem</value>
         <description>The backend that will be used to store operator state checkpoints if
             checkpointing is enabled. Supported backends: filesystem, jobmanager</description>
+        <value-attributes>
+            <type>value-list</type>
+            <entries>
+                <entry>
+                    <value>filesystem</value>
+                    <label>Filesystem</label>
+                </entry>
+                <entry>
+                    <value>jobmanager</value>
+                    <label>Jobmanager</label>
+                </entry>
+            </entries>
+            <selection-cardinality>1</selection-cardinality>
+        </value-attributes>
     </property>
 
     <property>
         <name>blob.storage.directory</name>
         <value></value>
         <description>Directory for storing blobs (such as user jar’s) on the TaskManagers.</description>
+        <value-attributes>
+            <type>directory</type>
+        </value-attributes>
         <value-attributes>
             <empty-value-valid>true</empty-value-valid>
         </value-attributes>
@@ -101,6 +134,9 @@
             ranges (“50100-50200”) or a combination of both. It is recommended to set a
             range of ports to avoid collisions when multiple JobManagers are running on
             the same machine.</description>
+        <value-attributes>
+            <type>int</type>
+        </value-attributes>
     </property>
 
     <property>
@@ -112,6 +148,9 @@
             1 will also create a directory and place a single result file into it. If the option
             is set to false, the writer will directly create the file directly at the output path,
             without creating a containing directory.</description>
+        <value-attributes>
+            <type>boolean</type>
+        </value-attributes>
     </property>
 
 </configuration>

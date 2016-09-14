@@ -52,7 +52,7 @@ journal_addr = config['configurations']['core-site']['fs.defaultFS'] + journal_r
 # evictor_class = config['configurations']['alluxio-config']['alluxio.worker.evictor.class']
 
 # alluxio worker memory alotment
-worker_mem = config['configurations']['alluxio-config']['alluxio.worker.memory']
+worker_mem = str(config['configurations']['alluxio-config']['alluxio.worker.memory']) + 'MB'
 
 # alluxio worker tieredstore levels
 # tieredstore_levels = config['configurations']['alluxio-config']['alluxio.worker.tieredstore.levels']
@@ -64,7 +64,7 @@ tieredstore_level0_alias = config['configurations']['alluxio-config']['alluxio.w
 tieredstore_level0_dirs_path = config['configurations']['alluxio-config']['alluxio.worker.tieredstore.level0.dirs.path']
 
 # alluxio worker tieredstore level0 dirs quota
-tieredstore_level0_dirs_quota = config['configurations']['alluxio-config']['alluxio.worker.tieredstore.level0.dirs.quota']
+tieredstore_level0_dirs_quota = str(config['configurations']['alluxio-config']['alluxio.worker.tieredstore.level0.dirs.quota']) + 'MB'
 
 # alluxio worker tieredstore level0 reserved ratio
 tieredstore_level0_reserved_ratio = config['configurations']['alluxio-config']['alluxio.worker.tieredstore.level0.reserved.ratio']
@@ -76,7 +76,7 @@ tieredstore_level1_alias = config['configurations']['alluxio-config']['alluxio.w
 tieredstore_level1_dirs_path = config['configurations']['alluxio-config']['alluxio.worker.tieredstore.level1.dirs.path']
 
 # alluxio worker tieredstore level1 dirs quota
-tieredstore_level1_dirs_quota = config['configurations']['alluxio-config']['alluxio.worker.tieredstore.level1.dirs.quota']
+tieredstore_level1_dirs_quota = str(config['configurations']['alluxio-config']['alluxio.worker.tieredstore.level1.dirs.quota']) + 'MB'
 
 # alluxio worker tieredstore level1 reserved ratio
 tieredstore_level1_reserved_ratio = config['configurations']['alluxio-config']['alluxio.worker.tieredstore.level1.reserved.ratio']
@@ -88,7 +88,7 @@ tieredstore_level2_alias = config['configurations']['alluxio-config']['alluxio.w
 tieredstore_level2_dirs_path = config['configurations']['alluxio-config']['alluxio.worker.tieredstore.level2.dirs.path']
 
 # alluxio worker tieredstore level2 dirs quota
-tieredstore_level2_dirs_quota = config['configurations']['alluxio-config']['alluxio.worker.tieredstore.level2.dirs.quota']
+tieredstore_level2_dirs_quota = str(config['configurations']['alluxio-config']['alluxio.worker.tieredstore.level2.dirs.quota']) + 'MB'
 
 # alluxio worker tieredstore level2 reserved ratio
 tieredstore_level2_reserved_ratio = config['configurations']['alluxio-config']['alluxio.worker.tieredstore.level2.reserved.ratio']

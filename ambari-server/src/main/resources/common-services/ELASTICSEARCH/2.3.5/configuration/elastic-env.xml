@@ -32,6 +32,11 @@
     <value>/var/run/elasticsearch</value>
     <display-name>PID directory</display-name>
     <description>PID directory</description>
+    <value-attributes>
+      <type>directory</type>
+      <overridable>false</overridable>
+      <editable-only-at-install>true</editable-only-at-install>
+    </value-attributes>
   </property>
 
   <property>
@@ -39,6 +44,9 @@
     <value>false</value>
     <display-name>ES insicure allow ROOT</display-name>
     <description>Allow to run ES as root</description>
+    <value-attributes>
+      <type>boolean</type>
+    </value-attributes>
   </property>
 
   <!-- elasticsearch-env.sh -->

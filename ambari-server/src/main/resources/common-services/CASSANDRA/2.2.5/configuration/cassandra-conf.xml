@@ -42,6 +42,11 @@
           physical device) from the data file directories. Using an HDD is acceptable because the
           commit log is append only.</description>
       <value>/var/lib/cassandra/commitlog</value>
+      <value-attributes>
+          <type>directory</type>
+          <overridable>false</overridable>
+          <editable-only-at-install>true</editable-only-at-install>
+      </value-attributes>
   </property>
 
   <property require-input="true">
@@ -51,6 +56,11 @@
           comma-separated list of paths.
       </description>
       <value>/var/lib/cassandra/data</value>
+      <value-attributes>
+          <type>directory</type>
+          <overridable>false</overridable>
+          <editable-only-at-install>true</editable-only-at-install>
+      </value-attributes>
   </property>
 
   <property require-input="true">
@@ -58,6 +68,11 @@
       <display-name>Saved Caches Directory</display-name>
       <description>The directory where table key and row caches are stored.</description>
       <value>/var/lib/cassandra/saved_caches</value>
+      <value-attributes>
+          <type>directory</type>
+          <overridable>false</overridable>
+          <editable-only-at-install>true</editable-only-at-install>
+      </value-attributes>
   </property>
 
 </configuration>

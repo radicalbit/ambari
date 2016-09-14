@@ -25,6 +25,9 @@
         <value>5601</value>
         <display-name>Server port</display-name>
         <description>Kibana is served by a back end server. This controls which port to use.</description>
+        <value-attributes>
+            <type>int</type>
+        </value-attributes>
     </property>
 
     <property>
@@ -41,6 +44,10 @@
         <display-name>Elasticsearch ping timeout</display-name>
         <description>Time in milliseconds to wait for elasticsearch to respond to pings, defaults to
             request_timeout setting.</description>
+        <value-attributes>
+            <type>int</type>
+            <unit>milliseconds</unit>
+        </value-attributes>
     </property>
 
     <property>
@@ -49,6 +56,10 @@
         <display-name>Elasticsearch request timeout</display-name>
         <description>Time in milliseconds to wait for responses from the back end or elasticsearch.
             This must be > 0.</description>
+        <value-attributes>
+            <type>int</type>
+            <unit>milliseconds</unit>
+        </value-attributes>
     </property>
 
     <property>
@@ -57,6 +68,10 @@
         <display-name>Elsaticsearch shard timeout</display-name>
         <description>Time in milliseconds for Elasticsearch to wait for responses from shards.
             Set to 0 to disable.</description>
+        <value-attributes>
+            <type>int</type>
+            <unit>milliseconds</unit>
+        </value-attributes>
     </property>
 
     <property>
@@ -64,6 +79,10 @@
         <value>5000</value>
         <display-name>Elasticsearch startup timeout</display-name>
         <description>Time in milliseconds to wait for Elasticsearch at Kibana startup before retrying.</description>
+        <value-attributes>
+            <type>int</type>
+            <unit>milliseconds</unit>
+        </value-attributes>
     </property>
 
 </configuration>

@@ -27,7 +27,11 @@
   <property require-input="true">
     <name>alluxio.worker.memory</name>
     <description>Alluxio Worker Memory</description>
-    <value>2GB</value>
+    <value>2048</value>
+    <value-attributes>
+      <type>int</type>
+      <unit>MB</unit>
+    </value-attributes>
   </property>
 
   <!--<property require-input="true">-->
@@ -40,23 +44,47 @@
     <name>alluxio.worker.tieredstore.level0.alias</name>
     <description>Alluxio Worker Tieredstore Level0 Alias</description>
     <value>MEM</value>
+    <value-attributes>
+      <type>value-list</type>
+      <entries>
+        <entry>
+          <value>MEM</value>
+          <label>MEM</label>
+        </entry>
+        <entry>
+          <value>SSD</value>
+          <label>SSD</label>
+        </entry>
+        <entry>
+          <value>HDD</value>
+          <label>HDD</label>
+        </entry>
+      </entries>
+      <selection-cardinality>1</selection-cardinality>
+    </value-attributes>
   </property>
 
   <property require-input="true">
     <name>alluxio.worker.tieredstore.level0.dirs.path</name>
-    <description>Alluxio Worker Tieredstore Level0 Dirs Path</description>
+    <description>The path of storage directory path for the storage layer.</description>
     <value>/mnt/ramdisk</value>
+    <value-attributes>
+      <type>directory</type>
+    </value-attributes>
   </property>
 
   <property require-input="true">
     <name>alluxio.worker.tieredstore.level0.dirs.quota</name>
-    <description>Alluxio Worker Tieredstore Level0 Dirs Quota</description>
+    <description>The capacity of the storage layer.</description>
     <value>${alluxio.worker.memory.size}</value>
+    <value-attributes>
+      <unit>MB</unit>
+    </value-attributes>
   </property>
 
   <property require-input="true">
     <name>alluxio.worker.tieredstore.level0.reserved.ratio</name>
-    <description>Alluxio Worker Tieredstore Level0 Reserved Ratio</description>
+    <description>The portion of space reserved in the layer 0 (a value between 0 and 1).</description>
     <value>0.1</value>
   </property>
 
@@ -64,23 +92,48 @@
     <name>alluxio.worker.tieredstore.level1.alias</name>
     <description>Alluxio Worker Tieredstore Level1 Alias</description>
     <value>SSD</value>
+    <value-attributes>
+      <type>value-list</type>
+      <entries>
+        <entry>
+          <value>MEM</value>
+          <label>MEM</label>
+        </entry>
+        <entry>
+          <value>SSD</value>
+          <label>SSD</label>
+        </entry>
+        <entry>
+          <value>HDD</value>
+          <label>HDD</label>
+        </entry>
+      </entries>
+      <selection-cardinality>1</selection-cardinality>
+    </value-attributes>
   </property>
 
   <property require-input="false">
     <name>alluxio.worker.tieredstore.level1.dirs.path</name>
-    <description>Alluxio Worker Tieredstore Level1 Dirs Path</description>
+    <description>The path of storage directory path for the storage layer.</description>
     <value>/var/lib/alluxio/level1_tired_storage</value>
+    <value-attributes>
+      <type>directory</type>
+    </value-attributes>
   </property>
 
   <property require-input="false">
     <name>alluxio.worker.tieredstore.level1.dirs.quota</name>
-    <description>Alluxio Worker Tieredstore Level1 Dirs Quota</description>
-    <value>10GB</value>
+    <description>The capacity of the storage layer.</description>
+    <value>10240</value>
+    <value-attributes>
+      <type>int</type>
+      <unit>MB</unit>
+    </value-attributes>
   </property>
 
   <property require-input="false">
     <name>alluxio.worker.tieredstore.level1.reserved.ratio</name>
-    <description>Alluxio Worker Tieredstore Level1 Reserved Ratio</description>
+    <description>The portion of space reserved in the layer 1 (a value between 0 and 1).</description>
     <value>0.1</value>
   </property>
 
@@ -89,31 +142,50 @@
     <description>Alluxio Worker Tieredstore Level2 Alias</description>
     <value></value>
     <value-attributes>
+      <type>value-list</type>
+      <entries>
+        <entry>
+          <value>MEM</value>
+          <label>MEM</label>
+        </entry>
+        <entry>
+          <value>SSD</value>
+          <label>SSD</label>
+        </entry>
+        <entry>
+          <value>HDD</value>
+          <label>HDD</label>
+        </entry>
+      </entries>
+      <selection-cardinality>1</selection-cardinality>
       <empty-value-valid>true</empty-value-valid>
     </value-attributes>
   </property>
 
   <property require-input="false">
     <name>alluxio.worker.tieredstore.level2.dirs.path</name>
-    <description>Alluxio Worker Tieredstore Level2 Dirs Path</description>
+    <description>The path of storage directory path for the storage layer.</description>
     <value></value>
     <value-attributes>
+      <type>directory</type>
       <empty-value-valid>true</empty-value-valid>
     </value-attributes>
   </property>
 
   <property require-input="false">
     <name>alluxio.worker.tieredstore.level2.dirs.quota</name>
-    <description>Alluxio Worker Tieredstore Level2 Dirs Quota</description>
+    <description>The capacity of the storage layer.</description>
     <value></value>
     <value-attributes>
       <empty-value-valid>true</empty-value-valid>
+      <type>int</type>
+      <unit>MB</unit>
     </value-attributes>
   </property>
 
   <property require-input="false">
     <name>alluxio.worker.tieredstore.level2.reserved.ratio</name>
-    <description>Alluxio Worker Tieredstore Level2 Reserved Ratio</description>
+    <description>The portion of space reserved in the layer 2 (a value between 0 and 1).</description>
     <value></value>
     <value-attributes>
       <empty-value-valid>true</empty-value-valid>
@@ -128,20 +200,48 @@
 
   <property require-input="true">
     <name>alluxio.worker.web.port</name>
-    <description>Alluxio Worker Web Port</description>
+    <description>The port Alluxio worker's web UI runs on.</description>
     <value>30000</value>
+    <value-attributes>
+      <type>int</type>
+    </value-attributes>
   </property>
 
   <property require-input="true">
     <name>alluxio.master.web.port</name>
-    <description>Alluxio Master Web Port</description>
+    <description>The port Alluxio web UI runs on.</description>
     <value>19999</value>
+    <value-attributes>
+      <type>int</type>
+    </value-attributes>
   </property>
 
   <property require-input="true">
     <name>alluxio.user.file.readtype.default</name>
-    <description>Alluxio User File Readtype Default</description>
+    <description>Default read type when creating Alluxio files. Valid options are `CACHE_PROMOTE`
+      (move data to highest tier if already in Alluxio storage, write data into highest tier of local
+      Alluxio if data needs to be read from under storage), `CACHE` (write data into highest tier of
+      local Alluxio if data needs to be read from under storage), `NO_CACHE` (no data interaction with
+      Alluxio, if the read is from Alluxio data migration or eviction will not occur).</description>
     <value>CACHE_PROMOTE</value>
+    <value-attributes>
+      <type>value-list</type>
+      <entries>
+        <entry>
+          <value>CACHE_PROMOTE</value>
+          <label>CACHE_PROMOTE</label>
+        </entry>
+        <entry>
+          <value>CACHE</value>
+          <label>CACHE</label>
+        </entry>
+        <entry>
+          <value>NO_CACHE</value>
+          <label>NO_CACHE</label>
+        </entry>
+      </entries>
+      <selection-cardinality>1</selection-cardinality>
+    </value-attributes>
   </property>
 
   <!--<property require-input="true">-->
@@ -152,8 +252,29 @@
 
   <property require-input="true">
     <name>alluxio.user.file.writetype.default</name>
-    <description>Alluxio User File Writetype Default</description>
+    <description>Default write type when creating Alluxio files. Valid options are `MUST_CACHE`
+      (write will only go to Alluxio and must be stored in Alluxio), `CACHE_THROUGH`
+      (try to cache, write to UnderFS synchronously), `THROUGH` (no cache, write to UnderFS synchronously).
+    </description>
     <value>MUST_CACHE</value>
+    <value-attributes>
+      <type>value-list</type>
+      <entries>
+        <entry>
+          <value>MUST_CACHE</value>
+          <label>MUST_CACHE</label>
+        </entry>
+        <entry>
+          <value>CACHE_THROUGH</value>
+          <label>CACHE_THROUGH</label>
+        </entry>
+        <entry>
+          <value>THROUGH</value>
+          <label>THROUGH</label>
+        </entry>
+      </entries>
+      <selection-cardinality>1</selection-cardinality>
+    </value-attributes>
   </property>
 
   <!--<property require-input="false">-->
