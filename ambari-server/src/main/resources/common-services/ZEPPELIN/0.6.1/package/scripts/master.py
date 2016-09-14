@@ -25,6 +25,8 @@ class Zeppelin(Script):
     import params
     self.install_packages(env)
 
+    self.restore_interpreters_defaults(env)
+
     Directory([params.zeppelin_pid_dir, params.zeppelin_log_dir],
             owner=params.zeppelin_user,
             group=params.user_group,
@@ -58,16 +60,9 @@ class Zeppelin(Script):
         mode=0775,
         content=Template('zeppelin-env.sh.j2', conf_dir=params.conf_dir)
     )
-    #write out interpreter.json
-    File(
-        format("{params.conf_dir}/interpreter.json"),
-        owner=params.zeppelin_user,
-        mode=0755,
-        content=Template('interpreter.json', conf_dir=params.conf_dir)
-    )
-    # env_content=InlineTemplate(params.zeppelin_env_content)
-    # File(format("{params.conf_dir}/zeppelin-env.sh"), content=env_content, owner=params.zeppelin_user, group=params.user_group) # , mode=0777)
 
+    if params.zeppelin_restore_interpreters:
+      self.restore_interpreters_defaults(env)
 
   def stop(self, env):
     import params
@@ -89,6 +84,18 @@ class Zeppelin(Script):
     env.set_params(status_params)
     pid_file = glob.glob(status_params.zeppelin_pid_dir + '/zeppelin.pid')[0]
     check_process_status(pid_file)
+
+  def restore_interpreters_defaults(self, env):
+    import params
+    env.set_params(params)
+
+    #write out interpreter.json
+    File(
+        format("{params.conf_dir}/interpreter.json"),
+        owner=params.zeppelin_user,
+        mode=0755,
+        content=Template('interpreter.json', conf_dir=params.conf_dir)
+    )
 
 
 if __name__ == "__main__":

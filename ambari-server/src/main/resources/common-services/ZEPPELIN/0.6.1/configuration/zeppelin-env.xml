@@ -24,19 +24,42 @@
         <display-name>Zeppelin User</display-name>
         <value>zeppelin</value>
         <property-type>USER</property-type>
+        <display-name>Zeppelin service user</display-name>
         <description>User zeppelin daemon runs as</description>
     </property>
 
     <property>
         <name>zeppelin_log_dir</name>
         <value>/var/log/zeppelin</value>
-        <description>Zeppelin Log dir</description>
+        <display-name>Zeppelin log dir</display-name>
+        <description>Zeppelin log dir</description>
+        <value-attributes>
+            <type>directory</type>
+            <overridable>false</overridable>
+            <editable-only-at-install>true</editable-only-at-install>
+        </value-attributes>
     </property>
 
     <property>
         <name>zeppelin_pid_dir</name>
         <value>/var/run/zeppelin</value>
+        <display-name>Zeppelin PID dir</display-name>
         <description>Dir containing process ID file</description>
+        <value-attributes>
+            <type>directory</type>
+            <overridable>false</overridable>
+            <editable-only-at-install>true</editable-only-at-install>
+        </value-attributes>
+    </property>
+
+    <property>
+        <name>zeppelin_restore_interpreter_defaults</name>
+        <value>true</value>
+        <display-name>Restore interpreters defaults on boot</display-name>
+        <description>Restore interpreters defaults everytime Zeppelin service is restarted.</description>
+        <value-attributes>
+            <type>boolean</type>
+        </value-attributes>
     </property>
 
   

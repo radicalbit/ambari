@@ -33,6 +33,7 @@ user_group = config['configurations']['cluster-env']['user_group']
 zeppelin_log_dir = config['configurations']['zeppelin-env']['zeppelin_log_dir']
 zeppelin_pid_dir = config['configurations']['zeppelin-env']['zeppelin_pid_dir']
 zeppelin_hdfs_user_dir = format("/user/{zeppelin_user}")
+zeppelin_restore_interpreters = config['configurations']['zeppelin-env']['zeppelin_restore_interpreter_defaults']
 
 zeppelin_dir = '/usr/lib/zeppelin'
 conf_dir = zeppelin_dir + '/conf'
