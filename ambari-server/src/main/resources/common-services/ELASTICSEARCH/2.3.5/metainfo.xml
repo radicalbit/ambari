@@ -39,7 +39,7 @@
                     <name>ELASTICSEARCH_SLAVE</name>
                     <displayName>Elasticsearch Slave</displayName>
                     <category>SLAVE</category>
-                    <cardinality>1+</cardinality>
+                    <cardinality>0+</cardinality>
                     <commandScript>
                         <script>scripts/elastic_slave.py</script>
                         <scriptType>PYTHON</scriptType>
