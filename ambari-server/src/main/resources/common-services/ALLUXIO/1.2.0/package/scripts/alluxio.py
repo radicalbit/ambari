@@ -73,6 +73,8 @@ class Alluxio(Script):
         content=Template('alluxio-site.properties.j2', conf_dir=params.alluxio_config_dir)
     )
 
+    Execute('ln -s /var/log/alluxio/ /usr/lib/alluxio/logs', not_if="test -d /usr/lib/alluxio/logs")
+
     Directory(params.tieredstore_level1_dirs_path,
               owner=params.alluxio_user,
               group=params.user_group,
