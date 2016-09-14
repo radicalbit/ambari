@@ -28,12 +28,22 @@
                     <name>ALLUXIO_MASTER</name>
                     <displayName>Alluxio Master</displayName>
                     <category>MASTER</category>
-                    <cardinality>1</cardinality>
+                    <cardinality>1+</cardinality>
                     <commandScript>
                         <script>scripts/master.py</script>
                         <scriptType>PYTHON</scriptType>
                         <timeout>500</timeout>
                     </commandScript>
+                    <customCommands>
+                        <customCommand>
+                            <name>FORMAT_CLUSTER</name>
+                            <commandScript>
+                                <script>scripts/master.py</script>
+                                <scriptType>PYTHON</scriptType>
+                                <timeout>600</timeout>
+                            </commandScript>
+                        </customCommand>
+                    </customCommands>
                 </component>
                 <component>
                     <name>ALLUXIO_SLAVE</name>

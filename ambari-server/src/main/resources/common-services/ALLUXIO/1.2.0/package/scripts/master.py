@@ -17,6 +17,7 @@ limitations under the License.
 
 """
 import sys, os, pwd, signal, time
+from resource_management.core.exceptions import ComponentIsNotRunning
 from resource_management.core.resources.system import File, Execute
 from resource_management.libraries.functions.check_process_status import check_process_status
 from resource_management.core.logger import Logger
@@ -36,39 +37,11 @@ class Master(Alluxio):
     self.configure(env)
     env.set_params(params)
 
+    #Format cluster if required
     if params.current_host == params.alluxio_master_head:
-
-      if params.security_enabled:
-        tmp_alluxio_file = 'ALLUXIO_MASTER_FORMATTED_SECURED'
-      else:
-        tmp_alluxio_file = 'ALLUXIO_MASTER_FORMATTED'
-
-      self.alluxio_master_format_marker = os.path.join(params.tmp_dir, tmp_alluxio_file)
+      self.format_marker(env)
       if not os.path.exists(self.alluxio_master_format_marker):
-
-        Logger.info('Formatting the Alluxio master...')
-
-        # the following steps are needed to format correctly the journal of alluxio
-        # 1-create as hdfs the journal folder
-        folders = params.journal_relative_path.split('/')[1:]
-        if params.security_enabled:
-          Execute(params.kinit_path_local+' -kt '+params.hdfs_user_keytab+' '+params.hdfs_principal_name, user = 'hdfs')
-
-        Execute('hdfs dfs -mkdir -p /' + folders[0], user='hdfs', not_if ='hdfs dfs -ls /' + folders[0])
-        Execute('hdfs dfs -mkdir -p ' + params.journal_relative_path, user='hdfs', not_if ='hdfs dfs -ls ' + params.journal_relative_path)
-        # 2-change owner to root
-        Execute('hdfs dfs -chown -R ' + params.root_user + ':' + params.user_group + ' /' + folders[0], user='hdfs')
-        # 3-format the cluster as root
-        Execute(params.base_dir + '/bin/alluxio format', user='hdfs')
-        # 4-change owner to alluxio
-        Execute('hdfs dfs -chown -R ' + params.alluxio_user + ':' + params.user_group + ' /' + folders[0], user='hdfs')
-
-        #update permissions on alluxio folder on hdfs
-        Execute('hdfs dfs -chmod -R 775 /' + folders[0], user='hdfs')
-
-        # create marker
-        open(self.alluxio_master_format_marker, 'a').close()
-        Logger.info('Alluxio master formatted')
+        self.format_cluster(env)
 
     Logger.info('Starting Alluxio master...')
     Execute(params.base_dir + '/bin/alluxio-start.sh master', user=params.alluxio_user)
@@ -90,6 +63,52 @@ class Master(Alluxio):
     env.set_params(params)
     pid_file = format("{pid_dir}/alluxio-master.pid")
     check_process_status(pid_file)
+
+  def format_marker(self, env):
+    import params
+    env.set_params(params)
+    if params.security_enabled:
+      tmp_alluxio_file = 'ALLUXIO_MASTER_FORMATTED_SECURED'
+    else:
+      tmp_alluxio_file = 'ALLUXIO_MASTER_FORMATTED'
+
+    self.alluxio_master_format_marker = os.path.join(params.tmp_dir, tmp_alluxio_file)
+
+  def format_cluster(self, env):
+    import params
+    #env.set_params(params)
+
+    try:
+      check_process_status(params.pid_dir + '/alluxio-master.pid')
+      Logger.error('Format cluster not possible while Alluxio is running')
+      raise Exception('Format cluster not possible while Alluxio is running')
+    except ComponentIsNotRunning:
+      Logger.info('Formatting the Alluxio master...')
+
+      self.format_marker(env)
+
+      # the following steps are needed to format correctly the journal of alluxio
+      # 1-create as hdfs the journal folder
+      folders = params.journal_relative_path.split('/')[1:]
+      if params.security_enabled:
+        Execute(params.kinit_path_local+' -kt '+params.hdfs_user_keytab+' '+params.hdfs_principal_name, user = 'hdfs')
+
+      Execute('hdfs dfs -mkdir -p /' + folders[0], user='hdfs', not_if ='hdfs dfs -ls /' + folders[0])
+      Execute('hdfs dfs -mkdir -p ' + params.journal_relative_path, user='hdfs', not_if ='hdfs dfs -ls ' + params.journal_relative_path)
+      # 2-change owner to root
+      Execute('hdfs dfs -chown -R ' + params.root_user + ':' + params.user_group + ' /' + folders[0], user='hdfs')
+      # 3-format the cluster as root
+      Execute(params.base_dir + '/bin/alluxio format', user='hdfs')
+      # 4-change owner to alluxio
+      Execute('hdfs dfs -chown -R ' + params.alluxio_user + ':' + params.user_group + ' /' + folders[0], user='hdfs')
+
+      #update permissions on alluxio folder on hdfs
+      Execute('hdfs dfs -chmod -R 775 /' + folders[0], user='hdfs')
+
+      # create marker
+      open(self.alluxio_master_format_marker, 'a').close()
+      Logger.info('Alluxio master formatted')
+
 
 if __name__ == "__main__":
   Master().execute()
