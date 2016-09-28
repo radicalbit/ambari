@@ -162,10 +162,10 @@
             <package>
               <name>hadoop</name>
             </package>
-            <package>
-              <name>hadoop-lzo</name>
-              <skipUpgrade>true</skipUpgrade>
-            </package>
+            <!--<package>-->
+              <!--<name>hadoop-lzo</name>-->
+              <!--<skipUpgrade>true</skipUpgrade>-->
+            <!--</package>-->
           </packages>
         </osSpecific>
         
@@ -182,10 +182,10 @@
               <name>lzo</name>
               <skipUpgrade>true</skipUpgrade>
             </package>
-            <package>
-              <name>hadoop-lzo-native</name>
-              <skipUpgrade>true</skipUpgrade>
-            </package>
+            <!--<package>-->
+              <!--<name>hadoop-lzo-native</name>-->
+              <!--<skipUpgrade>true</skipUpgrade>-->
+            <!--</package>-->
             <package>
               <name>hadoop-libhdfs</name>
             </package>
