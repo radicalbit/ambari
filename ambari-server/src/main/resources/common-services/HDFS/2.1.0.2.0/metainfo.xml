@@ -172,16 +172,16 @@
         <osSpecific>
           <osFamily>redhat6,suse11</osFamily>
           <packages>
-            <package>
-              <name>snappy</name>
-            </package>
-            <package>
-              <name>snappy-devel</name>
-            </package>
-            <package>
-              <name>lzo</name>
-              <skipUpgrade>true</skipUpgrade>
-            </package>
+            <!--<package>-->
+              <!--<name>snappy</name>-->
+            <!--</package>-->
+            <!--<package>-->
+              <!--<name>snappy-devel</name>-->
+            <!--</package>-->
+            <!--<package>-->
+              <!--<name>lzo</name>-->
+              <!--<skipUpgrade>true</skipUpgrade>-->
+            <!--</package>-->
             <!--<package>-->
               <!--<name>hadoop-lzo-native</name>-->
               <!--<skipUpgrade>true</skipUpgrade>-->
