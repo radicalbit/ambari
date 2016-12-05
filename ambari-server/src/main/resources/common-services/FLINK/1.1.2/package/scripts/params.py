@@ -74,6 +74,7 @@ flink_lib = flink_install_dir + '/lib'
 
 jobmanager_rpc_address = flink_master
 jobmanager_rpc_port = config['configurations']['flink-config']['jobmanager.rpc.port']
+jobmanager_rpc_port_ha = config['configurations']['flink-config']['high-availability.jobmanager.port']
 jobmanager_heap_mb = config['configurations']['flink-config']['jobmanager.heap.mb']
 taskmanager_heap_mb = config['configurations']['flink-config']['taskmanager.heap.mb']
 taskmanager_numberOfTaskSlots = config['configurations']['flink-config']['taskmanager.numberOfTaskSlots']

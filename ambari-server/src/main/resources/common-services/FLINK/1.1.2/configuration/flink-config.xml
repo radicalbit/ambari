@@ -29,6 +29,12 @@
   </property>
 
   <property>
+    <name>high-availability.jobmanager.port</name>
+    <value>50010</value>
+    <description>The port number of the JobManager in high availability mode.</description>
+  </property>
+
+  <property>
     <name>jobmanager.heap.mb</name>
     <value>768</value>
     <description>JVM heap size (in megabytes) for the JobManager. You may have to increase
