@@ -93,6 +93,7 @@ taskmanager_network_numberOfBuffers = config['configurations']['flink-advanced']
 state_backend = config['configurations']['flink-advanced']['state.backend']
 state_backend_checkpointdir = '/flink/checkpoint'
 state_backend_fs_checkpointdir = format('{hdfs_default_name}{state_backend_checkpointdir}')
+state_backend_memory_threshold = config['configurations']['flink-advanced']['state.backend.fs.memory-threshold']
 blob_storage_directory = config['configurations']['flink-advanced']['blob.storage.directory']
 blob_server_port = config['configurations']['flink-advanced']['blob.server.port']
 fs_output_always_create_directory = config['configurations']['flink-advanced']['fs.output.always-create-directory']

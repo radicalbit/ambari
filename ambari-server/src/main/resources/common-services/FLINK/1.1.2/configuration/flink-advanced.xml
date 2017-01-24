@@ -84,6 +84,13 @@
     </property>
 
     <property>
+        <name>state.backend.fs.memory-threshold</name>
+        <value>0</value>
+        <description>Flink doesn't store the actual state to files if it is smaller than a given threshold.
+            Below this threshold, the state is stored alongside with the checkpoint metadata.</description>
+    </property>
+
+    <property>
         <name>blob.storage.directory</name>
         <value></value>
         <description>Directory for storing blobs (such as user jar’s) on the TaskManagers.</description>
