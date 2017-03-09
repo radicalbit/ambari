@@ -20,7 +20,8 @@
     <services>
         <service>
             <name>ALLUXIO</name>
-            <extends>common-services/ALLUXIO/1.2.0</extends>
+            <version>1.2.0</version>
+            <deleted>true</deleted>
         </service>
     </services>
 </metainfo>
