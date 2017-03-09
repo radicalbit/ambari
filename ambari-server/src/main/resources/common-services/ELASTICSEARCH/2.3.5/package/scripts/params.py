@@ -42,9 +42,11 @@ http_port = config['configurations']['elastic-site']['http_port']
 transport_tcp_port = config['configurations']['elastic-site']['transport_tcp_port']
 
 cluster_name = config['configurations']['elastic-site']['cluster_name']
-cluster_seeds = cassandra_seeds = config['clusterHostInfo']['elasticsearch_master_hosts']
+cluster_seeds = config['clusterHostInfo']['elasticsearch_master_hosts']
+cluster_slaves = config['clusterHostInfo']['elasticsearch_slave_hosts']
+cluster_nodes = cluster_seeds + cluster_slaves
+discovery_zen_ping_unicast_hosts = '"' + (':' + str(transport_tcp_port) + '","').join(cluster_nodes) + ':' + str(transport_tcp_port) + '"'
 cluster_seed_head = cluster_seeds[0]
-discovery_zen_ping_unicast_hosts = '"' + (':' + str(transport_tcp_port) + '","').join(cluster_seeds) + ':' + str(transport_tcp_port) + '"'
 
 path_data = config['configurations']['elastic-site']['path_data']
 log_dir = config['configurations']['elastic-site']['elastic_log_dir']
