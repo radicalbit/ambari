@@ -30,12 +30,13 @@ def flink(action = None):
 
 
   if action == 'install':
-    download_alluxio_client_jar(params.jar_url, params.alluxio_jar_name)
-    Execute(
-        format('cp /tmp/{alluxio_jar_name} {params.flink_lib}/'),
-        user='root',
-        not_if=format('test -d /{params.flink_lib}/{alluxio_jar_name}')
-    )
+    pass
+    # download_alluxio_client_jar(params.jar_url, params.alluxio_jar_name)
+    # Execute(
+    #     format('cp /tmp/{alluxio_jar_name} {params.flink_lib}/'),
+    #     user='root',
+    #     not_if=format('test -d /{params.flink_lib}/{alluxio_jar_name}')
+    # )
 
   elif action == 'configure':
 
