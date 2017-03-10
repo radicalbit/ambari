@@ -20,8 +20,7 @@
     <services>
         <service>
             <name>ELASTICSEARCH</name>
-            <version>2.3.5</version>
-            <deleted>true</deleted>
+            <extends>common-services/ELASTICSEARCH/2.3.5</extends>
         </service>
     </services>
 </metainfo>
