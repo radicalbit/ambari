@@ -75,6 +75,7 @@
             <requiredServices>
                 <service>ZOOKEEPER</service>
                 <service>HDFS</service>
+                <service>ALLUXIO</service>
             </requiredServices>
 
       	    <configuration-dependencies>

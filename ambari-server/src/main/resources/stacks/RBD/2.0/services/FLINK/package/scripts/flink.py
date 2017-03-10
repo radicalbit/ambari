@@ -21,23 +21,7 @@ from resource_management import *
 def flink(action = None):
   import params
 
-  def download_alluxio_client_jar(jar_url, jar_name):
-    Execute(
-        format('wget {jar_url}/{jar_name} -O /tmp/{jar_name} -a /tmp/alluxio_download.log'),
-        user='root',
-        not_if=format('test -d /tmp/{jar_name}')
-    )
-
-
-  if action == 'install':
-    download_alluxio_client_jar(params.jar_url, params.alluxio_jar_name)
-    Execute(
-        format('cp /tmp/{alluxio_jar_name} {params.flink_lib}/'),
-        user='root',
-        not_if=format('test -d /{params.flink_lib}/{alluxio_jar_name}')
-    )
-
-  elif action == 'configure':
+  if action == 'configure':
 
     # configure folders and permissions
 
@@ -86,29 +70,6 @@ def flink(action = None):
           mode=0700,
           content=Template('cron-kinit-flink.sh.j2', conf_dir=params.conf_dir)
       )
-
-
-    # Create and add alluxio-site.properties jar
-
-    Execute(
-        format("scp -o StrictHostKeyChecking=no {alluxio_master}:/etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
-        #format("cp /etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
-        tries = 10,
-        try_sleep=3,
-        logoutput=True
-    )
-    Execute(
-        format("zip -j /tmp/alluxio-site.jar /tmp/alluxio-site.properties"),
-        tries = 10,
-        try_sleep=3,
-        logoutput=True
-    )
-    Execute(
-        format("cp /tmp/alluxio-site.jar {params.flink_lib}"),
-        tries = 10,
-        try_sleep=3,
-        logoutput=True
-    )
 
   else:
     pass
