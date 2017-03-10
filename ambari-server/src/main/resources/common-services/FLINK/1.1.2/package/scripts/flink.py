@@ -91,25 +91,25 @@ def flink(action = None):
 
     # Create and add alluxio-site.properties jar
 
-    Execute(
-        format("scp -o StrictHostKeyChecking=no {alluxio_master}:/etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
-        #format("cp /etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
-        tries = 10,
-        try_sleep=3,
-        logoutput=True
-    )
-    Execute(
-        format("zip -j /tmp/alluxio-site.jar /tmp/alluxio-site.properties"),
-        tries = 10,
-        try_sleep=3,
-        logoutput=True
-    )
-    Execute(
-        format("cp /tmp/alluxio-site.jar {params.flink_lib}"),
-        tries = 10,
-        try_sleep=3,
-        logoutput=True
-    )
+    # Execute(
+    #     format("scp -o StrictHostKeyChecking=no {alluxio_master}:/etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
+    #     #format("cp /etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
+    #     tries = 10,
+    #     try_sleep=3,
+    #     logoutput=True
+    # )
+    # Execute(
+    #     format("zip -j /tmp/alluxio-site.jar /tmp/alluxio-site.properties"),
+    #     tries = 10,
+    #     try_sleep=3,
+    #     logoutput=True
+    # )
+    # Execute(
+    #     format("cp /tmp/alluxio-site.jar {params.flink_lib}"),
+    #     tries = 10,
+    #     try_sleep=3,
+    #     logoutput=True
+    # )
 
   else:
     pass
