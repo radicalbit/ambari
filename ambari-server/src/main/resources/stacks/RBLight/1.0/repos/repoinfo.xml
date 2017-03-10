@@ -20,13 +20,13 @@
   <os family="redhat6">
     <repo>
       <baseurl>https://public-repo.radicalbit.io/rbd/centos6/2.2.0.0</baseurl>
-      <repoid>RBD-1.0</repoid>
-      <reponame>RBD</reponame>
+      <repoid>RBLight-1.0</repoid>
+      <reponame>RBLight</reponame>
     </repo>
     <repo>
       <baseurl>https://public-repo.radicalbit.io/rbd-utils/centos6/2.2.0.0</baseurl>
-      <repoid>RBD-UTILS-1.1.0.20</repoid>
-      <reponame>RBD-UTILS</reponame>
+      <repoid>RBLight-UTILS-1.1.0.20</repoid>
+      <reponame>RBLight-UTILS</reponame>
     </repo>
   </os>
   <os family="redhat7">
