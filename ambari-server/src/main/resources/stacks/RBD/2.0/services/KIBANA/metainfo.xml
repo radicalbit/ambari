@@ -20,8 +20,7 @@
     <services>
         <service>
             <name>KIBANA</name>
-            <version>4.5.4</version>
-            <deleted>true</deleted>
+            <extends>common-services/KIBANA/4.5.4</extends>
         </service>
     </services>
 </metainfo>

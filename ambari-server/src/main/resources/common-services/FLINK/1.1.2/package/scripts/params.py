@@ -35,9 +35,7 @@ nodes_number = len(config['clusterHostInfo']['all_hosts'])
 cores_number = config['configurations']['yarn-site']['yarn.scheduler.maximum-allocation-vcores']
 #cores_number = multiprocessing.cpu_count()
 
-# alluxio jar params
-jar_url = 'https://public-repo.radicalbit.io/jars'
-alluxio_jar_name = 'alluxio-core-client-1.2.0-jar-with-dependencies.jar'
+
 
 security_enabled = config['configurations']['cluster-env']['security_enabled']
 
@@ -59,11 +57,15 @@ if security_enabled:
   hdfs_user_keytab = config['configurations']['hadoop-env']['hdfs_user_keytab']
   hdfs_principal_name = default('/configurations/hadoop-env/hdfs_principal_name', None)
 
-alluxio_master = ''
-alluxio_default_name = 'file:///'
+is_alluxio_installed = False
+fs_default_scheme = 'file:///'
 if 'alluxio_master_hosts' in config['clusterHostInfo']:
+  is_alluxio_installed = True
   alluxio_master = config['clusterHostInfo']['alluxio_master_hosts'][0]
-  alluxio_default_name = 'alluxio-ft://' + alluxio_master + ':19998/'
+  fs_default_scheme = 'alluxio-ft://' + alluxio_master + ':19998/'
+  # alluxio jar params
+  jar_url = 'https://public-repo.radicalbit.io/jars'
+  alluxio_jar_name = 'alluxio-core-client-1.2.0-jar-with-dependencies.jar'
 
 flink_install_dir = '/usr/lib/flink'
 conf_dir = flink_install_dir + '/conf'

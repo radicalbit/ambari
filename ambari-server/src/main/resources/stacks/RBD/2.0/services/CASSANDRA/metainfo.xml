@@ -20,8 +20,7 @@
     <services>
         <service>
             <name>CASSANDRA</name>
-            <version>2.2.5</version>
-            <deleted>true</deleted>
+            <extends>common-services/CASSANDRA/2.2.5</extends>
         </service>
     </services>
 </metainfo>

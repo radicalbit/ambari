@@ -30,12 +30,13 @@ def flink(action = None):
 
 
   if action == 'install':
-    download_alluxio_client_jar(params.jar_url, params.alluxio_jar_name)
-    Execute(
-        format('cp /tmp/{alluxio_jar_name} {params.flink_lib}/'),
-        user='root',
-        not_if=format('test -d /{params.flink_lib}/{alluxio_jar_name}')
-    )
+    if params.is_alluxio_installed:
+        download_alluxio_client_jar(params.jar_url, params.alluxio_jar_name)
+        Execute(
+            format('cp /tmp/{alluxio_jar_name} {params.flink_lib}/'),
+            user='root',
+            not_if=format('test -d /{params.flink_lib}/{alluxio_jar_name}')
+        )
 
   elif action == 'configure':
 
@@ -87,28 +88,27 @@ def flink(action = None):
           content=Template('cron-kinit-flink.sh.j2', conf_dir=params.conf_dir)
       )
 
-
-    # Create and add alluxio-site.properties jar
-
-    Execute(
-        format("scp -o StrictHostKeyChecking=no {alluxio_master}:/etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
-        #format("cp /etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
-        tries = 10,
-        try_sleep=3,
-        logoutput=True
-    )
-    Execute(
-        format("zip -j /tmp/alluxio-site.jar /tmp/alluxio-site.properties"),
-        tries = 10,
-        try_sleep=3,
-        logoutput=True
-    )
-    Execute(
-        format("cp /tmp/alluxio-site.jar {params.flink_lib}"),
-        tries = 10,
-        try_sleep=3,
-        logoutput=True
-    )
+    if params.is_alluxio_installed:
+        # Create and add alluxio-site.properties jar
+        Execute(
+            format("scp -o StrictHostKeyChecking=no {alluxio_master}:/etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
+            #format("cp /etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
+            tries = 10,
+            try_sleep=3,
+            logoutput=True
+        )
+        Execute(
+            format("zip -j /tmp/alluxio-site.jar /tmp/alluxio-site.properties"),
+            tries = 10,
+            try_sleep=3,
+            logoutput=True
+        )
+        Execute(
+            format("cp /tmp/alluxio-site.jar {params.flink_lib}"),
+            tries = 10,
+            try_sleep=3,
+            logoutput=True
+        )
 
   else:
     pass
