@@ -21,17 +21,6 @@
     <service>
       <name>ZOOKEEPER</name>
       <version>3.4.8</version>
-      <osSpecifics>
-        <osSpecific>
-          <osFamily>redhat7,redhat6,suse11</osFamily>
-          <packages>
-            <package>
-              <name>zookeeper</name>
-            </package>
-          </packages>
-        </osSpecific>
-      </osSpecifics>
-
     </service>
   </services>
 </metainfo>
