@@ -17,6 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
+from stack_advisor_023 import RBLight023StackAdvisor
 
 class RBLight10StackAdvisor(RBLight023StackAdvisor):
 

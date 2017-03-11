@@ -1,0 +1,52 @@
+{
+  "services": [
+    {
+      "name": "KAFKA",
+      "identities": [
+        {
+          "name": "/smokeuser"
+        }
+      ],
+      "configurations": [
+        {
+          "kafka-broker": {
+              "authorizer.class.name": "kafka.security.auth.SimpleAclAuthorizer",
+              "super.users": "User:${kafka-env/kafka_user}",
+              "sasl.mechanism.inter.broker.protocol": "GSSAPI",
+              "sasl.enabled.mechanisms": "GSSAPI",
+              "allow.everyone.if.no.acl.found": "true",
+              "sasl.kerberos.principal.to.local.rules": "RULE:[1:$1@$0](.*@${realm})s/@.*//, DEFAULT",
+              "security.inter.broker.protocol": "SASL_PLAINTEXT"
+          }
+        }
+      ],
+      "components": [
+        {
+          "name": "KAFKA_BROKER",
+          "identities": [
+            {
+              "name": "kafka_broker",
+              "principal": {
+                "value": "${kafka-env/kafka_user}/_HOST@${realm}",
+                "type": "service",
+                "configuration": "kafka-env/kafka_principal_name"
+              },
+              "keytab": {
+                "file": "${keytab_dir}/kafka.service.keytab",
+                "owner": {
+                  "name": "${kafka-env/kafka_user}",
+                  "access": "r"
+                },
+                "group": {
+                  "name": "${cluster-env/user_group}",
+                  "access": ""
+                },
+                "configuration": "kafka-env/kafka_keytab"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

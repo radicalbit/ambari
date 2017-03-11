@@ -19,9 +19,30 @@
   <schemaVersion>2.0</schemaVersion>
   <services>
     <service>
-      <name>ZOOKEEPER</name>
-      <extends>common-services/ZOOKEEPER/3.4.8</extends>
-
+      <name>KAFKA</name>
+      <version>0.9.0.2.3</version>
+      <extends>common-services/KAFKA/0.8.1.2.2</extends>
+      <osSpecifics>
+        <osSpecific>
+          <osFamily>redhat7,redhat6,suse11</osFamily>
+          <packages>
+            <package>
+              <name>kafka_2_3_*</name>
+            </package>
+          </packages>
+        </osSpecific>
+        <osSpecific>
+          <osFamily>debian7,ubuntu12,ubuntu14</osFamily>
+          <packages>
+            <package>
+              <name>kafka-2-3-.*</name>
+            </package>
+          </packages>
+        </osSpecific>
+      </osSpecifics>
+      <configuration-dependencies>
+        <config-type>kafka-broker</config-type>
+      </configuration-dependencies>
     </service>
   </services>
 </metainfo>
