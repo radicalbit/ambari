@@ -53,6 +53,14 @@ def flink(action = None):
 
     # add flink node configurations
 
+    PropertiesFile("flink-conf-test.yaml",
+        dir=params.conf_dir,
+        properties=params.config['configurations']['flink-config'],
+        owner=params.flink_user,
+        group=params.user_group,
+        mode=0644,
+        key_value_delimiter=":"
+    )
     File(
         format("{conf_dir}/flink-conf.yaml"),
         owner=params.flink_user,

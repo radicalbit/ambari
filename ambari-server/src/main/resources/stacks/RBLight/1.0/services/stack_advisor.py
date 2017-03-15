@@ -17,6 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
+import multiprocessing
 from stack_advisor_023 import RBLight023StackAdvisor
 
 class RBLight10StackAdvisor(RBLight023StackAdvisor):
@@ -52,7 +53,6 @@ class RBLight10StackAdvisor(RBLight023StackAdvisor):
 
   def getComponentLayoutSchemes(self):
     parentSchemes = super(RBLight10StackAdvisor, self).getComponentLayoutSchemes()
-
     return parentSchemes
 
   def validateAmsHbaseEnvConfigurations(self, properties, recommendedDefaults, configurations, services, hosts):
@@ -63,3 +63,15 @@ class RBLight10StackAdvisor(RBLight023StackAdvisor):
 
   def validateStormConfigurations(self, properties, recommendedDefaults, configurations, services, hosts):
     return []
+
+  def getServiceConfigurationRecommenderDict(self):
+    parentRecommendConfDict = super(RBLight10StackAdvisor, self).getServiceConfigurationRecommenderDict()
+    childRecommendConfDict = {
+      "FLINK": self.recommendFlinkConfigurations
+    }
+    parentRecommendConfDict.update(childRecommendConfDict)
+    return parentRecommendConfDict
+
+  def recommendFlinkConfigurations(self, configurations, clusterData, services, hosts):
+    putFlinkProperty = self.putProperty(configurations, "flink-conf")
+    putFlinkProperty("taskmanager.numberOfTaskSlots", multiprocessing.cpu_count())
