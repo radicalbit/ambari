@@ -21,6 +21,7 @@
     <service>
       <name>ZOOKEEPER</name>
       <version>3.4.8</version>
+      <extends>common-services/ZOOKEEPER/3.4.8</extends>
       <osSpecifics>
         <osSpecific>
           <osFamily>redhat7,redhat6,suse11</osFamily>
