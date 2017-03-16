@@ -58,11 +58,11 @@ if security_enabled:
   hdfs_principal_name = default('/configurations/hadoop-env/hdfs_principal_name', None)
 
 is_alluxio_installed = False
-fs_default_scheme = 'file:///'
+# fs_default_scheme = 'file:///'
 if 'alluxio_master_hosts' in config['clusterHostInfo']:
   is_alluxio_installed = True
   alluxio_master = config['clusterHostInfo']['alluxio_master_hosts'][0]
-  fs_default_scheme = 'alluxio-ft://' + alluxio_master + ':19998/'
+  # fs_default_scheme = 'alluxio-ft://' + alluxio_master + ':19998/'
   # alluxio jar params
   jar_url = 'https://public-repo.radicalbit.io/jars'
   alluxio_jar_name = 'alluxio-core-client-1.2.0-jar-with-dependencies.jar'
@@ -106,7 +106,7 @@ jobmanager_web_history = config['configurations']['flink-config']['jobmanager.we
 jobmanager_web_checkpoints_disable = config['configurations']['flink-config']['jobmanager.web.checkpoints.disable']
 jobmanager_web_checkpoints_history = config['configurations']['flink-config']['jobmanager.web.checkpoints.history']
 
-# params from flink-env.yaml
+# params from flink-env.xml
 flink_user = config['configurations']['flink-env']['flink_user']
 user_group = config['configurations']['cluster-env']['user_group']
 flink_pid_dir = config['configurations']['flink-env']['env.pid.dir']

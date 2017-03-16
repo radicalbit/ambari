@@ -55,18 +55,18 @@ def flink(action = None):
 
     PropertiesFile("flink-conf-test.yaml",
         dir=params.conf_dir,
-        properties=params.config['configurations']['flink-config'],
+        properties=params.config['configurations']['flink-conf'],
         owner=params.flink_user,
         group=params.user_group,
         mode=0644,
         key_value_delimiter=":"
     )
-    File(
-        format("{conf_dir}/flink-conf.yaml"),
-        owner=params.flink_user,
-        mode=0644,
-        content=Template('flink-conf.yaml.j2', conf_dir=params.conf_dir)
-    )
+    # File(
+    #     format("{conf_dir}/flink-conf.yaml"),
+    #     owner=params.flink_user,
+    #     mode=0644,
+    #     content=Template('flink-conf.yaml.j2', conf_dir=params.conf_dir)
+    # )
     File(
         format("{conf_dir}/slaves"),
         owner=params.flink_user,

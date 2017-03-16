@@ -73,5 +73,12 @@ class RBLight10StackAdvisor(RBLight023StackAdvisor):
     return parentRecommendConfDict
 
   def recommendFlinkConfigurations(self, configurations, clusterData, services, hosts):
+    alluxioMasterHost = self.getHostWithComponent("ALLUXIO", "ALLUXIO_MASTER", services, hosts)
+
     putFlinkProperty = self.putProperty(configurations, "flink-conf")
     putFlinkProperty("taskmanager.numberOfTaskSlots", multiprocessing.cpu_count())
+
+    if alluxioMasterHost in not None:
+      putFlinkProperty("fs.default-scheme", 'alluxio-ft://' + alluxioMasterHost + ':19998/')
+    else:
+      putFlinkProperty("fs.default-scheme", "file:///")

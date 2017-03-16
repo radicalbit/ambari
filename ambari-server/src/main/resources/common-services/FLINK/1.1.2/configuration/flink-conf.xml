@@ -54,17 +54,17 @@
         </description>
     </property>
 
-    <property>
-        <name>taskmanager.numberOfTaskSlots</name>
-        <value>1</value>
-        <description>The number of parallel operator or user function instances that a single
-            TaskManager can run (DEFAULT: 1). If this value is larger than 1, a single TaskManager
-            takes multiple instances of a function or operator. That way, the TaskManager can
-            utilize multiple CPU cores, but at the same time, the available memory is divided
-            between the different operator or function instances. This value is typically
-            proportional to the number of physical CPU cores that the TaskManager’s machine
-            has (e.g., equal to the number of cores, or half the number of cores).</description>
-    </property>
+    <!--<property>-->
+        <!--<name>taskmanager.numberOfTaskSlots</name>-->
+        <!--<value>1</value>-->
+        <!--<description>The number of parallel operator or user function instances that a single-->
+            <!--TaskManager can run (DEFAULT: 1). If this value is larger than 1, a single TaskManager-->
+            <!--takes multiple instances of a function or operator. That way, the TaskManager can-->
+            <!--utilize multiple CPU cores, but at the same time, the available memory is divided-->
+            <!--between the different operator or function instances. This value is typically-->
+            <!--proportional to the number of physical CPU cores that the TaskManager’s machine-->
+            <!--has (e.g., equal to the number of cores, or half the number of cores).</description>-->
+    <!--</property>-->
 
     <property>
         <name>parallelism.default</name>
