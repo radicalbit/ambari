@@ -54,17 +54,17 @@
         </description>
     </property>
 
-    <!--<property>-->
-        <!--<name>taskmanager.numberOfTaskSlots</name>-->
-        <!--<value>1</value>-->
-        <!--<description>The number of parallel operator or user function instances that a single-->
-            <!--TaskManager can run (DEFAULT: 1). If this value is larger than 1, a single TaskManager-->
-            <!--takes multiple instances of a function or operator. That way, the TaskManager can-->
-            <!--utilize multiple CPU cores, but at the same time, the available memory is divided-->
-            <!--between the different operator or function instances. This value is typically-->
-            <!--proportional to the number of physical CPU cores that the TaskManager’s machine-->
-            <!--has (e.g., equal to the number of cores, or half the number of cores).</description>-->
-    <!--</property>-->
+    <property>
+        <name>taskmanager.numberOfTaskSlots</name>
+        <value>1</value>
+        <description>The number of parallel operator or user function instances that a single
+            TaskManager can run (DEFAULT: 1). If this value is larger than 1, a single TaskManager
+            takes multiple instances of a function or operator. That way, the TaskManager can
+            utilize multiple CPU cores, but at the same time, the available memory is divided
+            between the different operator or function instances. This value is typically
+            proportional to the number of physical CPU cores that the TaskManager’s machine
+            has (e.g., equal to the number of cores, or half the number of cores).</description>
+    </property>
 
     <property>
         <name>parallelism.default</name>
@@ -73,6 +73,16 @@
             specified. (DEFAULT: 1). For setups that have no concurrent jobs running, setting
             this value to NumTaskManagers * NumSlotsPerTaskManager will cause the system to use
             all available execution resources for the program’s execution. </description>
+    </property>
+
+    <property>
+        <name>fs.default-scheme</name>
+        <value>file:///</value>
+        <description> The default filesystem scheme to be used, with the necessary authority to
+            contact, e.g. the host:port of the NameNode in the case of HDFS (if needed). By default,
+            this is set to file:/// which points to the local filesystem. This means that the local
+            filesystem is going to be used to search for user-specified files without an explicit
+            scheme definition. </description>
     </property>
 
     <property>
