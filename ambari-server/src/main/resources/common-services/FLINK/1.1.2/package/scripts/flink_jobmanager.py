@@ -19,7 +19,7 @@ limitations under the License.
 from resource_management import *
 from flink_service import FlinkService
 
-class FlinkMaster(FlinkService):
+class FlinkJobManager(FlinkService):
 
 
   def start(self, env):

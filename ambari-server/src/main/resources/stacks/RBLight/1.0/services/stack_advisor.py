@@ -3942,12 +3942,17 @@ class RBLight10StackAdvisor(RBLight023StackAdvisor):
 
   def recommendFlinkConfigurations(self, configurations, clusterData, services, hosts):
     print("recommendFlinkConfigurations")
-    alluxioMasterHost = self.getHostWithComponent("ALLUXIO", "ALLUXIO_MASTER", services, hosts)
+    alluxioMasterHosts = self.getHostWithComponent("ALLUXIO", "ALLUXIO_MASTER", services, hosts)
+    hdfsNameNodes = self.getHostWithComponent("HDFS", "NAMENODE", services, hosts)
+    flinkJobManagers = self.getHostWithComponent("FLINK", "NAMENODE", services, hosts)
 
     putFlinkProperty = self.putProperty(configurations, "flink-conf", services)
+
     putFlinkProperty("taskmanager.numberOfTaskSlots", multiprocessing.cpu_count())
 
-    if alluxioMasterHost is not None:
-      putFlinkProperty("fs.default-scheme", 'alluxio-ft://' + alluxioMasterHost + ':19998/')
+    if alluxioMasterHosts is not None:
+      putFlinkProperty("fs.default-scheme", 'alluxio-ft://' + alluxioMasterHosts[0] + ':19998/')
+    elif hdfsNameNodes is not None:
+      putFlinkProperty("fs.default-scheme", 'hdfs://' + hdfsNameNodes[0] + ':50010/')
     else:
       putFlinkProperty("fs.default-scheme", "file:///")

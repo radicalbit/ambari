@@ -29,6 +29,12 @@
     </property>
 
     <property>
+        <name>jobmanager.rpc.address</name>
+        <value>0.0.0.0</value>
+        <description>The IP address of the JobManager, which is the master/coordinator of the distributed system.</description>
+    </property>
+
+    <property>
         <name>high-availability.jobmanager.port</name>
         <value>50010</value>
         <description>The port number of the JobManager in high availability mode.</description>

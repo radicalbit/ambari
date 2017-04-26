@@ -15,10 +15,10 @@
                     "name" : "HDFS_CLIENT"
                 },
                 {
-                    "name" : "FLINK_MASTER"
+                    "name" : "FLINK_JOBMANAGER"
                 },
                 {
-                    "name" : "FLINK_SLAVE"
+                    "name" : "FLINK_TASKMANAGER"
                 }
             ],
             "cardinality" : "1"
@@ -40,7 +40,7 @@
                     "name" : "MYSQL_SERVER"
                 },
                 {
-                    "name" : "FLINK_SLAVE"
+                    "name" : "FLINK_TASKMANAGER"
                 },
                 {
                     "name" : "WEBHCAT_SERVER"
@@ -55,7 +55,7 @@
                     "name" : "ZOOKEEPER_SERVER"
                 },
                 {
-                    "name" : "FLINK_SLAVE"
+                    "name" : "FLINK_TASKMANAGER"
                 }
             ],
             "cardinality" : "1"
@@ -67,7 +67,7 @@
                     "name" : "ZOOKEEPER_SERVER"
                 },
                 {
-                    "name" : "FLINK_SLAVE"
+                    "name" : "FLINK_TASKMANAGER"
                 }
             ],
             "cardinality" : "1"
@@ -79,7 +79,7 @@
                     "name" : "DATANODE"
                 },
                 {
-                    "name" : "FLINK_SLAVE"
+                    "name" : "FLINK_TASKMANAGER"
                 }
             ],
             "cardinality" : "${slavesCount}"

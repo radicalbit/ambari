@@ -40,7 +40,7 @@ conf_dir = zeppelin_dir + '/conf'
 
 hadoop_conf_dir = conf_select.get_hadoop_conf_dir()
 
-flink_hosts = default('/clusterHostInfo/flink_master_hosts', None)
+flink_hosts = default('/clusterHostInfo/flink_jobmanager_hosts', None)
 alluxio_master_hosts = default('/clusterHostInfo/alluxio_master_hosts', None)
 cassandra_seeds = default('/clusterHostInfo/cassandra_seed_hosts', None)
 cassandra_nodes = default('/clusterHostInfo/cassandra_node_hosts', None)
@@ -48,13 +48,13 @@ elasticsearch_seeds = default('/clusterHostInfo/elasticsearch_master_hosts', Non
 namenode_host = default("/clusterHostInfo/namenode_host", None)
 
 if flink_hosts is not None:
-  has_flink_master = True
+  has_flink_jobmanager = True
   flink_conf_dir = '/etc/flink/conf'
   flink_user = config['configurations']['flink-env']['flink_user']
-  flink_master = config['clusterHostInfo']['flink_master_hosts'][0]
-  flink_host = config['clusterHostInfo']['flink_master_hosts'][0]
+  flink_jobmanager = config['clusterHostInfo']['flink_jobmanager_hosts'][0]
+  flink_host = config['clusterHostInfo']['flink_jobmanager_hosts'][0]
 else:
-  has_flink_master = False
+  has_flink_jobmanager = False
   flink_host = 'local'
 
 if alluxio_master_hosts is not None:

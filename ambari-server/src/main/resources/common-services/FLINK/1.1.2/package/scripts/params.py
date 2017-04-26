@@ -40,9 +40,9 @@ cores_number = config['configurations']['yarn-site']['yarn.scheduler.maximum-all
 security_enabled = config['configurations']['cluster-env']['security_enabled']
 
 hostname = config['hostname']
-flink_masters = config['clusterHostInfo']['flink_master_hosts']
-flink_slaves = config['clusterHostInfo']['flink_slave_hosts']
-flink_master = flink_masters[0]
+flink_jobmanagers = config['clusterHostInfo']['flink_jobmanager_hosts']
+flink_taskmanagers = config['clusterHostInfo']['flink_taskmanager_hosts']
+flink_jobmanager = flink_jobmanagers[0]
 custer_hosts = config['clusterHostInfo']['all_hosts']
 
 if security_enabled:
@@ -74,7 +74,7 @@ flink_lib = flink_install_dir + '/lib'
 
 # params from flink-config
 
-jobmanager_rpc_address = flink_master
+jobmanager_rpc_address = flink_jobmanager
 jobmanager_rpc_port = config['configurations']['flink-config']['jobmanager.rpc.port']
 jobmanager_rpc_port_ha = config['configurations']['flink-config']['high-availability.jobmanager.port']
 jobmanager_heap_mb = config['configurations']['flink-config']['jobmanager.heap.mb']

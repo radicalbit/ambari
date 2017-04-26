@@ -27,10 +27,10 @@
                     "name" : "SECONDARY_NAMENODE"
                 },
                 {
-                    "name" : "FLINK_MASTER"
+                    "name" : "FLINK_JOBMANAGER"
                 },
                 {
-                    "name" : "FLINK_SLAVE"
+                    "name" : "FLINK_TASKMANAGER"
                 },
                 {
                     "name" : "MYSQL_SERVER"

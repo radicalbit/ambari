@@ -33,7 +33,7 @@
           "name": "FLINK_CLIENT"
         },
         {
-          "name": "FLINK_MASTER"
+          "name": "FLINK_JOBMANAGER"
         }
       ]
     }

@@ -27,24 +27,24 @@
             <version>1.1.2</version>
             <components>
                 <component>
-                    <name>FLINK_MASTER</name>
+                    <name>FLINK_JOBMANAGER</name>
                     <displayName>Flink JobManager</displayName>
                     <category>MASTER</category>
                     <cardinality>1+</cardinality>
                     <commandScript>
-                        <script>scripts/flink_master.py</script>
+                        <script>scripts/flink_jobmanager.py</script>
                         <scriptType>PYTHON</scriptType>
                         <timeout>10000</timeout>
                     </commandScript>
                 </component>
 
                 <component>
-                    <name>FLINK_SLAVE</name>
+                    <name>FLINK_TASKMANAGER</name>
                     <displayName>Flink TaskManager</displayName>
                     <category>SLAVE</category>
                     <cardinality>1+</cardinality>
                     <commandScript>
-                        <script>scripts/flink_slave.py</script>
+                        <script>scripts/flink_taskmanager.py</script>
                         <scriptType>PYTHON</scriptType>
                         <timeout>10000</timeout>
                     </commandScript>
@@ -75,12 +75,10 @@
             <requiredServices>
                 <service>ZOOKEEPER</service>
                 <service>HDFS</service>
-                <service>ALLUXIO</service>
             </requiredServices>
 
       	    <configuration-dependencies>
-	        	<config-type>flink-config</config-type>
-                <config-type>flink-advanced</config-type>
+                <config-type>flink-conf</config-type>
       	    </configuration-dependencies>
             <restartRequiredAfterChange>true</restartRequiredAfterChange>
         </service>
