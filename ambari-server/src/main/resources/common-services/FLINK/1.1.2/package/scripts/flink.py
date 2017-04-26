@@ -53,26 +53,35 @@ def flink(action = None):
 
     # add flink node configurations
 
-    PropertiesFile("flink-conf-test.yaml",
+    configs = {}
+    configs.update(params.config['configurations']['flink-conf'])
+    configs["jobmanager.rpc.address"] = params.flink_jobmanager
+    configs["recovery.zookeeper.quorum"] = params.zookeeper_hosts_list
+    configs["recovery.zookeeper.path.root"] = params.recovery_zookeeper_path_root
+    configs["recovery.zookeeper.storageDir"] = params.recovery_zookeeper_storage_dir
+    configs["fs.hdfs.hadoopconf"] = params.hadoop_conf_dir
+    configs["state.backend.fs.checkpointdir"] = params.state_backend_fs_checkpointdir
+
+    if params.security_enabled:
+        configs["krb5.conf.path"] = params.krb5_conf_path
+        configs["krb5.jaas.path"] = params.flink_client_jass_path
+
+    PropertiesFile("flink-conf.yaml",
         dir=params.conf_dir,
-        properties=params.config['configurations']['flink-conf'],
+        properties=configs,
         owner=params.flink_user,
         group=params.user_group,
         mode=0644,
         key_value_delimiter=":"
     )
-    # File(
-    #     format("{conf_dir}/flink-conf.yaml"),
-    #     owner=params.flink_user,
-    #     mode=0644,
-    #     content=Template('flink-conf.yaml.j2', conf_dir=params.conf_dir)
-    # )
+
     File(
         format("{conf_dir}/slaves"),
         owner=params.flink_user,
         mode=0644,
         content=Template('slaves.j2', conf_dir=params.conf_dir)
     )
+
     File(
         format("{conf_dir}/masters"),
         owner=params.flink_user,
@@ -100,7 +109,6 @@ def flink(action = None):
         # Create and add alluxio-site.properties jar
         Execute(
             format("scp -o StrictHostKeyChecking=no {alluxio_master}:/etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
-            #format("cp /etc/alluxio/conf/alluxio-site.properties /tmp/alluxio-site.properties"),
             tries = 10,
             try_sleep=3,
             logoutput=True

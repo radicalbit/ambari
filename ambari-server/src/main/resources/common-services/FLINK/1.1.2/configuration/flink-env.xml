@@ -24,12 +24,22 @@
         <name>env.log.dir</name>
         <value>/var/log/flink</value>
         <description>Default directory for Flink logs.</description>
+        <value-attributes>
+            <type>directory</type>
+            <overridable>false</overridable>
+            <editable-only-at-install>true</editable-only-at-install>
+        </value-attributes>
     </property>
 
     <property>
         <name>env.pid.dir</name>
         <value>/var/run/flink</value>
         <description>Dir containing process ID files.</description>
+        <value-attributes>
+            <type>directory</type>
+            <overridable>false</overridable>
+            <editable-only-at-install>true</editable-only-at-install>
+        </value-attributes>
     </property>
 
     <property>
@@ -38,6 +48,9 @@
         <value>23</value>
         <description>Time for renew the Kerberos ticket lifetime. Value should be between 1 and 23.
             Value should be less then ticket_lifetime into krb5.conf file.</description>
+        <value-attributes>
+            <type>int</type>
+        </value-attributes>
     </property>
 
     <property>

@@ -3950,6 +3950,12 @@ class RBLight10StackAdvisor(RBLight023StackAdvisor):
 
     putFlinkProperty("taskmanager.numberOfTaskSlots", multiprocessing.cpu_count())
 
+    #config['configurations']['core-site']['fs.defaultFS']
+    #services["configurations"]["core-site"]["properties"]["fs.defaultFS"]
+
+    #recovery.zookeeper.quorum
+    #recovery.zookeeper.storageDir = format('{hdfs_default_name}{recovery_zookeeper_path_root}')
+
     if alluxioMasterHosts is not None:
       putFlinkProperty("fs.default-scheme", 'alluxio-ft://' + alluxioMasterHosts[0] + ':19998/')
     elif hdfsNameNodes is not None:

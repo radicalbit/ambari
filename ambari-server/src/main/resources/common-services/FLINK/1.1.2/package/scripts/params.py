@@ -31,11 +31,11 @@ hadoop_conf_dir = conf_select.get_hadoop_conf_dir() + '/'
 hdfs_user = config['configurations']['hadoop-env']['hdfs_user']
 hdfs_default_name = config['configurations']['core-site']['fs.defaultFS']
 
-nodes_number = len(config['clusterHostInfo']['all_hosts'])
-cores_number = config['configurations']['yarn-site']['yarn.scheduler.maximum-allocation-vcores']
-#cores_number = multiprocessing.cpu_count()
-
-
+# params from flink-env.xml
+flink_user = config['configurations']['flink-env']['flink_user']
+user_group = config['configurations']['cluster-env']['user_group']
+flink_pid_dir = config['configurations']['flink-env']['env.pid.dir']
+flink_log_dir = config['configurations']['flink-env']['env.log.dir']
 
 security_enabled = config['configurations']['cluster-env']['security_enabled']
 
@@ -43,7 +43,6 @@ hostname = config['hostname']
 flink_jobmanagers = config['clusterHostInfo']['flink_jobmanager_hosts']
 flink_taskmanagers = config['clusterHostInfo']['flink_taskmanager_hosts']
 flink_jobmanager = flink_jobmanagers[0]
-custer_hosts = config['clusterHostInfo']['all_hosts']
 
 if security_enabled:
   kinit_path_local = get_kinit_path(default('/configurations/kerberos-env/executable_search_paths', None))
@@ -72,54 +71,19 @@ conf_dir = flink_install_dir + '/conf'
 bin_dir = flink_install_dir + '/bin'
 flink_lib = flink_install_dir + '/lib'
 
-# params from flink-config
+state_backend_fs_checkpointdir = "/flink/checkpoint"
 
-jobmanager_rpc_address = flink_jobmanager
-jobmanager_rpc_port = config['configurations']['flink-config']['jobmanager.rpc.port']
-jobmanager_rpc_port_ha = config['configurations']['flink-config']['high-availability.jobmanager.port']
-jobmanager_heap_mb = config['configurations']['flink-config']['jobmanager.heap.mb']
-taskmanager_heap_mb = config['configurations']['flink-config']['taskmanager.heap.mb']
-taskmanager_numberOfTaskSlots = config['configurations']['flink-config']['taskmanager.numberOfTaskSlots']
-parallelism_default = config['configurations']['flink-config']['parallelism.default']
-taskmanager_memory_preallocate = config['configurations']['flink-config']['taskmanager.memory.preallocate']
-
-fs_hdfs_hadoopconf = hadoop_conf_dir
-
-# advanced configurations
-taskmanager_memory_size = config['configurations']['flink-advanced']['taskmanager.memory.size']
-taskmanager_memory_fraction = config['configurations']['flink-advanced']['taskmanager.memory.fraction']
-taskmanager_memory_segment_size = config['configurations']['flink-advanced']['taskmanager.memory.segment-size']
-taskmanager_memory_preallocate = config['configurations']['flink-advanced']['taskmanager.memory.preallocate']
-taskmanager_tmp_dirs = config['configurations']['flink-advanced']['taskmanager.tmp.dirs']
-taskmanager_network_numberOfBuffers = config['configurations']['flink-advanced']['taskmanager.network.numberOfBuffers']
-state_backend = config['configurations']['flink-advanced']['state.backend']
-state_backend_checkpointdir = '/flink/checkpoint'
-state_backend_fs_checkpointdir = format('{hdfs_default_name}{state_backend_checkpointdir}')
-state_backend_memory_threshold = config['configurations']['flink-advanced']['state.backend.fs.memory-threshold']
-blob_storage_directory = config['configurations']['flink-advanced']['blob.storage.directory']
-blob_server_port = config['configurations']['flink-advanced']['blob.server.port']
-fs_output_always_create_directory = config['configurations']['flink-advanced']['fs.output.always-create-directory']
-
-# web
-jobmanager_web_port = config['configurations']['flink-config']['jobmanager.web.port']
-jobmanager_web_history = config['configurations']['flink-config']['jobmanager.web.history']
-jobmanager_web_checkpoints_disable = config['configurations']['flink-config']['jobmanager.web.checkpoints.disable']
-jobmanager_web_checkpoints_history = config['configurations']['flink-config']['jobmanager.web.checkpoints.history']
-
-# params from flink-env.xml
-flink_user = config['configurations']['flink-env']['flink_user']
-user_group = config['configurations']['cluster-env']['user_group']
-flink_pid_dir = config['configurations']['flink-env']['env.pid.dir']
-flink_log_dir = config['configurations']['flink-env']['env.log.dir']
-
-recovery_mode = config['configurations']['flink-config']['recovery.mode']
-
+recovery_mode = config['configurations']['flink-conf']['recovery.mode']
 zookeeper_quorum = ''
-zookeeper_port = str(config['configurations']['zoo.cfg']['clientPort'])
-if 'zookeeper_hosts' in config['clusterHostInfo']:
-  zookeeper_hosts_list = config['clusterHostInfo']['zookeeper_hosts']
-  if len(zookeeper_hosts_list) > 0:
-    zookeeper_quorum = (':' + zookeeper_port + ',').join(zookeeper_hosts_list) + ':' + zookeeper_port
+recovery_zookeeper_path_root = ''
+recovery_zookeeper_storage_dir = ''
 
-recovery_zookeeper_path_root = '/flink/recovery'
-recovery_zookeeper_storage_dir = format('{hdfs_default_name}{recovery_zookeeper_path_root}')
+if recovery_mode == 'zookeeper':
+  zookeeper_port = str(config['configurations']['zoo.cfg']['clientPort'])
+  if 'zookeeper_hosts' in config['clusterHostInfo']:
+    zookeeper_hosts_list = config['clusterHostInfo']['zookeeper_hosts']
+    if len(zookeeper_hosts_list) > 0:
+      zookeeper_quorum = (':' + zookeeper_port + ',').join(zookeeper_hosts_list) + ':' + zookeeper_port
+
+  recovery_zookeeper_path_root = '/flink/recovery'
+  recovery_zookeeper_storage_dir = format('{hdfs_default_name}{recovery_zookeeper_path_root}')

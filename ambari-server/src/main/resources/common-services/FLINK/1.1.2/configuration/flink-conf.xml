@@ -26,6 +26,9 @@
         <name>jobmanager.rpc.port</name>
         <value>6123</value>
         <description>The port number of the JobManager (DEFAULT: 6123).</description>
+        <value-attributes>
+            <type>int</type>
+        </value-attributes>
     </property>
 
     <property>
@@ -38,6 +41,9 @@
         <name>high-availability.jobmanager.port</name>
         <value>50010</value>
         <description>The port number of the JobManager in high availability mode.</description>
+        <value-attributes>
+            <type>int</type>
+        </value-attributes>
     </property>
 
     <property>
@@ -46,6 +52,10 @@
         <description>JVM heap size (in megabytes) for the JobManager. You may have to increase
             the heap size for the JobManager if you are running very large applications
             (with many operators), or if you are keeping a long history of them.</description>
+        <value-attributes>
+            <type>int</type>
+            <unit>MB</unit>
+        </value-attributes>
     </property>
 
     <property>
@@ -58,6 +68,10 @@
             If the cluster is exclusively running Flink, the total amount of available memory
             per machine minus some memory for the operating system (maybe 1-2 GB) is a good value.
         </description>
+        <value-attributes>
+            <type>int</type>
+            <unit>MB</unit>
+        </value-attributes>
     </property>
 
     <property>
@@ -70,6 +84,9 @@
             between the different operator or function instances. This value is typically
             proportional to the number of physical CPU cores that the TaskManager’s machine
             has (e.g., equal to the number of cores, or half the number of cores).</description>
+        <value-attributes>
+            <type>int</type>
+        </value-attributes>
     </property>
 
     <property>
@@ -79,6 +96,9 @@
             specified. (DEFAULT: 1). For setups that have no concurrent jobs running, setting
             this value to NumTaskManagers * NumSlotsPerTaskManager will cause the system to use
             all available execution resources for the program’s execution. </description>
+        <value-attributes>
+            <type>int</type>
+        </value-attributes>
     </property>
 
     <property>
@@ -96,6 +116,9 @@
         <value>false</value>
         <description>Can be either of true or false. Specifies whether task managers should
             allocate all managed memory when starting up. (DEFAULT: false)</description>
+        <value-attributes>
+            <type>boolean</type>
+        </value-attributes>
     </property>
 
     <!--JobManager Web Frontend-->
@@ -106,25 +129,37 @@
         <description>Port of the JobManager’s web interface that displays status of running
             jobs and execution time breakdowns of finished jobs.
             Setting this value to -1 disables the web frontend.</description>
+        <value-attributes>
+            <type>int</type>
+        </value-attributes>
     </property>
 
     <property>
         <name>jobmanager.web.history</name>
-        <value>5</value>
+        <value>15</value>
         <description>The number of latest jobs that the JobManager’s web
             front-end in its history</description>
+        <value-attributes>
+            <type>int</type>
+        </value-attributes>
     </property>
 
     <property>
         <name>jobmanager.web.checkpoints.disable</name>
         <value>false</value>
         <description>Disables checkpoint statistics</description>
+        <value-attributes>
+            <type>boolean</type>
+        </value-attributes>
     </property>
 
     <property>
         <name>jobmanager.web.checkpoints.history</name>
         <value>10</value>
         <description>Number of checkpoint statistics to remember</description>
+        <value-attributes>
+            <type>int</type>
+        </value-attributes>
     </property>
 
     <!--High Availability Mode-->
@@ -151,6 +186,10 @@
             sorting, hash tables, and caching of intermediate results. If unspecified (-1), the memory manager will
             take a fixed ratio of the heap memory available to the JVM,
             as specified by taskmanager.memory.fraction.</description>
+        <value-attributes>
+            <type>int</type>
+            <unit>MB</unit>
+        </value-attributes>
     </property>
 
     <property>
@@ -168,6 +207,10 @@
         <name>taskmanager.memory.segment-size</name>
         <value>32768</value>
         <description>The size of memory buffers used by the memory manager and the network stack in bytes</description>
+        <value-attributes>
+            <type>int</type>
+            <unit>Bytes</unit>
+        </value-attributes>
     </property>
 
     <property>
@@ -175,6 +218,9 @@
         <value>false</value>
         <description>Can be either of true or false. Specifies whether task managers should
             allocate all managed memory when starting up.</description>
+        <value-attributes>
+            <type>boolean</type>
+        </value-attributes>
     </property>
 
     <property>
@@ -186,6 +232,9 @@
             The I/O manager component will spawn one reading and one writing thread per directory.
             A directory may be listed multiple times to have the I/O manager use multiple threads
             for it (for example if it is physically stored on a very fast disc or RAID)</description>
+        <value-attributes>
+            <type>directories</type>
+        </value-attributes>
     </property>
 
     <property>
@@ -196,6 +245,9 @@
             can have at the same time and how well buffered the channels are. If a job is
             rejected or you get a warning that the system has not enough buffers available,
             increase this value</description>
+        <value-attributes>
+            <type>int</type>
+        </value-attributes>
     </property>
 
     <property>
@@ -210,7 +262,11 @@
         <value>0</value>
         <description>Flink doesn't store the actual state to files if it is smaller than a given threshold.
             Below this threshold, the state is stored alongside with the checkpoint metadata.</description>
+        <value-attributes>
+            <type>int</type>
+        </value-attributes>
     </property>
+
 
     <property>
         <name>blob.storage.directory</name>
@@ -241,6 +297,9 @@
             1 will also create a directory and place a single result file into it. If the option
             is set to false, the writer will directly create the file directly at the output path,
             without creating a containing directory.</description>
+        <value-attributes>
+            <type>boolean</type>
+        </value-attributes>
     </property>
 
 </configuration>
