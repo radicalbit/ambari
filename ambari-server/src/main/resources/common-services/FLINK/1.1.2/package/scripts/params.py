@@ -30,6 +30,10 @@ config = Script.get_config()
 hadoop_conf_dir = conf_select.get_hadoop_conf_dir() + '/'
 hdfs_user = config['configurations']['hadoop-env']['hdfs_user']
 hdfs_default_name = config['configurations']['core-site']['fs.defaultFS']
+flink_install_dir = '/usr/lib/flink'
+conf_dir = flink_install_dir + '/conf'
+bin_dir = flink_install_dir + '/bin'
+flink_lib = flink_install_dir + '/lib'
 
 # params from flink-env.xml
 flink_user = config['configurations']['flink-env']['flink_user']
@@ -61,17 +65,13 @@ is_alluxio_installed = False
 if 'alluxio_master_hosts' in config['clusterHostInfo']:
   is_alluxio_installed = True
   alluxio_master = config['clusterHostInfo']['alluxio_master_hosts'][0]
-  # fs_default_scheme = 'alluxio-ft://' + alluxio_master + ':19998/'
   # alluxio jar params
   jar_url = 'https://public-repo.radicalbit.io/jars'
   alluxio_jar_name = 'alluxio-core-client-1.2.0-jar-with-dependencies.jar'
 
-flink_install_dir = '/usr/lib/flink'
-conf_dir = flink_install_dir + '/conf'
-bin_dir = flink_install_dir + '/bin'
-flink_lib = flink_install_dir + '/lib'
 
-state_backend_fs_checkpointdir = "/flink/checkpoint"
+
+state_backend_checkpointdir = "/flink/checkpoint"
 
 recovery_mode = config['configurations']['flink-conf']['recovery.mode']
 zookeeper_quorum = ''

@@ -56,11 +56,13 @@ def flink(action = None):
     configs = {}
     configs.update(params.config['configurations']['flink-conf'])
     configs["jobmanager.rpc.address"] = params.flink_jobmanager
-    configs["recovery.zookeeper.quorum"] = params.zookeeper_hosts_list
+    configs["recovery.zookeeper.quorum"] = params.zookeeper_quorum
     configs["recovery.zookeeper.path.root"] = params.recovery_zookeeper_path_root
     configs["recovery.zookeeper.storageDir"] = params.recovery_zookeeper_storage_dir
     configs["fs.hdfs.hadoopconf"] = params.hadoop_conf_dir
-    configs["state.backend.fs.checkpointdir"] = params.state_backend_fs_checkpointdir
+    configs["state.backend.fs.checkpointdir"] = params.state_backend_checkpointdir
+    configs["env.log.dir"] = params.flink_log_dir
+    configs["env.pid.dir"] = params.flink_pid_dir
 
     if params.security_enabled:
         configs["krb5.conf.path"] = params.krb5_conf_path
@@ -78,6 +80,7 @@ def flink(action = None):
     File(
         format("{conf_dir}/slaves"),
         owner=params.flink_user,
+        group=params.user_group,
         mode=0644,
         content=Template('slaves.j2', conf_dir=params.conf_dir)
     )
@@ -85,6 +88,7 @@ def flink(action = None):
     File(
         format("{conf_dir}/masters"),
         owner=params.flink_user,
+        group=params.user_group,
         mode=0644,
         content=Template('masters.j2', conf_dir=params.conf_dir)
     )
@@ -95,12 +99,14 @@ def flink(action = None):
       File(
           format("{conf_dir}/flink_client_jaas.conf"),
           owner=params.flink_user,
+          group=params.user_group,
           mode=0644,
           content=Template('flink_client_jaas.conf.j2', conf_dir=params.conf_dir)
       )
       File(
           format("{conf_dir}/cron-kinit-flink.sh"),
           owner=params.flink_user,
+          group=params.user_group,
           mode=0700,
           content=Template('cron-kinit-flink.sh.j2', conf_dir=params.conf_dir)
       )

@@ -48,4 +48,4 @@ class FlinkTaskManager(FlinkService):
     check_process_status(pid_file)
 
 if __name__ == "__main__":
-  FlinkSlave().execute()
+  FlinkTaskManager().execute()
