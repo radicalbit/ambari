@@ -3933,7 +3933,6 @@ class RBLight10StackAdvisor(RBLight023StackAdvisor):
 
   def getServiceConfigurationRecommenderDict(self):
     parentRecommendConfDict = super(RBLight10StackAdvisor, self).getServiceConfigurationRecommenderDict()
-    print("getServiceConfigurationRecommenderDict")
     childRecommendConfDict = {
       "FLINK": self.recommendFlinkConfigurations
     }
@@ -3941,24 +3940,19 @@ class RBLight10StackAdvisor(RBLight023StackAdvisor):
     return parentRecommendConfDict
 
   def recommendFlinkConfigurations(self, configurations, clusterData, services, hosts):
-    print("recommendFlinkConfigurations")
-    alluxioMasterHosts = self.getHostWithComponent("ALLUXIO", "ALLUXIO_MASTER", services, hosts)
-    hdfsNameNodes = self.getHostWithComponent("HDFS", "NAMENODE", services, hosts)
-    flinkJobManagers = self.getHostWithComponent("FLINK", "NAMENODE", services, hosts)
+    alluxioMasterInfo = self.getHostWithComponent("ALLUXIO", "ALLUXIO_MASTER", services, hosts)
+    hdfsNameNodeInfo = self.getHostWithComponent("HDFS", "NAMENODE", services, hosts)
 
     putFlinkProperty = self.putProperty(configurations, "flink-conf", services)
 
     putFlinkProperty("taskmanager.numberOfTaskSlots", multiprocessing.cpu_count())
 
-    #config['configurations']['core-site']['fs.defaultFS']
-    #services["configurations"]["core-site"]["properties"]["fs.defaultFS"]
+    # TO DO WITH RBFDD-642
+    # Configuring the Network Buffers -> taskmanager.network.numberOfBuffers = num-slots-per-TM^2 * num-TMs * 4
 
-    #recovery.zookeeper.quorum
-    #recovery.zookeeper.storageDir = format('{hdfs_default_name}{recovery_zookeeper_path_root}')
-
-    if alluxioMasterHosts is not None:
-      putFlinkProperty("fs.default-scheme", 'alluxio-ft://' + alluxioMasterHosts[0] + ':19998/')
-    elif hdfsNameNodes is not None:
-      putFlinkProperty("fs.default-scheme", 'hdfs://' + hdfsNameNodes[0] + ':50010/')
+    if alluxioMasterInfo is not None:
+      putFlinkProperty("fs.default-scheme", 'alluxio-ft://' + alluxioMasterInfo["Hosts"]["host_name"] + ':19998/')
+    elif hdfsNameNodeInfo is not None:
+      putFlinkProperty("fs.default-scheme", services["configurations"]["core-site"]["properties"]["fs.defaultFS"])
     else:
       putFlinkProperty("fs.default-scheme", "file:///")

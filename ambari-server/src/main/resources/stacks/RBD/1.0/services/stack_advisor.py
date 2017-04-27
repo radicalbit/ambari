@@ -3934,7 +3934,6 @@ class RBD10StackAdvisor(RBD023StackAdvisor):
 
   def getServiceConfigurationRecommenderDict(self):
     parentRecommendConfDict = super(RBD10StackAdvisor, self).getServiceConfigurationRecommenderDict()
-    print("getServiceConfigurationRecommenderDict")
     childRecommendConfDict = {
       "FLINK": self.recommendFlinkConfigurations
     }
@@ -3942,13 +3941,19 @@ class RBD10StackAdvisor(RBD023StackAdvisor):
     return parentRecommendConfDict
 
   def recommendFlinkConfigurations(self, configurations, clusterData, services, hosts):
-    print("recommendFlinkConfigurations")
-    alluxioMasterHost = self.getHostWithComponent("ALLUXIO", "ALLUXIO_MASTER", services, hosts)
+    alluxioMasterInfo = self.getHostWithComponent("ALLUXIO", "ALLUXIO_MASTER", services, hosts)
+    hdfsNameNodeInfo = self.getHostWithComponent("HDFS", "NAMENODE", services, hosts)
 
     putFlinkProperty = self.putProperty(configurations, "flink-conf", services)
+
     putFlinkProperty("taskmanager.numberOfTaskSlots", multiprocessing.cpu_count())
 
-    if alluxioMasterHost is not None:
-      putFlinkProperty("fs.default-scheme", 'alluxio-ft://' + alluxioMasterHost + ':19998/')
+    # TO DO WITH RBFDD-642
+    # Configuring the Network Buffers -> taskmanager.network.numberOfBuffers = num-slots-per-TM^2 * num-TMs * 4
+
+    if alluxioMasterInfo is not None:
+      putFlinkProperty("fs.default-scheme", 'alluxio-ft://' + alluxioMasterInfo["Hosts"]["host_name"] + ':19998/')
+    elif hdfsNameNodeInfo is not None:
+      putFlinkProperty("fs.default-scheme", services["configurations"]["core-site"]["properties"]["fs.defaultFS"])
     else:
       putFlinkProperty("fs.default-scheme", "file:///")
