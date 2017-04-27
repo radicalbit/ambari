@@ -39,7 +39,7 @@
 
     <property>
         <name>high-availability.jobmanager.port</name>
-        <value>50010</value>
+        <value>50050</value>
         <description>The port number of the JobManager in high availability mode.</description>
         <value-attributes>
             <type>int</type>

@@ -74,7 +74,7 @@ def flink(action = None):
         owner=params.flink_user,
         group=params.user_group,
         mode=0644,
-        key_value_delimiter=":"
+        key_value_delimiter=": "
     )
 
     File(
