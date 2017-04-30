@@ -82,6 +82,7 @@
 
             <configuration-dependencies>
               <config-type>alluxio-config</config-type>
+              <config-type>alluxio-site</config-type>
               <config-type>alluxio-env</config-type>
             </configuration-dependencies>
             <restartRequiredAfterChange>true</restartRequiredAfterChange>

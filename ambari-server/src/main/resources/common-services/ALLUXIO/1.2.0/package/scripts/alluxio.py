@@ -73,6 +73,21 @@ class Alluxio(Script):
         content=Template('alluxio-site.properties.j2', conf_dir=params.alluxio_config_dir)
     )
 
+    configs = {}
+    configs.update(params.config['configurations']['alluxio-site'])
+    configs["alluxio.logs.dir"] = params.log_dir
+    configs["alluxio.underfs.hdfs.configuration"] = params.hadoop_core_site
+    configs["alluxio.zookeeper.address"] = params.zookeeper_hosts
+
+    PropertiesFile("alluxio-site.properties.tmp",
+                   dir=params.alluxio_config_dir,
+                   properties=configs,
+                   owner=params.alluxio_user,
+                   group=params.user_group,
+                   mode=0644,
+                   key_value_delimiter="="
+                   )
+
     Execute('ln -s /var/log/alluxio/ /usr/lib/alluxio/logs', not_if="test -d /usr/lib/alluxio/logs")
 
     Directory(params.tieredstore_level1_dirs_path,

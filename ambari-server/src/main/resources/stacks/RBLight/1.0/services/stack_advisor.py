@@ -3934,7 +3934,8 @@ class RBLight10StackAdvisor(RBLight023StackAdvisor):
   def getServiceConfigurationRecommenderDict(self):
     parentRecommendConfDict = super(RBLight10StackAdvisor, self).getServiceConfigurationRecommenderDict()
     childRecommendConfDict = {
-      "FLINK": self.recommendFlinkConfigurations
+      "FLINK": self.recommendFlinkConfigurations,
+      "ALLUXIO": self.recommendAlluxioConfigurations
     }
     parentRecommendConfDict.update(childRecommendConfDict)
     return parentRecommendConfDict
@@ -3947,7 +3948,7 @@ class RBLight10StackAdvisor(RBLight023StackAdvisor):
 
     putFlinkProperty("taskmanager.numberOfTaskSlots", multiprocessing.cpu_count())
 
-    # TO DO WITH RBFDD-642
+    # TODO WITH RBFDD-642
     # Configuring the Network Buffers -> taskmanager.network.numberOfBuffers = num-slots-per-TM^2 * num-TMs * 4
 
     if alluxioMasterInfo is not None:
@@ -3956,3 +3957,9 @@ class RBLight10StackAdvisor(RBLight023StackAdvisor):
       putFlinkProperty("fs.default-scheme", services["configurations"]["core-site"]["properties"]["fs.defaultFS"])
     else:
       putFlinkProperty("fs.default-scheme", "file:///")
+
+  def recommendAlluxioConfigurations(self, configurations, clusterData, services, hosts):
+    putAlluxioProperty = self.putProperty(configurations, "alluxio-site", services)
+
+    putAlluxioProperty("alluxio.underfs.address", services["configurations"]["core-site"]["properties"]["fs.defaultFS"])
+    # TODO: ADD TIREDSTORE CONFIGURATION
