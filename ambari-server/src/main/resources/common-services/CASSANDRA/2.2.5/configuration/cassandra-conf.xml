@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+
+<configuration supports_final="true">
+
+  <property require-input="true">
+      <name>cluster_name</name>
+      <display-name>Cluster Name</display-name>
+      <description>The name of the cluster. This setting prevents nodes in one logical cluster
+          from joining another. All nodes in a cluster must have the same value.</description>
+      <value>Cassandra Cluster</value>
+  </property>
+
+    <property require-input="true">
+        <name>authorizer</name>
+        <display-name>Authorization backend</display-name>
+        <description>Authorization backend, implementing IAuthorizer; used to limit access</description>
+        <value>AllowAllAuthorizer</value>
+    </property>
+
+  <property require-input="true">
+      <name>commitlog_directory</name>
+      <display-name>Commit Log Directory</display-name>
+      <description>The directory where the commit log is stored. For optimal write performance, it
+          is recommended the commit log be on a separate disk partition (ideally, a separate
+          physical device) from the data file directories. Using an HDD is acceptable because the
+          commit log is append only.</description>
+      <value>/var/lib/cassandra/commitlog</value>
+  </property>
+
+  <property require-input="true">
+      <name>data_file_directories</name>
+      <display-name>Data File Directories</display-name>
+      <description>The directory or directories where table data (SSTables) is stored.  Provide a
+          comma-separated list of paths.
+      </description>
+      <value>/var/lib/cassandra/data</value>
+  </property>
+
+  <property require-input="true">
+      <name>saved_caches_directory</name>
+      <display-name>Saved Caches Directory</display-name>
+      <description>The directory where table key and row caches are stored.</description>
+      <value>/var/lib/cassandra/saved_caches</value>
+  </property>
+
+</configuration>

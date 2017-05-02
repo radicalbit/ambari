@@ -1,0 +1,49 @@
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+cluster.name: {{cluster_name}}
+
+node.name: {{hostname}}
+
+path.data: {{path_data}}
+path.logs: {{log_dir}}
+path.plugins: {{plugins_dir}}
+
+network.host: {{hostname}}
+http.port: {{http_port}}
+transport.tcp.port: {{transport_tcp_port}}
+
+discovery.zen.ping.unicast.hosts: [{{discovery_zen_ping_unicast_hosts}}]
+
+# Prevent the "split brain" by configuring the majority of nodes (total number of nodes / 2 + 1):
+# discovery.zen.minimum_master_nodes: 3
+
+# gateway.recover_after_nodes: 3
+# gateway.expected_nodes: 10
+# gateway.recover_after_time: 5m
+
+# ----------------------------------- Memory -----------------------------------
+#
+# Lock the memory on startup:
+#
+# bootstrap.mlockall: true
+#
+# Make sure that the `ES_HEAP_SIZE` environment variable is set to about half the memory
+# available on the system and that the owner of the process is allowed to use this limit.
+#
+# Elasticsearch performs poorly when the system is swapping the memory.
+#

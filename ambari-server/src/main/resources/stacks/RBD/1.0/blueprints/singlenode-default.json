@@ -1,0 +1,59 @@
+{
+    "configurations" : [
+    ],
+    "host_groups" : [
+        {
+            "name" : "host_group_1",
+            "components" : [
+                {
+                    "name" : "NAMENODE"
+                },
+                {
+                    "name" : "AMBARI_SERVER"
+                },
+                {
+                    "name" : "HDFS_CLIENT"
+                },
+                {
+                    "name" : "DATANODE"
+                },
+                {
+                    "name" : "ZOOKEEPER_SERVER"
+                },
+                {
+                    "name" : "ZOOKEEPER_CLIENT"
+                },
+                {
+                    "name" : "SECONDARY_NAMENODE"
+                },
+                {
+                    "name" : "FLINK_JOBMANAGER"
+                },
+                {
+                    "name" : "FLINK_TASKMANAGER"
+                },
+                {
+                    "name" : "MYSQL_SERVER"
+                },
+                {
+                    "name" : "DRPC_SERVER"
+                },
+                {
+                    "name" : "NIMBUS"
+                },
+                {
+                    "name" : "ALLUXIO_MASTER"
+                },
+                {
+                    "name" : "ALLUXIO_SLAVE"
+                }
+            ],
+            "cardinality" : "1"
+        }
+    ],
+    "Blueprints" : {
+        "blueprint_name" : "blueprint-singlenode-default",
+        "stack_name" : "RBD",
+        "stack_version" : "1.0"
+    }
+}

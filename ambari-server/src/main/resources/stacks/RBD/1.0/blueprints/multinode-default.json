@@ -1,0 +1,126 @@
+{
+    "configurations" : [
+    ],
+    "host_groups" : [
+        {
+            "name" : "master_1",
+            "components" : [
+                {
+                    "name" : "NAMENODE"
+                },
+                {
+                    "name" : "ZOOKEEPER_SERVER"
+                },
+                {
+                    "name" : "HDFS_CLIENT"
+                },
+                {
+                    "name" : "FLINK_JOBMANAGER"
+                },
+                {
+                    "name" : "FLINK_TASKMANAGER"
+                },
+                {
+                    "name" : "ALLUXIO_MASTER"
+                },
+                {
+                    "name" : "ALLUXIO_SLAVE"
+                }
+            ],
+            "cardinality" : "1"
+        },
+        {
+            "name" : "master_2",
+            "components" : [
+
+                {
+                    "name" : "ZOOKEEPER_CLIENT"
+                },
+                {
+                    "name" : "SECONDARY_NAMENODE"
+                },
+                {
+                    "name" : "HDFS_CLIENT"
+                },
+                {
+                    "name" : "MYSQL_SERVER"
+                },
+                {
+                    "name" : "FLINK_TASKMANAGER"
+                },
+                {
+                    "name" : "WEBHCAT_SERVER"
+                },
+                {
+                    "name" : "ALLUXIO_SLAVE"
+                }
+            ],
+            "cardinality" : "1"
+        },
+        {
+            "name" : "master_3",
+            "components" : [
+                {
+                    "name" : "ZOOKEEPER_SERVER"
+                },
+                {
+                    "name" : "FLINK_TASKMANAGER"
+                },
+                {
+                    "name" : "ALLUXIO_SLAVE"
+                }
+            ],
+            "cardinality" : "1"
+        },
+        {
+            "name" : "master_4",
+            "components" : [
+                {
+                    "name" : "ZOOKEEPER_SERVER"
+                },
+                {
+                    "name" : "FLINK_TASKMANAGER"
+                },
+                {
+                    "name" : "ALLUXIO_SLAVE"
+                }
+            ],
+            "cardinality" : "1"
+        },
+        {
+            "name" : "slave",
+            "components" : [
+                {
+                    "name" : "DATANODE"
+                },
+                {
+                    "name" : "FLINK_TASKMANAGER"
+                },
+                {
+                    "name" : "ALLUXIO_SLAVE"
+                }
+            ],
+            "cardinality" : "${slavesCount}"
+        },
+        {
+            "name" : "gateway",
+            "components" : [
+                {
+                    "name" : "AMBARI_SERVER"
+                },
+                {
+                    "name" : "ZOOKEEPER_CLIENT"
+                },
+                {
+                    "name" : "HDFS_CLIENT"
+                }
+            ],
+            "cardinality" : "1"
+        }
+    ],
+    "Blueprints" : {
+        "blueprint_name" : "blueprint-multinode-default",
+        "stack_name" : "HDP",
+        "stack_version" : "2.1"
+    }
+}

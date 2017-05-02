@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+
+<!-- Elastic search  Configurations -->
+
+<!--TODO: add descriptions and labels-->
+<!--TODO: check properties and remove not used or necessary-->
+<configuration supports_final="true">
+    <!-- Configurations -->
+
+    <property>
+        <name>cluster_name</name>
+        <value>ES-Cluster</value>
+        <display-name>Cluster name</display-name>
+        <description>Cluster name identifies your cluster</description>
+    </property>
+    <!--<property>-->
+        <!--<name>index_number_of_shards</name>-->
+        <!--<value>4</value>-->
+        <!--<display-name>Number of shards</display-name>-->
+        <!--<description>Set the number of shards (splits) of an index</description>-->
+    <!--</property>-->
+    <!--<property>-->
+        <!--<name>index_number_of_replicas</name>-->
+        <!--<value>2</value>-->
+        <!--<display-name>Number of replicas</display-name>-->
+        <!--<description>Set the number of replicas (additional copies) of an index</description>-->
+    <!--</property>-->
+    <property>
+        <name>path_data</name>
+        <value>/var/lib/elasticsearch/data</value>
+        <display-name>Data directory</display-name>
+        <description>Path to directory where to store index data allocated for this node.</description>
+    </property>
+    <property>
+        <name>elastic_plugins_dir</name>
+        <value>/var/lib/elasticsearch/plugins</value>
+        <display-name>Plugins directory</display-name>
+        <description>Plugins directory</description>
+    </property>
+    <!--  Logging Configurations -->
+    <property>
+        <name>elastic_log_dir</name>
+        <value>/var/log/elasticsearch</value>
+        <display-name>Log directory</display-name>
+        <description>Log directory</description>
+    </property>
+    <!--  Discovery -->
+    <property>
+        <name>transport_tcp_port</name>
+        <value>9300</value>
+        <display-name>Transport TCP port</display-name>
+        <description>Set a custom port for the node to node communication</description>
+    </property>
+    <property>
+        <name>http_port</name>
+        <value>9200</value>
+        <display-name>HTTP port</display-name>
+        <description>Set a custom port to listen for HTTP traffic</description>
+    </property>
+</configuration>
