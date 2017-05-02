@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+
+<configuration supports_final="true">
+    <!-- Configurations -->
+
+    <property>
+        <name>server_port</name>
+        <value>5601</value>
+        <display-name>Server port</display-name>
+        <description>Kibana is served by a back end server. This controls which port to use.</description>
+    </property>
+
+    <property>
+        <name>kibana_index</name>
+        <value>.kibana</value>
+        <display-name>Kibana index</display-name>
+        <description>Kibana uses an index in Elasticsearch to store saved searches, visualizations
+            and dashboards. It will create a new index if it doesn't already exist.</description>
+    </property>
+
+    <property>
+        <name>elasticsearch_ping_timeout</name>
+        <value>1500</value>
+        <display-name>Elasticsearch ping timeout</display-name>
+        <description>Time in milliseconds to wait for elasticsearch to respond to pings, defaults to
+            request_timeout setting.</description>
+    </property>
+
+    <property>
+        <name>elasticsearch_request_timeout</name>
+        <value>30000</value>
+        <display-name>Elasticsearch request timeout</display-name>
+        <description>Time in milliseconds to wait for responses from the back end or elasticsearch.
+            This must be > 0.</description>
+    </property>
+
+    <property>
+        <name>elasticsearch_shard_timeout</name>
+        <value>0</value>
+        <display-name>Elsaticsearch shard timeout</display-name>
+        <description>Time in milliseconds for Elasticsearch to wait for responses from shards.
+            Set to 0 to disable.</description>
+    </property>
+
+    <property>
+        <name>elasticsearch_startup_timeout</name>
+        <value>5000</value>
+        <display-name>Elasticsearch startup timeout</display-name>
+        <description>Time in milliseconds to wait for Elasticsearch at Kibana startup before retrying.</description>
+    </property>
+
+</configuration>

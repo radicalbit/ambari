@@ -1,0 +1,72 @@
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# Default configuration properties for Alluxio
+# All the properties except Build properties are override-able via alluxio-site.properties file.
+
+# Build properties
+alluxio.version=${project.version}
+
+# Common properties
+alluxio.logs.dir={{ log_dir }}
+alluxio.underfs.address={{ underfs_addr }}
+alluxio.underfs.hdfs.configuration={{ hadoop_core_site }}
+alluxio.zookeeper.enabled=true
+alluxio.zookeeper.address={{ zookeeper_hosts }}
+
+# Master properties
+alluxio.master.hostname={{alluxio_master}}
+alluxio.master.journal.folder={{ journal_addr }}
+alluxio.master.web.port={{ master_web_port }}
+
+# Worker properties
+alluxio.worker.memory.size={{ worker_mem }}
+{% if is_tiredstore_level2_enabled %}
+alluxio.worker.tieredstore.levels=3
+{% else %}
+alluxio.worker.tieredstore.levels=2
+{% endif %}
+alluxio.worker.tieredstore.level0.alias={{ tieredstore_level0_alias }}
+alluxio.worker.tieredstore.level0.dirs.path={{ tieredstore_level0_dirs_path }}
+alluxio.worker.tieredstore.level0.dirs.quota={{ tieredstore_level0_dirs_quota }}
+alluxio.worker.tieredstore.level0.reserved.ratio={{ tieredstore_level0_reserved_ratio }}
+alluxio.worker.tieredstore.level1.alias={{ tieredstore_level1_alias }}
+alluxio.worker.tieredstore.level1.dirs.path={{ tieredstore_level1_dirs_path }}
+alluxio.worker.tieredstore.level1.dirs.quota={{ tieredstore_level1_dirs_quota }}
+alluxio.worker.tieredstore.level1.reserved.ratio={{ tieredstore_level1_reserved_ratio }}
+{% if is_tiredstore_level2_enabled %}
+alluxio.worker.tieredstore.level2.alias={{ tieredstore_level2_alias }}
+alluxio.worker.tieredstore.level2.dirs.path={{ tieredstore_level2_dirs_path }}
+alluxio.worker.tieredstore.level2.dirs.quota={{ tieredstore_level2_dirs_quota }}
+alluxio.worker.tieredstore.level2.reserved.ratio={{ tieredstore_level2_reserved_ratio }}
+{% endif %}
+alluxio.worker.web.port={{ worker_web_port }}
+
+# User properties
+alluxio.user.block.size.bytes.default=128MB
+alluxio.user.file.readtype.default={{ readtype }}
+alluxio.user.file.writetype.default={{ writetype }}
+
+{% if security_enabled %}
+# Kerberos properties
+{% if is_current_node_master %}
+alluxio.master.keytab.file={{ master_keytab }}
+{% endif %}
+alluxio.master.principal={{ master_principal }}
+alluxio.worker.keytab.file={{ worker_keytab }}
+alluxio.worker.principal={{ worker_principal }}
+{% endif %}
