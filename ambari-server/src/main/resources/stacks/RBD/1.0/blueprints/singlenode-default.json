@@ -53,7 +53,7 @@
     ],
     "Blueprints" : {
         "blueprint_name" : "blueprint-singlenode-default",
-        "stack_name" : "RBLight",
+        "stack_name" : "RBD",
         "stack_version" : "1.0"
     }
 }
