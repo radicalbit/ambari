@@ -19,7 +19,7 @@ limitations under the License.
 import os, hashlib
 from resource_management import *
 from resource_management.libraries.script.script import Script
-from resource_management.core.resources.system import File, Execute, Directory
+from resource_management.core.resources.system import File, Execute, Directory, PropertiesFile
 from resource_management.core.logger import Logger
 
 class Alluxio(Script):
@@ -75,9 +75,33 @@ class Alluxio(Script):
 
     configs = {}
     configs.update(params.config['configurations']['alluxio-site'])
+
+    # Common properties
     configs["alluxio.logs.dir"] = params.log_dir
+    configs["alluxio.underfs.address"] = params.underfs_addr
     configs["alluxio.underfs.hdfs.configuration"] = params.hadoop_core_site
+    configs["alluxio.zookeeper.enabled"] = "true"
     configs["alluxio.zookeeper.address"] = params.zookeeper_hosts
+
+    # Master properties
+    configs["alluxio.master.hostname"] = params.alluxio_master
+    configs["alluxio.master.journal.folder"] = params.journal_addr
+
+    # Worker properties
+    configs["alluxio.worker.memory"] = params.worker_mem
+    configs["alluxio.worker.tieredstore.level0.dirs.quota"] = params.tieredstore_level0_dirs_quota
+    configs["alluxio.worker.tieredstore.level1.dirs.quota"] = params.tieredstore_level1_dirs_quota
+    if params.is_tiredstore_level2_enabled:
+        configs["alluxio.worker.tieredstore.levels"] = 3
+        configs["alluxio.worker.tieredstore.level2.alias"] = params.tieredstore_level2_alias
+        configs["alluxio.worker.tieredstore.level2.dirs.path"] = params.tieredstore_level2_dirs_path
+        configs["alluxio.worker.tieredstore.level2.dirs.quota"] = params.tieredstore_level2_dirs_quota
+        configs["alluxio.worker.tieredstore.level2.reserved.ratio"] = params.tieredstore_level2_reserved_ratio
+    else:
+        configs["alluxio.worker.tieredstore.levels"] = 2
+
+    # User properties
+    configs["alluxio.user.block.size.bytes.default"] = params.block_size_default
 
     PropertiesFile("alluxio-site.properties.tmp",
                    dir=params.alluxio_config_dir,
