@@ -38,8 +38,7 @@
     <repo>
       <baseurl>https://public-repo.radicalbit.io/rbd-utils/centos7/2.2.0.0</baseurl>
       <repoid>RBLight-UTILS-1.1.0.20</repoid>
-      <reponame>RBLight
-        -UTILS</reponame>
+      <reponame>RBLight-UTILS</reponame>
     </repo>
   </os>
 
