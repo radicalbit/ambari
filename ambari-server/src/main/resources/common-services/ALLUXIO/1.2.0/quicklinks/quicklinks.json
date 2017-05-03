@@ -1,0 +1,27 @@
+{
+  "name": "default",
+  "description": "default quick links configuration",
+  "configuration": {
+    "protocol":
+    {
+      "type":"http",
+      "checks":[]
+    },
+
+    "links": [
+      {
+        "name": "alluxio_master_ui",
+        "label": "Master Web UI",
+        "component_name": "ALLUXIO_MASTER",
+        "url":"%@://%@:%@/",
+        "requires_user_name": "false",
+        "port":{
+          "http_property": "alluxio.master.web.port",
+          "http_default_port": "19999",
+          "regex": "^(\\d+)$",
+          "site": "alluxio-config"
+        }
+      }
+    ]
+  }
+}

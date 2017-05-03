@@ -3956,3 +3956,12 @@ class RBLight10StackAdvisor(RBLight023StackAdvisor):
       putFlinkProperty("fs.default-scheme", services["configurations"]["core-site"]["properties"]["fs.defaultFS"])
     else:
       putFlinkProperty("fs.default-scheme", "file:///")
+
+  def recommendHDFSConfigurations(self, configurations, clusterData, services, hosts):
+    super(RBLight10StackAdvisor, self).recommendHDFSConfigurations(configurations, clusterData, services, hosts)
+    alluxioMasterInfo = self.getHostWithComponent("ALLUXIO", "ALLUXIO_MASTER", services, hosts)
+
+    putCoreSiteProperty = self.putProperty(configurations, "core-site", services)
+
+    if alluxioMasterInfo is not None:
+      putCoreSiteProperty("fs.alluxio-ft.impl", "alluxio.hadoop.FaultTolerantFileSystem")

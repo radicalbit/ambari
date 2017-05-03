@@ -1,0 +1,27 @@
+{
+  "name": "default",
+  "description": "default quick links configuration",
+  "configuration": {
+    "protocol":
+    {
+      "type":"http",
+      "checks":[]
+    },
+
+    "links": [
+      {
+        "name": "jobmanager_ui",
+        "label": "Flink Web UI",
+        "component_name": "FLINK_JOBMANAGER",
+        "url":"%@://%@:%@/",
+        "requires_user_name": "false",
+        "port":{
+          "http_property": "jobmanager.web.port",
+          "http_default_port": "8081",
+          "regex": "^(\\d+)$",
+          "site": "flink-conf"
+        }
+      }
+    ]
+  }
+}
