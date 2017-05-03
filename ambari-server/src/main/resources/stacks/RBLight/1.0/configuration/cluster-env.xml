@@ -78,4 +78,20 @@ gpgcheck=0</value>
         <description>Have Ambari manage UIDs</description>
     </property>
 
+    <!-- Define stack_features property in the base stack. DO NOT override this property for each stack version -->
+    <property>
+        <name>stack_features</name>
+        <value/>
+        <description>List of features supported by the stack</description>
+        <property-type>VALUE_FROM_PROPERTY_FILE</property-type>
+        <value-attributes>
+            <property-file-name>stack_features.json</property-file-name>
+            <property-file-type>json</property-file-type>
+            <read-only>true</read-only>
+            <overridable>false</overridable>
+            <visible>false</visible>
+        </value-attributes>
+        <on-ambari-upgrade add="true"/>
+    </property>
+
 </configuration>
