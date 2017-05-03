@@ -20,7 +20,6 @@ limitations under the License.
 import collections
 import os
 
-from resource_management.libraries.functions.version import format_hdp_stack_version, compare_versions
 from resource_management.libraries.resources.properties_file import PropertiesFile
 from resource_management.libraries.resources.template_config import TemplateConfig
 from resource_management.core.resources.system import Directory, Execute, File, Link
@@ -82,39 +81,39 @@ def kafka(upgrade_type=None):
     Logger.info(format("Kafka listeners: {listeners}"))
 
     if params.security_enabled and params.kafka_kerberos_enabled:
-      Logger.info("Kafka kerberos security is enabled.")
-      if "SASL" not in listeners:
-        listeners = listeners.replace("PLAINTEXT", "SASL_PLAINTEXT")
+        Logger.info("Kafka kerberos security is enabled.")
+        if "SASL" not in listeners:
+            listeners = listeners.replace("PLAINTEXT", "SASL_PLAINTEXT")
 
-      kafka_server_config['listeners'] = listeners
-      kafka_server_config['advertised.listeners'] = listeners
-      kafka_server_config['sasl.kerberos.service.name'] = params.kafka_user
-      kafka_server_config['zookeeper.set.acl'] = 'true'
-      Logger.info(format("Kafka advertised listeners: {listeners}"))
+        kafka_server_config['listeners'] = listeners
+        kafka_server_config['advertised.listeners'] = listeners
+        kafka_server_config['sasl.kerberos.service.name'] = params.kafka_user
+        kafka_server_config['zookeeper.set.acl'] = 'true'
+        Logger.info(format("Kafka advertised listeners: {listeners}"))
     else:
-      kafka_server_config['listeners'] = listeners
-      if hasattr(kafka_server_config, 'authorizer.class.name'):
-        del kafka_server_config['authorizer.class.name']
-      if hasattr(kafka_server_config, 'principal.to.local.class'):
-        del kafka_server_config['principal.to.local.class']
-      if hasattr(kafka_server_config, 'security.inter.broker.protocol'):
-        del kafka_server_config['security.inter.broker.protocol']
-      if hasattr(kafka_server_config, 'super.users'):
-        del kafka_server_config['super.users']
-      if hasattr(kafka_server_config, 'zookeeper.set.acl'):
-        del kafka_server_config['zookeeper.set.acl']
+        kafka_server_config['listeners'] = listeners
+        if hasattr(kafka_server_config, 'authorizer.class.name'):
+            del kafka_server_config['authorizer.class.name']
+        if hasattr(kafka_server_config, 'principal.to.local.class'):
+            del kafka_server_config['principal.to.local.class']
+        if hasattr(kafka_server_config, 'security.inter.broker.protocol'):
+            del kafka_server_config['security.inter.broker.protocol']
+        if hasattr(kafka_server_config, 'super.users'):
+            del kafka_server_config['super.users']
+        if hasattr(kafka_server_config, 'zookeeper.set.acl'):
+            del kafka_server_config['zookeeper.set.acl']
 
-      if 'advertised.listeners' in kafka_server_config:
-        advertised_listeners = kafka_server_config['advertised.listeners'].replace("localhost", params.hostname)
-        kafka_server_config['advertised.listeners'] = advertised_listeners
-        Logger.info(format("Kafka advertised listeners: {advertised_listeners}"))
+        if 'advertised.listeners' in kafka_server_config:
+            advertised_listeners = kafka_server_config['advertised.listeners'].replace("localhost", params.hostname)
+            kafka_server_config['advertised.listeners'] = advertised_listeners
+            Logger.info(format("Kafka advertised listeners: {advertised_listeners}"))
 
 
     # ---------------------------------------------
 
     if params.has_metric_collector:
-      kafka_server_config['kafka.timeline.metrics.host'] = params.metric_collector_host
-      kafka_server_config['kafka.timeline.metrics.port'] = params.metric_collector_port
+        kafka_server_config['kafka.timeline.metrics.host'] = params.metric_collector_host
+        kafka_server_config['kafka.timeline.metrics.port'] = params.metric_collector_port
 
     kafka_data_dir = kafka_server_config['log.dirs']
     kafka_data_dirs = filter(None, kafka_data_dir.split(","))
@@ -123,20 +122,20 @@ def kafka(upgrade_type=None):
               cd_access='a',
               owner=params.kafka_user,
               group=params.user_group,
-              recursive=True)
+              create_parents=True)
     set_dir_ownership(kafka_data_dirs)
 
     PropertiesFile("server.properties",
-                      dir=params.conf_dir,
-                      properties=kafka_server_config,
-                      owner=params.kafka_user,
-                      group=params.user_group,
-    )
+                   dir=params.conf_dir,
+                   properties=kafka_server_config,
+                   owner=params.kafka_user,
+                   group=params.user_group,
+                   )
 
     File(format("{conf_dir}/kafka-env.sh"),
-          owner=params.kafka_user,
-          content=InlineTemplate(params.kafka_env_sh_template)
-     )
+         owner=params.kafka_user,
+         content=InlineTemplate(params.kafka_env_sh_template)
+         )
 
     File(
         format("{kafka_home}/bin/kafka-server-start.sh"),
@@ -158,28 +157,28 @@ def kafka(upgrade_type=None):
              group=params.user_group,
              owner=params.kafka_user,
              content=params.log4j_props
-         )
+             )
 
     if params.security_enabled and params.kafka_kerberos_enabled:
         TemplateConfig(format("{conf_dir}/kafka_jaas.conf"),
-                         owner=params.kafka_user)
+                       owner=params.kafka_user)
 
         TemplateConfig(format("{conf_dir}/kafka_client_jaas.conf"),
                        owner=params.kafka_user)
 
     # On some OS this folder could be not exists, so we will create it before pushing there files
     Directory(params.limits_conf_dir,
-              recursive=True,
+              create_parents=True,
               owner='root',
               group='root'
-    )
+              )
 
     File(os.path.join(params.limits_conf_dir, 'kafka.conf'),
          owner='root',
          group='root',
          mode=0644,
          content=Template("kafka.conf.j2")
-    )
+         )
 
     setup_symlink(params.kafka_managed_pid_dir, params.kafka_pid_dir)
     setup_symlink(params.kafka_managed_log_dir, params.kafka_log_dir)
@@ -194,110 +193,110 @@ def mutable_config_dict(kafka_broker_config):
 
 # Used to workaround the hardcoded pid/log dir used on the kafka bash process launcher
 def setup_symlink(kafka_managed_dir, kafka_ambari_managed_dir):
-  import params
-  backup_folder_path = None
-  backup_folder_suffix = "_tmp"
-  if kafka_ambari_managed_dir != kafka_managed_dir:
-    if os.path.exists(kafka_managed_dir) and not os.path.islink(kafka_managed_dir):
+    import params
+    backup_folder_path = None
+    backup_folder_suffix = "_tmp"
+    if kafka_ambari_managed_dir != kafka_managed_dir:
+        if os.path.exists(kafka_managed_dir) and not os.path.islink(kafka_managed_dir):
 
-      # Backup existing data before delete if config is changed repeatedly to/from default location at any point in time time, as there may be relevant contents (historic logs)
-      backup_folder_path = backup_dir_contents(kafka_managed_dir, backup_folder_suffix)
+            # Backup existing data before delete if config is changed repeatedly to/from default location at any point in time time, as there may be relevant contents (historic logs)
+            backup_folder_path = backup_dir_contents(kafka_managed_dir, backup_folder_suffix)
 
-      Directory(kafka_managed_dir,
-                action="delete",
-                recursive=True)
+            Directory(kafka_managed_dir,
+                      action="delete",
+                      create_parents=True)
 
-    elif os.path.islink(kafka_managed_dir) and os.path.realpath(kafka_managed_dir) != kafka_ambari_managed_dir:
-      Link(kafka_managed_dir,
-           action="delete")
+        elif os.path.islink(kafka_managed_dir) and os.path.realpath(kafka_managed_dir) != kafka_ambari_managed_dir:
+            Link(kafka_managed_dir,
+                 action="delete")
 
-    if not os.path.islink(kafka_managed_dir):
-      Link(kafka_managed_dir,
-           to=kafka_ambari_managed_dir)
+        if not os.path.islink(kafka_managed_dir):
+            Link(kafka_managed_dir,
+                 to=kafka_ambari_managed_dir)
 
-  elif os.path.islink(kafka_managed_dir): # If config is changed and coincides with the kafka managed dir, remove the symlink and physically create the folder
-    Link(kafka_managed_dir,
-         action="delete")
+    elif os.path.islink(kafka_managed_dir): # If config is changed and coincides with the kafka managed dir, remove the symlink and physically create the folder
+        Link(kafka_managed_dir,
+             action="delete")
 
-    Directory(kafka_managed_dir,
-              mode=0755,
-              cd_access='a',
-              owner=params.kafka_user,
-              group=params.user_group,
-              recursive=True)
-    set_dir_ownership(kafka_managed_dir)
+        Directory(kafka_managed_dir,
+                  mode=0755,
+                  cd_access='a',
+                  owner=params.kafka_user,
+                  group=params.user_group,
+                  create_parents=True)
+        set_dir_ownership(kafka_managed_dir)
 
-  if backup_folder_path:
-    # Restore backed up files to current relevant dirs if needed - will be triggered only when changing to/from default path;
-    for file in os.listdir(backup_folder_path):
-      File(os.path.join(kafka_managed_dir,file),
-           owner=params.kafka_user,
-           content = StaticFile(os.path.join(backup_folder_path,file)))
+    if backup_folder_path:
+        # Restore backed up files to current relevant dirs if needed - will be triggered only when changing to/from default path;
+        for file in os.listdir(backup_folder_path):
+            File(os.path.join(kafka_managed_dir,file),
+                 owner=params.kafka_user,
+                 content = StaticFile(os.path.join(backup_folder_path,file)))
 
-    # Clean up backed up folder
-    Directory(backup_folder_path,
-              action="delete",
-              recursive=True)
+        # Clean up backed up folder
+        Directory(backup_folder_path,
+                  action="delete",
+                  create_parents=True)
 
 
 # Uses agent temp dir to store backup files
 def backup_dir_contents(dir_path, backup_folder_suffix):
-  import params
-  backup_destination_path = params.tmp_dir + os.path.normpath(dir_path)+backup_folder_suffix
-  Directory(backup_destination_path,
-            mode=0755,
-            cd_access='a',
-            owner=params.kafka_user,
-            group=params.user_group,
-            recursive=True
-  )
-  set_dir_ownership(backup_destination_path)
-  # Safely copy top-level contents to backup folder
-  for file in os.listdir(dir_path):
-    File(os.path.join(backup_destination_path, file),
-         owner=params.kafka_user,
-         content = StaticFile(os.path.join(dir_path,file)))
+    import params
+    backup_destination_path = params.tmp_dir + os.path.normpath(dir_path)+backup_folder_suffix
+    Directory(backup_destination_path,
+              mode=0755,
+              cd_access='a',
+              owner=params.kafka_user,
+              group=params.user_group,
+              create_parents=True
+              )
+    set_dir_ownership(backup_destination_path)
+    # Safely copy top-level contents to backup folder
+    for file in os.listdir(dir_path):
+        File(os.path.join(backup_destination_path, file),
+             owner=params.kafka_user,
+             content = StaticFile(os.path.join(dir_path,file)))
 
-  return backup_destination_path
+    return backup_destination_path
 
 
 def ensure_base_directories():
-  """
-  Make basic Kafka directories, and make sure that their ownership is correct
-  """
-  import params
-  base_dirs = [params.kafka_log_dir, params.kafka_pid_dir, params.conf_dir]
-  Directory(base_dirs[:],  # Todo: remove list copy when AMBARI-14373 is fixed
-            mode=0755,
-            cd_access='a',
-            owner=params.kafka_user,
-            group=params.user_group,
-            recursive=True
-            )
-  set_dir_ownership(base_dirs)
+    """
+    Make basic Kafka directories, and make sure that their ownership is correct
+    """
+    import params
+    base_dirs = [params.kafka_log_dir, params.kafka_pid_dir, params.conf_dir]
+    Directory(base_dirs[:],  # Todo: remove list copy when AMBARI-14373 is fixed
+              mode=0755,
+              cd_access='a',
+              owner=params.kafka_user,
+              group=params.user_group,
+              create_parents=True
+              )
+    set_dir_ownership(base_dirs)
 
 
 def set_dir_ownership(targets):
-  import params
-  if isinstance(targets, collections.Iterable):
-    directories = targets
-  else:  # If target is a single object, convert it to list
-    directories = [targets]
-  for directory in directories:
-    # If path is empty or a single slash,
-    # may corrupt filesystem permissions
-    if len(directory) > 1:
-      Execute(('chown', '-R', format("{kafka_user}:{user_group}"), directory),
-            sudo=True)
-    else:
-      Logger.warning("Permissions for the folder \"%s\" were not updated due to "
-            "empty path passed: " % directory)
+    import params
+    if isinstance(targets, collections.Iterable):
+        directories = targets
+    else:  # If target is a single object, convert it to list
+        directories = [targets]
+    for directory in directories:
+        # If path is empty or a single slash,
+        # may corrupt filesystem permissions
+        if len(directory) > 1:
+            Execute(('chown', '-R', format("{kafka_user}:{user_group}"), directory),
+                    sudo=True)
+        else:
+            Logger.warning("Permissions for the folder \"%s\" were not updated due to "
+                           "empty path passed: " % directory)
 
 def set_kafka_sh(script_name):
-  import params
-  File(
-      format("{kafka_home}/bin/{script_name}.sh"),
-      owner=params.kafka_user,
-      mode=0755,
-      content=Template(format('{script_name}.sh.j2'), conf_dir=params.conf_dir)
-  )
+    import params
+    File(
+        format("{kafka_home}/bin/{script_name}.sh"),
+        owner=params.kafka_user,
+        mode=0755,
+        content=Template(format('{script_name}.sh.j2'), conf_dir=params.conf_dir)
+    )

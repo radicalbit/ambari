@@ -260,3 +260,8 @@ def setup_unlimited_key_jce_policy():
               path=['/bin/', '/usr/bin'],
               sudo=True
               )
+def start_service(service_name):
+    Execute(
+        format("service {service_name} start"),
+        not_if = format("ps -ef | grep -v grep | grep {service_name} > /dev/null")
+    )

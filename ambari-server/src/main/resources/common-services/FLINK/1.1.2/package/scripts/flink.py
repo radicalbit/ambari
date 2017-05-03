@@ -46,7 +46,7 @@ def flink(action = None):
         [params.flink_log_dir,params.flink_pid_dir],
         owner=params.flink_user,
         group=params.user_group,
-        recursive=True
+        create_parents=True
     )
 
     Execute('chmod 777 ' + params.flink_log_dir, user='root')
