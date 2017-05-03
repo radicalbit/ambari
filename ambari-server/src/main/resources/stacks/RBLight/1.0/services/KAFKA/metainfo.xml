@@ -20,7 +20,7 @@
   <services>
     <service>
       <name>KAFKA</name>
-      <extends>common-services/KAFK/0.10.0.1</extends>
+      <extends>common-services/KAFKA/0.10.0.1</extends>
     </service>
   </services>
 </metainfo>
