@@ -45,7 +45,7 @@ class Alluxio(Script):
           [params.pid_dir],
           owner=params.root_user,
           group=params.user_group,
-          recursive=True
+          create_parents=True
       )
       Logger.info('Created Alluxio pid dir ' + params.pid_dir)
 
@@ -78,14 +78,14 @@ class Alluxio(Script):
     Directory(params.tieredstore_level1_dirs_path,
               owner=params.alluxio_user,
               group=params.user_group,
-              recursive=True
+              create_parents=True
               )
 
     if params.is_tiredstore_level2_enabled:
         Directory(params.tieredstore_level2_dirs_path,
                   owner=params.alluxio_user,
                   group=params.user_group,
-                  recursive=True
+                  create_parents=True
                   )
 
     # update permissions on alluxio-env.sh file

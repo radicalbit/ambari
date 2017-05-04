@@ -35,7 +35,7 @@ def elasticsearch():
     Directory(directories,
               owner=params.elastic_user,
               group=params.user_group,
-              recursive=True
+              create_parents=True
           )
     
     File(format("{conf_dir}/elastic-env.sh"),

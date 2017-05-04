@@ -30,7 +30,7 @@ class Zeppelin(Script):
     Directory([params.zeppelin_pid_dir, params.zeppelin_log_dir],
             owner=params.zeppelin_user,
             group=params.user_group,
-            recursive=True
+            create_parents=True
     )
 
   def configure(self, env):
@@ -43,7 +43,7 @@ class Zeppelin(Script):
         [params.zeppelin_log_dir, params.zeppelin_pid_dir],
         owner=params.zeppelin_user,
         group=params.user_group,
-        recursive=True
+        create_parents=True
     )
 
     #write out zeppelin-site.xml

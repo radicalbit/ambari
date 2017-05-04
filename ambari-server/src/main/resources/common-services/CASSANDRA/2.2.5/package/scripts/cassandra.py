@@ -51,7 +51,7 @@ def cassandra(action = None):
         [params.commitlog_directory, params.data_file_directories, params.saved_caches_directory, params.cassandra_pid_dir],
         owner=params.cassandra_user,
         group=params.user_group,
-        recursive=True
+        create_parents=True
     )
 
     Execute(format('chown -R {params.cassandra_user}:{params.user_group} {params.cassandra_log_dir}'), user='root')

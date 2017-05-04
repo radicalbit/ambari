@@ -28,7 +28,7 @@ def kibana():
     Directory([params.log_dir, params.pid_dir],
               owner=params.kibana_user,
               group=params.user_group,
-              recursive=True
+              create_parents=True
           )
 
     Execute(format('chmod -R 777 {optimize_dir}'))
