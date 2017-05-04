@@ -4,8 +4,7 @@
   "configuration": {
     "protocol":
     {
-      "type":"http",
-      "checks":[]
+      "type":"http_only"
     },
 
     "links": [

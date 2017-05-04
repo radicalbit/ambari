@@ -22,6 +22,12 @@
       <name>HDFS</name>
       <version>2.7.1.2.3</version>
       <extends>common-services/HDFS/2.6.0.2.2</extends>
+      <quickLinksConfigurations>
+        <quickLinksConfiguration>
+          <fileName>quicklinks.json</fileName>
+          <default>true</default>
+        </quickLinksConfiguration>
+      </quickLinksConfigurations>
 
       <components>
         <component>
