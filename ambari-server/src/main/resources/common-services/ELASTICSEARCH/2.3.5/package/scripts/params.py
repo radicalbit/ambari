@@ -41,7 +41,7 @@ transport_tcp_port = config['configurations']['elastic-site']['transport_tcp_por
 
 cluster_name = config['configurations']['elastic-site']['cluster_name']
 cluster_seeds = config['clusterHostInfo']['elasticsearch_master_hosts']
-cluster_slaves = config['clusterHostInfo']['elasticsearch_slave_hosts']
+cluster_slaves = default('clusterHostInfo/elasticsearch_slave_hosts', [])
 cluster_nodes = cluster_seeds + cluster_slaves
 discovery_zen_ping_unicast_hosts = '"' + (':' + str(transport_tcp_port) + '","').join(cluster_nodes) + ':' + str(transport_tcp_port) + '"'
 cluster_seed_head = cluster_seeds[0]
