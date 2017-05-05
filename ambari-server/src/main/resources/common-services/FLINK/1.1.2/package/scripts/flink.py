@@ -60,7 +60,7 @@ def flink(action = None):
     configs["recovery.zookeeper.path.root"] = params.recovery_zookeeper_path_root
     configs["recovery.zookeeper.storageDir"] = params.recovery_zookeeper_storage_dir
     configs["fs.hdfs.hadoopconf"] = params.hadoop_conf_dir
-    configs["state.backend.fs.checkpointdir"] = params.state_backend_checkpointdir
+    configs["state.backend.fs.checkpointdir"] = "{}{}".format(params.hdfs_default_name, params.state_backend_checkpointdir)
     configs["env.log.dir"] = params.flink_log_dir
     configs["env.pid.dir"] = params.flink_pid_dir
 
