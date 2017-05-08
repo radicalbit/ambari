@@ -41,6 +41,8 @@ user_group = config['configurations']['cluster-env']['user_group']
 flink_pid_dir = config['configurations']['flink-env']['env.pid.dir']
 flink_log_dir = config['configurations']['flink-env']['env.log.dir']
 
+flink_version = config['configurations']['flink-env']['flink_version']
+
 security_enabled = config['configurations']['cluster-env']['security_enabled']
 
 hostname = config['hostname']
@@ -73,7 +75,13 @@ if 'alluxio_master_hosts' in config['clusterHostInfo']:
 
 state_backend_checkpointdir = "/flink/checkpoint"
 
-recovery_mode = config['configurations']['flink-conf']['recovery.mode']
+if flink_version == '1.1.2':
+  recovery_mode = config['configurations']['flink-conf']['recovery.mode']
+  recovery_zookeeper_path_root = '/flink/recovery'
+else
+  recovery_mode = config['configurations']['flink-conf']['high-availability']
+  recovery_zookeeper_path_root = '/flink/high-availability'
+
 zookeeper_quorum = ''
 recovery_zookeeper_path_root = ''
 recovery_zookeeper_storage_dir = ''
@@ -85,5 +93,4 @@ if recovery_mode == 'zookeeper':
     if len(zookeeper_hosts_list) > 0:
       zookeeper_quorum = (':' + zookeeper_port + ',').join(zookeeper_hosts_list) + ':' + zookeeper_port
 
-  recovery_zookeeper_path_root = '/flink/recovery'
   recovery_zookeeper_storage_dir = format('{hdfs_default_name}{recovery_zookeeper_path_root}')

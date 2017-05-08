@@ -59,6 +59,19 @@
         <value>flink</value>
         <property-type>USER</property-type>
         <description>User flink daemon runs as</description>
+        <value-attributes>
+            <editable-only-at-install>true</editable-only-at-install>
+        </value-attributes>
+    </property>
+
+    <property>
+        <name>flink_version</name>
+        <display-name>Flink Version</display-name>
+        <value>1.1.2</value>
+        <description>Flink Version</description>
+        <value-attributes>
+            <visible>false</visible>
+        </value-attributes>
     </property>
 
 </configuration>

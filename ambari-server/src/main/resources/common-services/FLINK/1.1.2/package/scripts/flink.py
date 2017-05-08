@@ -56,13 +56,19 @@ def flink(action = None):
     configs = {}
     configs.update(params.config['configurations']['flink-conf'])
     configs["jobmanager.rpc.address"] = params.flink_jobmanager
-    configs["recovery.zookeeper.quorum"] = params.zookeeper_quorum
-    configs["recovery.zookeeper.path.root"] = params.recovery_zookeeper_path_root
-    configs["recovery.zookeeper.storageDir"] = params.recovery_zookeeper_storage_dir
     configs["fs.hdfs.hadoopconf"] = params.hadoop_conf_dir
     configs["state.backend.fs.checkpointdir"] = "{}{}".format(params.hdfs_default_name, params.state_backend_checkpointdir)
     configs["env.log.dir"] = params.flink_log_dir
     configs["env.pid.dir"] = params.flink_pid_dir
+
+    if params.flink_version == '1.1.2':
+        configs["recovery.zookeeper.quorum"] = params.zookeeper_quorum
+        configs["recovery.zookeeper.path.root"] = params.recovery_zookeeper_path_root
+        configs["recovery.zookeeper.storageDir"] = params.recovery_zookeeper_storage_dir
+    else:
+        configs["high-availability.zookeeper.quorum"] = params.zookeeper_quorum
+        configs["high-availability.zookeeper.path.root"] = params.recovery_zookeeper_path_root
+        configs["high-availability.zookeeper.storageDir"] = params.recovery_zookeeper_storage_dir
 
     if params.security_enabled:
         configs["krb5.conf.path"] = params.krb5_conf_path
