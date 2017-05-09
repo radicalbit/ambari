@@ -23,12 +23,22 @@
    <name>alluxio.log.dir</name>
    <description>Alluxio Log Directory</description>
    <value>/var/log/alluxio/</value>
+    <value-attributes>
+      <type>directory</type>
+      <overridable>false</overridable>
+      <editable-only-at-install>true</editable-only-at-install>
+    </value-attributes>
   </property>
 
   <property>
     <name>alluxio.pid.dir</name>
     <description>Alluxio pid Directory</description>
     <value>/var/run/alluxio</value>
+    <value-attributes>
+      <type>directory</type>
+      <overridable>false</overridable>
+      <editable-only-at-install>true</editable-only-at-install>
+    </value-attributes>
   </property>
 
   <property>
@@ -37,6 +47,9 @@
     <value>alluxio</value>
     <property-type>USER</property-type>
     <description>Alluxio Service Account User</description>
+    <value-attributes>
+      <editable-only-at-install>true</editable-only-at-install>
+    </value-attributes>
   </property>
 
   <property>
