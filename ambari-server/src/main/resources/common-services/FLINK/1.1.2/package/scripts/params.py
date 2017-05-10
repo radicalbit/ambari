@@ -75,6 +75,7 @@ if 'alluxio_master_hosts' in config['clusterHostInfo']:
 
 
 state_backend_checkpointdir = "/flink/checkpoint"
+recovery_zookeeper_path_root = ''
 
 if flink_version == '1.1.2':
   recovery_mode = config['configurations']['flink-conf']['recovery.mode']
@@ -84,7 +85,6 @@ else:
   recovery_zookeeper_path_root = '/flink/high-availability'
 
 zookeeper_quorum = ''
-recovery_zookeeper_path_root = ''
 recovery_zookeeper_storage_dir = ''
 
 if recovery_mode == 'zookeeper':
