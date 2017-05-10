@@ -79,7 +79,7 @@ state_backend_checkpointdir = "/flink/checkpoint"
 if flink_version == '1.1.2':
   recovery_mode = config['configurations']['flink-conf']['recovery.mode']
   recovery_zookeeper_path_root = '/flink/recovery'
-else
+else:
   recovery_mode = config['configurations']['flink-conf']['high-availability']
   recovery_zookeeper_path_root = '/flink/high-availability'
 
