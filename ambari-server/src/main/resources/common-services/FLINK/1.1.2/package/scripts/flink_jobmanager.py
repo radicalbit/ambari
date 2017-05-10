@@ -27,30 +27,43 @@ class FlinkJobManager(FlinkService):
     self.configure(env)
 
     if params.security_enabled:
-      Execute(format("{kinit_path_local} -kt {hdfs_user_keytab} {hdfs_principal_name}"),
-              user = params.hdfs_user)
+      if params.flink_version == '1.1.2':
+        Execute(format("{kinit_path_local} -kt {hdfs_user_keytab} {hdfs_principal_name}"),
+                user = params.hdfs_user)
+      #TODO: add security configurations for 1.2.0 and above
 
     self.create_hdfs_user(params.flink_user)
 
     if params.security_enabled:
-      self.start_krb_session(env)
+      if params.flink_version == '1.1.2':
+        self.start_krb_session(env)
+      #TODO: add security configurations for 1.2.0 and above
 
+    Logger.info('Starting Flink JobManager...')
     Execute(format("export HADOOP_CONF_DIR={hadoop_conf_dir}; {bin_dir}/jobmanager.sh start cluster"), user=params.flink_user)
+    Logger.info('Flink JobManager Started...')
+
+    Logger.info('Creating pid file for Flink JobManager...')
+    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep JobManager | awk '{print $1}'`> " + params.flink_pid_dir + "/flink-jobmanager.pid"
+    Execute(cmd, user=params.flink_user)
+    Logger.info('Pid file created for Flink JobManager')
 
   def stop(self, env):
     import params
     env.set_params(params)
 
     Execute(format("{bin_dir}/jobmanager.sh stop"), user=params.flink_user)
-    Execute(format("rm -f {flink_pid_dir}/flink-{flink_user}-jobmanager.pid"), user=params.flink_user)
+    Execute(format("rm -f {flink_pid_dir}/flink-jobmanager.pid"), user=params.flink_user)
 
     if params.security_enabled:
-      self.stop_krb_session(env)
+      if params.flink_version == '1.1.2':
+        self.stop_krb_session(env)
+      #TODO: add security configurations for 1.2.0 and above
 
   def status(self, env):
     import status_params as params
     env.set_params(params)
-    pid_file = format("{flink_pid_dir}/flink-{flink_user}-jobmanager.pid")
+    pid_file = format("{flink_pid_dir}/flink-jobmanager.pid")
     check_process_status(pid_file)
 
   def create_hdfs_user(self, user):

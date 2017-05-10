@@ -59,7 +59,6 @@ def flink(action = None):
     configs["fs.hdfs.hadoopconf"] = params.hadoop_conf_dir
     configs["state.backend.fs.checkpointdir"] = "{}{}".format(params.hdfs_default_name, params.state_backend_checkpointdir)
     configs["env.log.dir"] = params.flink_log_dir
-    configs["env.pid.dir"] = params.flink_pid_dir
 
     if params.flink_version == '1.1.2':
         configs["recovery.zookeeper.quorum"] = params.zookeeper_quorum
@@ -71,8 +70,10 @@ def flink(action = None):
         configs["high-availability.zookeeper.storageDir"] = params.recovery_zookeeper_storage_dir
 
     if params.security_enabled:
-        configs["krb5.conf.path"] = params.krb5_conf_path
-        configs["krb5.jaas.path"] = params.flink_client_jass_path
+        if params.flink_version == '1.1.2':
+            configs["krb5.conf.path"] = params.krb5_conf_path
+            configs["krb5.jaas.path"] = params.flink_client_jass_path
+        #TODO: add security configurations for 1.2.0 and above
 
     PropertiesFile("flink-conf.yaml",
         dir=params.conf_dir,
@@ -102,20 +103,22 @@ def flink(action = None):
     # add security configurations if required
 
     if params.security_enabled:
-      File(
-          format("{conf_dir}/flink_client_jaas.conf"),
-          owner=params.flink_user,
-          group=params.user_group,
-          mode=0644,
-          content=Template('flink_client_jaas.conf.j2', conf_dir=params.conf_dir)
-      )
-      File(
-          format("{conf_dir}/cron-kinit-flink.sh"),
-          owner=params.flink_user,
-          group=params.user_group,
-          mode=0700,
-          content=Template('cron-kinit-flink.sh.j2', conf_dir=params.conf_dir)
-      )
+        if params.flink_version == '1.1.2':
+            File(
+              format("{conf_dir}/flink_client_jaas.conf"),
+              owner=params.flink_user,
+              group=params.user_group,
+              mode=0644,
+              content=Template('flink_client_jaas.conf.j2', conf_dir=params.conf_dir)
+            )
+            File(
+              format("{conf_dir}/cron-kinit-flink.sh"),
+              owner=params.flink_user,
+              group=params.user_group,
+              mode=0700,
+              content=Template('cron-kinit-flink.sh.j2', conf_dir=params.conf_dir)
+            )
+        #TODO: add security configurations for 1.2.0 and above
 
     if params.is_alluxio_installed:
         # Create and add alluxio-site.properties jar

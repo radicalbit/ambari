@@ -60,4 +60,14 @@
     <description>Root User</description>
   </property>
 
+  <property>
+    <name>alluxio_version</name>
+    <display-name>Alluxio Version</display-name>
+    <value>1.2.0</value>
+    <description>Alluxio Version</description>
+    <value-attributes>
+      <visible>false</visible>
+    </value-attributes>
+  </property>
+
 </configuration>

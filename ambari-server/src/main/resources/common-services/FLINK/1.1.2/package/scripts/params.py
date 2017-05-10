@@ -67,9 +67,10 @@ is_alluxio_installed = False
 if 'alluxio_master_hosts' in config['clusterHostInfo']:
   is_alluxio_installed = True
   alluxio_master = config['clusterHostInfo']['alluxio_master_hosts'][0]
+  alluxio_version = config['configurations']['alluxio-env']['alluxio_version']
   # alluxio jar params
   jar_url = 'https://public-repo.radicalbit.io/jars'
-  alluxio_jar_name = 'alluxio-core-client-1.2.0-jar-with-dependencies.jar'
+  alluxio_jar_name = format('alluxio-core-client-{alluxio_version}-jar-with-dependencies.jar')
 
 
 
