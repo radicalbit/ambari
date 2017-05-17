@@ -121,6 +121,28 @@
         </value-attributes>
     </property>
 
+    <property>
+        <name>taskmanager.debug.memory.startLogThread</name>
+        <value>true</value>
+        <description>Causes the TaskManagers to periodically log memory and Garbage collection
+            statistics. The statistics include current heap-, off-heap, and other memory pool utilization,
+            as well as the time spent on garbage collection, by heap memory pool.</description>
+        <value-attributes>
+            <type>boolean</type>
+        </value-attributes>
+    </property>
+
+    <property>
+        <name>taskmanager.debug.memory.logIntervalMs</name>
+        <value>10000</value>
+        <description>The interval (in milliseconds) in which the TaskManagers log the memory
+            and garbage collection statistics. Only has an effect, if taskmanager.debug.memory.startLogThread
+            is set to true.</description>
+        <value-attributes>
+            <type>int</type>
+        </value-attributes>
+    </property>
+
     <!--JobManager Web Frontend-->
 
     <property>

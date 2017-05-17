@@ -84,5 +84,10 @@ class FlinkJobManager(FlinkService):
     Execute('hdfs dfs -chgrp ' + user + ' ' + params.recovery_zookeeper_path_root, user=params.hdfs_user)
     Execute('hdfs dfs -chgrp ' + user + ' ' + params.state_backend_checkpointdir, user=params.hdfs_user)
 
+    if params.flink_version != '1.1.2':
+      Execute('hdfs dfs -mkdir -p ' + params.state_savepoints_dir, user=params.hdfs_user, not_if ='hdfs dfs -ls ' + params.state_savepoints_dir)
+      Execute('hdfs dfs -chown ' + user + ' ' + params.state_savepoints_dir, user=params.hdfs_user)
+      Execute('hdfs dfs -chgrp ' + user + ' ' + params.state_savepoints_dir, user=params.hdfs_user)
+
 if __name__ == "__main__":
   FlinkJobManager().execute()

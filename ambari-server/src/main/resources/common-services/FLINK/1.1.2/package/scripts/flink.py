@@ -68,6 +68,7 @@ def flink(action = None):
         configs["high-availability.zookeeper.quorum"] = params.zookeeper_quorum
         configs["high-availability.zookeeper.path.root"] = params.recovery_zookeeper_path_root
         configs["high-availability.zookeeper.storageDir"] = params.recovery_zookeeper_storage_dir
+        configs["state.savepoints.dir"] = "{}{}".format(params.hdfs_default_name, params.state_savepoints_dir)
 
     if params.security_enabled:
         if params.flink_version == '1.1.2':
