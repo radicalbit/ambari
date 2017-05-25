@@ -44,7 +44,8 @@ class FlinkTaskManager(FlinkService):
     import params
     env.set_params(params)
 
-    Execute(format("{bin_dir}/taskmanager.sh stop"), user=params.flink_user)
+    #Execute(format("{bin_dir}/taskmanager.sh stop"), user=params.flink_user)
+    Execute(format("kill `cat {flink_pid_dir}/flink-taskmanager.pid`"), user=params.flink_user)
     Execute(format("rm -f {flink_pid_dir}/flink-taskmanager.pid"), user=params.flink_user)
 
     if params.security_enabled:
