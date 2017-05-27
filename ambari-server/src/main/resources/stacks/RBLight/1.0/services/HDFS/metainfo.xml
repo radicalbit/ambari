@@ -56,7 +56,13 @@
           <osFamily>redhat7,redhat6,suse11</osFamily>
           <packages>
             <package>
-              <name>hadoop*</name>
+              <name>hadoop-hdfs-2.7.1*</name>
+            </package>
+            <package>
+              <name>hadoop-hdfsfs-2.7.1*</name>
+            </package>
+            <package>
+              <name>hadoop-libhdfs-2.7.1*</name>
             </package>
             <package>
               <name>snappy</name>
