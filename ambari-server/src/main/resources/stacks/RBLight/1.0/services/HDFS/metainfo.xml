@@ -59,7 +59,7 @@
               <name>hadoop-hdfs-2.7.1*</name>
             </package>
             <package>
-              <name>hadoop-hdfsfs-2.7.1*</name>
+              <name>hadoop-httpfs-2.7.1*</name>
             </package>
             <package>
               <name>hadoop-libhdfs-2.7.1*</name>
