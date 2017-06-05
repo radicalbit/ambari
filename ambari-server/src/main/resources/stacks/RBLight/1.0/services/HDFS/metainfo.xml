@@ -52,31 +52,6 @@
           </packages>
         </osSpecific>
 
-        <!--<osSpecific>-->
-          <!--<osFamily>redhat7,redhat6,suse11</osFamily>-->
-          <!--<packages>-->
-            <!--<package>-->
-              <!--<name>hadoop-hdfs-2.7.1*</name>-->
-            <!--</package>-->
-            <!--<package>-->
-              <!--<name>hadoop-httpfs-2.7.1*</name>-->
-            <!--</package>-->
-            <!--<package>-->
-              <!--<name>hadoop-libhdfs-2.7.1*</name>-->
-            <!--</package>-->
-            <!--<package>-->
-              <!--<name>snappy</name>-->
-            <!--</package>-->
-            <!--<package>-->
-              <!--<name>snappy-devel</name>-->
-            <!--</package>-->
-            <!--<package>-->
-              <!--<name>lzo</name>-->
-              <!--<skipUpgrade>true</skipUpgrade>-->
-            <!--</package>-->
-          <!--</packages>-->
-        <!--</osSpecific>-->
-
         <osSpecific>
           <osFamily>redhat7,redhat6,suse11</osFamily>
           <packages>
