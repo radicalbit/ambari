@@ -52,7 +52,8 @@ class FlinkJobManager(FlinkService):
     import params
     env.set_params(params)
 
-    Execute(format("{bin_dir}/jobmanager.sh stop"), user=params.flink_user)
+    #Execute(format("{bin_dir}/jobmanager.sh stop"), user=params.flink_user)
+    Execute(format("kill `cat {flink_pid_dir}/flink-jobmanager.pid`"), user=params.flink_user)
     Execute(format("rm -f {flink_pid_dir}/flink-jobmanager.pid"), user=params.flink_user)
 
     if params.security_enabled:

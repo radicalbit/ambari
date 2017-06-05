@@ -56,7 +56,25 @@
           <osFamily>redhat7,redhat6,suse11</osFamily>
           <packages>
             <package>
-              <name>hadoop*</name>
+              <name>hadoop-client-2.7.1*</name>
+            </package>
+            <package>
+              <name>hadoop-hdfs-datanode-2.7.1*</name>
+            </package>
+            <package>
+              <name>hadoop-hdfs-journalnode-2.7.1*</name>
+            </package>
+            <package>
+              <name>hadoop-hdfs-namenode-2.7.1*</name>
+            </package>
+            <package>
+              <name>hadoop-hdfs-secondarynamenode-2.7.1*</name>
+            </package>
+            <package>
+              <name>hadoop-hdfs-zkfc-2.7.1*</name>
+            </package>
+            <package>
+              <name>hadoop-libhdfs-2.7.1*</name>
             </package>
             <package>
               <name>snappy</name>
