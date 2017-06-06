@@ -18,96 +18,18 @@
 <reposinfo>
   <latest>http://s3.amazonaws.com/dev.hortonworks.com/HDP/hdp_urlinfo.json</latest>
 
-  <!--<os family="redhat6">-->
-    <!--<repo>-->
-      <!--<baseurl>https://public-repo.radicalbit.io/rbd/centos6/2.2.0.0/rblight10</baseurl>-->
-      <!--<repoid>RBLight-1.0</repoid>-->
-      <!--<reponame>RBLight</reponame>-->
-      <!--<unique>true</unique>-->
-    <!--</repo>-->
-    <!--<repo>-->
-      <!--<baseurl>https://public-repo.radicalbit.io/rbd-utils/centos6/2.2.0.0</baseurl>-->
-      <!--<repoid>RBLight-UTILS-1.1.0.20</repoid>-->
-      <!--<reponame>RBLight-UTILS</reponame>-->
-      <!--<unique>false</unique>-->
-    <!--</repo>-->
-  <!--</os>-->
-
   <os family="redhat7">
     <repo>
-      <baseurl>https://public-repo.radicalbit.io/rbd/centos7/2.2.0.0/rblight10</baseurl>
+      <baseurl>https://public-repo.radicalbit.io/rbd/centos7/2.5.0.0/rblight10</baseurl>
       <repoid>RBLight-1.0</repoid>
       <reponame>RBLight</reponame>
       <unique>true</unique>
     </repo>
     <repo>
-      <baseurl>https://public-repo.radicalbit.io/rbd-utils/centos7/2.2.0.0</baseurl>
+      <baseurl>https://public-repo.radicalbit.io/rbd-utils/centos7/2.5.0.0</baseurl>
       <repoid>RBLight-UTILS-1.1.0.20</repoid>
       <reponame>RBLight-UTILS</reponame>
       <unique>false</unique>
     </repo>
   </os>
-
-  <!--<latest>http://s3.amazonaws.com/dev.hortonworks.com/HDP/hdp_urlinfo.json</latest>-->
-  <!--<os family="redhat6">-->
-    <!--<repo>-->
-      <!--<baseurl>http://public-repo.radicalbit.io/rbp/centos6/2.1.2.0</baseurl>-->
-      <!--<repoid>RBP-1.0</repoid>-->
-      <!--<reponame>RBP</reponame>-->
-    <!--</repo>-->
-    <!--<repo>-->
-      <!--<baseurl>http://public-repo.radicalbit.io/rbp-utils/centos6/2.1.2.0</baseurl>-->
-      <!--<repoid>RBP-UTILS-1.1.0.20</repoid>-->
-      <!--<reponame>RBP-UTILS</reponame>-->
-    <!--</repo>-->
-  <!--</os>-->
-  <!--<os family="redhat7">-->
-    <!--<repo>-->
-      <!--<baseurl>http://public-repo.radicalbit.io/rbp/centos7/2.1.2.0</baseurl>-->
-      <!--<repoid>RBP-1.0</repoid>-->
-      <!--<reponame>RBP</reponame>-->
-    <!--</repo>-->
-    <!--<repo>-->
-      <!--<baseurl>http://public-repo.radicalbit.io/rbp-utils/centos7/2.1.2.0</baseurl>-->
-      <!--<repoid>RBP-UTILS-1.1.0.20</repoid>-->
-      <!--<reponame>RBP-UTILS</reponame>-->
-    <!--</repo>-->
-  <!--</os>  -->
-
-  <!--<os family="ubuntu12">-->
-    <!--<repo>-->
-      <!--<baseurl>http://public-repo-1.hortonworks.com/HDP/ubuntu12/2.x/updates/2.3.0.0</baseurl>-->
-      <!--<repoid>RBP-1.0</repoid>-->
-      <!--<reponame>RBP</reponame>-->
-    <!--</repo>-->
-    <!--<repo>-->
-      <!--<baseurl>http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/ubuntu12</baseurl>-->
-      <!--<repoid>HDP-UTILS-1.1.0.20</repoid>-->
-      <!--<reponame>HDP-UTILS</reponame>-->
-    <!--</repo>-->
-  <!--</os>-->
-  <!--<os family="debian7">-->
-    <!--<repo>-->
-      <!--<baseurl>http://public-repo-1.hortonworks.com/HDP/debian7/2.x/updates/2.3.0.0</baseurl>-->
-      <!--<repoid>RBP-1.0</repoid>-->
-      <!--<reponame>RBP</reponame>-->
-    <!--</repo>-->
-    <!--<repo>-->
-      <!--<baseurl>http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/debian6</baseurl>-->
-      <!--<repoid>HDP-UTILS-1.1.0.20</repoid>-->
-      <!--<reponame>HDP-UTILS</reponame>-->
-    <!--</repo>-->
-  <!--</os>-->
-  <!--<os family="ubuntu14">-->
-    <!--<repo>-->
-      <!--<baseurl>http://public-repo-1.hortonworks.com/HDP/ubuntu14/2.x/updates/2.3.0.0</baseurl>-->
-      <!--<repoid>RBP-1.0</repoid>-->
-      <!--<reponame>RBP</reponame>-->
-    <!--</repo>-->
-    <!--<repo>-->
-      <!--<baseurl>http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/ubuntu12</baseurl>-->
-      <!--<repoid>HDP-UTILS-1.1.0.20</repoid>-->
-      <!--<reponame>HDP-UTILS</reponame>-->
-    <!--</repo>-->
-  <!--</os>-->
 </reposinfo>
