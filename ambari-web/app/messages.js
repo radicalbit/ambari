@@ -1951,6 +1951,9 @@ Em.I18n.translations = {
   'services.service.actions.run.stopLdapKnox.context':'Stop Demo LDAP',
   'services.service.actions.run.startStopLdapKnox.error': 'Error during remote command: ',
 
+  'services.service.actions.run.formatAlluxioCluster': 'Format Cluster',
+  'services.service.actions.run.formatAlluxioCluster.context': 'Format Cluster',
+
   // Hive Server Interactive custom command to restart LLAP
   'services.service.actions.run.restartLLAP':'Restart LLAP',
   'services.service.actions.run.immediateStopHawqService.context':'Stop HAWQ Service (Immediate Mode)',

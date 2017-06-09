@@ -485,6 +485,13 @@ App.HostComponentActionMap = {
         cssClass: 'icon-play-circle',
         isHidden: false,
         disabled: false
+      },
+      FORMAT_CLUSTER: {
+        customCommand: 'FORMAT_CLUSTER',
+        context: Em.I18n.t('services.service.actions.run.formatAlluxioCluster.context'),
+        label: Em.I18n.t('services.service.actions.run.formatAlluxioCluster'),
+        cssClass: 'icon-refresh',
+        disabled: false
       }
     };
   }
