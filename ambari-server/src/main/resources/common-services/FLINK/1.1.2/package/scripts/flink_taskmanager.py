@@ -31,22 +31,19 @@ class FlinkTaskManager(FlinkService):
         self.start_krb_session(env)
       #TODO: add security configurations for 1.2.0 and above
 
+    Execute(format("rm -f {flink_pid_dir}/flink-{flink_user}-taskmanager.pid"),
+            only_if=format("test -f {flink_pid_dir}/flink-{flink_user}-taskmanager.pid"),
+            user=params.flink_user)
+
     Logger.info('Starting Flink TaskManager...')
     Execute(format("export HADOOP_CONF_DIR={hadoop_conf_dir}; {bin_dir}/taskmanager.sh start"), user=params.flink_user)
     Logger.info('Flink TaskManager Started...')
-
-    Logger.info('Creating pid file for Flink TaskManager...')
-    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep TaskManager | awk '{print $1}'`> " + params.flink_pid_dir + "/flink-taskmanager.pid"
-    Execute(cmd, user=params.flink_user)
-    Logger.info('Pid file created for Flink TaskManager')
 
   def stop(self, env):
     import params
     env.set_params(params)
 
-    #Execute(format("{bin_dir}/taskmanager.sh stop"), user=params.flink_user)
-    Execute(format("kill `cat {flink_pid_dir}/flink-taskmanager.pid`"), user=params.flink_user)
-    Execute(format("rm -f {flink_pid_dir}/flink-taskmanager.pid"), user=params.flink_user)
+    Execute(format("{bin_dir}/taskmanager.sh stop"), user=params.flink_user)
 
     if params.security_enabled:
       if params.flink_version == '1.1.2':
@@ -56,7 +53,7 @@ class FlinkTaskManager(FlinkService):
   def status(self, env):
     import status_params as params
     env.set_params(params)
-    pid_file = format("{flink_pid_dir}/flink-taskmanager.pid")
+    pid_file = format("{flink_pid_dir}/flink-{flink_user}-taskmanager.pid")
     check_process_status(pid_file)
 
 if __name__ == "__main__":

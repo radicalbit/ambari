@@ -39,22 +39,19 @@ class FlinkJobManager(FlinkService):
         self.start_krb_session(env)
       #TODO: add security configurations for 1.2.0 and above
 
+    Execute(format("rm -f {flink_pid_dir}/flink-{flink_user}-jobmanager.pid"),
+            only_if=format("test -f {flink_pid_dir}/flink-{flink_user}-jobmanager.pid"),
+            user=params.flink_user)
+
     Logger.info('Starting Flink JobManager...')
     Execute(format("export HADOOP_CONF_DIR={hadoop_conf_dir}; {bin_dir}/jobmanager.sh start cluster"), user=params.flink_user)
     Logger.info('Flink JobManager Started...')
-
-    Logger.info('Creating pid file for Flink JobManager...')
-    cmd = "echo `ps -A -o pid,command | grep -i \"[j]ava\" | grep JobManager | awk '{print $1}'`> " + params.flink_pid_dir + "/flink-jobmanager.pid"
-    Execute(cmd, user=params.flink_user)
-    Logger.info('Pid file created for Flink JobManager')
 
   def stop(self, env):
     import params
     env.set_params(params)
 
-    #Execute(format("{bin_dir}/jobmanager.sh stop"), user=params.flink_user)
-    Execute(format("kill `cat {flink_pid_dir}/flink-jobmanager.pid`"), user=params.flink_user)
-    Execute(format("rm -f {flink_pid_dir}/flink-jobmanager.pid"), user=params.flink_user)
+    Execute(format("{bin_dir}/jobmanager.sh stop"), user=params.flink_user)
 
     if params.security_enabled:
       if params.flink_version == '1.1.2':
@@ -64,7 +61,7 @@ class FlinkJobManager(FlinkService):
   def status(self, env):
     import status_params as params
     env.set_params(params)
-    pid_file = format("{flink_pid_dir}/flink-jobmanager.pid")
+    pid_file = format("{flink_pid_dir}/flink-{flink_user}-jobmanager.pid")
     check_process_status(pid_file)
 
   def create_hdfs_user(self, user):
@@ -89,6 +86,11 @@ class FlinkJobManager(FlinkService):
       Execute('hdfs dfs -mkdir -p ' + params.state_savepoints_dir, user=params.hdfs_user, not_if ='hdfs dfs -ls ' + params.state_savepoints_dir)
       Execute('hdfs dfs -chown ' + user + ' ' + params.state_savepoints_dir, user=params.hdfs_user)
       Execute('hdfs dfs -chgrp ' + user + ' ' + params.state_savepoints_dir, user=params.hdfs_user)
+
+    if params.flink_version == '1.3.0':
+      Execute('hdfs dfs -mkdir -p ' + params.jobmanager_archive_fs_dir, user=params.hdfs_user, not_if ='hdfs dfs -ls ' + params.jobmanager_archive_fs_dir)
+      Execute('hdfs dfs -chown ' + user + ' ' + params.jobmanager_archive_fs_dir, user=params.hdfs_user)
+      Execute('hdfs dfs -chgrp ' + user + ' ' + params.jobmanager_archive_fs_dir, user=params.hdfs_user)
 
 if __name__ == "__main__":
   FlinkJobManager().execute()

@@ -27,6 +27,20 @@
             <version>1.3.0</version>
             <extends>common-services/FLINK/1.2.0</extends>
 
+            <components>
+                <component>
+                    <name>FLINK_HISTORYSERVER</name>
+                    <displayName>Flink History Server</displayName>
+                    <category>SLAVE</category>
+                    <cardinality>1</cardinality>
+                    <commandScript>
+                        <script>scripts/flink_historyserver.py</script>
+                        <scriptType>PYTHON</scriptType>
+                        <timeout>10000</timeout>
+                    </commandScript>
+                </component>
+            </components>
+
             <osSpecifics>
               <osSpecific>
                 <osFamily>any</osFamily>
