@@ -3952,7 +3952,7 @@ class RBLight10StackAdvisor(RBLight023StackAdvisor):
 
     if alluxioMasterInfo is not None:
       putFlinkProperty("fs.default-scheme", 'alluxio-ft://' + alluxioMasterInfo["Hosts"]["host_name"] + ':19998/')
-    elif hdfsNameNodeInfo is not None:
+    elif hdfsNameNodeInfo is not None and ('core-site' in services['configurations']):
       putFlinkProperty("fs.default-scheme", services["configurations"]["core-site"]["properties"]["fs.defaultFS"])
     else:
       putFlinkProperty("fs.default-scheme", "file:///")

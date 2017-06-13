@@ -23,6 +23,7 @@ from resource_management.libraries.functions import conf_select
 from resource_management.libraries.functions import Direction
 from resource_management.libraries.functions.format import format
 from resource_management.libraries.functions.check_process_status import check_process_status
+import time
 from kafka import ensure_base_directories
 
 from kafka import kafka
@@ -66,6 +67,7 @@ class KafkaBroker(Script):
     File(params.kafka_pid_file,
           action = "delete"
     )
+    time.sleep(2)
 
 
   def status(self, env):
