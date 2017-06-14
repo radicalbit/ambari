@@ -157,7 +157,6 @@ jtnode_heapsize =  "1024m"
 ttnode_heapsize = "1024m"
 
 dtnode_heapsize = config['configurations']['hadoop-env']['dtnode_heapsize']
-nfsgateway_heapsize = config['configurations']['hadoop-env']['nfsgateway_heapsize']
 mapred_pid_dir_prefix = default("/configurations/mapred-env/mapred_pid_dir_prefix","/var/run/hadoop-mapreduce")
 mapred_log_dir_prefix = default("/configurations/mapred-env/mapred_log_dir_prefix","/var/log/hadoop-mapreduce")
 hadoop_env_sh_template = config['configurations']['hadoop-env']['content']
@@ -170,7 +169,6 @@ gmond_user = config['configurations']['ganglia-env']["gmond_user"]
 tez_user = config['configurations']['tez-env']["tez_user"]
 oozie_user = config['configurations']['oozie-env']["oozie_user"]
 falcon_user = config['configurations']['falcon-env']["falcon_user"]
-ranger_user = config['configurations']['ranger-env']["ranger_user"]
 zeppelin_user = config['configurations']['zeppelin-env']["zeppelin_user"]
 zeppelin_group = config['configurations']['zeppelin-env']["zeppelin_group"]
 
@@ -181,7 +179,6 @@ namenode_host = default("/clusterHostInfo/namenode_host", [])
 hbase_master_hosts = default("/clusterHostInfo/hbase_master_hosts", [])
 oozie_servers = default("/clusterHostInfo/oozie_server", [])
 falcon_server_hosts = default("/clusterHostInfo/falcon_server_hosts", [])
-ranger_admin_hosts = default("/clusterHostInfo/ranger_admin_hosts", [])
 zeppelin_master_hosts = default("/clusterHostInfo/zeppelin_master_hosts", [])
 
 # get the correct version to use for checking stack features
@@ -194,7 +191,6 @@ has_tez = 'tez-site' in config['configurations']
 has_hbase_masters = not len(hbase_master_hosts) == 0
 has_oozie_server = not len(oozie_servers) == 0
 has_falcon_server_hosts = not len(falcon_server_hosts) == 0
-has_ranger_admin = not len(ranger_admin_hosts) == 0
 has_zeppelin_master = not len(zeppelin_master_hosts) == 0
 stack_supports_zk_security = check_stack_feature(StackFeature.SECURE_ZOOKEEPER, version_for_stack_feature_checks)
 
@@ -217,7 +213,6 @@ if has_namenode or dfs_type == 'HCFS':
 hbase_tmp_dir = "/tmp/hbase-hbase"
 
 proxyuser_group = default("/configurations/hadoop-env/proxyuser_group","users")
-ranger_group = config['configurations']['ranger-env']['ranger_group']
 dfs_cluster_administrators_group = config['configurations']['hdfs-site']["dfs.cluster.administrators"]
 
 sysprep_skip_create_users_and_groups = default("/configurations/cluster-env/sysprep_skip_create_users_and_groups", False)
@@ -242,8 +237,6 @@ if has_oozie_server:
   user_to_groups_dict[oozie_user] = [proxyuser_group]
 if has_falcon_server_hosts:
   user_to_groups_dict[falcon_user] = [proxyuser_group]
-if has_ranger_admin:
-  user_to_groups_dict[ranger_user] = [ranger_group]
 if has_zeppelin_master:
   user_to_groups_dict[zeppelin_user] = [zeppelin_group, user_group]
 #Append new user-group mapping to the dict
