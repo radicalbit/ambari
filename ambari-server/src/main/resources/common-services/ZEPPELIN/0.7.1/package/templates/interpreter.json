@@ -41,13 +41,15 @@
       "name": "flink",
       "group": "flink",
       "properties": {
-        "port": "{{flink_jobmanager_port}}",
-        "zeppelin.interpreter.localRepo": "/var/lib/zeppelin/local-repo/2B6U1MESG",
-        "host": "{{ flink_host }}",
+{% if has_flink_jobmanager %}
         "high-availability": "{{ recovery_mode }}",
         "high-availability.zookeeper.path.root": "{{ recovery_zookeeper_path_root }}",
         "high-availability.zookeeper.quorum": "{{ zookeeper_quorum }}",
-        "high-availability.zookeeper.storageDir": "{{ recovery_zookeeper_storage_dir }}"
+        "high-availability.zookeeper.storageDir": "{{ recovery_zookeeper_storage_dir }}",
+{% endif %}
+        "port": "{{flink_jobmanager_port}}",
+        "zeppelin.interpreter.localRepo": "/var/lib/zeppelin/local-repo/2B6U1MESG",
+        "host": "{{ flink_host }}"
       },
       "interpreterGroup": [
         {

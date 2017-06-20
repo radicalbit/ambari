@@ -55,6 +55,13 @@
                 <timeout>300</timeout>
             </commandScript>
 
+            <quickLinksConfigurations>
+                <quickLinksConfiguration>
+                    <fileName>quicklinks.json</fileName>
+                    <default>true</default>
+                </quickLinksConfiguration>
+            </quickLinksConfigurations>
+
             <configuration-dependencies>
                 <config-type>zeppelin-site</config-type>
                 <config-type>zeppelin-env</config-type>

@@ -51,9 +51,9 @@ zeppelin_host = str(config['clusterHostInfo']['zeppelin_master_hosts'][0])
 
 # Set configuration properties for flink in high availability mode
 hdfs_default_name = config['configurations']['core-site']['fs.defaultFS']
-zookeeper_port = str(config['configurations']['zoo.cfg']['clientPort'])
 
 if flink_hosts is not None:
+  zookeeper_port = str(config['configurations']['zoo.cfg']['clientPort'])
   flink_version = config['configurations']['flink-env']['flink_version']
   flink_jobmanager_port = config['configurations']['flink-conf']['jobmanager.rpc.port']
 
@@ -80,6 +80,8 @@ if flink_hosts is not None:
 else:
   has_flink_jobmanager = False
   flink_host = 'local'
+  flink_jobmanager_port = '6123'
+  flink_version = '1.3.0'
 
 if alluxio_master_hosts is not None:
   alluxio_master_host = alluxio_master_hosts[0]
