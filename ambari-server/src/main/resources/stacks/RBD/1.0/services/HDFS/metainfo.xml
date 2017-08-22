@@ -21,7 +21,7 @@
     <service>
       <name>HDFS</name>
       <version>2.7.1</version>
-      <extends>common-services/HDFS/2.7.1.2.3</extends>
+      <extends>common-services/HDFS/2.7.1</extends>
 
       <component>
         <name>HDFS_CLIENT</name>

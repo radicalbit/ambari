@@ -20,32 +20,15 @@
   <services>
     <service>
       <name>HDFS</name>
+      <displayName>HDFS</displayName>
+      <comment>Apache Hadoop Distributed File System</comment>
       <version>2.7.3</version>
-      <extends>common-services/HDFS/2.7.3</extends>
-
-      <component>
-        <name>HDFS_CLIENT</name>
-        <displayName>HDFS Client</displayName>
-        <category>CLIENT</category>
-        <cardinality>ALL</cardinality>
-        <versionAdvertised>true</versionAdvertised>
-        <auto-deploy>
-          <enabled>true</enabled>
-        </auto-deploy>
-      </component>
-
-      <components>
-        <component>
-          <name>NFS_GATEWAY</name>
-          <category>SLAVE</category>
-          <deleted>true</deleted>
-        </component>
-      </components>
+      <extends>common-services/HDFS/2.7.1</extends>
 
       <osSpecifics>
         <osSpecific>
           <osFamily>any</osFamily>
-          <packages>
+          <packages>gits
             <package>
               <name>rpcbind</name>
             </package>
@@ -88,9 +71,7 @@
             </package>
           </packages>
         </osSpecific>
-
       </osSpecifics>
-
     </service>
   </services>
 </metainfo>
