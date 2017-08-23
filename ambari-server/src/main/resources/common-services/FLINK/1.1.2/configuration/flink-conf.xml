@@ -47,6 +47,15 @@
     </property>
 
     <property>
+        <name>taskmanager.rpc.port</name>
+        <value>8083</value>
+        <description>The task manager’s IPC port.</description>
+        <value-attributes>
+            <type>int</type>
+        </value-attributes>
+    </property>
+
+    <property>
         <name>jobmanager.heap.mb</name>
         <value>768</value>
         <description>JVM heap size (in megabytes) for the JobManager. You may have to increase

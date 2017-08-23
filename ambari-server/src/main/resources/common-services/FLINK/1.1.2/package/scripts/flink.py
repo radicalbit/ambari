@@ -59,6 +59,7 @@ def flink(action = None):
     configs["fs.hdfs.hadoopconf"] = params.hadoop_conf_dir
     configs["state.backend.fs.checkpointdir"] = "{}{}".format(params.hdfs_default_name, params.state_backend_checkpointdir)
     configs["env.log.dir"] = params.flink_log_dir
+    configs["env.pid.dir"] = params.flink_pid_dir
 
     if params.flink_version == '1.1.2':
         configs["recovery.zookeeper.quorum"] = params.zookeeper_quorum
@@ -69,6 +70,10 @@ def flink(action = None):
         configs["high-availability.zookeeper.path.root"] = params.recovery_zookeeper_path_root
         configs["high-availability.zookeeper.storageDir"] = params.recovery_zookeeper_storage_dir
         configs["state.savepoints.dir"] = "{}{}".format(params.hdfs_default_name, params.state_savepoints_dir)
+
+    if params.flink_version == '1.3.0':
+        configs["jobmanager.archive.fs.dir"] = "{}{}".format(params.hdfs_default_name, params.jobmanager_archive_fs_dir)
+        configs["historyserver.archive.fs.dir"] = "{}{}".format(params.hdfs_default_name, params.historyserver_archive_fs_dir)
 
     if params.security_enabled:
         if params.flink_version == '1.1.2':

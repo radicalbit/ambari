@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  ~ Licensed to the Apache Software Foundation (ASF) under one
+  ~ or more contributor license agreements.  See the NOTICE file
+  ~ distributed with this work for additional information
+  ~ regarding copyright ownership.  The ASF licenses this file
+  ~ to you under the Apache License, Version 2.0 (the
+  ~ "License"); you may not use this file except in compliance
+  ~ with the License.  You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<configuration>
+
+    <property>
+        <name>jobmanager.archive.fs.dir</name>
+        <value>/flink/historyserver</value>
+        <description>Directory to upload information about terminated jobs to. You have to add
+            this directory to the list of monitored directories of the history server via
+            historyserver.archive.fs.dir.</description>
+        <value-attributes>
+            <type>directories</type>
+        </value-attributes>
+    </property>
+
+    <property>
+        <name>historyserver.archive.fs.dir</name>
+        <value>/flink/historyserver</value>
+        <description>Comma separated list of directories to fetch archived jobs from.
+            The history server will monitor these directories for archived jobs.
+            You can configure the JobManager to archive jobs to a directory via
+            jobmanager.archive.fs.dir.</description>
+        <value-attributes>
+            <type>directories</type>
+        </value-attributes>
+    </property>
+
+    <property>
+        <name>historyserver.archive.fs.refresh-interval</name>
+        <value>10000</value>
+        <description>Interval in milliseconds for refreshing the archived job directories.</description>
+        <value-attributes>
+            <type>int</type>
+        </value-attributes>
+    </property>
+
+    <property>
+        <name>historyserver.web.port</name>
+        <value>8082</value>
+        <description>Port of the HistoryServers’s web interface.</description>
+        <value-attributes>
+            <type>int</type>
+        </value-attributes>
+    </property>
+
+</configuration>
