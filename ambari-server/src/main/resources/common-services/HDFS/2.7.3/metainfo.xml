@@ -23,7 +23,7 @@
       <displayName>HDFS</displayName>
       <comment>Apache Hadoop Distributed File System</comment>
       <version>2.7.3</version>
-      <extends>common-services/HDFS/2.7.1</extends>
+      <extends>common-services/HDFS/2.7.1.2.3</extends>
 
       <osSpecifics>
         <osSpecific>
