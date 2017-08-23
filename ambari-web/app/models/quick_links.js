@@ -357,6 +357,17 @@ App.QuickLinks.FIXTURES = [
   },
   {
     id: 38,
+    label:'Master Web UI',
+    url:'%@://%@:%@/',
+    service_id: 'ALLUXIO',
+    template:'%@://%@:%@/',
+    http_config: 'alluxio.master.web.port',
+    site: 'alluxio-config',
+    regex: '^(\\d+)$',
+    default_http_port: 19999
+  },
+  {
+    id: 39,
     label:'Flink Web UI',
     url:'%@://%@:%@/',
     service_id: 'FLINK',
@@ -367,15 +378,15 @@ App.QuickLinks.FIXTURES = [
     default_http_port: 8081
   },
   {
-    id: 39,
-    label:'Master Web UI',
+    id: 40,
+    label:'Flink History Server',
     url:'%@://%@:%@/',
-    service_id: 'ALLUXIO',
+    service_id: 'FLINK',
     template:'%@://%@:%@/',
-    http_config: 'alluxio.master.web.port',
-    site: 'alluxio-config',
+    http_config: 'historyserver.web.port',
+    site: 'flink-conf',
     regex: '^(\\d+)$',
-    default_http_port: 19999
+    default_http_port: 8082
   }
 
 ];

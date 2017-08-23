@@ -389,8 +389,8 @@ App.serviceMetricsMapper = App.QuickDataMapper.create({
       ACCUMULO: [35],
       ATLAS: [36],
       ZEPPELIN: [37],
-      FLINK: [38],
-      ALLUXIO: [39]
+      ALLUXIO: [38],
+      FLINK: [39, 40]
     };
     if (quickLinks[item.ServiceInfo.service_name])
       finalJson.quick_links = quickLinks[item.ServiceInfo.service_name];
