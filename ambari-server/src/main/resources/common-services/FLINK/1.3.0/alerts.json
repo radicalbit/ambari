@@ -1,0 +1,144 @@
+{
+  "FLINK": {
+    "service": [
+      {
+        "name": "taskmanager_process_percent",
+        "label": "Percent TaskManagers Available",
+        "description": "This alert is triggered if the number of down TaskManagers in the cluster is greater than the configured critical threshold. It aggregates the results of TaskManager process checks.",
+        "interval": 1,
+        "scope": "SERVICE",
+        "enabled": true,
+        "source": {
+          "type": "AGGREGATE",
+          "alert_name": "taskmanager_process",
+          "reporting": {
+            "ok": {
+              "text": "affected: [{1}], total: [{0}]"
+            },
+            "warning": {
+              "text": "affected: [{1}], total: [{0}]",
+              "value": 10
+            },
+            "critical": {
+              "text": "affected: [{1}], total: [{0}]",
+              "value": 30
+            },
+            "units" : "%",
+            "type": "PERCENT"
+          }
+        }
+      }
+    ],
+    "FLINK_JOBMANAGER": [
+      {
+        "name": "flink_jobmanager_process",
+        "label": "Flink JobManager Process",
+        "description": "This host-level alert is triggered if the Flink JobManager cannot be determined to be up.",
+        "interval": 1,
+        "scope": "HOST",
+        "source": {
+          "type": "PORT",
+          "uri": "{{flink-conf/high-availability.jobmanager.port}}",
+          "default_port": 50050,
+          "reporting": {
+            "ok": {
+              "text": "TCP OK - {0:.3f}s response on port {1}"
+            },
+            "warning": {
+              "text": "TCP OK - {0:.3f}s response on port {1}",
+              "value": 1.5
+            },
+            "critical": {
+              "text": "Connection failed: {0} to {1}:{2}",
+              "value": 5.0
+            }
+          }
+        }
+      },
+      {
+        "name": "flink_jobmanager_webui",
+        "label": "Flink JobManager Web UI",
+        "description": "This host-level alert is triggered if the Flink JobManager Web UI is unreachable.",
+        "interval": 1,
+        "scope": "ANY",
+        "enabled": true,
+        "source": {
+          "type": "WEB",
+          "uri": {
+            "http": "{{flink-conf/jobmanager.web.port}}",
+            "default_port": 8081,
+            "connection_timeout": 5.0
+          },
+          "reporting": {
+            "ok": {
+              "text": "HTTP {0} response in {2:.3f}s"
+            },
+            "warning":{
+              "text": "HTTP {0} response from {1} in {2:.3f}s ({3})"
+            },
+            "critical": {
+              "text": "Connection failed to {1} ({3})"
+            }
+          }
+        }
+      }
+    ],
+    "FLINK_TASKMANAGER": [
+      {
+        "name": "taskmanager_process",
+        "label": "TaskManager Process",
+        "description": "This host-level alert is triggered if the individual TaskManager processes cannot be established to be up and listening on the network.",
+        "interval": 1,
+        "scope": "HOST",
+        "enabled": true,
+        "source": {
+          "type": "PORT",
+          "uri": "{{flink-conf/taskmanager.rpc.port}}",
+          "default_port": 8083,
+          "reporting": {
+            "ok": {
+              "text": "TCP OK - {0:.3f}s response on port {1}"
+            },
+            "warning": {
+              "text": "TCP OK - {0:.3f}s response on port {1}",
+              "value": 1.5
+            },
+            "critical": {
+              "text": "Connection failed: {0} to {1}:{2}",
+              "value": 5.0
+            }
+          }
+        }
+      }
+    ],
+    "FLINK_HISTORYSERVER": [
+      {
+        "name": "flink_historyserver_webui",
+        "label": "Flink History Server Web UI",
+        "description": "This host-level alert is triggered if the Flink History Server Web UI is unreachable.",
+        "interval": 1,
+        "scope": "ANY",
+        "enabled": true,
+        "source": {
+          "type": "WEB",
+          "uri": {
+            "http": "{{flink-conf/historyserver.web.port}}",
+            "default_port": 8082,
+            "connection_timeout": 5.0
+          },
+          "reporting": {
+            "ok": {
+              "text": "HTTP {0} response in {2:.3f}s"
+            },
+            "warning":{
+              "text": "HTTP {0} response from {1} in {2:.3f}s ({3})"
+            },
+            "critical": {
+              "text": "Connection failed to {1} ({3})"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
