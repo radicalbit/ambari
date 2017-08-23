@@ -16,11 +16,24 @@
    limitations under the License.
 -->
 <metainfo>
-    <schemaVersion>2.0</schemaVersion>
-    <services>
-        <service>
-            <name>KAFKA</name>
-            <extends>common-services/KAFKA/0.10.2.1</extends>
-        </service>
-    </services>
+  <schemaVersion>2.0</schemaVersion>
+  <services>
+    <service>
+      <name>KAFKA</name>
+      <displayName>Kafka</displayName>
+      <comment>A high-throughput distributed messaging system</comment>
+      <version>0.10.2.1</version>
+      <extends>common-services/KAFKA/0.10.0.1</extends>
+      <osSpecifics>
+        <osSpecific>
+          <osFamily>any</osFamily>
+          <packages>
+            <package>
+              <name>kafka-0.10.2.1*</name>
+            </package>
+          </packages>
+        </osSpecific>
+      </osSpecifics>
+    </service>
+  </services>
 </metainfo>
