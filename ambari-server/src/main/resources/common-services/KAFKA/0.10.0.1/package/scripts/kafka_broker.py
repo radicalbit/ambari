@@ -25,6 +25,7 @@ from resource_management.libraries.functions import Direction
 from resource_management.libraries.functions.version import compare_versions, format_hdp_stack_version
 from resource_management.libraries.functions.format import format
 from resource_management.libraries.functions.check_process_status import check_process_status
+import time
 from kafka import ensure_base_directories
 
 from kafka import kafka
@@ -46,7 +47,7 @@ class KafkaBroker(Script):
     import params
     env.set_params(params)
     self.configure(env, upgrade_type=upgrade_type)
-    daemon_cmd = format('nohup {params.kafka_home}/bin/kafka-server-start.sh {params.conf_dir}/server.properties >>{params.conf_dir}/kafka.out 2>>{params.conf_dir}/kafka.err & echo $! > {params.kafka_pid_file}')
+    daemon_cmd = format('{params.kafka_home}/bin/kafka-server-start.sh {params.conf_dir}/server.properties >/dev/null & echo $! > {params.kafka_pid_file}')
     no_op_test = format('ls {params.kafka_pid_file} >/dev/null 2>&1 && ps -p `cat {params.kafka_pid_file}` >/dev/null 2>&1')
     Execute(daemon_cmd,
             user=params.kafka_user,
@@ -68,6 +69,7 @@ class KafkaBroker(Script):
     File(params.kafka_pid_file,
           action = "delete"
     )
+    time.sleep(2)
 
 
   def status(self, env):
