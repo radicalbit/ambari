@@ -30,7 +30,6 @@
       <type>directory</type>
       <overridable>false</overridable>
     </value-attributes>
-    <on-ambari-upgrade add="true"/>
   </property>
 
   <property>
@@ -43,7 +42,6 @@
       <overridable>false</overridable>
       <editable-only-at-install>true</editable-only-at-install>
     </value-attributes>
-    <on-ambari-upgrade add="true"/>
   </property>
 
   <property>
@@ -54,7 +52,6 @@
     <value-attributes>
       <overridable>false</overridable>
     </value-attributes>
-    <on-ambari-upgrade add="true"/>
   </property>
 
   <property>
@@ -67,7 +64,6 @@
       <unit>MB</unit>
       <overridable>false</overridable>
     </value-attributes>
-    <on-ambari-upgrade add="true"/>
   </property>
 
   <property>
@@ -89,7 +85,6 @@
         <name>dfs.datanode.data.dir</name>
       </property>
     </depends-on>
-    <on-ambari-upgrade add="true"/>
   </property>
 
   <property>
@@ -111,7 +106,6 @@
       <increment-step>256</increment-step>
       <overridable>false</overridable>
     </value-attributes>
-    <on-ambari-upgrade add="true"/>
   </property>
 
   <property>
@@ -133,7 +127,6 @@
       <increment-step>256</increment-step>
       <overridable>false</overridable>
     </value-attributes>
-    <on-ambari-upgrade add="true"/>
   </property>
 
   <property>
@@ -149,7 +142,6 @@
       <increment-step>128</increment-step>
       <overridable>false</overridable>
     </value-attributes>
-    <on-ambari-upgrade add="true"/>
   </property>
 
   <property>
@@ -165,7 +157,6 @@
       <increment-step>128</increment-step>
       <overridable>false</overridable>
     </value-attributes>
-    <on-ambari-upgrade add="true"/>
   </property>
 
   <property>
@@ -180,7 +171,6 @@
       <unit>MB</unit>
       <increment-step>128</increment-step>
     </value-attributes>
-    <on-ambari-upgrade add="true"/>
   </property>
 
   <property>
@@ -193,7 +183,6 @@
       <type>user</type>
       <overridable>false</overridable>
     </value-attributes>
-    <on-ambari-upgrade add="true"/>
   </property>
 
   <property>
@@ -206,7 +195,6 @@
       <type>user</type>
       <overridable>false</overridable>
     </value-attributes>
-    <on-ambari-upgrade add="true"/>
   </property>
 
   <property>
@@ -220,41 +208,35 @@
       <overridable>false</overridable>
       <visible>false</visible>
     </value-attributes>
-    <on-ambari-upgrade add="true"/>
   </property>
 
   <property>
     <name>hdfs_user_nofile_limit</name>
     <value>128000</value>
     <description>Max open files limit setting for HDFS user.</description>
-    <on-ambari-upgrade add="true"/>
   </property>
 
   <property>
     <name>hdfs_user_nproc_limit</name>
     <value>65536</value>
     <description>Max number of processes limit setting for HDFS user.</description>
-    <on-ambari-upgrade add="true"/>
   </property>
 
   <property>
     <name>namenode_backup_dir</name>
     <description>Local directory for storing backup copy of NameNode images during upgrade</description>
     <value>/tmp/upgrades</value>
-    <on-ambari-upgrade add="false"/>
   </property>
 
   <property>
     <name>hdfs_user_keytab</name>
     <description>HDFS keytab path</description>
-    <on-ambari-upgrade add="true"/>
   </property>
 
   <property>
     <name>hdfs_principal_name</name>
     <description>HDFS principal name</description>
     <property-type>KERBEROS_PRINCIPAL</property-type>
-    <on-ambari-upgrade add="true"/>
   </property>
 
   <property>

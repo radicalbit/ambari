@@ -28,7 +28,7 @@ class Zeppelin(Script):
     Directory([params.zeppelin_pid_dir, params.zeppelin_log_dir],
             owner=params.zeppelin_user,
             group=params.user_group,
-            create_parents=True
+            recursive=True
     )
 
   def configure(self, env):

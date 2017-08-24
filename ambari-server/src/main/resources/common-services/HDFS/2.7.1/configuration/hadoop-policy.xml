@@ -26,7 +26,6 @@
     The ACL is a comma-separated list of user and group names. The user and
     group list is separated by a blank. For e.g. "alice,bob users,wheel".
     A special value of "*" means all users are allowed.</description>
-    <on-ambari-upgrade add="true"/>
   </property>
   <property>
     <name>security.client.datanode.protocol.acl</name>
@@ -36,7 +35,6 @@
     The ACL is a comma-separated list of user and group names. The user and
     group list is separated by a blank. For e.g. "alice,bob users,wheel".
     A special value of "*" means all users are allowed.</description>
-    <on-ambari-upgrade add="true"/>
   </property>
   <property>
     <name>security.datanode.protocol.acl</name>
@@ -46,7 +44,6 @@
     The ACL is a comma-separated list of user and group names. The user and
     group list is separated by a blank. For e.g. "alice,bob users,wheel".
     A special value of "*" means all users are allowed.</description>
-    <on-ambari-upgrade add="true"/>
   </property>
   <property>
     <name>security.inter.datanode.protocol.acl</name>
@@ -56,7 +53,6 @@
     The ACL is a comma-separated list of user and group names. The user and
     group list is separated by a blank. For e.g. "alice,bob users,wheel".
     A special value of "*" means all users are allowed.</description>
-    <on-ambari-upgrade add="true"/>
   </property>
   <property>
     <name>security.namenode.protocol.acl</name>
@@ -66,7 +62,6 @@
     The ACL is a comma-separated list of user and group names. The user and
     group list is separated by a blank. For e.g. "alice,bob users,wheel".
     A special value of "*" means all users are allowed.</description>
-    <on-ambari-upgrade add="true"/>
   </property>
   <property>
     <name>security.inter.tracker.protocol.acl</name>
@@ -76,7 +71,6 @@
     The ACL is a comma-separated list of user and group names. The user and
     group list is separated by a blank. For e.g. "alice,bob users,wheel".
     A special value of "*" means all users are allowed.</description>
-    <on-ambari-upgrade add="true"/>
   </property>
   <property>
     <name>security.job.client.protocol.acl</name>
@@ -86,7 +80,6 @@
     The ACL is a comma-separated list of user and group names. The user and
     group list is separated by a blank. For e.g. "alice,bob users,wheel".
     A special value of "*" means all users are allowed.</description>
-    <on-ambari-upgrade add="true"/>
   </property>
   <property>
     <name>security.job.task.protocol.acl</name>
@@ -96,7 +89,6 @@
     The ACL is a comma-separated list of user and group names. The user and
     group list is separated by a blank. For e.g. "alice,bob users,wheel".
     A special value of "*" means all users are allowed.</description>
-    <on-ambari-upgrade add="true"/>
   </property>
   <property>
     <name>security.admin.operations.protocol.acl</name>
@@ -105,7 +97,6 @@
     The ACL is a comma-separated list of user and group names. The user and
     group list is separated by a blank. For e.g. "alice,bob users,wheel".
     A special value of "*" means all users are allowed.</description>
-    <on-ambari-upgrade add="true"/>
   </property>
   <property>
     <name>security.refresh.usertogroups.mappings.protocol.acl</name>
@@ -115,7 +106,6 @@
     group names. The user and group list is separated by a blank. For
     e.g. "alice,bob users,wheel".  A special value of "*" means all
     users are allowed.</description>
-    <on-ambari-upgrade add="true"/>
   </property>
   <property>
     <name>security.refresh.policy.protocol.acl</name>
@@ -125,6 +115,5 @@
     The ACL is a comma-separated list of user and group names. The user and
     group list is separated by a blank. For e.g. "alice,bob users,wheel".
     A special value of "*" means all users are allowed.</description>
-    <on-ambari-upgrade add="true"/>
   </property>
 </configuration>

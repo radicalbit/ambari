@@ -275,7 +275,7 @@ def create_name_dirs(directories):
             mode=0755,
             owner=params.hdfs_user,
             group=params.user_group,
-            create_parents = True,
+            recursive = True,
             cd_access="a",
   )
 
@@ -323,7 +323,7 @@ def format_namenode(force=None):
         )
         for m_dir in mark_dir:
           Directory(m_dir,
-            create_parents = True
+            recursive = True
           )
   else:
     if params.dfs_ha_namenode_active is not None and \
@@ -353,7 +353,7 @@ def format_namenode(force=None):
             raise
           for m_dir in mark_dir:
             Directory(m_dir,
-              create_parents = True
+              recursive = True
             )
 
 def is_namenode_formatted(params):
@@ -371,7 +371,7 @@ def is_namenode_formatted(params):
   if marked:
     for mark_dir in mark_dirs:
       Directory(mark_dir,
-        create_parents = True
+        recursive = True
       )
     return marked
 
@@ -389,7 +389,7 @@ def is_namenode_formatted(params):
     elif os.path.isfile(old_mark_dir):
       for mark_dir in mark_dirs:
         Directory(mark_dir,
-                  create_parents = True,
+                  recursive = True,
         )
       Directory(old_mark_dir,
         action = "delete"
@@ -505,7 +505,7 @@ def bootstrap_standby_namenode(params, use_path=False):
   if bootstrapped:
     for mark_dir in mark_dirs:
       Directory(mark_dir,
-                create_parents = True
+                recursive = True
                 )
   return bootstrapped
 
@@ -524,7 +524,7 @@ def is_namenode_bootstrapped(params):
   if marked:
     for mark_dir in mark_dirs:
       Directory(mark_dir,
-                create_parents = True
+                recursive = True
                 )
 
   return marked
