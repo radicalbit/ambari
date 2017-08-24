@@ -17,15 +17,11 @@ limitations under the License.
 
 """
 import datanode_upgrade
-
-from ambari_commons.constants import UPGRADE_TYPE_ROLLING
-
 from hdfs_datanode import datanode
 from resource_management import *
 from resource_management.libraries.functions import conf_select
-from resource_management.libraries.functions import stack_select
-from resource_management.libraries.functions import StackFeature
-from resource_management.libraries.functions.stack_features import check_stack_feature
+from resource_management.libraries.functions import hdp_select
+from resource_management.libraries.functions.version import compare_versions, format_hdp_stack_version
 from resource_management.libraries.functions.security_commons import build_expectations, \
   cached_kinit_executor, get_params_from_filesystem, validate_security_config_properties, FILE_TYPE_XML
 from hdfs import hdfs
@@ -35,21 +31,23 @@ from utils import get_hdfs_binary
 
 class DataNode(Script):
 
-  def get_component_name(self):
-    return "hadoop-hdfs-datanode"
+  def get_stack_to_component(self):
+    return {"HDP": "hadoop-hdfs-datanode"}
 
   def get_hdfs_binary(self):
     """
-    Get the name or path to the hdfs binary depending on the component name.
+    Get the name or path to the hdfs binary depending on the stack and version.
     """
-    component_name = self.get_component_name()
-    return get_hdfs_binary(component_name)
-
+    import params
+    stack_to_comp = self.get_stack_to_component()
+    if params.stack_name in stack_to_comp:
+      return get_hdfs_binary(stack_to_comp[params.stack_name])
+    return "hdfs"
 
   def install(self, env):
     import params
+    self.install_packages(env, params.exclude_packages)
     env.set_params(params)
-    self.install_packages(env)
 
   def configure(self, env):
     import params
@@ -69,7 +67,7 @@ class DataNode(Script):
     # pre-upgrade steps shutdown the datanode, so there's no need to call
 
     hdfs_binary = self.get_hdfs_binary()
-    if upgrade_type == UPGRADE_TYPE_ROLLING:
+    if upgrade_type == "rolling":
       stopped = datanode_upgrade.pre_rolling_upgrade_shutdown(hdfs_binary)
       if not stopped:
         datanode(action="stop")
@@ -89,9 +87,9 @@ class DataNodeDefault(DataNode):
     Logger.info("Executing DataNode Stack Upgrade pre-restart")
     import params
     env.set_params(params)
-    if params.version and check_stack_feature(StackFeature.ROLLING_UPGRADE, params.version):
+    if params.version and compare_versions(format_hdp_stack_version(params.version), '2.2.0.0') >= 0:
       conf_select.select(params.stack_name, "hadoop", params.version)
-      stack_select.select("hadoop-hdfs-datanode", params.version)
+      hdp_select.select("hadoop-hdfs-datanode", params.version)
 
   def post_upgrade_restart(self, env, upgrade_type=None):
     Logger.info("Executing DataNode Stack Upgrade post-restart")
@@ -158,20 +156,12 @@ class DataNodeDefault(DataNode):
         self.put_structured_out({"securityState": "UNSECURED"})
     else:
       self.put_structured_out({"securityState": "UNSECURED"})
-      
-  def get_log_folder(self):
-    import params
-    return params.hdfs_log_dir
-  
-  def get_user(self):
-    import params
-    return params.hdfs_user
 
 @OsFamilyImpl(os_family=OSConst.WINSRV_FAMILY)
 class DataNodeWindows(DataNode):
   def install(self, env):
     import install_params
-    self.install_packages(env)
+    self.install_packages(env, install_params.exclude_packages)
 
 if __name__ == "__main__":
   DataNode().execute()

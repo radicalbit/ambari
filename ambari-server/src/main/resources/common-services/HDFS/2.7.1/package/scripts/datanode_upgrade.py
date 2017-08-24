@@ -24,8 +24,6 @@ from resource_management.core.resources.system import Execute
 from resource_management.core import shell
 from resource_management.libraries.functions import format
 from resource_management.libraries.functions.decorator import retry
-from resource_management.libraries.functions import check_process_status
-from resource_management.core import ComponentIsNotRunning
 from utils import get_dfsadmin_base_command
 
 
@@ -76,14 +74,6 @@ def post_upgrade_check(hdfs_binary):
   _check_datanode_startup(hdfs_binary)
 
 
-def is_datanode_process_running():
-  import params
-  try:
-    check_process_status(params.datanode_pid_file)
-    return True
-  except ComponentIsNotRunning:
-    return False
-
 @retry(times=24, sleep_time=5, err_class=Fail)
 def _check_datanode_shutdown(hdfs_binary):
   """
@@ -118,21 +108,16 @@ def _check_datanode_shutdown(hdfs_binary):
   raise Fail('DataNode has not shutdown.')
 
 
-@retry(times=30, sleep_time=30, err_class=Fail) # keep trying for 15 mins
+@retry(times=12, sleep_time=10, err_class=Fail)
 def _check_datanode_startup(hdfs_binary):
   """
-  Checks that a DataNode process is running and DataNode is reported as being alive via the
+  Checks that a DataNode is reported as being alive via the
   "hdfs dfsadmin -fs {namenode_address} -report -live" command. Once the DataNode is found to be
   alive this method will return, otherwise it will raise a Fail(...) and retry
   automatically.
   :param hdfs_binary: name/path of the HDFS binary to use
   :return:
   """
-
-  if not is_datanode_process_running():
-    Logger.info("DataNode process is not running")
-    raise Fail("DataNode process is not running")
-
   import params
   import socket
 

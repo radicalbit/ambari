@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -16,10 +17,13 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
+
 <!-- Put site-specific property overrides in this file. -->
+
 <configuration supports_final="true">
 
   <!-- file system properties -->
+
   <property>
     <name>dfs.namenode.name.dir</name>
     <!-- cluster variant -->
@@ -100,6 +104,17 @@
       excluded.</description>
   </property>
 
+  <!--
+    <property>
+      <name>dfs.hosts</name>
+      <value>/etc/hadoop/conf/dfs.include</value>
+      <description>Names a file that contains a list of hosts that are
+      permitted to connect to the namenode. The full pathname of the file
+      must be specified.  If the value is empty, all hosts are
+      permitted.</description>
+    </property>
+  -->
+
   <property>
     <name>dfs.namenode.checkpoint.dir</name>
     <value>/hadoop/hdfs/namesecondary</value>
@@ -125,6 +140,7 @@
       Default value is same as dfs.namenode.checkpoint.dir
     </description>
   </property>
+
 
   <property>
     <name>dfs.namenode.checkpoint.period</name>
@@ -247,6 +263,7 @@
   <property>
     <name>dfs.namenode.rpc-address</name>
     <value>localhost:8020</value>
+    <property-type>DONT_ADD_ON_UPGRADE</property-type>
     <description>RPC address that handles all clients requests.</description>
   </property>
 
@@ -261,12 +278,6 @@
       <type>int</type>
       <unit>bytes</unit>
     </value-attributes>
-    <depends-on>
-      <property>
-        <type>hdfs-site</type>
-        <name>dfs.datanode.data.dir</name>
-      </property>
-    </depends-on>
   </property>
 
   <property>
@@ -297,6 +308,7 @@
   </property>
 
   <!-- Permissions configuration -->
+
   <property>
     <name>fs.permissions.umask-mode</name>
     <value>022</value>
@@ -351,10 +363,12 @@
     <description>Address of secondary namenode web server</description>
   </property>
 
+
   <property>
     <name>dfs.namenode.https-address</name>
     <value>localhost:50470</value>
     <description>The https address where namenode binds</description>
+
   </property>
 
   <property>
@@ -374,7 +388,7 @@
     <name>dfs.namenode.accesstime.precision</name>
     <value>0</value>
     <display-name>Access time precision</display-name>
-    <description>The access time for HDFS file is precise up to this value.
+    <description>The access time for HDFS file is precise upto this value.
       The default value is 1 hour. Setting a value of 0 disables
       access times for HDFS.
     </description>
@@ -386,7 +400,7 @@
   <property>
     <name>dfs.cluster.administrators</name>
     <value> hdfs</value>
-    <description>ACL for the admins, this configuration is used to control who can access the default servlets in the namenode, etc. The value should be a comma separated list of users and groups. The user list comes first and is separated by a space followed by the group list, e.g. "user1,user2 group1,group2". Both users and groups are optional, so "user1", " group1", "", "user1 group1", "user1,user2 group1,group2" are all valid (note the leading space in " group1"). '*' grants access to all users and groups, e.g. '*', '* ' and ' *' are all valid.</description>
+    <description>ACL for who all can view the default servlets in the HDFS</description>
   </property>
 
   <property>
@@ -398,7 +412,6 @@
       specified time interval.
     </description>
   </property>
-
   <property>
     <name>dfs.namenode.avoid.write.stale.datanode</name>
     <value>true</value>
@@ -408,7 +421,6 @@
       specified time interval.
     </description>
   </property>
-
   <property>
     <name>dfs.namenode.write.stale.datanode.ratio</name>
     <value>1.0f</value>
@@ -416,7 +428,6 @@
       than this ratio, stop avoiding writing to stale nodes so as to prevent causing hotspots.
     </description>
   </property>
-
   <property>
     <name>dfs.namenode.stale.datanode.interval</name>
     <value>30000</value>
@@ -437,7 +448,14 @@
       If the port is 0 then the server will start on a free port. </description>
   </property>
 
+  <property>
+    <name>dfs.journalnode.edits.dir</name>
+    <value>/hadoop/hdfs/journalnode</value>
+    <description>The path where the JournalNode daemon will store its local state. </description>
+  </property>
+
   <!-- HDFS Short-Circuit Local Reads -->
+
   <property>
     <name>dfs.client.read.shortcircuit</name>
     <value>true</value>
@@ -506,12 +524,6 @@
   </property>
 
   <property>
-    <name>dfs.journalnode.edits.dir</name>
-    <value>/hadoop/hdfs/journalnode</value>
-    <description>The path where the JournalNode daemon will store its local state. </description>
-  </property>
-
-  <property>
     <name>dfs.client.retry.policy.enabled</name>
     <value>false</value>
     <description>Enables HDFS client retry in the event of a NameNode failure.</description>
@@ -576,4 +588,5 @@
       is used. By default, the property is not defined.
     </description>
   </property>
+
 </configuration>

@@ -19,8 +19,8 @@
  * limitations under the License.
  */
 -->
-<configuration supports_adding_forbidden="true">
 
+<configuration>
   <property>
     <name>hdfs_log_dir_prefix</name>
     <value>/var/log/hadoop</value>
@@ -29,9 +29,9 @@
     <value-attributes>
       <type>directory</type>
       <overridable>false</overridable>
+      <editable-only-at-install>true</editable-only-at-install>
     </value-attributes>
   </property>
-
   <property>
     <name>hadoop_pid_dir_prefix</name>
     <value>/var/run/hadoop</value>
@@ -43,7 +43,6 @@
       <editable-only-at-install>true</editable-only-at-install>
     </value-attributes>
   </property>
-
   <property>
     <name>hadoop_root_logger</name>
     <value>INFO,RFA</value>
@@ -53,7 +52,6 @@
       <overridable>false</overridable>
     </value-attributes>
   </property>
-
   <property>
     <name>hadoop_heapsize</name>
     <value>1024</value>
@@ -65,7 +63,6 @@
       <overridable>false</overridable>
     </value-attributes>
   </property>
-
   <property>
     <name>namenode_heapsize</name>
     <value>1024</value>
@@ -86,7 +83,6 @@
       </property>
     </depends-on>
   </property>
-
   <property>
     <name>namenode_opt_newsize</name>
     <value>200</value>
@@ -107,7 +103,6 @@
       <overridable>false</overridable>
     </value-attributes>
   </property>
-
   <property>
     <name>namenode_opt_maxnewsize</name>
     <value>200</value>
@@ -128,7 +123,6 @@
       <overridable>false</overridable>
     </value-attributes>
   </property>
-
   <property>
     <name>namenode_opt_permsize</name>
     <value>128</value>
@@ -143,7 +137,6 @@
       <overridable>false</overridable>
     </value-attributes>
   </property>
-
   <property>
     <name>namenode_opt_maxpermsize</name>
     <value>256</value>
@@ -158,7 +151,6 @@
       <overridable>false</overridable>
     </value-attributes>
   </property>
-
   <property>
     <name>dtnode_heapsize</name>
     <value>1024</value>
@@ -172,17 +164,12 @@
       <increment-step>128</increment-step>
     </value-attributes>
   </property>
-
   <property>
     <name>proxyuser_group</name>
     <display-name>Proxy User Group</display-name>
     <value>users</value>
     <property-type>GROUP</property-type>
     <description>Proxy user group.</description>
-    <value-attributes>
-      <type>user</type>
-      <overridable>false</overridable>
-    </value-attributes>
   </property>
 
   <property>
@@ -191,23 +178,6 @@
     <value>hdfs</value>
     <property-type>USER</property-type>
     <description>User to run HDFS as</description>
-    <value-attributes>
-      <type>user</type>
-      <overridable>false</overridable>
-    </value-attributes>
-  </property>
-
-  <property>
-    <name>hdfs_tmp_dir</name>
-    <value>/tmp</value>
-    <description>HDFS tmp Dir</description>
-    <display-name>HDFS tmp Dir</display-name>
-    <property-type>NOT_MANAGED_HDFS_PATH</property-type>
-    <value-attributes>
-      <read-only>true</read-only>
-      <overridable>false</overridable>
-      <visible>false</visible>
-    </value-attributes>
   </property>
 
   <property>
@@ -223,12 +193,6 @@
   </property>
 
   <property>
-    <name>namenode_backup_dir</name>
-    <description>Local directory for storing backup copy of NameNode images during upgrade</description>
-    <value>/tmp/upgrades</value>
-  </property>
-
-  <property>
     <name>hdfs_user_keytab</name>
     <description>HDFS keytab path</description>
   </property>
@@ -236,9 +200,19 @@
   <property>
     <name>hdfs_principal_name</name>
     <description>HDFS principal name</description>
-    <property-type>KERBEROS_PRINCIPAL</property-type>
   </property>
 
+  <property>
+    <name>nfsgateway_heapsize</name>
+    <display-name>NFSGateway maximum Java heap size</display-name>
+    <value>1024</value>
+    <description>Maximum Java heap size for NFSGateway (Java option -Xmx)</description>
+    <value-attributes>
+      <type>int</type>
+      <unit>MB</unit>
+    </value-attributes>
+  </property>
+  <!-- hadoop-env.sh -->
   <property>
     <name>keyserver_host</name>
     <value> </value>
@@ -260,7 +234,6 @@
     </value-attributes>
   </property>
 
-  <!-- hadoop-env.sh -->
   <property>
     <name>content</name>
     <description>This is the jinja template for hadoop-env.sh file</description>
@@ -395,4 +368,5 @@ fi
 {% endif %}
     </value>
   </property>
+  
 </configuration>

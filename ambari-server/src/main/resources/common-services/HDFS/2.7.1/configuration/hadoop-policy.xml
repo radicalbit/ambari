@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -16,7 +17,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
+
 <!-- Put site-specific property overrides in this file. -->
+
 <configuration supports_final="true">
   <property>
     <name>security.client.protocol.acl</name>
@@ -27,6 +30,7 @@
     group list is separated by a blank. For e.g. "alice,bob users,wheel".
     A special value of "*" means all users are allowed.</description>
   </property>
+
   <property>
     <name>security.client.datanode.protocol.acl</name>
     <value>*</value>
@@ -36,6 +40,7 @@
     group list is separated by a blank. For e.g. "alice,bob users,wheel".
     A special value of "*" means all users are allowed.</description>
   </property>
+
   <property>
     <name>security.datanode.protocol.acl</name>
     <value>*</value>
@@ -45,6 +50,7 @@
     group list is separated by a blank. For e.g. "alice,bob users,wheel".
     A special value of "*" means all users are allowed.</description>
   </property>
+
   <property>
     <name>security.inter.datanode.protocol.acl</name>
     <value>*</value>
@@ -54,6 +60,7 @@
     group list is separated by a blank. For e.g. "alice,bob users,wheel".
     A special value of "*" means all users are allowed.</description>
   </property>
+
   <property>
     <name>security.namenode.protocol.acl</name>
     <value>*</value>
@@ -63,6 +70,7 @@
     group list is separated by a blank. For e.g. "alice,bob users,wheel".
     A special value of "*" means all users are allowed.</description>
   </property>
+
   <property>
     <name>security.inter.tracker.protocol.acl</name>
     <value>*</value>
@@ -72,6 +80,7 @@
     group list is separated by a blank. For e.g. "alice,bob users,wheel".
     A special value of "*" means all users are allowed.</description>
   </property>
+
   <property>
     <name>security.job.client.protocol.acl</name>
     <value>*</value>
@@ -81,6 +90,7 @@
     group list is separated by a blank. For e.g. "alice,bob users,wheel".
     A special value of "*" means all users are allowed.</description>
   </property>
+
   <property>
     <name>security.job.task.protocol.acl</name>
     <value>*</value>
@@ -90,7 +100,8 @@
     group list is separated by a blank. For e.g. "alice,bob users,wheel".
     A special value of "*" means all users are allowed.</description>
   </property>
-  <property>
+
+ <property>
     <name>security.admin.operations.protocol.acl</name>
     <value>hadoop</value>
     <description>ACL for AdminOperationsProtocol. Used for admin commands.
@@ -98,6 +109,7 @@
     group list is separated by a blank. For e.g. "alice,bob users,wheel".
     A special value of "*" means all users are allowed.</description>
   </property>
+
   <property>
     <name>security.refresh.usertogroups.mappings.protocol.acl</name>
     <value>hadoop</value>
@@ -107,7 +119,8 @@
     e.g. "alice,bob users,wheel".  A special value of "*" means all
     users are allowed.</description>
   </property>
-  <property>
+
+<property>
     <name>security.refresh.policy.protocol.acl</name>
     <value>hadoop</value>
     <description>ACL for RefreshAuthorizationPolicyProtocol, used by the
@@ -116,4 +129,6 @@
     group list is separated by a blank. For e.g. "alice,bob users,wheel".
     A special value of "*" means all users are allowed.</description>
   </property>
+
+
 </configuration>

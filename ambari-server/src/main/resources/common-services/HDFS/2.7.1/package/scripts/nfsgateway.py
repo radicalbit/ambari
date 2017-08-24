@@ -25,30 +25,29 @@ from resource_management.libraries.functions.security_commons import build_expec
 from hdfs_nfsgateway import nfsgateway
 from hdfs import hdfs
 from resource_management.libraries.functions import conf_select
-from resource_management.libraries.functions import stack_select
-from resource_management.libraries.functions import StackFeature
-from resource_management.libraries.functions.stack_features import check_stack_feature
+from resource_management.libraries.functions import hdp_select
+from resource_management.libraries.functions.version import compare_versions, format_hdp_stack_version
 
 
 class NFSGateway(Script):
 
-  def get_component_name(self):
-    return "hadoop-hdfs-nfs3"
+  def get_stack_to_component(self):
+    return {"HDP": "hadoop-hdfs-nfs3"}
 
   def install(self, env):
     import params
 
     env.set_params(params)
 
-    self.install_packages(env)
+    self.install_packages(env, params.exclude_packages)
 
   def pre_upgrade_restart(self, env, upgrade_type=None):
     import params
     env.set_params(params)
 
-    if params.stack_version_formatted and check_stack_feature(StackFeature.NFS, params.stack_version_formatted):
+    if Script.is_hdp_stack_greater_or_equal('2.3.0.0'):
       conf_select.select(params.stack_name, "hadoop", params.version)
-      stack_select.select("hadoop-hdfs-nfs3", params.version)
+      hdp_select.select("hadoop-hdfs-nfs3", params.version)
 
   def start(self, env, upgrade_type=None):
     import params
@@ -134,14 +133,6 @@ class NFSGateway(Script):
         self.put_structured_out({"securityState": "UNSECURED"})
     else:
       self.put_structured_out({"securityState": "UNSECURED"})
-      
-  def get_log_folder(self):
-    import params
-    return params.hdfs_log_dir
-  
-  def get_user(self):
-    import params
-    return params.hdfs_user
 
 if __name__ == "__main__":
   NFSGateway().execute()

@@ -34,13 +34,23 @@ class HdfsServiceCheckDefault(HdfsServiceCheck):
 
     env.set_params(params)
     unique = functions.get_unique_id_and_date()
-    dir = params.hdfs_tmp_dir
+    dir = '/tmp'
     tmp_file = format("{dir}/{unique}")
+
+    safemode_command = format("dfsadmin -fs {namenode_address} -safemode get | grep OFF")
 
     if params.security_enabled:
       Execute(format("{kinit_path_local} -kt {hdfs_user_keytab} {hdfs_principal_name}"),
         user=params.hdfs_user
       )
+    ExecuteHadoop(safemode_command,
+                  user=params.hdfs_user,
+                  logoutput=True,
+                  conf_dir=params.hadoop_conf_dir,
+                  try_sleep=3,
+                  tries=20,
+                  bin_dir=params.hadoop_bin_dir
+    )
     params.HdfsResource(dir,
                         type="directory",
                         action="create_on_execute",
@@ -76,8 +86,7 @@ class HdfsServiceCheckDefault(HdfsServiceCheck):
         checkWebUIFileName = "checkWebUI.py"
         checkWebUIFilePath = format("{tmp_dir}/{checkWebUIFileName}")
         comma_sep_jn_hosts = ",".join(params.journalnode_hosts)
-
-        checkWebUICmd = format("ambari-python-wrap {checkWebUIFilePath} -m {comma_sep_jn_hosts} -p {journalnode_port} -s {https_only} -o {script_https_protocol}")
+        checkWebUICmd = format("python {checkWebUIFilePath} -m {comma_sep_jn_hosts} -p {journalnode_port} -s {https_only}")
         File(checkWebUIFilePath,
              content=StaticFile(checkWebUIFileName),
              mode=0775)
@@ -110,7 +119,7 @@ class HdfsServiceCheckWindows(HdfsServiceCheck):
     unique = functions.get_unique_id_and_date()
 
     #Hadoop uses POSIX-style paths, separator is always /
-    dir = params.hdfs_tmp_dir
+    dir = '/tmp'
     tmp_file = dir + '/' + unique
 
     #commands for execution

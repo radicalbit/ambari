@@ -18,20 +18,19 @@ limitations under the License.
 """
 import os
 from resource_management import *
-from resource_management.libraries.functions.mounted_dirs_helper import handle_mounted_dirs
+from resource_management.libraries.functions.dfs_datanode_helper import handle_dfs_data_dir
 from utils import service
 from ambari_commons.os_family_impl import OsFamilyImpl, OsFamilyFuncImpl
 from ambari_commons import OSConst
 
 
-def create_dirs(data_dir):
+def create_dirs(data_dir, params):
   """
   :param data_dir: The directory to create
   :param params: parameters
   """
-  import params
   Directory(data_dir,
-            recursive = True,
+            recursive=True,
             cd_access="a",
             mode=0755,
             owner=params.hdfs_user,
@@ -44,14 +43,19 @@ def datanode(action=None):
   if action == "configure":
     import params
     Directory(params.dfs_domain_socket_dir,
-              recursive = True,
+              recursive=True,
               mode=0751,
               owner=params.hdfs_user,
               group=params.user_group)
 
-    # handle_mounted_dirs ensures that we don't create dfs data dirs which are temporary unavailable (unmounted), and intended to reside on a different mount.
-    data_dir_to_mount_file_content = handle_mounted_dirs(create_dirs, params.dfs_data_dirs, params.data_dir_mount_file, params)
-    # create a history file used by handle_mounted_dirs
+    if not os.path.isdir(os.path.dirname(params.data_dir_mount_file)):
+      Directory(os.path.dirname(params.data_dir_mount_file),
+                recursive=True,
+                mode=0755,
+                owner=params.hdfs_user,
+                group=params.user_group)
+
+    data_dir_to_mount_file_content = handle_dfs_data_dir(create_dirs, params)
     File(params.data_dir_mount_file,
          owner=params.hdfs_user,
          group=params.user_group,

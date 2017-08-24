@@ -26,40 +26,27 @@ import re
 from ambari_commons.os_check import OSCheck
 
 from resource_management.libraries.functions import conf_select
-from resource_management.libraries.functions import stack_select
-from resource_management.libraries.functions import StackFeature
-from resource_management.libraries.functions.stack_features import check_stack_feature
-from resource_management.libraries.functions.stack_features import get_stack_feature_version
+from resource_management.libraries.functions import hdp_select
 from resource_management.libraries.functions import format
-from resource_management.libraries.functions.version import format_stack_version
+from resource_management.libraries.functions.version import format_hdp_stack_version
 from resource_management.libraries.functions.default import default
-from resource_management.libraries.functions.expect import expect
 from resource_management.libraries.functions import get_klist_path
 from resource_management.libraries.functions import get_kinit_path
-from resource_management.libraries.functions.get_not_managed_resources import get_not_managed_resources
 from resource_management.libraries.script.script import Script
 from resource_management.libraries.resources.hdfs_resource import HdfsResource
+
 from resource_management.libraries.functions.format_jvm_option import format_jvm_option
 from resource_management.libraries.functions.get_lzo_packages import get_lzo_packages
-from resource_management.libraries.functions.hdfs_utils import is_https_enabled_in_hdfs
-from resource_management.libraries.functions import is_empty
-from resource_management.libraries.functions.get_architecture import get_architecture
+from resource_management.libraries.functions.is_empty import is_empty
+
 
 config = Script.get_config()
 tmp_dir = Script.get_tmp_dir()
 
-architecture = get_architecture()
-
-stack_name = status_params.stack_name
-stack_root = Script.get_stack_root()
+stack_name = default("/hostLevelParams/stack_name", None)
 upgrade_direction = default("/commandParams/upgrade_direction", None)
-stack_version_unformatted = config['hostLevelParams']['stack_version']
-stack_version_formatted = format_stack_version(stack_version_unformatted)
-agent_stack_retry_on_unavailability = config['hostLevelParams']['agent_stack_retry_on_unavailability']
-agent_stack_retry_count = expect("/hostLevelParams/agent_stack_retry_count", int)
-
-# there is a stack upgrade which has not yet been finalized; it's currently suspended
-upgrade_suspended = default("roleParams/upgrade_suspended", False)
+stack_version_unformatted = str(config['hostLevelParams']['stack_version'])
+hdp_stack_version = format_hdp_stack_version(stack_version_unformatted)
 
 # New Cluster Stack Version that is defined during the RESTART of a Stack Upgrade
 version = default("/commandParams/version", None)
@@ -69,10 +56,6 @@ version = default("/commandParams/version", None)
 # are started using different commands.
 desired_namenode_role = default("/commandParams/desired_namenode_role", None)
 
-# get the correct version to use for checking stack features
-version_for_stack_feature_checks = get_stack_feature_version(config)
-
-stack_supports_zk_security = check_stack_feature(StackFeature.SECURE_ZOOKEEPER, version_for_stack_feature_checks)
 
 security_enabled = config['configurations']['cluster-env']['security_enabled']
 hdfs_user = status_params.hdfs_user
@@ -80,7 +63,6 @@ root_user = "root"
 hadoop_pid_dir_prefix = status_params.hadoop_pid_dir_prefix
 namenode_pid_file = status_params.namenode_pid_file
 zkfc_pid_file = status_params.zkfc_pid_file
-datanode_pid_file = status_params.datanode_pid_file
 
 # Some datanode settings
 dfs_dn_addr = default('/configurations/hdfs-site/dfs.datanode.address', None)
@@ -90,23 +72,20 @@ dfs_http_policy = default('/configurations/hdfs-site/dfs.http.policy', None)
 dfs_dn_ipc_address = config['configurations']['hdfs-site']['dfs.datanode.ipc.address']
 secure_dn_ports_are_in_use = False
 
-hdfs_tmp_dir = config['configurations']['hadoop-env']['hdfs_tmp_dir']
-namenode_backup_dir = default("/configurations/hadoop-env/namenode_backup_dir", "/tmp/upgrades")
-
 # hadoop default parameters
 mapreduce_libs_path = "/usr/lib/hadoop-mapreduce/*"
-hadoop_libexec_dir = stack_select.get_hadoop_dir("libexec")
-hadoop_bin = stack_select.get_hadoop_dir("sbin")
-hadoop_bin_dir = stack_select.get_hadoop_dir("bin")
-hadoop_home = stack_select.get_hadoop_dir("home")
+hadoop_libexec_dir = hdp_select.get_hadoop_dir("libexec")
+hadoop_bin = hdp_select.get_hadoop_dir("sbin")
+hadoop_bin_dir = hdp_select.get_hadoop_dir("bin")
+hadoop_home = hdp_select.get_hadoop_dir("home")
 hadoop_secure_dn_user = hdfs_user
 hadoop_conf_dir = conf_select.get_hadoop_conf_dir()
 hadoop_conf_secure_dir = os.path.join(hadoop_conf_dir, "secure")
-hadoop_lib_home = stack_select.get_hadoop_dir("lib")
+hadoop_lib_home = hdp_select.get_hadoop_dir("lib")
 
-# hadoop parameters for stacks that support rolling_upgrade
-if stack_version_formatted and check_stack_feature(StackFeature.ROLLING_UPGRADE, stack_version_formatted):
-  mapreduce_libs_path = format("{stack_root}/current/hadoop-mapreduce-client/*")
+# hadoop parameters for 2.2+
+if Script.is_hdp_stack_greater_or_equal("2.2"):
+  mapreduce_libs_path = "/usr/hdp/current/hadoop-mapreduce-client/*"
 
   if not security_enabled:
     hadoop_secure_dn_user = '""'
@@ -132,7 +111,7 @@ limits_conf_dir = "/etc/security/limits.d"
 hdfs_user_nofile_limit = default("/configurations/hadoop-env/hdfs_user_nofile_limit", "128000")
 hdfs_user_nproc_limit = default("/configurations/hadoop-env/hdfs_user_nproc_limit", "65536")
 
-create_lib_snappy_symlinks = check_stack_feature(StackFeature.SNAPPY, stack_version_formatted)
+create_lib_snappy_symlinks = not Script.is_hdp_stack_greater_or_equal("2.2")
 jsvc_path = "/usr/lib/bigtop-utils"
 
 execute_path = os.environ['PATH'] + os.pathsep + hadoop_bin_dir
@@ -222,7 +201,6 @@ proxyuser_group =  config['configurations']['hadoop-env']['proxyuser_group']
 #hadoop params
 hdfs_log_dir_prefix = config['configurations']['hadoop-env']['hdfs_log_dir_prefix']
 hadoop_root_logger = config['configurations']['hadoop-env']['hadoop_root_logger']
-nfs_file_dump_dir = config['configurations']['hdfs-site']['nfs.file.dump.dir']
 
 dfs_domain_socket_path = config['configurations']['hdfs-site']['dfs.domain.socket.path']
 dfs_domain_socket_dir = os.path.dirname(dfs_domain_socket_path)
@@ -231,27 +209,22 @@ jn_edits_dir = config['configurations']['hdfs-site']['dfs.journalnode.edits.dir'
 
 dfs_name_dir = config['configurations']['hdfs-site']['dfs.namenode.name.dir']
 
-hdfs_log_dir = format("{hdfs_log_dir_prefix}/{hdfs_user}")
-namenode_dirs_created_stub_dir = hdfs_log_dir
+namenode_dirs_created_stub_dir = format("{hdfs_log_dir_prefix}/{hdfs_user}")
 namenode_dirs_stub_filename = "namenode_dirs_created"
 
 smoke_hdfs_user_dir = format("/user/{smoke_user}")
 smoke_hdfs_user_mode = 0770
 
-hdfs_namenode_format_disabled = default("/configurations/cluster-env/hdfs_namenode_format_disabled", False)
+
 hdfs_namenode_formatted_mark_suffix = "/namenode-formatted/"
-hdfs_namenode_bootstrapped_mark_suffix = "/namenode-bootstrapped/"
 namenode_formatted_old_mark_dirs = ["/var/run/hadoop/hdfs/namenode-formatted", 
   format("{hadoop_pid_dir_prefix}/hdfs/namenode/formatted"),
   "/var/lib/hdfs/namenode/formatted"]
 dfs_name_dirs = dfs_name_dir.split(",")
 namenode_formatted_mark_dirs = []
-namenode_bootstrapped_mark_dirs = []
 for dn_dir in dfs_name_dirs:
- tmp_format_mark_dir = format("{dn_dir}{hdfs_namenode_formatted_mark_suffix}")
- tmp_bootstrap_mark_dir = format("{dn_dir}{hdfs_namenode_bootstrapped_mark_suffix}")
- namenode_formatted_mark_dirs.append(tmp_format_mark_dir)
- namenode_bootstrapped_mark_dirs.append(tmp_bootstrap_mark_dir)
+ tmp_mark_dir = format("{dn_dir}{hdfs_namenode_formatted_mark_suffix}")
+ namenode_formatted_mark_dirs.append(tmp_mark_dir)
 
 # Use the namenode RPC address if configured, otherwise, fallback to the default file system
 namenode_address = None
@@ -263,15 +236,14 @@ else:
 
 fs_checkpoint_dirs = default("/configurations/hdfs-site/dfs.namenode.checkpoint.dir", "").split(',')
 
-dfs_data_dirs = config['configurations']['hdfs-site']['dfs.datanode.data.dir']
+dfs_data_dir = config['configurations']['hdfs-site']['dfs.datanode.data.dir']
+dfs_data_dir = ",".join([re.sub(r'^\[.+\]', '', dfs_dir.strip()) for dfs_dir in dfs_data_dir.split(",")])
 
 data_dir_mount_file = "/var/lib/ambari-agent/data/datanode/dfs_data_dir_mount.hist"
 
 # HDFS High Availability properties
 dfs_ha_enabled = False
-dfs_ha_nameservices = default('/configurations/hdfs-site/dfs.internal.nameservices', None)
-if dfs_ha_nameservices is None:
-  dfs_ha_nameservices = default('/configurations/hdfs-site/dfs.nameservices', None)
+dfs_ha_nameservices = default("/configurations/hdfs-site/dfs.nameservices", None)
 dfs_ha_namenode_ids = default(format("/configurations/hdfs-site/dfs.ha.namenodes.{dfs_ha_nameservices}"), None)
 dfs_ha_automatic_failover_enabled = default("/configurations/hdfs-site/dfs.ha.automatic-failover.enabled", False)
 
@@ -279,9 +251,6 @@ dfs_ha_automatic_failover_enabled = default("/configurations/hdfs-site/dfs.ha.au
 dfs_ha_namenode_active = default("/configurations/hadoop-env/dfs_ha_initial_namenode_active", None)
 # hostname of the standby HDFS HA Namenode (only used when HA is enabled)
 dfs_ha_namenode_standby = default("/configurations/hadoop-env/dfs_ha_initial_namenode_standby", None)
-ha_zookeeper_quorum = config['configurations']['core-site']['ha.zookeeper.quorum']
-jaas_file = os.path.join(hadoop_conf_secure_dir, 'hdfs_jaas.conf')
-zk_namespace = default('/configurations/hdfs-site/ha.zookeeper.parent-znode', '/hadoop-ha')
 
 # Values for the current Host
 namenode_id = None
@@ -298,7 +267,7 @@ if dfs_ha_namenode_ids:
 if dfs_ha_enabled:
   for nn_id in dfs_ha_namemodes_ids_list:
     nn_host = config['configurations']['hdfs-site'][format('dfs.namenode.rpc-address.{dfs_ha_nameservices}.{nn_id}')]
-    if hostname.lower() in nn_host.lower():
+    if hostname in nn_host:
       namenode_id = nn_id
       namenode_rpc = nn_host
   # With HA enabled namenode_address is recomputed
@@ -337,16 +306,15 @@ if security_enabled:
   if jn_principal_name:
     jn_principal_name = jn_principal_name.replace('_HOST', hostname.lower())
   jn_keytab = default("/configurations/hdfs-site/dfs.journalnode.keytab.file", None)
-  hdfs_kinit_cmd = format("{kinit_path_local} -kt {hdfs_user_keytab} {hdfs_principal_name};")
+  jn_kinit_cmd = format("{kinit_path_local} -kt {jn_keytab} {jn_principal_name};")
 else:
   dn_kinit_cmd = ""
   nn_kinit_cmd = ""
-  hdfs_kinit_cmd = ""
+  jn_kinit_cmd = ""
+  
 
 hdfs_site = config['configurations']['hdfs-site']
 default_fs = config['configurations']['core-site']['fs.defaultFS']
-
-dfs_type = default("/commandParams/dfs_type", "")
 
 import functools
 #create partial functions with common arguments for every HdfsResource call
@@ -354,7 +322,6 @@ import functools
 HdfsResource = functools.partial(
   HdfsResource,
   user=hdfs_user,
-  hdfs_resource_ignore_file = "/var/lib/ambari-agent/data/.hdfs_resource_ignore",
   security_enabled = security_enabled,
   keytab = hdfs_user_keytab,
   kinit_path_local = kinit_path_local,
@@ -362,9 +329,7 @@ HdfsResource = functools.partial(
   hadoop_conf_dir = hadoop_conf_dir,
   principal_name = hdfs_principal_name,
   hdfs_site = hdfs_site,
-  default_fs = default_fs,
-  immutable_paths = get_not_managed_resources(),
-  dfs_type = dfs_type
+  default_fs = default_fs
 )
 
 
@@ -372,12 +337,15 @@ HdfsResource = functools.partial(
 io_compression_codecs = default("/configurations/core-site/io.compression.codecs", None)
 lzo_enabled = io_compression_codecs is not None and "com.hadoop.compression.lzo" in io_compression_codecs.lower()
 lzo_packages = get_lzo_packages(stack_version_unformatted)
+
+exclude_packages = []
+if not lzo_enabled:
+  exclude_packages += lzo_packages
   
 name_node_params = default("/commandParams/namenode", None)
 
 java_home = config['hostLevelParams']['java_home']
-java_version = expect("/hostLevelParams/java_version", int)
-java_exec = format("{java_home}/bin/java")
+java_version = int(config['hostLevelParams']['java_version'])
 
 hadoop_heapsize = config['configurations']['hadoop-env']['hadoop_heapsize']
 namenode_heapsize = config['configurations']['hadoop-env']['namenode_heapsize']
@@ -404,9 +372,6 @@ if security_enabled:
   sn_principal_name = default("/configurations/hdfs-site/dfs.secondary.namenode.kerberos.principal", "nn/_HOST@EXAMPLE.COM")
   sn_principal_name = sn_principal_name.replace('_HOST',hostname.lower())
 
-# for curl command in ranger plugin to get db connector
-jdk_location = config['hostLevelParams']['jdk_location']
-java_share_dir = '/usr/share/java'
 
-is_https_enabled = is_https_enabled_in_hdfs(config['configurations']['hdfs-site']['dfs.http.policy'],
-                                            config['configurations']['hdfs-site']['dfs.https.enable'])
+is_https_enabled = config['configurations']['hdfs-site']['dfs.https.enable'] if \
+  not is_empty(config['configurations']['hdfs-site']['dfs.https.enable']) else False
