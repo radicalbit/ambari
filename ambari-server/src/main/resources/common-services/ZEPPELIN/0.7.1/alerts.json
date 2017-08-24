@@ -1,0 +1,33 @@
+{
+  "ZEPPELIN": {
+    "ZEPPELIN_MASTER": [
+      {
+        "name": "zeppelin_ui",
+        "label": "Zeppelin UI",
+        "description": "This host-level alert is triggered if the Zeppelin server cannot be determined to be up and responding to client requests.",
+        "interval": 1,
+        "scope": "ANY",
+        "enabled": true,
+        "source": {
+          "type": "WEB",
+          "uri": {
+            "http": "{{zeppelin-site/zeppelin.server.port}}",
+            "default_port": 18080,
+            "connection_timeout": 5.0
+          },
+          "reporting": {
+            "ok": {
+              "text": "HTTP {0} response in {2:.3f}s"
+            },
+            "warning":{
+              "text": "HTTP {0} response from {1} in {2:.3f}s ({3})"
+            },
+            "critical": {
+              "text": "Connection failed to {1} ({3})"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
