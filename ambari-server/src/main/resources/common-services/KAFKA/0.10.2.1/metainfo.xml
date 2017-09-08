@@ -24,16 +24,21 @@
       <comment>A high-throughput distributed messaging system</comment>
       <version>0.10.2.1</version>
       <extends>common-services/KAFKA/0.10.0.1</extends>
+
       <osSpecifics>
         <osSpecific>
           <osFamily>any</osFamily>
           <packages>
+            <package>
+              <name>lsof</name>
+            </package>
             <package>
               <name>kafka-0.10.2.1*</name>
             </package>
           </packages>
         </osSpecific>
       </osSpecifics>
+      
     </service>
   </services>
 </metainfo>

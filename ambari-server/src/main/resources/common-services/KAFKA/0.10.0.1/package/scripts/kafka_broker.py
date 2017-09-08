@@ -20,7 +20,7 @@ from resource_management import Script
 from resource_management.core.resources.system import Execute, File, Directory
 from resource_management.libraries.functions.format import format
 from resource_management.libraries.functions.check_process_status import check_process_status
-import os, time
+import os, time, subprocess
 from kafka import ensure_base_directories
 
 from kafka import kafka
@@ -41,8 +41,19 @@ class KafkaBroker(Script):
   def start(self, env, upgrade_type=None):
     import params
     env.set_params(params)
-    while is_kafka_logs_locked():
-      time.sleep(2)
+
+    kafka_logs_dir = params.config['configurations']['kafka-broker']['log.dirs']
+    kafka_logs_lock = "%s/.lock" % kafka_logs_dir
+
+    if os.path.exists(kafka_logs_lock):
+      process = subprocess.Popen("lsof %s" % kafka_logs_lock, stdout=subprocess.PIPE, shell=True)
+      process.communicate()
+
+      while process.returncode == 0:
+        time.sleep(2)
+        process = subprocess.Popen("lsof %s" % kafka_logs_lock, stdout=subprocess.PIPE, shell=True)
+        process.communicate()
+
     self.configure(env, upgrade_type=upgrade_type)
     daemon_cmd = format('{params.kafka_home}/bin/kafka-server-start.sh {params.conf_dir}/server.properties >/dev/null & echo $! > {params.kafka_pid_file}')
     no_op_test = format('ls {params.kafka_pid_file} >/dev/null 2>&1 && ps -p `cat {params.kafka_pid_file}` >/dev/null 2>&1')
@@ -71,32 +82,6 @@ class KafkaBroker(Script):
     import status_params
     env.set_params(status_params)
     check_process_status(status_params.kafka_pid_file)
-
-  def is_kafka_logs_locked(self):
-    import params
-    kafka_logs_dir = params.config['configurations']['kafka-broker']['log.dirs']
-    kafka_logs_lock = "%s/.lock" % kafka_logs_dir
-    locked = False
-    if os.path.exists(kafka_logs_lock):
-      file_object = None
-      try:
-        print "Trying to open %s." % kafka_logs_lock
-        buffer_size = 0
-        file_object = open(kafka_logs_lock, 'a', buffer_size)
-        if file_object:
-          print "%s is not locked." % kafka_logs_lock
-          pass
-      except IOError, message:
-        print "File is locked (unable to open in append mode). %s." % \
-              message
-        locked = True
-      finally:
-        if file_object:
-          file_object.close()
-          print "%s closed." % kafka_logs_lock
-      return locked
-    else:
-      return locked
 
 if __name__ == "__main__":
   KafkaBroker().execute()
