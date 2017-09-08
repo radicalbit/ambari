@@ -20,7 +20,7 @@ from resource_management import Script
 from resource_management.core.resources.system import Execute, File, Directory
 from resource_management.libraries.functions.format import format
 from resource_management.libraries.functions.check_process_status import check_process_status
-import time
+import os, time
 from kafka import ensure_base_directories
 
 from kafka import kafka
@@ -41,6 +41,8 @@ class KafkaBroker(Script):
   def start(self, env, upgrade_type=None):
     import params
     env.set_params(params)
+    while is_kafka_logs_locked():
+      time.sleep(2)
     self.configure(env, upgrade_type=upgrade_type)
     daemon_cmd = format('{params.kafka_home}/bin/kafka-server-start.sh {params.conf_dir}/server.properties >/dev/null & echo $! > {params.kafka_pid_file}')
     no_op_test = format('ls {params.kafka_pid_file} >/dev/null 2>&1 && ps -p `cat {params.kafka_pid_file}` >/dev/null 2>&1')
@@ -64,13 +66,40 @@ class KafkaBroker(Script):
     File(params.kafka_pid_file,
           action = "delete"
     )
-    time.sleep(2)
+    #time.sleep(2)
 
 
   def status(self, env):
     import status_params
     env.set_params(status_params)
     check_process_status(status_params.kafka_pid_file)
+
+  def is_kafka_logs_locked(self):
+    import params
+    kafka_logs_dir = params.config['configurations']['kafka-broker']['log.dirs']
+    locked = False
+    if os.path.exists(kafka_logs_dir):
+      for filename in os.listdir(kafka_logs_dir):
+        file_object = None
+        try:
+          print "Trying to open %s." % filename
+          buffer_size = 0
+          file_object = open(filename, 'a', buffer_size)
+          if file_object:
+            print "%s is not locked." % filename
+            pass
+        except IOError, message:
+          print "File is locked (unable to open in append mode). %s." % \
+                message
+          locked = True
+        finally:
+          if file_object:
+            file_object.close()
+            print "%s closed." % filename
+
+      return locked
+    else:
+      return locked
 
 if __name__ == "__main__":
   KafkaBroker().execute()
