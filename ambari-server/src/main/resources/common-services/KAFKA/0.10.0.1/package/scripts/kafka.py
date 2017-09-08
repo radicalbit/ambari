@@ -22,8 +22,7 @@ import os
 
 from resource_management.libraries.resources.properties_file import PropertiesFile
 from resource_management.libraries.resources.template_config import TemplateConfig
-from resource_management.core.resources.sys
-tem import Directory, Execute, File, Link
+from resource_management.core.resources.system import Directory, Execute, File, Link
 from resource_management.core.source import StaticFile, Template, InlineTemplate
 from resource_management.libraries.functions import format
 

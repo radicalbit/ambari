@@ -66,8 +66,6 @@ class KafkaBroker(Script):
     File(params.kafka_pid_file,
           action = "delete"
     )
-    #time.sleep(2)
-
 
   def status(self, env):
     import status_params
@@ -77,26 +75,25 @@ class KafkaBroker(Script):
   def is_kafka_logs_locked(self):
     import params
     kafka_logs_dir = params.config['configurations']['kafka-broker']['log.dirs']
+    kafka_logs_lock = "%s/.lock" % kafka_logs_dir
     locked = False
-    if os.path.exists(kafka_logs_dir):
-      for filename in os.listdir(kafka_logs_dir):
-        file_object = None
-        try:
-          print "Trying to open %s." % filename
-          buffer_size = 0
-          file_object = open(filename, 'a', buffer_size)
-          if file_object:
-            print "%s is not locked." % filename
-            pass
-        except IOError, message:
-          print "File is locked (unable to open in append mode). %s." % \
-                message
-          locked = True
-        finally:
-          if file_object:
-            file_object.close()
-            print "%s closed." % filename
-
+    if os.path.exists(kafka_logs_lock):
+      file_object = None
+      try:
+        print "Trying to open %s." % kafka_logs_lock
+        buffer_size = 0
+        file_object = open(kafka_logs_lock, 'a', buffer_size)
+        if file_object:
+          print "%s is not locked." % kafka_logs_lock
+          pass
+      except IOError, message:
+        print "File is locked (unable to open in append mode). %s." % \
+              message
+        locked = True
+      finally:
+        if file_object:
+          file_object.close()
+          print "%s closed." % kafka_logs_lock
       return locked
     else:
       return locked
