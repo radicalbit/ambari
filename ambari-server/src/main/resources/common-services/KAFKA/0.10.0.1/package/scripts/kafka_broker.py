@@ -17,12 +17,7 @@ limitations under the License.
 
 """
 from resource_management import Script
-from resource_management.core.logger import Logger
 from resource_management.core.resources.system import Execute, File, Directory
-from resource_management.libraries.functions import conf_select
-from resource_management.libraries.functions import hdp_select
-from resource_management.libraries.functions import Direction
-from resource_management.libraries.functions.version import compare_versions, format_hdp_stack_version
 from resource_management.libraries.functions.format import format
 from resource_management.libraries.functions.check_process_status import check_process_status
 import time

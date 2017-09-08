@@ -20,10 +20,10 @@ limitations under the License.
 import collections
 import os
 
-from resource_management.libraries.functions.version import format_hdp_stack_version, compare_versions
 from resource_management.libraries.resources.properties_file import PropertiesFile
 from resource_management.libraries.resources.template_config import TemplateConfig
-from resource_management.core.resources.system import Directory, Execute, File, Link
+from resource_management.core.resources.sys
+tem import Directory, Execute, File, Link
 from resource_management.core.source import StaticFile, Template, InlineTemplate
 from resource_management.libraries.functions import format
 
@@ -36,40 +36,6 @@ def kafka(upgrade_type=None):
     ensure_base_directories()
 
     kafka_server_config = mutable_config_dict(params.config['configurations']['kafka-broker'])
-    # This still has an issue of hostnames being alphabetically out-of-order for broker.id in HDP-2.2.
-    # Starting in HDP 2.3, Kafka handles the generation of broker.id so Ambari doesn't have to.
-
-    # effective_version = params.hdp_stack_version if upgrade_type is None else format_hdp_stack_version(params.version)
-    # Logger.info(format("Effective stack version: {effective_version}"))
-
-    # if effective_version is not None and effective_version != "" and compare_versions(effective_version, '2.2.0.0') >= 0 and compare_versions(effective_version, '2.3.0.0') < 0:
-    #   if len(params.kafka_hosts) > 0 and params.hostname in params.kafka_hosts:
-    #     brokerid = str(sorted(params.kafka_hosts).index(params.hostname))
-    #     kafka_server_config['broker.id'] = brokerid
-    #     Logger.info(format("Calculating broker.id as {brokerid}"))
-
-    # listeners and advertised.listeners are only added in 2.3.0.0 onwards.
-    # if effective_version is not None and effective_version != "" and compare_versions(effective_version, '2.3.0.0') >= 0:
-    #   listeners = kafka_server_config['listeners'].replace("localhost", params.hostname)
-    #   Logger.info(format("Kafka listeners: {listeners}"))
-    #
-    #   if params.security_enabled and params.kafka_kerberos_enabled:
-    #     Logger.info("Kafka kerberos security is enabled.")
-    #     if "SASL" not in listeners:
-    #       listeners = listeners.replace("PLAINTEXT", "PLAINTEXTSASL")
-    #
-    #     kafka_server_config['listeners'] = listeners
-    #     kafka_server_config['advertised.listeners'] = listeners
-    #     Logger.info(format("Kafka advertised listeners: {listeners}"))
-    #   else:
-    #     kafka_server_config['listeners'] = listeners
-    #
-    #     if 'advertised.listeners' in kafka_server_config:
-    #       advertised_listeners = kafka_server_config['advertised.listeners'].replace("localhost", params.hostname)
-    #       kafka_server_config['advertised.listeners'] = advertised_listeners
-    #       Logger.info(format("Kafka advertised listeners: {advertised_listeners}"))
-    # else:
-    #   kafka_server_config['host.name'] = params.hostname
 
     if len(params.kafka_hosts) > 0 and params.hostname in params.kafka_hosts:
         brokerid = str(sorted(params.kafka_hosts).index(params.hostname))
