@@ -23,7 +23,7 @@
     <property>
         <name>flink_version</name>
         <display-name>Flink Version</display-name>
-        <value>1.3.0</value>
+        <value>1.3.2</value>
         <description>Flink Version</description>
         <value-attributes>
             <visible>false</visible>

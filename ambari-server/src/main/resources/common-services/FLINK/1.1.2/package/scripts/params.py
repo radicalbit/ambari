@@ -97,7 +97,7 @@ if recovery_mode == 'zookeeper':
 
   recovery_zookeeper_storage_dir = format('{hdfs_default_name}{recovery_zookeeper_path_root}')
 
-# History Server section - available starting from Flink 1.3.0
-if flink_version == '1.3.0':
+# History Server section - available starting from Flink 1.3.2
+if flink_version == '1.3.2':
   jobmanager_archive_fs_dir = config['configurations']['flink-conf']["jobmanager.archive.fs.dir"]
   historyserver_archive_fs_dir = config['configurations']['flink-conf']["historyserver.archive.fs.dir"]

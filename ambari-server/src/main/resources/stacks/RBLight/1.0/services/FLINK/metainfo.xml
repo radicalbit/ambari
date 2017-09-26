@@ -21,7 +21,7 @@
     <services>
         <service>
             <name>FLINK</name>
-            <extends>common-services/FLINK/1.3.0</extends>
+            <extends>common-services/FLINK/1.3.2</extends>
         </service>
     </services>
 </metainfo>
