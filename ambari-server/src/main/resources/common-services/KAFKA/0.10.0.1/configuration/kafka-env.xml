@@ -45,6 +45,11 @@
     </value-attributes>
   </property>
   <property>
+    <name>kafka_jmx_port</name>
+    <value>9999</value>
+    <description>Kafka JMX port.</description>
+  </property>
+  <property>
     <name>kafka_user_nofile_limit</name>
     <value>32000</value>
     <description>Max open files limit setting for KAFKA user.</description>
@@ -69,6 +74,7 @@ JAVA_HOME={{java64_home}}
 PATH=$PATH:$JAVA_HOME/bin
 export PID_DIR={{kafka_pid_dir}}
 export LOG_DIR={{kafka_log_dir}}
+export JMX_PORT={{kafka_jmx_port}}
 # Add kafka sink to classpath and related depenencies
 if [ -e "/usr/lib/ambari-metrics-kafka-sink/ambari-metrics-kafka-sink.jar" ]; then
   export CLASSPATH=$CLASSPATH:/usr/lib/ambari-metrics-kafka-sink/ambari-metrics-kafka-sink.jar
