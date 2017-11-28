@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
@@ -17,13 +16,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
-from resource_management.libraries.functions import format
-from resource_management.libraries.script.script import Script
+from resource_management import Script
+from resource_management.libraries.functions.format import format
+from resource_management.libraries.functions.check_process_status import check_process_status
 
-config = Script.get_config()
+class KafkaConnect(Script):
 
-kafka_pid_dir = config['configurations']['kafka-env']['kafka_pid_dir']
-kafka_pid_file = format("{kafka_pid_dir}/kafka.pid")
+    def install(self, env):
+        self.install_packages(env)
 
-kafka_connect_pid_dir = config['configurations']['kafka-env']['kafka_connect_pid_dir']
-kafka_connect_pid_file = format("{kafka_connect_pid_dir}/kafka.pid")
+    def configure(self, env):
+        import params
+        env.set_params(params)
+
+    def start(self, env):
+        import params
+        env.set_params(params)
+
+    def stop(self, env):
+        import params
+        env.set_params(params)
+
+    def status(self, env):
+        import status_params
+        env.set_params(status_params)
+        check_process_status(status_params.kafka_connect_pid_file)
+
+if __name__ == "__main__":
+    KafkaConnect().execute()
