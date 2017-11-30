@@ -62,6 +62,10 @@
           </packages>
         </osSpecific>
       </osSpecifics>
+
+      <configuration-dependencies>
+        <config-type>kafka-connect-properties</config-type>
+      </configuration-dependencies>
       
     </service>
   </services>

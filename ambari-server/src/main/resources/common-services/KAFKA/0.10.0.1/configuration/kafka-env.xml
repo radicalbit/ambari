@@ -51,17 +51,6 @@
     </value-attributes>
   </property>
   <property>
-    <name>kafka_connect_log_dir</name>
-    <value>/var/log/kafka-connect</value>
-    <display-name>Kafka Connect log dir</display-name>
-    <description></description>
-    <value-attributes>
-      <type>directory</type>
-      <editable-only-at-install>true</editable-only-at-install>
-      <overridable>false</overridable>
-    </value-attributes>
-  </property>
-  <property>
     <name>kafka_connect_pid_dir</name>
     <value>/var/run/kafka-connect</value>
     <display-name>Kafka Connect PID dir</display-name>
@@ -102,7 +91,6 @@ JAVA_HOME={{java64_home}}
 PATH=$PATH:$JAVA_HOME/bin
 export PID_DIR={{kafka_pid_dir}}
 export LOG_DIR={{kafka_log_dir}}
-export JMX_PORT={{kafka_jmx_port}}
 # Add kafka sink to classpath and related depenencies
 if [ -e "/usr/lib/ambari-metrics-kafka-sink/ambari-metrics-kafka-sink.jar" ]; then
   export CLASSPATH=$CLASSPATH:/usr/lib/ambari-metrics-kafka-sink/ambari-metrics-kafka-sink.jar

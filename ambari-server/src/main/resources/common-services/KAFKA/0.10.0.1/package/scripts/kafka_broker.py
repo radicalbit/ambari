@@ -55,7 +55,7 @@ class KafkaBroker(Script):
         process.communicate()
 
     self.configure(env, upgrade_type=upgrade_type)
-    daemon_cmd = format('{params.kafka_home}/bin/kafka-server-start.sh {params.conf_dir}/server.properties >/dev/null & echo $! > {params.kafka_pid_file}')
+    daemon_cmd = format('export JMX_PORT={params.kafka_jmx_port} && {params.kafka_home}/bin/kafka-server-start.sh {params.conf_dir}/server.properties >/dev/null & echo $! > {params.kafka_pid_file}')
     no_op_test = format('ls {params.kafka_pid_file} >/dev/null 2>&1 && ps -p `cat {params.kafka_pid_file}` >/dev/null 2>&1')
     Execute(daemon_cmd,
             user=params.kafka_user,

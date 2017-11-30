@@ -19,6 +19,9 @@ limitations under the License.
 from resource_management import Script
 from resource_management.libraries.functions.format import format
 from resource_management.libraries.functions.check_process_status import check_process_status
+from resource_management.libraries.resources.properties_file import PropertiesFile
+from resource_management.core.resources.system import Execute
+from kafka import mutable_config_dict
 
 class KafkaConnect(Script):
 
@@ -28,14 +31,31 @@ class KafkaConnect(Script):
     def configure(self, env):
         import params
         env.set_params(params)
+        kafka_connect_config = mutable_config_dict(params.config['configurations']['kafka-connect'])
+        kafka_connect_config['rest.host.name'] = params.hostname
+        kafka_connect_config['bootstrap.servers'] = params.bootstrap_servers
+        PropertiesFile(
+            "connect-distributed.properties",
+            dir=params.conf_dir,
+            properties=kafka_connect_config,
+            owner=params.kafka_user,
+            group=params.user_group,
+        )
 
     def start(self, env):
         import params
         env.set_params(params)
+        Execute(
+            '{params.kafka_home}/bin/connect-distributed.sh {params.conf_dir}/connect-distributed.properties >/dev/null & echo $! > {params.kafka_connect_pid_file}',
+            user=params.kafka_user
+        )
+        self.configure(env)
 
     def stop(self, env):
         import params
         env.set_params(params)
+        Execute(format('kill `cat {params.kafka_connect_pid_file}`'), user=params.kafka_user)
+        Execute(format('rm -f {params.kafka_connect_pid_file}'), user=params.kafka_user)
 
     def status(self, env):
         import status_params

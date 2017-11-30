@@ -150,6 +150,18 @@ hadoop_bin_dir = hdp_select.get_hadoop_dir("bin") if has_namenode else None
 hadoop_conf_dir = conf_select.get_hadoop_conf_dir() if has_namenode else None
 kinit_path_local = get_kinit_path(default('/configurations/kerberos-env/executable_search_paths', None))
 
+# kafka connect section
+kafka_connect_pid_dir = config['configurations']['kafka-env']['kafka_connect_pid_dir']
+kafka_connect_pid_file = format("{kafka_connect_pid_dir}/kafka.pid")
+kafka_connect_log4j_props = config['configurations']['kafka-connect-log4j']['content']
+kafka_listeners = params.config['configurations']['kafka-broker']['listeners']
+kafka_port = kafka_listeners.split('//')[1].replace('localhost:', '')
+bootstrap_servers = ''
+kafka_hosts_list = config['clusterHostInfo']['kafka_broker_hosts']
+if len(kafka_hosts_list) > 0:
+    bootstrap_servers =(':' + kafka_port + ',').join(kafka_hosts_list) + ':' + kafka_port
+
+
 import functools
 #create partial functions with common arguments for every HdfsResource call
 #to create/delete hdfs directory/file/copyfromlocal we need to call params.HdfsResource in code
