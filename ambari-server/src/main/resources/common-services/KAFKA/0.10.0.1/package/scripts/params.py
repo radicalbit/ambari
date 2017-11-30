@@ -151,10 +151,9 @@ hadoop_conf_dir = conf_select.get_hadoop_conf_dir() if has_namenode else None
 kinit_path_local = get_kinit_path(default('/configurations/kerberos-env/executable_search_paths', None))
 
 # kafka connect section
-kafka_connect_pid_dir = config['configurations']['kafka-env']['kafka_connect_pid_dir']
-kafka_connect_pid_file = format("{kafka_connect_pid_dir}/kafka.pid")
+kafka_connect_pid_file = format("{kafka_pid_dir}/kafka-connect.pid")
 kafka_connect_log4j_props = config['configurations']['kafka-connect-log4j']['content']
-kafka_listeners = params.config['configurations']['kafka-broker']['listeners']
+kafka_listeners = config['configurations']['kafka-broker']['listeners']
 kafka_port = kafka_listeners.split('//')[1].replace('localhost:', '')
 bootstrap_servers = ''
 kafka_hosts_list = config['clusterHostInfo']['kafka_broker_hosts']

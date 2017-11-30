@@ -65,6 +65,7 @@
 
       <configuration-dependencies>
         <config-type>kafka-connect-properties</config-type>
+        <config-type>kafka-connect-log4j</config-type>
       </configuration-dependencies>
       
     </service>

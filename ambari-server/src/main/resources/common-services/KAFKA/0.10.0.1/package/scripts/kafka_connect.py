@@ -20,7 +20,7 @@ from resource_management import Script
 from resource_management.libraries.functions.format import format
 from resource_management.libraries.functions.check_process_status import check_process_status
 from resource_management.libraries.resources.properties_file import PropertiesFile
-from resource_management.core.resources.system import Execute
+from resource_management.core.resources.system import Execute, File
 from kafka import mutable_config_dict
 
 class KafkaConnect(Script):
@@ -42,11 +42,19 @@ class KafkaConnect(Script):
             group=params.user_group,
         )
 
+        if (params.kafka_connect_log4j_props != None):
+            File(format("{conf_dir}/connect-log4j.properties"),
+                 mode=0644,
+                 group=params.user_group,
+                 owner=params.kafka_user,
+                 content=params.kafka_connect_log4j_props
+                 )
+
     def start(self, env):
         import params
         env.set_params(params)
         Execute(
-            '{params.kafka_home}/bin/connect-distributed.sh {params.conf_dir}/connect-distributed.properties >/dev/null & echo $! > {params.kafka_connect_pid_file}',
+            format('{params.kafka_home}/bin/connect-distributed.sh {params.conf_dir}/connect-distributed.properties >/dev/null & echo $! > {params.kafka_connect_pid_file}'),
             user=params.kafka_user
         )
         self.configure(env)

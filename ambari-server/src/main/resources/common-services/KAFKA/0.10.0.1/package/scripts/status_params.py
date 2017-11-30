@@ -25,5 +25,4 @@ config = Script.get_config()
 kafka_pid_dir = config['configurations']['kafka-env']['kafka_pid_dir']
 kafka_pid_file = format("{kafka_pid_dir}/kafka.pid")
 
-kafka_connect_pid_dir = config['configurations']['kafka-env']['kafka_connect_pid_dir']
-kafka_connect_pid_file = format("{kafka_connect_pid_dir}/kafka.pid")
+kafka_connect_pid_file = format("{kafka_pid_dir}/kafka-connect.pid")
