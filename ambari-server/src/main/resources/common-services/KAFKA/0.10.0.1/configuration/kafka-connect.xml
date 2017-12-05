@@ -21,7 +21,7 @@
 <configuration>
     <property>
         <name>rest.port</name>
-        <value>8083</value>
+        <value>8085</value>
         <display-name>REST port</display-name>
         <description>
             REST Api port.
