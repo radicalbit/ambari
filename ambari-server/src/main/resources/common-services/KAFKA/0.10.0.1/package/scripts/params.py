@@ -160,7 +160,7 @@ kafka_hosts_list = config['clusterHostInfo']['kafka_broker_hosts']
 if len(kafka_hosts_list) > 0:
     bootstrap_servers =(':' + kafka_port + ',').join(kafka_hosts_list) + ':' + kafka_port
 
-kafka_connect_heapsize = config['configurations']['kafka-connect-env']['connect_heapsize']
+kafka_connect_heapsize = config['configurations']['kafka-connect-env']['connect_heapsize'].replace('m', '')
 
 import functools
 #create partial functions with common arguments for every HdfsResource call
