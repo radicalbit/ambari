@@ -54,7 +54,7 @@ class KafkaConnect(Script):
         import params
         env.set_params(params)
         Execute(
-            format('{params.kafka_home}/bin/connect-distributed.sh {params.conf_dir}/connect-distributed.properties '
+            format('export KAFKA_HEAP_OPTS="-Xmx{params.kafka_connect_heapsize}G";{params.kafka_home}/bin/connect-distributed.sh {params.conf_dir}/connect-distributed.properties '
                    '>{params.kafka_log_dir}/kafka-connect.log '
                    '2>{params.kafka_log_dir}/kafka-connect.out & '
                    'echo $! > {params.kafka_connect_pid_file}'),
